@@ -5,158 +5,103 @@
 
 @custom-variant dark (&:is(.dark *));
 
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Geist Variable", Inter, system-ui, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: #f6f6f6;
+  color: #1b1f1d;
+  background-color: #faf8f4;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
 
-.container {
-  margin: 0;
-  padding-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
+  /* ---- GeneField palette (Figma 1:2031) ---- */
+  --background: #faf8f4;
+  --foreground: #1b1f1d;
+  --card: #ffffff;
+  --card-foreground: #1b1f1d;
+  --popover: #ffffff;
+  --popover-foreground: #1b1f1d;
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
-}
+  /* primary green (brand) */
+  --primary: #256b50;
+  --primary-foreground: #ffffff;
 
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
-}
+  --secondary: #f6f4ee;
+  --secondary-foreground: #1b1f1d;
 
-.row {
-  display: flex;
-  justify-content: center;
-}
+  --muted: #efede7;
+  --muted-foreground: #5f6561;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
+  /* active nav tint + active label */
+  --accent: #e3efe8;
+  --accent-foreground: #1d5a41;
 
-a:hover {
-  color: #535bf2;
-}
+  --destructive: #b3261e;
+  --destructive-foreground: #ffffff;
 
-h1 {
-  text-align: center;
-}
+  --border: #e4e1da;
+  --input: #e4e1da;
+  --ring: #256b50;
 
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
+  --chart-1: #256b50;
+  --chart-2: #1d5a41;
+  --chart-3: #4a3a1c;
+  --chart-4: #374957;
+  --chart-5: #4a504c;
 
-button {
-  cursor: pointer;
-}
+  --radius: 0.5rem;
 
-button:hover {
-  border-color: #396cd8;
-}
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
-}
+  --sidebar: #f6f4ee;
+  --sidebar-foreground: #1b1f1d;
+  --sidebar-primary: #256b50;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e3efe8;
+  --sidebar-accent-foreground: #1d5a41;
+  --sidebar-border: #e4e1da;
+  --sidebar-ring: #256b50;
 
-input,
-button {
-  outline: none;
-}
-
-#greet-input {
-  margin-right: 5px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
-
-  a:hover {
-    color: #24c8db;
-  }
-
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
-  }
-  button:active {
-    background-color: #0f0f0f69;
-  }
+  /* ---- GeneField app-specific tokens ---- */
+  --gf-app-bg: #faf8f4;
+  --gf-header-bg: #faf8f4;
+  --gf-sidebar-bg: #f6f4ee;
+  --gf-nav-active: #e3efe8;
+  --gf-nav-accent: #256b50;
+  --gf-nav-label: #4a504c;
+  --gf-nav-label-active: #1d5a41;
+  --gf-wordmark: #154631;
+  --gf-chip-bg: #ffffff;
+  --gf-chip-border: #d8d5cd;
+  --gf-panel-bg: #fbfaf7;
+  --gf-tint-positive: #eef5f1;
+  --gf-tint-alert: #fcf5f4;
+  --gf-card-shadow: 0 1px 2px rgba(27, 31, 29, 0.04);
 }
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: 'Geist Variable', sans-serif;
+  --font-sans: "Geist Variable", Inter, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+
+  /* GeneField app colors */
+  --color-gf-app-bg: var(--gf-app-bg);
+  --color-gf-sidebar-bg: var(--gf-sidebar-bg);
+  --color-gf-nav-active: var(--gf-nav-active);
+  --color-gf-nav-accent: var(--gf-nav-accent);
+  --color-gf-nav-label: var(--gf-nav-label);
+  --color-gf-nav-label-active: var(--gf-nav-label-active);
+  --color-gf-wordmark: var(--gf-wordmark);
+  --color-gf-chip-bg: var(--gf-chip-bg);
+  --color-gf-chip-border: var(--gf-chip-border);
+  --color-gf-panel-bg: var(--gf-panel-bg);
+  --color-gf-tint-positive: var(--gf-tint-positive);
+  --color-gf-tint-alert: var(--gf-tint-alert);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -173,6 +118,7 @@ button {
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
@@ -216,11 +162,6 @@ button {
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
