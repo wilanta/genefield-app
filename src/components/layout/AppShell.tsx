@@ -29,7 +29,7 @@ interface NavItem {
 const NAV: NavItem[] = [
   { label: "Overview", to: "/", icon: LayoutDashboard, enabled: true },
   { label: "Line Explorer", to: "/lines", icon: ScanSearch, enabled: true },
-  { label: "Pedigree Explorer", to: "/pedigree", icon: GitFork, enabled: false },
+  { label: "Pedigree Explorer", to: "/pedigree", icon: GitFork, enabled: true },
   { label: "Cross Lab", to: "/cross-lab", icon: FlaskConical, enabled: false },
   { label: "Breed Designer", to: "/breed-designer", icon: Dna, enabled: false },
   { label: "Candidate Workspace", to: "/candidates", icon: FolderKanban, enabled: false },
@@ -54,6 +54,10 @@ const TITLES: Record<string, TitleMeta> = {
   "/lines": {
     title: "Line Explorer",
     subtitle: "Search, filter, and inspect historical rice breeding lines.",
+  },
+  "/pedigree": {
+    title: "Pedigree Explorer",
+    subtitle: "Investigate recorded parent–offspring relationships.",
   },
 };
 
