@@ -6,12 +6,29 @@ export interface RiceLine {
   hasGenotype: boolean;
   hasPhenotype: boolean;
   hasPedigree: boolean;
+  /** Optional — number of recorded phenotype observations (e.g. 14). */
+  phenotypeObservations?: number;
+  /** Optional — historical GY/DTF/NO/LB values shown in the profile. */
+  estimates?: TraitEstimate[];
+  /** Optional — known parent line IDs (rendered joined with " × "). */
+  knownParents?: string[];
 }
 
 export interface LineQuery {
   search?: string;
   page: number;
   pageSize: number;
+}
+
+/* ---- Line Explorer filters (client-side) ---- */
+
+export type AvailabilityFilter = "any" | "yes" | "no";
+
+export interface LineExplorerFilters {
+  search: string;
+  genotype: AvailabilityFilter;
+  phenotype: AvailabilityFilter;
+  pedigree: AvailabilityFilter;
 }
 
 export interface PaginatedResult<T> {
