@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { mockLines, TOTAL_LINES } from "@/mocks/lines";
 import type { LineExplorerFilters, RiceLine } from "@/types/research";
 import { LineExplorerToolbar } from "./LineExplorerToolbar";
@@ -50,13 +51,18 @@ export default function LineExplorer({
   totalCount = TOTAL_LINES,
   selectedId = "GID_1233",
   onSelectLine,
-  onUseAsParent = () => {
-    /* no-op by default; caller supplies real navigation later. */
-  },
+  onUseAsParent,
   filters: initialFilters = DEFAULT_FILTERS,
 }: LineExplorerProps) {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<LineExplorerFilters>(initialFilters);
   const [selected, setSelected] = useState<string | null>(selectedId);
+
+  // Default: "Use as Parent A/B" navigates to Cross Lab, prefilling that slot.
+  const handleUseAsParent = onUseAsParent ?? ((id: string, slot: "A" | "B") => {
+    const target = slot === "A" ? "a" : "b";
+    navigate(`/cross-lab?${target}=${encodeURIComponent(id)}`);
+  });
 
   // Keep internal selection in sync when a parent-driven selectedId is provided.
   useEffect(() => {
@@ -76,10 +82,6 @@ export default function LineExplorer({
   const handleProfile = (line: RiceLine) => {
     setSelected(line.id);
     onSelectLine?.(line.id);
-  };
-
-  const handleUseAsParent = (id: string, slot: "A" | "B") => {
-    onUseAsParent?.(id, slot);
   };
 
   const clearFilters = () => setFilters(DEFAULT_FILTERS);
