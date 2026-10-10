@@ -3,6 +3,7 @@ import "./App.css";
 import AppShell from "@/components/layout/AppShell";
 import Overview from "@/pages/Overview/Overview";
 import LineExplorer from "@/pages/LineExplorer/LineExplorer";
+import PedigreeExplorer from "@/pages/PedigreeExplorer/PedigreeExplorer";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route element={<AppShell />}>
           <Route index element={<Overview />} />
           <Route path="lines" element={<LineExplorer />} />
+          <Route path="pedigree" element={<PedigreeExplorer />} />
           <Route path="*" element={<Overview />} />
         </Route>
       </Routes>

@@ -1,53 +1,133 @@
-import { useEffect, useState } from "react";
-import { dataService } from "@/services";
-import type { RiceLine } from "@/types/research";
+import { useEffect, useMemo, useState } from "react";
+import { mockLines, TOTAL_LINES } from "@/mocks/lines";
+import type { LineExplorerFilters, RiceLine } from "@/types/research";
+import { LineExplorerToolbar } from "./LineExplorerToolbar";
+import { LineExplorerTable } from "./LineExplorerTable";
+import { LineExplorerDetailPanel } from "./LineExplorerDetailPanel";
+import { LineExplorerNoResults } from "./LineExplorerNoResults";
 
-export default function LineExplorer() {
-    const [lines, setLines] = useState<RiceLine[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+const PAGE_SIZE = 10;
 
-    useEffect(() => {
-        let active = true;
+interface LineExplorerProps {
+  /** The full dataset to filter/paginate (defaults to local mocks). */
+  lines?: RiceLine[];
+  /** Simulated dataset total, independent of `lines` length. */
+  totalCount?: number;
+  /** Currently selected line ID (defaults to GID_1233 — the Figma reference). */
+  selectedId?: string | null;
+  /** Called when the user selects a line (e.g. via its Profile link). */
+  onSelectLine?: (id: string) => void;
+  /** Called by "Use as Parent A/B". */
+  onUseAsParent?: (id: string, slot: "A" | "B") => void;
+  /** Initial filter state (optional). */
+  filters?: LineExplorerFilters;
+}
 
-        dataService
-            .getLines({ page: 1, pageSize: 20 })
-            .then((result) => {
-                if (active) setLines(result.items);
-            })
-            .catch(() => {
-                if (active) setError("Failed to load lines.");
-            })
-            .finally(() => {
-                if (active) setLoading(false);
-            });
+const DEFAULT_FILTERS: LineExplorerFilters = {
+  search: "",
+  genotype: "any",
+  phenotype: "any",
+  pedigree: "any",
+};
 
-        return () => {
-            active = false;
-        };
-    }, []);
+function matchesFilters(
+  line: RiceLine,
+  filters: LineExplorerFilters,
+): boolean {
+  const q = filters.search.trim().toLowerCase();
+  if (q && !line.id.toLowerCase().includes(q)) return false;
+  if (filters.genotype !== "any" && line.hasGenotype !== (filters.genotype === "yes"))
+    return false;
+  if (filters.phenotype !== "any" && line.hasPhenotype !== (filters.phenotype === "yes"))
+    return false;
+  if (filters.pedigree !== "any" && line.hasPedigree !== (filters.pedigree === "yes"))
+    return false;
+  return true;
+}
 
-    if (loading) return <p>Loading lines...</p>;
-    if (error) return <p role="alert">{error}</p>;
+export default function LineExplorer({
+  lines = mockLines,
+  totalCount = TOTAL_LINES,
+  selectedId = "GID_1233",
+  onSelectLine,
+  onUseAsParent = () => {
+    /* no-op by default; caller supplies real navigation later. */
+  },
+  filters: initialFilters = DEFAULT_FILTERS,
+}: LineExplorerProps) {
+  const [filters, setFilters] = useState<LineExplorerFilters>(initialFilters);
+  const [selected, setSelected] = useState<string | null>(selectedId);
 
-    return (
-        <main className="p-6">
-            <h1 className="text-2xl font-semibold">
-                Line Explorer
-            </h1>
+  // Keep internal selection in sync when a parent-driven selectedId is provided.
+  useEffect(() => {
+    setSelected(selectedId);
+  }, [selectedId]);
 
-            <p className="mt-2 text-sm text-muted-foreground">
-                Development preview — mock data
-            </p>
+  const filtered = useMemo(
+    () => lines.filter((line) => matchesFilters(line, filters)),
+    [lines, filters],
+  );
 
-            <ul className="mt-6 space-y-3">
-                {lines.map((line) => (
-                    <li key={line.id} className="rounded-lg border p-4">
-                        <strong>{line.name}</strong>
-                        <p className="text-sm">{line.id}</p>
-                    </li>
-                ))}
-            </ul>
-        </main>
-    );
+  const selectedLine =
+    filtered.find((l) => l.id === selected) ??
+    lines.find((l) => l.id === selected) ??
+    null;
+
+  const handleProfile = (line: RiceLine) => {
+    setSelected(line.id);
+    onSelectLine?.(line.id);
+  };
+
+  const handleUseAsParent = (id: string, slot: "A" | "B") => {
+    onUseAsParent?.(id, slot);
+  };
+
+  const clearFilters = () => setFilters(DEFAULT_FILTERS);
+
+  const queryLabel =
+    filters.search.trim() ||
+    (filters.genotype !== "any" || filters.phenotype !== "any" || filters.pedigree !== "any"
+      ? "any of your filters"
+      : "any of your filters");
+
+  return (
+    <div className="flex h-full min-h-0 flex-col p-6">
+      {/* Toolbar */}
+      <div className="shrink-0">
+        <LineExplorerToolbar
+          filters={filters}
+          onChange={setFilters}
+          matchCount={filtered.length}
+          totalCount={totalCount}
+        />
+      </div>
+
+      {/* Content row: table (800) + detail panel (340) */}
+      <div className="mt-5 grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-auto lg:grid-cols-[800px_340px]">
+        <section aria-label="Lines table" className="min-h-0">
+          {filtered.length === 0 ? (
+            <LineExplorerNoResults
+              queryLabel={queryLabel}
+              onClearFilters={clearFilters}
+            />
+          ) : (
+            <LineExplorerTable
+              lines={filtered}
+              pageSize={PAGE_SIZE}
+              selectedId={selected}
+              onProfile={handleProfile}
+              onUseAsParent={handleUseAsParent}
+            />
+          )}
+        </section>
+
+        <aside aria-label="Line detail" className="min-h-0">
+          <LineExplorerDetailPanel
+            line={filtered.length === 0 ? null : selectedLine}
+            onUseAsParent={handleUseAsParent}
+          />
+        </aside>
+      </div>
+    </div>
+  );
 }

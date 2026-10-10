@@ -6,12 +6,29 @@ export interface RiceLine {
   hasGenotype: boolean;
   hasPhenotype: boolean;
   hasPedigree: boolean;
+  /** Optional — number of recorded phenotype observations (e.g. 14). */
+  phenotypeObservations?: number;
+  /** Optional — historical GY/DTF/NO/LB values shown in the profile. */
+  estimates?: TraitEstimate[];
+  /** Optional — known parent line IDs (rendered joined with " × "). */
+  knownParents?: string[];
 }
 
 export interface LineQuery {
   search?: string;
   page: number;
   pageSize: number;
+}
+
+/* ---- Line Explorer filters (client-side) ---- */
+
+export type AvailabilityFilter = "any" | "yes" | "no";
+
+export interface LineExplorerFilters {
+  search: string;
+  genotype: AvailabilityFilter;
+  phenotype: AvailabilityFilter;
+  pedigree: AvailabilityFilter;
 }
 
 export interface PaginatedResult<T> {
@@ -35,4 +52,43 @@ export interface CrossAnalysis {
   rankingEnabled: false;
   modelVersion: string;
   limitations: string[];
+}
+
+/* ---- Pedigree Explorer ---- */
+
+export type PedigreeColumn = "ancestor" | "parent" | "selected" | "descendant";
+
+export type PedigreeNodeKind = "normal" | "selected" | "missing";
+
+export interface PedigreeNode {
+  id: string;
+  label: string;
+  column: PedigreeColumn;
+  /** Generation offset relative to the selected node: -2, -1, 0, +1. */
+  depth: number;
+  kind: PedigreeNodeKind;
+  hasGenotype: boolean;
+  hasPhenotype: boolean;
+}
+
+export interface PedigreeEdge {
+  /** Parent / ancestor node id. */
+  source: string;
+  /** Offspring / descendant node id. */
+  target: string;
+}
+
+export interface PedigreeDetail {
+  recordedParents: string[];
+  recordedDescendants: number;
+  genotype: "available" | "none";
+  phenotype: "available" | "none";
+}
+
+export interface PedigreeGraphData {
+  nodes: PedigreeNode[];
+  /** Recorded parent → offspring relationships only (no SNP inference). */
+  edges: PedigreeEdge[];
+  selectedId: string;
+  detail: PedigreeDetail;
 }
