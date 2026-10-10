@@ -4,6 +4,7 @@ import AppShell from "@/components/layout/AppShell";
 import Overview from "@/pages/Overview/Overview";
 import LineExplorer from "@/pages/LineExplorer/LineExplorer";
 import PedigreeExplorer from "@/pages/PedigreeExplorer/PedigreeExplorer";
+import CrossLab from "@/pages/CrossLab/CrossLab";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route index element={<Overview />} />
           <Route path="lines" element={<LineExplorer />} />
           <Route path="pedigree" element={<PedigreeExplorer />} />
+          <Route path="cross-lab" element={<CrossLab />} />
           <Route path="*" element={<Overview />} />
         </Route>
       </Routes>

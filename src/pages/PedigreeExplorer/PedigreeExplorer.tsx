@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { mockPedigree } from "@/mocks/pedigree";
 import type { PedigreeGraphData } from "@/types/research";
 import PedigreeGraph from "./PedigreeGraph";
@@ -5,6 +6,7 @@ import { PedigreeDetailCard } from "./PedigreeDetailCard";
 import { PedigreeActionsCard } from "./PedigreeActionsCard";
 
 export default function PedigreeExplorer() {
+  const navigate = useNavigate();
   const data: PedigreeGraphData = mockPedigree;
   const selectedNode =
     data.nodes.find((n) => n.id === data.selectedId) ?? data.nodes[0];
@@ -13,6 +15,13 @@ export default function PedigreeExplorer() {
   const descendantCount = data.nodes.filter(
     (n) => n.column === "descendant",
   ).length;
+
+  const openLineProfile = (id: string) =>
+    navigate(`/lines?select=${encodeURIComponent(id)}`);
+  const useAsParentA = (id: string) =>
+    navigate(`/cross-lab?a=${encodeURIComponent(id)}`);
+  const useAsParentB = (id: string) =>
+    navigate(`/cross-lab?b=${encodeURIComponent(id)}`);
 
   return (
     <div className="mx-auto flex h-full w-full max-w-[1208px] flex-col gap-5 p-6">
@@ -29,7 +38,12 @@ export default function PedigreeExplorer() {
           aria-label="Selected line details"
         >
           <PedigreeDetailCard selectedNode={selectedNode} detail={data.detail} />
-          <PedigreeActionsCard selectedNode={selectedNode} />
+          <PedigreeActionsCard
+            selectedNode={selectedNode}
+            onOpenLineProfile={openLineProfile}
+            onUseAsParentA={useAsParentA}
+            onUseAsParentB={useAsParentB}
+          />
         </aside>
       </div>
 

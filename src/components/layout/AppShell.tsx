@@ -30,7 +30,7 @@ const NAV: NavItem[] = [
   { label: "Overview", to: "/", icon: LayoutDashboard, enabled: true },
   { label: "Line Explorer", to: "/lines", icon: ScanSearch, enabled: true },
   { label: "Pedigree Explorer", to: "/pedigree", icon: GitFork, enabled: true },
-  { label: "Cross Lab", to: "/cross-lab", icon: FlaskConical, enabled: false },
+  { label: "Cross Lab", to: "/cross-lab", icon: FlaskConical, enabled: true },
   { label: "Breed Designer", to: "/breed-designer", icon: Dna, enabled: false },
   { label: "Candidate Workspace", to: "/candidates", icon: FolderKanban, enabled: false },
   { label: "Model Insights", to: "/model-insights", icon: BarChart3, enabled: false },
@@ -58,6 +58,10 @@ const TITLES: Record<string, TitleMeta> = {
   "/pedigree": {
     title: "Pedigree Explorer",
     subtitle: "Investigate recorded parent–offspring relationships.",
+  },
+  "/cross-lab": {
+    title: "Cross Lab",
+    subtitle: "Explore parent combinations and experimental trait estimates.",
   },
 };
 
