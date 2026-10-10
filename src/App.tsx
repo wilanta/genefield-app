@@ -9,6 +9,7 @@ import BreedDesigner from "@/pages/BreedDesigner/BreedDesigner";
 import CandidateWorkspace from "@/pages/CandidateWorkspace/CandidateWorkspace";
 import ModelInsights from "@/pages/ModelInsights/ModelInsights";
 import Settings from "@/pages/Settings/Settings";
+import About from "@/pages/About/About";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="candidates" element={<CandidateWorkspace />} />
           <Route path="model-insights" element={<ModelInsights />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="about" element={<About />} />
           <Route path="*" element={<Overview />} />
         </Route>
       </Routes>
