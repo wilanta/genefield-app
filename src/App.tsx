@@ -5,6 +5,7 @@ import Overview from "@/pages/Overview/Overview";
 import LineExplorer from "@/pages/LineExplorer/LineExplorer";
 import PedigreeExplorer from "@/pages/PedigreeExplorer/PedigreeExplorer";
 import CrossLab from "@/pages/CrossLab/CrossLab";
+import BreedDesigner from "@/pages/BreedDesigner/BreedDesigner";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="lines" element={<LineExplorer />} />
           <Route path="pedigree" element={<PedigreeExplorer />} />
           <Route path="cross-lab" element={<CrossLab />} />
+          <Route path="breed-designer" element={<BreedDesigner />} />
           <Route path="*" element={<Overview />} />
         </Route>
       </Routes>
