@@ -38,7 +38,7 @@ const NAV: NavItem[] = [
 
 const BOTTOM_NAV: NavItem[] = [
   { label: "Settings", to: "/settings", icon: Settings, enabled: true },
-  { label: "About GeneField", to: "/about", icon: Info, enabled: false },
+  { label: "About GeneField", to: "/about", icon: Info, enabled: true },
 ];
 
 interface TitleMeta {
@@ -78,6 +78,10 @@ const TITLES: Record<string, TitleMeta> = {
   "/settings": {
     title: "Settings",
     subtitle: "Configure appearance, local storage, and the inference engine.",
+  },
+  "/about": {
+    title: "About GeneField",
+    subtitle: "Product information, attribution, and scientific limitations.",
   },
 };
 
