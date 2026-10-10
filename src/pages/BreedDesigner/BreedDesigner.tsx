@@ -313,7 +313,11 @@ export default function BreedDesigner() {
             </Card>
 
             {generated ? (
-              <CandidateTable candidates={candidates} onOpenInCrossLab={openInCrossLab} />
+              <CandidateTable
+                candidates={candidates}
+                onOpenInCrossLab={openInCrossLab}
+                onGoToWorkspace={() => navigate("/candidates")}
+              />
             ) : (
               <div className="rounded-xl border border-border bg-card px-4 py-10 text-center shadow-[var(--gf-card-shadow)]">
                 <p className="text-sm text-muted-foreground">

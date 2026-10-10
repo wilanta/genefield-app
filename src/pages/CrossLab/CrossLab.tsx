@@ -38,7 +38,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { mockLines } from "@/mocks/lines";
+import { candidateStore } from "@/services";
 import type { RiceLine, TraitCode } from "@/types/research";
+import { CandidateNameConflictError } from "@/types/research";
 import { cn } from "@/lib/utils";
 
 // CardHeading was removed; headings are now rendered inline.
@@ -358,6 +360,8 @@ export default function CrossLab() {
   );
   const [tags, setTags] = useState<string[]>(["pilot"]);
   const [tagInput, setTagInput] = useState("");
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSaving, setSaveSaving] = useState(false);
 
   const timerRef = useRef<number | null>(null);
   useEffect(
@@ -474,16 +478,35 @@ export default function CrossLab() {
     setReviewStatus("draft");
     setTags(["pilot"]);
     setTagInput("");
+    setSaveError(null);
     setSaveOpen(true);
   };
 
-  const handleSaveCandidate = () => {
-    /* If the name matches the default, show the duplicate-name error;
-       otherwise just close (no real persistence yet). */
-    if (candidateName.trim() === defaultCandidateName) {
-      return; // leave dialog open — error banner will show
+  const handleSaveCandidate = async () => {
+    if (saveSaving) return;
+    setSaveSaving(true);
+    setSaveError(null);
+    try {
+      await candidateStore.create({
+        name: candidateName,
+        parentA: lineA?.id ?? parentA,
+        parentB: lineB?.id ?? parentB,
+        notes: candidateNotes,
+        source: "cross-lab",
+        reviewStatus,
+        tags,
+      });
+      setSaveOpen(false);
+    } catch (e) {
+      if (e instanceof CandidateNameConflictError) {
+        setSaveError(e.message);
+      } else {
+        setSaveError("Could not save candidate. " + (e as Error).message);
+      }
+      // Dialog stays open so the user can correct the name or retry.
+    } finally {
+      setSaveSaving(false);
     }
-    setSaveOpen(false);
   };
 
   /* ---- Research Note modal helpers (frame 1:3720) ---- */
@@ -1012,12 +1035,6 @@ export default function CrossLab() {
                   value={candidateName}
                   onChange={(e) => setCandidateName(e.target.value)}
                 />
-                {candidateName.trim() === defaultCandidateName && (
-                  <p className="text-xs text-destructive">
-                    A candidate with this name already exists in this
-                    workspace.
-                  </p>
-                )}
               </div>
 
               {/* Research notes */}
@@ -1120,6 +1137,14 @@ export default function CrossLab() {
                 </div>
               </div>
             </div>
+
+            {saveError && (
+              <div className="flex items-start gap-2 rounded-lg border border-destructive bg-destructive/5 px-3 py-2.5">
+                <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
+                <p className="text-xs leading-[18px] text-destructive">{saveError}</p>
+              </div>
+            )}
+
             <DialogFooter>
               <div className="mr-auto flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <Database className="size-3.5" />
@@ -1128,7 +1153,19 @@ export default function CrossLab() {
               <Button variant="outline" onClick={() => setSaveOpen(false)}>
                 Cancel
               </Button>
-              <Button onClick={handleSaveCandidate}>Save Candidate</Button>
+              <Button
+                onClick={handleSaveCandidate}
+                disabled={saveSaving}
+              >
+                {saveSaving ? (
+                  <>
+                    <Loader2 className="animate-spin size-4" />
+                    Saving…
+                  </>
+                ) : (
+                  "Save Candidate"
+                )}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
