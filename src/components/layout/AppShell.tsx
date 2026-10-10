@@ -37,7 +37,7 @@ const NAV: NavItem[] = [
 ];
 
 const BOTTOM_NAV: NavItem[] = [
-  { label: "Settings", to: "/settings", icon: Settings, enabled: false },
+  { label: "Settings", to: "/settings", icon: Settings, enabled: true },
   { label: "About GeneField", to: "/about", icon: Info, enabled: false },
 ];
 
@@ -74,6 +74,10 @@ const TITLES: Record<string, TitleMeta> = {
   "/model-insights": {
     title: "Model Insights",
     subtitle: "Understand model performance, validation protocols, and limitations.",
+  },
+  "/settings": {
+    title: "Settings",
+    subtitle: "Configure appearance, local storage, and the inference engine.",
   },
 };
 
