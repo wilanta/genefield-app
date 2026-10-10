@@ -32,8 +32,8 @@ const NAV: NavItem[] = [
   { label: "Pedigree Explorer", to: "/pedigree", icon: GitFork, enabled: true },
   { label: "Cross Lab", to: "/cross-lab", icon: FlaskConical, enabled: true },
   { label: "Breed Designer", to: "/breed-designer", icon: Dna, enabled: true },
-  { label: "Candidate Workspace", to: "/candidates", icon: FolderKanban, enabled: false },
-  { label: "Model Insights", to: "/model-insights", icon: BarChart3, enabled: false },
+  { label: "Candidate Workspace", to: "/candidates", icon: FolderKanban, enabled: true },
+  { label: "Model Insights", to: "/model-insights", icon: BarChart3, enabled: true },
 ];
 
 const BOTTOM_NAV: NavItem[] = [
@@ -66,6 +66,14 @@ const TITLES: Record<string, TitleMeta> = {
   "/breed-designer": {
     title: "Breed Designer",
     subtitle: "Construct and explore candidate crosses using user-defined criteria.",
+  },
+  "/candidates": {
+    title: "Candidate Workspace",
+    subtitle: "Review, organize, and manage saved cross candidates.",
+  },
+  "/model-insights": {
+    title: "Model Insights",
+    subtitle: "Understand model performance, validation protocols, and limitations.",
   },
 };
 
