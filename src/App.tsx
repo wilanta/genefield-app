@@ -8,6 +8,7 @@ import CrossLab from "@/pages/CrossLab/CrossLab";
 import BreedDesigner from "@/pages/BreedDesigner/BreedDesigner";
 import CandidateWorkspace from "@/pages/CandidateWorkspace/CandidateWorkspace";
 import ModelInsights from "@/pages/ModelInsights/ModelInsights";
+import Settings from "@/pages/Settings/Settings";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="breed-designer" element={<BreedDesigner />} />
           <Route path="candidates" element={<CandidateWorkspace />} />
           <Route path="model-insights" element={<ModelInsights />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<Overview />} />
         </Route>
       </Routes>
