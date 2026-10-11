@@ -1,37 +1,26 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  Search,
   Database,
-  Info,
-  Plus,
   Trash2,
-  FolderKanban,
   Loader2,
   Check,
   X,
-  ExternalLink,
-  Tag,
   AlertTriangle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  CandidateDetail,
+  CandidateList,
+  CandidateToolbar,
+  REVIEW_STATUSES,
+  reviewLabel,
+  type CandidateSort,
+  type CandidateView,
+} from "./CandidateWorkspacePanels";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -59,49 +48,44 @@ import {
 } from "@/components/ui/alert-dialog";
 import { candidateStore } from "@/services";
 import { demoCandidates } from "@/mocks/candidates";
-import {
-  MemoryCandidateStore,
-} from "@/services";
 import type {
   CandidateReviewStatus,
   CandidateSource,
   SavedCandidate,
 } from "@/types/research";
 import { CandidateNameConflictError } from "@/types/research";
-import { cn } from "@/lib/utils";
 
-const SOURCES: CandidateSource[] = ["cross-lab", "breed-designer", "manual"];
-const REVIEW_STATUSES: CandidateReviewStatus[] = [
-  "draft",
-  "review",
-  "archived",
-];
-
-function sourceLabel(s: CandidateSource): string {
-  switch (s) {
-    case "cross-lab":
-      return "Cross Lab";
-    case "breed-designer":
-      return "Breed Designer";
-    case "manual":
-      return "Manual";
-  }
-}
-
-function reviewLabel(s: CandidateReviewStatus): string {
-  switch (s) {
-    case "draft":
-      return "Draft";
-    case "review":
-      return "For Review";
-    case "archived":
-      return "Archived";
-  }
+function exportCandidates(candidates: SavedCandidate[]) {
+  const blob = new Blob(
+    [
+      JSON.stringify(
+        {
+          exportedAt: new Date().toISOString(),
+          researchOnly: true,
+          candidates,
+        },
+        null,
+        2,
+      ),
+    ],
+    { type: "application/json" },
+  );
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download =
+    candidates.length === 1
+      ? `candidate-${candidates[0].id.replace(/[^a-zA-Z0-9_-]/g, "")}.json`
+      : "genefield-candidates.json";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 export default function CandidateWorkspace() {
   const navigate = useNavigate();
-  const isMemory = candidateStore instanceof MemoryCandidateStore;
+  const isMemory = candidateStore.backend === "session-memory";
 
   const [items, setItems] = useState<SavedCandidate[]>([]);
   const [loading, setLoading] = useState(true);
@@ -112,6 +96,13 @@ export default function CandidateWorkspace() {
   const [statusFilter, setStatusFilter] = useState<
     "all" | CandidateReviewStatus
   >("all");
+  const [sort, setSort] = useState<CandidateSort>("created-newest");
+  const [view, setView] = useState<CandidateView>("list");
+  const [editingCandidate, setEditingCandidate] =
+    useState<SavedCandidate | null>(null);
+  const [editedNotes, setEditedNotes] = useState("");
+  const [notesError, setNotesError] = useState<string | null>(null);
+  const [savingNotes, setSavingNotes] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   // Load / delete / status-update error states
@@ -168,23 +159,78 @@ export default function CandidateWorkspace() {
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return items.filter((i) => {
-      if (sourceFilter !== "all" && i.source !== sourceFilter) return false;
-      if (statusFilter !== "all" && i.reviewStatus !== statusFilter)
-        return false;
-      if (q) {
-        const hay = `${i.name} ${i.parentA} ${i.parentB} ${i.tags.join(" ")}`.toLowerCase();
-        if (!hay.includes(q)) return false;
-      }
-      return true;
-    });
-  }, [items, search, sourceFilter, statusFilter]);
+    return items
+      .filter((i) => {
+        if (sourceFilter !== "all" && i.source !== sourceFilter) return false;
+        if (statusFilter !== "all" && i.reviewStatus !== statusFilter)
+          return false;
+        if (q) {
+          const hay =
+            `${i.name} ${i.parentA} ${i.parentB} ${i.tags.join(" ")}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      })
+      .sort((a, b) => {
+        switch (sort) {
+          case "created-newest":
+            return b.createdAt.localeCompare(a.createdAt);
+          case "created-oldest":
+            return a.createdAt.localeCompare(b.createdAt);
+          case "updated-newest":
+            return b.updatedAt.localeCompare(a.updatedAt);
+          case "name":
+            return a.name.localeCompare(b.name);
+        }
+      });
+  }, [items, search, sourceFilter, statusFilter, sort]);
+
+  useEffect(() => {
+    setSelectedId((current) =>
+      filtered.some((item) => item.id === current)
+        ? current
+        : (filtered[0]?.id ?? null),
+    );
+  }, [filtered]);
+
+  const openInCrossLab = (candidate: SavedCandidate) =>
+    navigate(
+      `/cross-lab?a=${encodeURIComponent(candidate.parentA)}&b=${encodeURIComponent(candidate.parentB)}`,
+    );
+
+  const editNotes = (candidate: SavedCandidate) => {
+    setEditingCandidate(candidate);
+    setEditedNotes(candidate.notes);
+    setNotesError(null);
+  };
+
+  const saveNotes = async () => {
+    if (!editingCandidate || savingNotes) return;
+    setSavingNotes(true);
+    setNotesError(null);
+    try {
+      const updated = await candidateStore.update(editingCandidate.id, {
+        notes: editedNotes.trim(),
+      });
+      if (!updated) throw new Error("This candidate no longer exists.");
+      setEditingCandidate(null);
+      await reload(false);
+    } catch (error) {
+      setNotesError(
+        "Could not save notes. " +
+          (error instanceof Error ? error.message : "Unknown error."),
+      );
+    } finally {
+      setSavingNotes(false);
+    }
+  };
 
   const handleCreate = async () => {
+    if (saving) return;
     setSaving(true);
     setCreateError(null);
     try {
-      await candidateStore.create({
+      const created = await candidateStore.create({
         name: newName,
         parentA: newParentA,
         parentB: newParentB,
@@ -193,9 +239,13 @@ export default function CandidateWorkspace() {
         reviewStatus: newStatus,
         tags: newTags,
       });
+      setSearch("");
+      setSourceFilter("all");
+      setStatusFilter("all");
       setCreateOpen(false);
       resetCreateForm();
       await reload(false);
+      setSelectedId(created.id);
     } catch (e) {
       if (e instanceof CandidateNameConflictError) {
         setCreateError(e.message);
@@ -266,302 +316,178 @@ export default function CandidateWorkspace() {
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col p-6">
-      <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-auto xl:grid-cols-[1fr_340px]">
-        {/* Left column */}
-        <div className="flex min-h-0 flex-col gap-3.5">
-          {/* Filter bar */}
-          <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-            <CardHeader className="px-4 pt-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
-                  Filters
-                </CardTitle>
-                <Button size="sm" onClick={() => setCreateOpen(true)}>
-                  <Plus className="size-3.5" />
-                  New Candidate
-                </Button>
+    <div className="flex min-h-full flex-col px-6 pb-5 pt-5 xl:h-full xl:min-h-[680px]">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <section
+          className="flex min-h-0 min-w-0 flex-col gap-3"
+          aria-label="Candidate workspace"
+        >
+          <CandidateToolbar
+            search={search}
+            onSearch={setSearch}
+            status={statusFilter}
+            onStatus={setStatusFilter}
+            source={sourceFilter}
+            onSource={setSourceFilter}
+            sort={sort}
+            onSort={setSort}
+            view={view}
+            onView={setView}
+            onCreate={() => setCreateOpen(true)}
+            onExport={() => exportCandidates(filtered)}
+            hasCandidates={filtered.length > 0}
+          />
+          <div
+            className="@container min-h-[360px] flex-1 overflow-auto rounded-xl border bg-card shadow-[var(--gf-card-shadow)]"
+            aria-busy={loading}
+          >
+            <CandidateList
+              items={filtered}
+              selectedId={selectedId}
+              view={view}
+              actions={{
+                onSelect: (candidate) => setSelectedId(candidate.id),
+                onOpen: openInCrossLab,
+                onEdit: editNotes,
+                onExport: (candidate) => exportCandidates([candidate]),
+                onDelete: (candidate) => setPendingDeleteId(candidate.id),
+                onStatus: (candidate, status) =>
+                  handleStatusChange(candidate.id, status),
+                updatingStatus,
+              }}
+            />
+            {loading && (
+              <div className="flex items-center gap-2 px-4 py-6 text-sm text-muted-foreground">
+                <Loader2 className="size-4 animate-spin" />
+                Loading candidates…
               </div>
-            </CardHeader>
-            <CardContent className="flex flex-wrap items-center gap-3 px-4 pb-3.5">
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search name, parent, or tag"
-                  aria-label="Search candidates"
-                  className="w-[240px] pl-9"
-                />
-              </div>
-              <Select value={sourceFilter} onValueChange={(v) => setSourceFilter(v as typeof sourceFilter)}>
-                <SelectTrigger className="w-[140px]">
-                  <SelectValue>{sourceFilter === "all" ? "All sources" : sourceLabel(sourceFilter)}</SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All sources</SelectItem>
-                  {SOURCES.map((s) => (
-                    <SelectItem key={s} value={s}>{sourceLabel(s)}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as typeof statusFilter)}>
-                <SelectTrigger className="w-[140px]">
-                  <SelectValue>{statusFilter === "all" ? "All statuses" : reviewLabel(statusFilter)}</SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All statuses</SelectItem>
-                  {REVIEW_STATUSES.map((s) => (
-                    <SelectItem key={s} value={s}>{reviewLabel(s)}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </CardContent>
-          </Card>
-
-          {/* Candidate table */}
-          <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-            <CardContent className="px-0 py-0">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-b hover:bg-transparent">
-                    <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Candidate</TableHead>
-                    <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Parents</TableHead>
-                    <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Source</TableHead>
-                    <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Status</TableHead>
-                    <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Tags</TableHead>
-                    <TableHead className="px-3 py-2 text-right text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filtered.map((c) => (
-                    <TableRow
-                      key={c.id}
-                      className={cn(
-                        "h-[46px] border-b cursor-pointer",
-                        selectedId === c.id && "bg-gf-panel-bg",
-                      )}
-                      onClick={() => setSelectedId(c.id)}
-                    >
-                      <TableCell className="px-3 text-sm font-medium text-foreground">{c.name}</TableCell>
-                      <TableCell className="px-3 font-mono text-sm">
-                        {c.parentA} <span className="text-muted-foreground">×</span> {c.parentB}
-                      </TableCell>
-                      <TableCell className="px-3 text-sm">
-                        <Badge variant="outline" className="text-[11px] font-medium">{sourceLabel(c.source)}</Badge>
-                      </TableCell>
-                      <TableCell className="px-3">
-                        <Select
-                          value={c.reviewStatus}
-                          onValueChange={(v) => handleStatusChange(c.id, v as CandidateReviewStatus)}
-                        >
-                          <SelectTrigger className="h-7 w-[110px] text-[11px]">
-                            <SelectValue>{reviewLabel(c.reviewStatus)}</SelectValue>
-                          </SelectTrigger>
-                          <SelectContent>
-                            {REVIEW_STATUSES.map((s) => (
-                              <SelectItem key={s} value={s}>{reviewLabel(s)}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
-                      <TableCell className="px-3">
-                        <div className="flex flex-wrap gap-1">
-                          {c.tags.length ? c.tags.map((t) => (
-                            <Badge key={t} variant="secondary" className="text-[11px] font-medium">
-                              <Tag className="size-3" /> {t}
-                            </Badge>
-                          )) : <span className="text-xs text-muted-foreground">—</span>}
-                        </div>
-                      </TableCell>
-                      <TableCell className="px-3">
-                        <div className="flex items-center justify-end gap-1.5">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-7 px-2 text-xs"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/cross-lab?a=${encodeURIComponent(c.parentA)}&b=${encodeURIComponent(c.parentB)}`);
-                            }}
-                          >
-                            <ExternalLink className="size-3.5" />
-                            Open
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-7 px-2 text-xs text-destructive"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setPendingDeleteId(c.id);
-                            }}
-                            aria-label={`Delete ${c.name}`}
-                          >
-                            <Trash2 className="size-3.5" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {!loading && filtered.length === 0 ? (
-                    <TableRow className="hover:bg-transparent">
-                      <TableCell colSpan={6} className="px-3 py-10 text-center text-sm text-muted-foreground">
-                        {items.length === 0
-                          ? "No candidates yet. Use “New Candidate” or save from Cross Lab / Breed Designer."
-                          : "No candidates match the current filters."}
-                      </TableCell>
-                    </TableRow>
-                  ) : null}
-                </TableBody>
-              </Table>
-              {loading ? (
-                <div className="flex items-center gap-2 px-4 py-6">
-                  <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">Loading candidates…</span>
-                </div>
-              ) : null}
-
-              {loadError && (
-                <div className="flex items-start gap-2 border-t border-destructive/20 bg-destructive/5 px-4 py-3">
-                  <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
-                  <div className="flex flex-col gap-1">
-                    <p className="text-xs text-destructive">{loadError}</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-7 w-fit text-xs"
-                      onClick={() => reload(false)}
-                    >
-                      <Loader2 className="size-3" />
-                      Retry
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {(deleteError || updateError) && (
-                <div className="flex items-start gap-2 border-t border-destructive/20 bg-destructive/5 px-4 py-3">
-                  <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
-                  <p className="text-xs text-destructive">{deleteError ?? updateError}</p>
-                </div>
-              )}
-            </CardContent>
-            <div className="border-t border-border px-4 py-2.5">
-              <p className="text-xs text-muted-foreground">
-                {isMemory
-                  ? "In-session preview only — candidates are not persisted and will be lost on reload."
-                  : "Saved to the local SQLite workspace on this device."}
+            )}
+            {!loading && !loadError && filtered.length === 0 && (
+              <p className="px-4 py-10 text-center text-sm text-muted-foreground">
+                {items.length === 0
+                  ? "No candidates yet. Create a candidate or save a pair from Cross Lab or Breed Designer."
+                  : "No candidates match the current filters."}
               </p>
-            </div>
-          </Card>
-        </div>
-
-        {/* Right sidebar */}
-        <div className="min-h-0">
-          <div className="flex flex-col gap-3.5">
-            {/* Detail card */}
-            <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-              <CardHeader className="px-4 pt-3">
-                <div className="flex items-center gap-2">
-                  <FolderKanban className="size-4 text-muted-foreground" />
-                  <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
-                    Candidate Detail
-                  </CardTitle>
+            )}
+            {loadError && (
+              <div
+                role="alert"
+                className="flex items-start gap-2 border-t bg-destructive/5 px-4 py-3 text-xs text-destructive"
+              >
+                <AlertTriangle className="size-4 shrink-0" />
+                <div>
+                  <p>{loadError}</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => reload(false)}
+                    className="mt-2"
+                  >
+                    Retry
+                  </Button>
                 </div>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-3 px-4 pb-3.5">
-                {selected ? (
-                  <>
-                    <div>
-                      <p className="text-[11px] text-muted-foreground">Name</p>
-                      <p className="text-sm font-medium text-foreground">{selected.name}</p>
-                    </div>
-                    <div>
-                      <p className="text-[11px] text-muted-foreground">Parents</p>
-                      <p className="font-mono text-sm text-foreground">
-                        {selected.parentA} × {selected.parentB}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[11px] text-muted-foreground">Source</p>
-                      <p className="text-sm text-foreground">{sourceLabel(selected.source)}</p>
-                    </div>
-                    {selected.notes ? (
-                      <div>
-                        <p className="text-[11px] text-muted-foreground">Notes</p>
-                        <p className="text-sm leading-[18px] text-foreground">{selected.notes}</p>
-                      </div>
-                    ) : null}
-                    <div>
-                      <p className="text-[11px] text-muted-foreground">Created</p>
-                      <p className="text-xs tabular-nums text-foreground">
-                        {new Date(selected.createdAt).toLocaleString()}
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <p className="text-sm text-muted-foreground">
-                    Select a candidate to view its detail.
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Backend indicator */}
-            <div
-              className={cn(
-                "rounded-xl border px-4 py-3.5 shadow-[var(--gf-card-shadow)]",
-                isMemory
-                  ? "border-amber-300 bg-amber-50/60"
-                  : "border-[#4D9E5C]/40 bg-[#4D9E5C]/5",
-              )}
-            >
-              <div className="mb-1.5 flex items-center gap-1.5">
-                {isMemory ? (
-                  <Info className="size-4 text-amber-800" />
-                ) : (
-                  <Database className="size-4 text-[#4D9E5C]" />
-                )}
-                <span
-                  className={cn(
-                    "font-semibold uppercase tracking-wider text-[11px]",
-                    isMemory ? "text-amber-900" : "text-[#4D9E5C]",
-                  )}
-                >
-                  {isMemory ? "Preview Mode" : "Local Workspace"}
-                </span>
               </div>
-              <p className={cn("text-[12.5px] leading-[19px]", isMemory ? "text-amber-950/80" : "text-foreground/80")}>
-                {isMemory
-                  ? "Running in browser preview. Candidates live in in-session memory only and are not written to disk."
-                  : "Candidates are stored in the local SQLite workspace on this device. No cloud sync."}
+            )}
+            {(deleteError || updateError) && (
+              <p
+                role="alert"
+                className="border-t bg-destructive/5 px-4 py-3 text-xs text-destructive"
+              >
+                {deleteError ?? updateError}
               </p>
-            </div>
-
-            {/* Limitations */}
-            <div className="rounded-xl border border-amber-300 bg-amber-50/60 px-4 py-3.5 shadow-[var(--gf-card-shadow)]">
-              <div className="mb-2 flex items-center gap-1.5">
-                <Info className="size-4 text-amber-800" />
-                <span className="font-semibold uppercase tracking-wider text-[11px] text-amber-900">
-                  Research Limitations
-                </span>
-              </div>
-              <ul className="list-disc space-y-1.5 pl-5 text-[12.5px] leading-[19px] text-amber-950/80">
-                <li>Candidates are illustrative for research review only.</li>
-                <li>No predictive ranking is applied to saved candidates.</li>
-                <li>Status changes are local to this device/workspace.</li>
-              </ul>
-            </div>
+            )}
           </div>
-        </div>
+        </section>
+        <aside
+          className="flex min-h-0 min-w-0 flex-col gap-3.5 xl:overflow-y-auto"
+          aria-label="Selected candidate details"
+        >
+          <CandidateDetail
+            candidate={selected}
+            onEdit={() => selected && editNotes(selected)}
+            onOpen={() => selected && openInCrossLab(selected)}
+            onPedigree={() => navigate("/pedigree")}
+            onExport={() => selected && exportCandidates([selected])}
+            onDelete={() => selected && setPendingDeleteId(selected.id)}
+            onStatus={(status) =>
+              selected && handleStatusChange(selected.id, status)
+            }
+            updatingStatus={updatingStatus}
+          />
+        </aside>
       </div>
+      <p className="mt-3.5 flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
+        <Database className="size-3" />
+        {isMemory
+          ? "Browser preview · candidates are stored in session memory and reset on reload."
+          : "Stored locally in a SQLite workspace on this device."}
+      </p>
+
+      <Dialog
+        open={editingCandidate !== null}
+        onOpenChange={(open) => {
+          if (!open && !savingNotes) setEditingCandidate(null);
+        }}
+      >
+        <DialogContent
+          className="sm:max-w-md"
+          onEscapeKeyDown={(event) => {
+            if (savingNotes) event.preventDefault();
+          }}
+          onInteractOutside={(event) => {
+            if (savingNotes) event.preventDefault();
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>Edit Notes</DialogTitle>
+            <DialogDescription>{editingCandidate?.name}</DialogDescription>
+          </DialogHeader>
+          <label
+            htmlFor="candidate-research-notes"
+            className="text-xs font-medium text-muted-foreground"
+          >
+            Research notes
+          </label>
+          <Textarea
+            id="candidate-research-notes"
+            value={editedNotes}
+            onChange={(event) => setEditedNotes(event.target.value)}
+            maxLength={2000}
+            disabled={savingNotes}
+            className="min-h-[140px]"
+          />
+          {notesError && (
+            <p role="alert" className="text-xs text-destructive">
+              {notesError}
+            </p>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              disabled={savingNotes}
+              onClick={() => setEditingCandidate(null)}
+            >
+              Cancel
+            </Button>
+            <Button onClick={saveNotes} disabled={savingNotes}>
+              {savingNotes && <Loader2 className="size-3.5 animate-spin" />}Save
+              Notes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Create dialog */}
-      <Dialog open={createOpen} onOpenChange={(o) => { setCreateOpen(o); if (!o) resetCreateForm(); }}>
+      <Dialog
+        open={createOpen}
+        onOpenChange={(o) => {
+          setCreateOpen(o);
+          if (!o) resetCreateForm();
+        }}
+      >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>New Candidate</DialogTitle>
+            <DialogTitle>Create Candidate</DialogTitle>
             <DialogDescription>
               Add a cross candidate to your workspace.
             </DialogDescription>
@@ -569,16 +495,28 @@ export default function CandidateWorkspace() {
           <div className="flex flex-col gap-3">
             <div className="grid grid-cols-2 gap-2">
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-muted-foreground">Parent A</label>
+                <label
+                  htmlFor="candidate-parent-a"
+                  className="text-xs font-medium text-muted-foreground"
+                >
+                  Parent A
+                </label>
                 <Input
+                  id="candidate-parent-a"
                   value={newParentA}
                   onChange={(e) => setNewParentA(e.target.value)}
                   placeholder="GID_1233"
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-muted-foreground">Parent B</label>
+                <label
+                  htmlFor="candidate-parent-b"
+                  className="text-xs font-medium text-muted-foreground"
+                >
+                  Parent B
+                </label>
                 <Input
+                  id="candidate-parent-b"
                   value={newParentB}
                   onChange={(e) => setNewParentB(e.target.value)}
                   placeholder="GID_3494"
@@ -586,16 +524,26 @@ export default function CandidateWorkspace() {
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-muted-foreground">Candidate name</label>
+              <label
+                htmlFor="candidate-name"
+                className="text-xs font-medium text-muted-foreground"
+              >
+                Candidate name
+              </label>
               <Input
+                id="candidate-name"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder="My cross candidate"
               />
-              {createError ? <p className="text-xs text-destructive">{createError}</p> : null}
+              {createError ? (
+                <p className="text-xs text-destructive">{createError}</p>
+              ) : null}
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-muted-foreground">Notes</label>
+              <label className="text-xs font-medium text-muted-foreground">
+                Notes
+              </label>
               <Textarea
                 value={newNotes}
                 onChange={(e) => setNewNotes(e.target.value)}
@@ -606,27 +554,40 @@ export default function CandidateWorkspace() {
             </div>
             <div className="flex items-center justify-between gap-3">
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-muted-foreground">Status</label>
-                <Select value={newStatus} onValueChange={(v) => setNewStatus(v as CandidateReviewStatus)}>
+                <label className="text-xs font-medium text-muted-foreground">
+                  Status
+                </label>
+                <Select
+                  value={newStatus}
+                  onValueChange={(v) =>
+                    setNewStatus(v as CandidateReviewStatus)
+                  }
+                >
                   <SelectTrigger className="h-8 w-[130px]">
                     <SelectValue>{reviewLabel(newStatus)}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {REVIEW_STATUSES.map((s) => (
-                      <SelectItem key={s} value={s}>{reviewLabel(s)}</SelectItem>
+                      <SelectItem key={s} value={s}>
+                        {reviewLabel(s)}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-muted-foreground">Tags</label>
+                <label className="text-xs font-medium text-muted-foreground">
+                  Tags
+                </label>
                 <div className="flex flex-wrap items-center gap-1.5">
                   {newTags.map((t) => (
                     <Badge key={t} variant="secondary" className="gap-1">
                       {t}
                       <button
                         type="button"
-                        onClick={() => setNewTags((p) => p.filter((x) => x !== t))}
+                        onClick={() =>
+                          setNewTags((p) => p.filter((x) => x !== t))
+                        }
                         className="text-muted-foreground hover:text-foreground"
                         aria-label={`Remove ${t}`}
                       >
@@ -637,7 +598,12 @@ export default function CandidateWorkspace() {
                   <Input
                     value={newTagInput}
                     onChange={(e) => setNewTagInput(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addNewTag(); } }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addNewTag();
+                      }
+                    }}
                     placeholder="tag"
                     className="h-7 w-24 px-2 text-xs"
                   />
@@ -651,9 +617,18 @@ export default function CandidateWorkspace() {
             </Button>
             <Button
               onClick={handleCreate}
-              disabled={saving || !newParentA.trim() || !newParentB.trim() || !newName.trim()}
+              disabled={
+                saving ||
+                !newParentA.trim() ||
+                !newParentB.trim() ||
+                !newName.trim()
+              }
             >
-              {saving ? <Loader2 className="size-3.5 animate-spin" /> : <Check className="size-3.5" />}
+              {saving ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : (
+                <Check className="size-3.5" />
+              )}
               Save Candidate
             </Button>
           </DialogFooter>
@@ -661,12 +636,18 @@ export default function CandidateWorkspace() {
       </Dialog>
 
       {/* Delete confirmation */}
-      <AlertDialog open={pendingDeleteId !== null} onOpenChange={(o) => { if (!o) setPendingDeleteId(null); }}>
+      <AlertDialog
+        open={pendingDeleteId !== null}
+        onOpenChange={(o) => {
+          if (!o) setPendingDeleteId(null);
+        }}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete candidate?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove this candidate from your workspace. This action cannot be undone.
+              This will permanently remove this candidate from your workspace.
+              This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -675,7 +656,11 @@ export default function CandidateWorkspace() {
               onClick={() => pendingDeleteId && handleDelete(pendingDeleteId)}
               disabled={deleting}
             >
-              {deleting ? <Loader2 className="size-3.5 animate-spin" /> : <Trash2 className="size-3.5" />}
+              {deleting ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : (
+                <Trash2 className="size-3.5" />
+              )}
               {deleting ? "Deleting…" : "Delete"}
             </AlertDialogAction>
           </AlertDialogFooter>

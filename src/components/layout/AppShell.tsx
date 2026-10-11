@@ -69,7 +69,7 @@ const TITLES: Record<string, TitleMeta> = {
   },
   "/candidates": {
     title: "Candidate Workspace",
-    subtitle: "Review, organize, and manage saved cross candidates.",
+    subtitle: "Organize candidate crosses and document research decisions.",
   },
   "/model-insights": {
     title: "Model Insights",
@@ -189,10 +189,12 @@ export default function AppShell() {
 
             <div className="flex shrink-0 items-center gap-2">
               <span className="inline-flex h-7 items-center rounded-lg border border-gf-chip-border bg-gf-chip-bg px-2.5 text-sm text-foreground shadow-[var(--gf-card-shadow)]">
+                <span className="mr-1.5 text-xs text-muted-foreground">Dataset</span>
                 INIA Uruguay
               </span>
               <span className="inline-flex h-7 items-center rounded-lg border border-gf-chip-border bg-gf-chip-bg px-2.5 text-sm text-foreground shadow-[var(--gf-card-shadow)]">
-                research-v1
+                <span className="mr-1.5 text-xs text-muted-foreground">Model</span>
+                <span className="font-mono text-xs">research-v1</span>
               </span>
             </div>
           </header>

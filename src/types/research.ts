@@ -60,7 +60,7 @@ export interface CrossAnalysis {
 export type CandidateSource = "cross-lab" | "breed-designer" | "manual";
 
 /** Review lifecycle for a saved candidate. */
-export type CandidateReviewStatus = "draft" | "review" | "archived";
+export type CandidateReviewStatus = "draft" | "review" | "reviewed" | "archived";
 
 /**
  * The shared, backend-facing shape of a saved cross candidate. This is the

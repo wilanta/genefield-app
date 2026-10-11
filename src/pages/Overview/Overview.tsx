@@ -14,14 +14,6 @@ const STATS: StatCard[] = [
   { label: "SNP markers", value: "61,260", hint: "Current project dataset" },
 ];
 
-const CATEGORIES = ["Pedigree", "SNP genotypes", "Phenotypes: GY · DTF · NO · LB"];
-
-const COVERAGE = [
-  { label: "Genotype coverage", value: "965 of 20,628 lines", note: "4.7%" },
-  { label: "Phenotype coverage", value: "Per-line coverage not computed", note: "placeholder" },
-  { label: "Pedigree availability", value: "Not computed", note: "placeholder" },
-];
-
 // Data categories
 const tags = [
   "Pedigree",
