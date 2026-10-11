@@ -40,13 +40,13 @@ export function PedigreeToolbar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search LINE_ID"
-          className="pl-9"
+          className="pl-9 bg-white"
           aria-label="Search LINE_ID"
         />
       </div>
 
       {/* Ancestor count chip */}
-      <Badge variant="secondary" className="gap-1.5">
+      <Badge variant="outline" className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-white">
         <span>
           Ancestors <span className="tabular-nums">{ancestors}</span>
         </span>
@@ -54,7 +54,7 @@ export function PedigreeToolbar({
       </Badge>
 
       {/* Descendant count chip */}
-      <Badge variant="secondary" className="gap-1.5">
+      <Badge variant="outline" className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-white">
         <span>
           Descendants <span className="tabular-nums">{descendants}</span>
         </span>

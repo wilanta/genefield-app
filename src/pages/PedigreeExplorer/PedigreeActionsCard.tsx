@@ -35,28 +35,25 @@ export function PedigreeActionsCard({
 
   return (
     <Card className="shadow-[var(--gf-card-shadow)]">
-      <CardHeader>
-        <CardTitle>Actions</CardTitle>
-      </CardHeader>
       <CardContent className="space-y-3">
         <div className="flex flex-col gap-2">
           <Button
             variant="outline"
-            className="w-full justify-start"
+            className="h-10 w-full bg-white"
             onClick={() => openLineProfile(selectedNode.id)}
           >
             Open Line Profile
           </Button>
           <Button
-            variant="outline"
-            className="w-full justify-start"
+            variant="default"
+            className="h-10 w-full bg-primary"
             onClick={() => useAsParentA(selectedNode.id)}
           >
             Use as Parent A
           </Button>
           <Button
             variant="outline"
-            className="w-full justify-start"
+            className="h-10 w-full bg-white"
             onClick={() => useAsParentB(selectedNode.id)}
           >
             Use as Parent B

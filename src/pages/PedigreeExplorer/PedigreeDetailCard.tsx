@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
 import type { PedigreeDetail, PedigreeNode } from "@/types/research";
 
 interface PedigreeDetailCardProps {
@@ -13,33 +6,23 @@ interface PedigreeDetailCardProps {
   detail: PedigreeDetail;
 }
 
-function DetailRow({
+function AvailabilityRow({
   label,
-  value,
   available,
 }: {
   label: string;
-  value?: string;
-  available?: boolean;
+  available: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-2 text-sm">
+    <div className="flex items-center justify-between text-sm">
       <span className="text-muted-foreground">{label}</span>
-      {available !== undefined ? (
+      <span className="flex items-center gap-1.5 font-medium">
         <span
-          className={
-            available
-              ? "font-medium text-primary"
-              : "font-medium text-muted-foreground"
-          }
-        >
-          {available ? "Available" : "Not available"}
-        </span>
-      ) : (
-        <span className="text-right font-medium text-foreground">
-          {value ?? "—"}
-        </span>
-      )}
+          className={`h-1.5 w-1.5 rounded-full ${available ? "bg-primary" : "bg-muted"
+            }`}
+        />
+        {available ? "Available" : "Not available"}
+      </span>
     </div>
   );
 }
@@ -48,56 +31,55 @@ export function PedigreeDetailCard({
   selectedNode,
   detail,
 }: PedigreeDetailCardProps) {
+  const parents =
+    detail.recordedParents.length > 0
+      ? detail.recordedParents.join(", ")
+      : null;
+
   return (
     <Card className="shadow-[var(--gf-card-shadow)]">
-      <CardHeader>
-        <CardDescription>Selected</CardDescription>
-        <CardTitle className="font-mono text-lg">
+      <CardContent className="space-y-0 ">
+        <h3 className="font-mono text-xl font-bold tracking-tight">
           {selectedNode.label}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-1.5">
-          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Recorded parents
-          </p>
-          {detail.recordedParents.length > 0 ? (
-            <ul className="space-y-0.5">
-              {detail.recordedParents.map((parent) => (
-                <li key={parent} className="font-mono text-sm">
-                  {parent}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">None recorded</p>
-          )}
+        </h3>
+
+        <div className="mt-4 divide-y divide-gray-200">
+          <div className="flex items-center justify-between py-2.5 text-sm">
+            <span className="text-muted-foreground">Recorded parents</span>
+            {parents ? (
+              <span className="text-right font-mono font-medium">
+                {parents}
+              </span>
+            ) : (
+              <span className="text-muted-foreground">None recorded</span>
+            )}
+          </div>
+
+          <div className="flex items-center justify-between py-2.5 text-sm">
+            <span className="text-muted-foreground">
+              Recorded descendants
+            </span>
+            <span className="font-medium">
+              {detail.recordedDescendants}
+            </span>
+          </div>
+
+          <div className="py-2.5">
+            <AvailabilityRow
+              label="Genotype availability"
+              available={selectedNode.hasGenotype}
+            />
+          </div>
+
+          <div className="py-2.5">
+            <AvailabilityRow
+              label="Phenotype availability"
+              available={selectedNode.hasPhenotype}
+            />
+          </div>
         </div>
 
-        <Separator />
-
-        <DetailRow
-          label="Recorded descendants"
-          value={String(detail.recordedDescendants)}
-        />
-
-        <Separator />
-
-        <DetailRow
-          label="Genotype availability"
-          available={selectedNode.hasGenotype}
-        />
-
-        <Separator />
-
-        <DetailRow
-          label="Phenotype availability"
-          available={selectedNode.hasPhenotype}
-        />
-
-        <Separator />
-
-        <p className="text-xs text-muted-foreground">
+        <p className="pt-3 text-xs leading-relaxed text-muted-foreground">
           Example data. Edges show recorded parent–offspring relationships only.
         </p>
       </CardContent>
