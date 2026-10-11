@@ -105,7 +105,7 @@ export default function LineExplorer({
       </div>
 
       {/* Content row: table (800) + detail panel (340) */}
-      <div className="mt-5 grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-auto lg:grid-cols-[800px_340px]">
+      <div className="mt-5 grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-auto lg:grid-cols-[minmax(0,1fr)_420px]">
         <section aria-label="Lines table" className="min-h-0">
           {filtered.length === 0 ? (
             <LineExplorerNoResults

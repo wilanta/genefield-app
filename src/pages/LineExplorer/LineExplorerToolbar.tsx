@@ -33,22 +33,20 @@ function AvailabilitySelect({
   value: AvailabilityFilter;
   onChange: (v: AvailabilityFilter) => void;
 }) {
+  const display = `${label} ${value.charAt(0).toUpperCase() + value.slice(1)}`;
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-sm text-muted-foreground">{label}</span>
-      <Select value={value} onValueChange={(v) => onChange(v as AvailabilityFilter)}>
-        <SelectTrigger className="w-[74px]">
-          <SelectValue>{value.charAt(0).toUpperCase() + value.slice(1)}</SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          {AVAILABILITY_OPTIONS.map((opt) => (
-            <SelectItem key={opt} value={opt}>
-              {opt.charAt(0).toUpperCase() + opt.slice(1)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <Select value={value} onValueChange={(v) => onChange(v as AvailabilityFilter)}>
+      <SelectTrigger className="h-9 w-36 gap-1.5 bg-white text-muted-foreground">
+        <SelectValue>{display}</SelectValue>
+      </SelectTrigger>
+      <SelectContent>
+        {AVAILABILITY_OPTIONS.map((opt) => (
+          <SelectItem key={opt} value={opt}>
+            {opt.charAt(0).toUpperCase() + opt.slice(1)}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
 
@@ -68,7 +66,7 @@ export function LineExplorerToolbar({
     onChange({ search: "", genotype: "any", phenotype: "any", pedigree: "any" });
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-2">
       {/* Search */}
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -77,7 +75,7 @@ export function LineExplorerToolbar({
           onChange={(e) => onChange({ ...filters, search: e.target.value })}
           placeholder="Search LINE_ID"
           aria-label="Search LINE_ID"
-          className="w-[197px] pl-9"
+          className="w-48 bg-white pl-9 text-foreground"
         />
       </div>
 
@@ -97,7 +95,13 @@ export function LineExplorerToolbar({
         onChange={(pedigree) => onChange({ ...filters, pedigree })}
       />
 
-      <Button variant="outline" size="sm" onClick={clear} disabled={!isClearable}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={clear}
+        disabled={!isClearable}
+        className="bg-white font-semibold text-foreground hover:bg-transparent"
+      >
         Clear
       </Button>
 

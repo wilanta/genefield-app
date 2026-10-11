@@ -95,7 +95,7 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
   return (
     <div className="flex flex-col gap-4">
       {/* Card 1 — Profile */}
-      <Card className="shadow-[var(--gf-card-shadow)]">
+      <Card className="mt-1 border border-border shadow-[var(--gf-card-shadow)]">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="font-mono text-lg">{line.id}</CardTitle>
@@ -155,7 +155,7 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
       </Card>
 
       {/* Card 2 — Actions */}
-      <Card className="shadow-[var(--gf-card-shadow)]">
+      <Card className="border border-border shadow-[var(--gf-card-shadow)]">
         <CardContent className="flex flex-col gap-2">
           <Button
             className="h-9 w-full justify-center bg-[#256B50] text-white hover:bg-[#1e5540]"
