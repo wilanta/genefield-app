@@ -1,4 +1,4 @@
-import { Dna } from "lucide-react";
+import logoUrl from "@/assets/GeneField_vector.svg";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { mockModelInsights } from "@/mocks/modelInsights";
@@ -80,7 +80,7 @@ export default function About() {
       <Card className="mb-3.5 shadow-[var(--gf-card-shadow)]">
         <CardContent className="flex items-center gap-4 px-4 py-4">
           <div className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-accent">
-            <Dna className="size-7 text-primary" aria-hidden />
+            <img src={logoUrl} alt="GeneField" className="size-8" aria-hidden />
           </div>
           <div className="min-w-0 flex-1">
             <h2 className="text-2xl font-bold leading-tight text-foreground">

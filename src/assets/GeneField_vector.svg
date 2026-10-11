@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1248 1248" role="img" aria-label="GeneField green G leaf logo">
+<defs>
+ <linearGradient id="g" x1="0" y1="0.9" x2="1" y2="0.1" gradientUnits="objectBoundingBox"><stop stop-color="#00412f"/><stop offset="0.58" stop-color="#006746"/><stop offset="1" stop-color="#099969"/></linearGradient>
+ <linearGradient id="leaf" x1="0" y1="1" x2="1" y2="0" gradientUnits="objectBoundingBox"><stop stop-color="#006b48"/><stop offset="1" stop-color="#39b76d"/></linearGradient>
+ <linearGradient id="bottom" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#006644"/><stop offset="0.55" stop-color="#15965d"/><stop offset="1" stop-color="#3aba70"/></linearGradient>
+ <linearGradient id="fold" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox"><stop stop-color="#00734e"/><stop offset="1" stop-color="#22a66b"/></linearGradient>
+</defs>
+<!-- Outer upper G arc -->
+<path fill="url(#g)" d="M 269,1084 C 119,963 48,804 48,632 C 48,309 310,46 649,45 C 806,43 929,87 1039,169 L 885,316 C 819,270 741,247 657,248 C 439,249 267,418 267,632 C 267,748 314,848 409,914 Z"/>
+<!-- Leaf blade -->
+<path fill="url(#leaf)" d="M 483,936 C 507,775 544,662 646,573 C 759,476 876,481 1194,482 C 1111,498 1053,611 957,676 C 826,816 666,913 483,936 Z"/>
+<!-- Bottom sweep with natural negative-space vein -->
+<path fill="url(#bottom)" d="M 269,1084 C 560,1052 811,922 956,670 C 1008,577 1097,482 1194,482 C 1207,729 1094,956 899,1100 C 700,1246 449,1235 269,1084 Z"/>
+<!-- Leaf's folded darker upper-right section -->
+<path fill="url(#fold)" opacity="0.56" d="M 957,670 C 1031,559 1107,482 1194,482 C 1195,589 1175,684 1137,765 C 1121,673 1070,648 957,670 Z"/>
+</svg>

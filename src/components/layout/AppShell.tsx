@@ -10,6 +10,7 @@ import {
   Settings,
   Info,
 } from "lucide-react";
+import logoUrl from "@/assets/GeneField_vector.svg";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
@@ -149,10 +150,7 @@ export default function AppShell() {
         <aside className="flex h-full w-[232px] shrink-0 flex-col bg-gf-sidebar-bg p-3 pt-4">
           {/* Brand */}
           <div className="mb-5 flex items-center gap-2.5 px-2">
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-card shadow-[var(--gf-card-shadow)]">
-              {/* logo placeholder */}
-              <Dna className="size-5 text-primary" aria-hidden />
-            </div>
+            <img src={logoUrl} alt="GeneField" className="size-10 shrink-0" aria-hidden />
             <span className="text-lg font-semibold tracking-tight text-gf-wordmark">
               GeneField
             </span>
