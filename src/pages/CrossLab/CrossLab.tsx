@@ -121,7 +121,7 @@ function ParentCard({
 
   return (
     <Card className="flex-1 rounded-xl shadow-[var(--gf-card-shadow)]">
-      <CardHeader className="px-4 pt-3.5">
+      <CardHeader className="px-4 ">
         <div className="flex items-center justify-between">
           <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
             Parent {slot}
@@ -132,14 +132,14 @@ function ParentCard({
               className={cn(
                 "size-[7px] rounded-full",
                 available
-                  ? "border-[1.5px] border-[#4D9E5C] bg-transparent"
+                  ? "border-[1.5px] border-primary bg-primary"
                   : "border border-foreground/30 bg-transparent",
               )}
             />
             <span
               className={cn(
                 "text-xs",
-                available ? "text-[#4D9E5C]" : "text-muted-foreground",
+                available ? "text-primary" : "text-muted-foreground",
               )}
             >
               {available ? "Genotype available" : "No genotype"}
@@ -147,7 +147,7 @@ function ParentCard({
           </span>
         </div>
       </CardHeader>
-      <CardContent className="flex flex-col gap-1.5 px-4 pb-3.5">
+      <CardContent className="flex flex-col gap-1.5 px-4">
         <div ref={containerRef} className="relative">
           <div
             className={cn(
@@ -539,7 +539,7 @@ export default function CrossLab() {
 
   return (
     <div className="p-6">
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_340px]">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_380px]">
         {/* Left column */}
         <div className="flex flex-col gap-3.5">
           {/* Parent inputs + swap */}
@@ -636,6 +636,9 @@ export default function CrossLab() {
             >
               Reset
             </Button>
+            <span className="text-xs text-muted-foreground">
+              Two distinct genotyped parent lines are required.
+            </span>
             {idsMatch && (
               <span className="text-xs text-destructive">
                 Choose two distinct lines to continue.
@@ -645,11 +648,11 @@ export default function CrossLab() {
 
           {/* Historical evidence */}
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-            <CardHeader className="px-4 pt-3">
+            <CardHeader className="px-4 border-b border-border pb-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <Info className="size-3.5 text-[#4D9E5C]" />
-                  <CardTitle className="text-[11px] font-semibold uppercase tracking-wider text-[#4D9E5C]">
+                  <Info className="size-3.5 text-primary" />
+                  <CardTitle className="text-[11px] font-semibold uppercase tracking-wider text-primary">
                     Historical Evidence
                   </CardTitle>
                 </div>
@@ -660,7 +663,7 @@ export default function CrossLab() {
                 </span>
               </div>
             </CardHeader>
-            <CardContent className="px-4 pb-3">
+            <CardContent className="px-4">
               <div className="grid grid-cols-2 gap-x-8 gap-y-2">
                 {lineA && lineB && phase === "done" ? (
                   <>
@@ -682,11 +685,11 @@ export default function CrossLab() {
                       </span>
                       <span className="flex items-center gap-2 text-[13px] text-foreground">
                         <span className="inline-flex items-center gap-1">
-                          <span className="size-[7px] rounded-full bg-[#4D9E5C]" />
+                          <span className="size-[7px] rounded-full bg-primary" />
                           A · Yes
                         </span>
                         <span className="inline-flex items-center gap-1">
-                          <span className="size-[7px] rounded-full bg-[#4D9E5C]" />
+                          <span className="size-[7px] rounded-full bg-primary" />
                           B · Yes
                         </span>
                       </span>
@@ -715,7 +718,7 @@ export default function CrossLab() {
 
           {/* Experimental trait estimates */}
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-            <CardHeader className="flex flex-row items-center justify-between px-4 pt-3">
+            <CardHeader className="flex flex-row items-center justify-between border-b border-border px-5">
               <CardTitle className="text-[15px] font-semibold tracking-tight">
                 Experimental Trait Estimates
               </CardTitle>
@@ -724,7 +727,7 @@ export default function CrossLab() {
                 {phase === "done" && (
                   <Badge
                     variant="outline"
-                    className="flex items-center gap-1.5 rounded-lg border-[#4D9E5C] bg-[#4D9E5C]/10 px-2 py-0.5 text-[11px] font-medium text-[#4D9E5C]"
+                    className="flex items-center gap-1.5 rounded-lg border-primary bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary"
                   >
                     <Check className="size-3.5" />
                     Analysis complete
@@ -739,10 +742,10 @@ export default function CrossLab() {
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent className="px-4 pb-3">
+            <CardContent className="px-5">
               <Table>
                 <TableHeader>
-                  <TableRow className="hover:bg-transparent">
+                  <TableRow className="bg-(--spring-wood)">
                     <TableHead className="px-3 py-2 text-[11px] uppercase tracking-wider text-muted-foreground">
                       Trait
                     </TableHead>
@@ -815,31 +818,20 @@ export default function CrossLab() {
                           Technical details
                         </p>
                         <pre className="overflow-x-auto rounded bg-muted/50 p-2 font-mono text-[11px] leading-[16px] text-foreground/80">
-{JSON.stringify(
-  {
-    stage: "inference",
-    bundle: "research-v1",
-    parents: [lineA?.id ?? "—", lineB?.id ?? "—"],
-    message: "Model bundle did not return a result for this parent pair.",
-  },
-  null,
-  2,
-)}
-</pre>
+                          {JSON.stringify(
+                            {
+                              stage: "inference",
+                              bundle: "research-v1",
+                              parents: [lineA?.id ?? "—", lineB?.id ?? "—"],
+                              message: "Model bundle did not return a result for this parent pair.",
+                            },
+                            null,
+                            2,
+                          )}
+                        </pre>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-
-              {/* Bordered footnote (results state, frame 1:410) */}
-              {phase === "done" && (
-                <div className="mt-3 rounded-lg border border-border px-3 py-2.5">
-                  <p className="text-xs leading-[18px] text-muted-foreground">
-                    Estimates describe modeled historical descendant phenotype
-                    summaries, not F1 performance or guaranteed cross
-                    outcomes.
-                  </p>
                 </div>
               )}
 
@@ -855,6 +847,13 @@ export default function CrossLab() {
                 </p>
               ) : null}
             </CardContent>
+            <div className="border-t border-border px-5 pt-3">
+              <p className="text-xs leading-[18px] text-muted-foreground">
+                Estimates describe modeled historical descendant phenotype
+                summaries, not F1 performance or guaranteed cross
+                outcomes.
+              </p>
+            </div>
           </Card>
 
           {/* Footer actions */}
@@ -890,12 +889,12 @@ export default function CrossLab() {
         <div className="flex flex-col gap-3.5">
           {/* Parent comparison */}
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-            <CardHeader className="px-4 pt-3">
+            <CardHeader className="px-5">
               <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
                 Parent Comparison
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-2 gap-2.5 px-4 pb-3">
+            <CardContent className="grid grid-cols-2 gap-4 px-5">
               <ComparisonPane
                 label="Parent A"
                 id={lineA?.id ?? parentA}
@@ -912,12 +911,12 @@ export default function CrossLab() {
 
           {/* Model information */}
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-            <CardHeader className="px-4 pt-3">
+            <CardHeader className="px-4">
               <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
                 Model Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-4 pb-3">
+            <CardContent className="px-4">
               <div className="divide-y divide-border">
                 <ModelRow label="Bundle" value="research-v1" mono />
                 <ModelRow label="Scientific review" value="Unreviewed" />
@@ -969,7 +968,7 @@ export default function CrossLab() {
                   id="research-note-textarea"
                   value={noteText}
                   onChange={(e) => setNoteText(e.target.value)}
-                  className="border-l-[3px] border-l-[#4D9E5C] min-h-[80px]"
+                  className="border-l-[3px] border-l-primary min-h-[80px]"
                   maxLength={2000}
                 />
                 <span className="text-right text-[11px] text-muted-foreground">
@@ -1012,13 +1011,13 @@ export default function CrossLab() {
                   <label className="text-xs font-medium text-muted-foreground">
                     Parent A
                   </label>
-                  <Input value={lineA?.id ?? "—"} readOnly className="bg-[#4D9E5C]/5" />
+                  <Input value={lineA?.id ?? "—"} readOnly className="bg-primary/5" />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-medium text-muted-foreground">
                     Parent B
                   </label>
-                  <Input value={lineB?.id ?? "—"} readOnly className="bg-[#4D9E5C]/5" />
+                  <Input value={lineB?.id ?? "—"} readOnly className="bg-primary/5" />
                 </div>
               </div>
 
@@ -1070,7 +1069,7 @@ export default function CrossLab() {
                     className={cn(
                       "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                       reviewStatus === "draft"
-                        ? "border-[#4D9E5C] bg-[#4D9E5C]/10 text-[#4D9E5C]"
+                        ? "border-primary bg-primary/10 text-primary"
                         : "border-border bg-transparent text-muted-foreground hover:bg-muted",
                     )}
                   >
@@ -1082,7 +1081,7 @@ export default function CrossLab() {
                     className={cn(
                       "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                       reviewStatus === "review"
-                        ? "border-[#4D9E5C] bg-[#4D9E5C]/10 text-[#4D9E5C]"
+                        ? "border-primary bg-primary/10 text-primary"
                         : "border-border bg-transparent text-muted-foreground hover:bg-muted",
                     )}
                   >
