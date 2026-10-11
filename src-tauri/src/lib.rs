@@ -24,7 +24,11 @@
 //   src/services/adapters/tauri-sqlite-candidate-store.ts
 // ─────────────────────────────────────────────────────────────────────────────
 
+use tauri::Manager;
 use tauri_plugin_sql::{Builder, Migration, MigrationKind};
+
+/// Apply the same compact scale to text, fixed-pixel layouts, and overlays.
+const DESKTOP_UI_ZOOM: f64 = 0.85;
 
 /// Connection string for the candidate-store database. The `sqlite:` prefix is
 /// mandatory; the path after it is resolved relative to the app data dir.
@@ -84,6 +88,12 @@ fn greet(name: &str) -> String {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .setup(|app| {
+            if let Some(window) = app.get_webview_window("main") {
+                window.set_zoom(DESKTOP_UI_ZOOM)?;
+            }
+            Ok(())
+        })
         .plugin(tauri_plugin_sql::Builder::new().build())
         .plugin(tauri_plugin_opener::init())
         .plugin(
