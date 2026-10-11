@@ -1,4 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowUpRight } from "lucide-react";
 
 interface StatCard {
   label: string;
@@ -8,9 +9,9 @@ interface StatCard {
 
 const STATS: StatCard[] = [
   { label: "Recorded lines", value: "20,628", hint: "Current project dataset" },
-  { label: "Phenotype observations", value: "91,636" },
-  { label: "Genotyped lines", value: "965" },
-  { label: "SNP markers", value: "61,260" },
+  { label: "Phenotype observations", value: "91,636", hint: "Current project dataset" },
+  { label: "Genotyped lines", value: "965", hint: "Current project dataset" },
+  { label: "SNP markers", value: "61,260", hint: "Current project dataset" },
 ];
 
 const CATEGORIES = ["Pedigree", "SNP genotypes", "Phenotypes: GY · DTF · NO · LB"];
@@ -19,6 +20,58 @@ const COVERAGE = [
   { label: "Genotype coverage", value: "965 of 20,628 lines", note: "4.7%" },
   { label: "Phenotype coverage", value: "Per-line coverage not computed", note: "placeholder" },
   { label: "Pedigree availability", value: "Not computed", note: "placeholder" },
+];
+
+// Data categories
+const tags = [
+  "Pedigree",
+  "SNP genotypes",
+  "Phenotypes: GY · DTF · NO · LB",
+];
+
+// Genotype coverage
+const formatNumber = (n: number) => n.toLocaleString("en-US");
+const getCoverage = (covered: number, total: number) => {
+  const pct = (covered / total) * 100;
+
+  return {
+    pct,
+    label: `${formatNumber(covered)} of ${formatNumber(total)} lines · ${pct.toFixed(1)}%`,
+  };
+};
+
+const covered = 965;
+const total = 20628;
+const { pct, label } = getCoverage(covered, total);
+
+// Quick actions
+const actions = [
+  { label: "Explore Lines", href: "/lines", primary: false },
+  { label: "Open Pedigree Explorer", href: "/pedigree", primary: false },
+  { label: "Analyze Cross", href: "/cross-lab", primary: true },
+  { label: "Open Breed Designer", href: "/breed-designer", primary: false },
+];
+
+// Research workspace
+const stats = [
+  { value: 12, label: "Saved candidates" },
+  { value: 7, label: "Draft candidates" },
+  { value: 3, label: "Awaiting review" },
+];
+
+const activities = [
+  { text: "Saved candidate · GID_1233 × GID_3494", time: "Today" },
+  { text: "Opened Pedigree Explorer · GID_1233", time: "Today" },
+  { text: "Exported candidates (CSV)", time: "Yesterday" },
+  { text: "Edited notes · illustrative candidate", time: "2 days ago" },
+];
+
+// System Status
+const systemStatus = [
+  { label: "Offline", value: "Active", dot: true },
+  { label: "Model bundle", value: "research-v1", mono: true },
+  { label: "Scientific review", value: "Unreviewed" },
+  { label: "Predictive ranking", value: "Disabled" },
 ];
 
 function StatTile({ stat }: { stat: StatCard }) {
@@ -42,11 +95,8 @@ function StatTile({ stat }: { stat: StatCard }) {
 export default function Overview() {
   return (
     <div className="mx-auto max-w-[1208px] space-y-6 p-6">
-      {/* Stat cards */}
+      {/* Section 1 - Stat cards */}
       <section aria-labelledby="overview-stats">
-        <h2 id="overview-stats" className="mb-3 text-sm font-medium text-muted-foreground">
-          Dataset Overview
-        </h2>
         <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
           {STATS.map((stat) => (
             <StatTile key={stat.label} stat={stat} />
@@ -54,24 +104,137 @@ export default function Overview() {
         </div>
       </section>
 
-      {/* Current project dataset */}
-      <section aria-labelledby="overview-dataset" className="grid gap-4 lg:grid-cols-2">
-        <Card className="bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
-          <CardHeader>
-            <CardTitle className="text-base">Current project dataset</CardTitle>
-            <CardDescription>Dataset source</CardDescription>
+      {/* Section 2 */}
+      <section aria-labelledby="overview-dataset" className="grid gap-4 lg:grid-cols-3">
+        {/* Dataset Overview */}
+        <Card className="col-span-2 bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
+          <CardHeader className="flex flex-row items-start justify-between">
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              DATASET OVERVIEW
+            </CardTitle>
           </CardHeader>
+          <div className="mx-3 h-px bg-gray-200"></div>
           <CardContent className="space-y-3">
-            <div>
+            {/* Dataset Source */}
+            <div className="flex w-full justify-between">
               <p className="text-sm text-muted-foreground">Dataset source</p>
-              <p className="text-sm font-medium text-foreground">INIA Uruguay</p>
+              <p className="text-sm text-foreground font-normal">INIA Uruguay</p>
             </div>
+
+            <div className=" h-px bg-gray-200"></div>
+
+            {/* Data Categories */}
+            <div className="flex w-full items-center justify-between gap-4">
+              <p className="shrink-0 text-sm text-muted-foreground">Data categories</p>
+              <div className="flex flex-wrap justify-end gap-2">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="whitespace-nowrap rounded-full bg-muted px-4 py-1.5 text-xs text-muted-foreground font-medium dark:bg-stone-800 dark:text-stone-200"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Genotype Coverage */}
+            <div className="w-full">
+              <div className="mb-2 flex items-baseline justify-between">
+                <p className="text-sm text-foreground">Genotype coverage</p>
+                <p className="text-sm text-muted-foreground">{label}</p>
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted dark:bg-stone-800">
+                <div
+                  className="h-full rounded-full bg-primary"
+                  style={{ width: `${pct}%`, minWidth: "6px" }}
+                />
+              </div>
+            </div>
+
+            {/* Phenotype coverage */}
+            <div className="w-full">
+              <div className="mb-2 flex items-baseline justify-between">
+                <p className="text-sm text-foreground">Phenotype coverage</p>
+                <p className="text-sm text-muted-foreground">Per-line coverage not computed · placeholder</p>
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted dark:bg-stone-800"></div>
+            </div>
+
+            {/* Pedigree availability */}
+            <div className="w-full">
+              <div className="mb-2 flex items-baseline justify-between">
+                <p className="text-sm text-foreground">Pedigree availability</p>
+                <p className="text-sm text-muted-foreground">Not computed · placeholder</p>
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted dark:bg-stone-800"></div>
+            </div>
+
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions */}
+        <Card className="bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
+          <CardHeader className="flex flex-row items-start justify-between">
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              QUICK ACTIONS
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2.5">
+            {actions.map((action) => (
+              <a
+                key={action.label}
+                href={action.href}
+                className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${action.primary
+                  ? "border-[#256B4E] bg-[#256B4E] text-white hover:bg-[#1f5a41]"
+                  : "border-stone-300 bg-white text-stone-900 hover:bg-stone-50"
+                  }`}
+              >
+                {action.label}
+                <ArrowUpRight className="size-3.5" />
+              </a>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Section 3 */}
+      <section aria-labelledby="overview-dataset" className="grid gap-4 lg:grid-cols-3">
+        {/* Research Workspace */}
+        <Card className="col-span-2 bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
+          <CardHeader className="flex flex-row items-start justify-between">
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              Research Workspace
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="space-y-6">
+            {/* Stat boxes */}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-xl border bg-muted/40 px-4 py-4"
+                >
+                  <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Recent local activity */}
             <div>
-              <p className="mb-1.5 text-sm text-muted-foreground">Data categories</p>
-              <ul className="space-y-1">
-                {CATEGORIES.map((cat) => (
-                  <li key={cat} className="text-sm text-foreground">
-                    {cat}
+              <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Recent local activity
+              </p>
+              <ul className="divide-y border-y">
+                {activities.map((item) => (
+                  <li
+                    key={item.text}
+                    className="flex items-center justify-between py-3 text-sm"
+                  >
+                    <span className="text-muted-foreground">{item.text}</span>
+                    <span className="font-medium text-foreground">{item.time}</span>
                   </li>
                 ))}
               </ul>
@@ -79,47 +242,40 @@ export default function Overview() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
+        {/* System Status */}
+        <Card className="self-start bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
           <CardHeader>
-            <CardTitle className="text-base">Coverage &amp; availability</CardTitle>
-            <CardDescription>
-              Placeholder values — not yet computed
-            </CardDescription>
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              System Status
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            {COVERAGE.map((row) => (
-              <div key={row.label}>
-                <p className="text-sm font-medium text-foreground">{row.label}</p>
-                <p className="text-sm text-muted-foreground">
-                  {row.value}
-                  {row.note ? (
-                    <span className="ml-2 inline-block rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                      {row.note}
-                    </span>
-                  ) : null}
-                </p>
-              </div>
-            ))}
+
+          <CardContent>
+            <ul className="divide-y border-y">
+              {systemStatus.map((item) => (
+                <li
+                  key={item.label}
+                  className="flex items-center justify-between py-3 text-sm"
+                >
+                  <span className="text-muted-foreground">{item.label}</span>
+                  <span
+                    className={`flex items-center gap-2 font-medium text-foreground ${item.mono ? "font-mono" : ""
+                      }`}
+                  >
+                    {item.dot && (
+                      <span className="size-2 rounded-full bg-[#256B4E]" />
+                    )}
+                    {item.value}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </CardContent>
         </Card>
       </section>
 
-      {/* Research workspace note */}
-      <Card className="shadow-[var(--gf-card-shadow)]">
-        <CardHeader>
-          <CardTitle className="text-base">Research Workspace</CardTitle>
-          <CardDescription>
-            12 placeholder values · 0 saved candidates
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
-            Analyze a cross in Cross Lab or generate pairs in Breed Designer,
-            then choose Save Candidate. Everything is saved locally on this
-            device.
-          </p>
-        </CardContent>
-      </Card>
+
+
     </div>
   );
 }
