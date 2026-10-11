@@ -2,7 +2,7 @@
  * Settings page data model.
  *
  * This describes the local, per-device configuration surface shown on the
- * Settings page. Theme is persisted locally by the theme provider. Other
+ * Settings page. Theme and interface density are persisted locally by their providers. Other
  * values are display-only in the current UI preview and are not yet wired
  * to a persistent store or the inference engine. Placeholder strings (e.g. `[user]`, `…`,
  * `[placeholder]`) are retained verbatim from the design.

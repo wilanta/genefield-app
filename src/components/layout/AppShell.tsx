@@ -95,7 +95,7 @@ function NavButton({ item }: { item: NavItem }) {
         end={item.to === "/"}
         className={({ isActive }) =>
           cn(
-            "group relative flex h-[34px] items-center gap-2.5 rounded-lg px-3 text-sm transition-colors outline-none",
+            "group relative flex h-(--gf-nav-height) items-center gap-2.5 rounded-lg px-3 text-sm transition-colors outline-none",
             "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40",
             isActive
               ? "bg-gf-nav-active text-gf-nav-label-active"
@@ -127,7 +127,7 @@ function NavButton({ item }: { item: NavItem }) {
         <button
           type="button"
           aria-disabled
-          className="group relative flex h-[34px] items-center gap-2.5 rounded-lg px-3 text-sm text-gf-nav-label opacity-50 transition-opacity cursor-not-allowed"
+          className="group relative flex h-(--gf-nav-height) items-center gap-2.5 rounded-lg px-3 text-sm text-gf-nav-label opacity-50 transition-opacity cursor-not-allowed"
         >
           <Icon className="size-4 shrink-0" />
           <span className="truncate">{item.label}</span>

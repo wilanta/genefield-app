@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTheme } from "next-themes";
+import { useInterfaceDensity } from "@/components/interface-density-provider";
 import {
   Lock,
   FolderOpen,
@@ -83,21 +84,28 @@ function SegmentedControl<T extends string>({
 
 function SettingRow({
   label,
+  description,
   children,
   first = false,
 }: {
   label: string;
+  description?: string;
   children: React.ReactNode;
   first?: boolean;
 }) {
   return (
     <div
       className={cn(
-        "flex min-h-[53px] flex-col justify-between gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between",
+        "flex min-h-(--gf-setting-row-height) flex-col justify-between gap-2 px-4 py-(--gf-setting-row-padding) sm:flex-row sm:items-center sm:justify-between",
         !first && "border-t border-border",
       )}
     >
-      <span className="text-[13px] text-foreground">{label}</span>
+      <div>
+        <span className="text-[13px] text-foreground">{label}</span>
+        {description && (
+          <p className="mt-1 max-w-[260px] text-xs text-muted-foreground">{description}</p>
+        )}
+      </div>
       <div className="sm:pl-3">{children}</div>
     </div>
   );
@@ -134,7 +142,7 @@ export default function Settings() {
   const data = mockSettings;
 
   const { theme = "light", setTheme } = useTheme();
-  const [density, setDensity] = useState<InterfaceDensity>(data.interfaceDensity);
+  const { density, setDensity } = useInterfaceDensity();
   const [language, setLanguage] = useState<LanguagePreference>(data.language);
 
   // Track which action (if any) was attempted, so only the relevant card
@@ -183,7 +191,10 @@ export default function Settings() {
                   onChange={setTheme}
                 />
               </SettingRow>
-              <SettingRow label="Interface density">
+              <SettingRow
+                label="Interface density"
+                description="Compact fits more content; Comfortable adds space to menus, cards, and table rows."
+              >
                 <SegmentedControl
                   ariaLabel="Interface density"
                   options={densityOptions}

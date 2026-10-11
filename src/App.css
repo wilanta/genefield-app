@@ -86,6 +86,35 @@
   --gf-graph-border: #c9c5bb;
   --gf-graph-missing-bg: #f3f1ec;
   --gf-graph-missing-border: #b9b5ab;
+
+  /* Compact preserves the original layout. */
+  --gf-nav-height: 34px;
+  --gf-setting-row-height: 53px;
+  --gf-setting-row-padding: 12px;
+}
+
+:root[data-interface-density="comfortable"] {
+  --gf-nav-height: 42px;
+  --gf-setting-row-height: 65px;
+  --gf-setting-row-padding: 16px;
+}
+
+:root[data-interface-density="comfortable"] [data-slot="card"] {
+  --card-spacing: 20px;
+}
+
+:root[data-interface-density="comfortable"] [data-slot="card"][data-size="sm"] {
+  --card-spacing: 16px;
+}
+
+:root[data-interface-density="comfortable"] [data-slot="table-head"] {
+  height: 48px;
+  padding-block: 12px;
+}
+
+/* Preserve the larger padding used by empty-state cells. */
+:root[data-interface-density="comfortable"] [data-slot="table-cell"]:not([colspan]) {
+  padding-block: 12px;
 }
 
 @theme inline {

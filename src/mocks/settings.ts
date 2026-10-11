@@ -8,7 +8,7 @@ import type { SettingsData } from "@/types/settings";
  */
 export const mockSettings: SettingsData = {
   theme: "light",
-  interfaceDensity: "compact",
+  interfaceDensity: "comfortable",
   language: "english",
 
   databaseEngine: "SQLite · local",
