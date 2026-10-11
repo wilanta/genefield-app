@@ -99,7 +99,7 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="font-mono text-lg">{line.id}</CardTitle>
-            <Badge className="border-amber-200 bg-amber-50 text-amber-800">
+            <Badge className="border-amber-200 dark:border-amber-700/50 bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-200">
               Illustrative
             </Badge>
           </div>
@@ -158,7 +158,7 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
       <Card className="border border-border shadow-[var(--gf-card-shadow)]">
         <CardContent className="flex flex-col gap-2">
           <Button
-            className="h-9 w-full justify-center bg-[#256B50] text-white hover:bg-[#1e5540]"
+            className="h-9 w-full justify-center bg-primary text-primary-foreground hover:bg-primary/90"
             onClick={() => onUseAsParent(line.id, "A")}
           >
             Use as Parent A

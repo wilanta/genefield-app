@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import {
   Lock,
   FolderOpen,
@@ -132,7 +133,7 @@ function NotConnectedNotice() {
 export default function Settings() {
   const data = mockSettings;
 
-  const [theme, setTheme] = useState<ThemePreference>(data.theme);
+  const { theme = "light", setTheme } = useTheme();
   const [density, setDensity] = useState<InterfaceDensity>(data.interfaceDensity);
   const [language, setLanguage] = useState<LanguagePreference>(data.language);
 
@@ -178,7 +179,7 @@ export default function Settings() {
                 <SegmentedControl
                   ariaLabel="Theme"
                   options={themeOptions}
-                  value={theme}
+                  value={theme as ThemePreference}
                   onChange={setTheme}
                 />
               </SettingRow>

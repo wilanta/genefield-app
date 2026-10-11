@@ -36,7 +36,7 @@ function AvailabilitySelect({
   const display = `${label} ${value.charAt(0).toUpperCase() + value.slice(1)}`;
   return (
     <Select value={value} onValueChange={(v) => onChange(v as AvailabilityFilter)}>
-      <SelectTrigger className="h-9 w-36 gap-1.5 bg-white text-muted-foreground">
+      <SelectTrigger className="h-9 w-36 gap-1.5 bg-card text-muted-foreground">
         <SelectValue>{display}</SelectValue>
       </SelectTrigger>
       <SelectContent>
@@ -75,7 +75,7 @@ export function LineExplorerToolbar({
           onChange={(e) => onChange({ ...filters, search: e.target.value })}
           placeholder="Search LINE_ID"
           aria-label="Search LINE_ID"
-          className="w-48 bg-white pl-9 text-foreground"
+          className="w-48 bg-card pl-9 text-foreground"
         />
       </div>
 
@@ -100,7 +100,7 @@ export function LineExplorerToolbar({
         size="sm"
         onClick={clear}
         disabled={!isClearable}
-        className="bg-white font-semibold text-foreground hover:bg-transparent"
+        className="bg-card font-semibold text-foreground hover:bg-transparent"
       >
         Clear
       </Button>

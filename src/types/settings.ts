@@ -2,9 +2,9 @@
  * Settings page data model.
  *
  * This describes the local, per-device configuration surface shown on the
- * Settings page. Values are display-only in the current UI preview: they
- * reflect the inspected design and are not yet wired to a persistent store
- * or the inference engine. Placeholder strings (e.g. `[user]`, `…`,
+ * Settings page. Theme is persisted locally by the theme provider. Other
+ * values are display-only in the current UI preview and are not yet wired
+ * to a persistent store or the inference engine. Placeholder strings (e.g. `[user]`, `…`,
  * `[placeholder]`) are retained verbatim from the design.
  */
 

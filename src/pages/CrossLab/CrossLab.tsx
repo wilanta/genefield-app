@@ -582,9 +582,9 @@ export default function CrossLab() {
 
           {/* Missing genotype warning banner (frame 1:3387) */}
           {genotypeWarning !== null && (
-            <div className="flex items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2.5">
-              <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700" />
-              <p className="text-xs leading-[18px] text-amber-900">
+            <div className="flex items-start gap-2 rounded-lg border border-amber-300 dark:border-amber-700/50 bg-amber-50 dark:bg-amber-950/30 px-3 py-2.5">
+              <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-200" />
+              <p className="text-xs leading-[18px] text-amber-900 dark:text-amber-200">
                 {genotypeWarning === "A" &&
                   "No genotype data available for Parent A. Trait estimation is unavailable until genotypes are recorded."}
                 {genotypeWarning === "B" &&
@@ -735,7 +735,7 @@ export default function CrossLab() {
                 )}
                 <Badge
                   variant="outline"
-                  className="flex items-center gap-1.5 rounded-lg border-amber-300 bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-800"
+                  className="flex items-center gap-1.5 rounded-lg border-amber-300 dark:border-amber-700/50 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 text-[11px] font-medium text-amber-800 dark:text-amber-200"
                 >
                   <AlertTriangle className="size-3.5" />
                   Research-only · Not validated for breeding decisions
@@ -928,14 +928,14 @@ export default function CrossLab() {
           </Card>
 
           {/* Scientific limitations */}
-          <div className="rounded-xl border border-amber-300 bg-amber-50/60 px-4 py-3.5 shadow-[var(--gf-card-shadow)]">
+          <div className="rounded-xl border border-amber-300 dark:border-amber-700/50 bg-amber-50/60 dark:bg-amber-950/30 px-4 py-3.5 shadow-[var(--gf-card-shadow)]">
             <div className="mb-2 flex items-center gap-1.5">
-              <Info className="size-4 text-amber-800" />
-              <span className="font-semibold uppercase tracking-wider text-[11px] text-amber-900">
+              <Info className="size-4 text-amber-800 dark:text-amber-200" />
+              <span className="font-semibold uppercase tracking-wider text-[11px] text-amber-900 dark:text-amber-200">
                 Scientific Limitations
               </span>
             </div>
-            <ul className="list-disc space-y-1.5 pl-5 text-[12.5px] leading-[19px] text-amber-950/80">
+            <ul className="list-disc space-y-1.5 pl-5 text-[12.5px] leading-[19px] text-amber-950/80 dark:text-amber-200">
               <li>Predictions are experimental.</li>
               <li>Generalization to unseen parents is not established.</li>
               <li>No calibrated uncertainty intervals are available.</li>

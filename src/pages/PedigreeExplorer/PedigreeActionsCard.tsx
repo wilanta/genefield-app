@@ -37,7 +37,7 @@ export function PedigreeActionsCard({
         <div className="flex flex-col gap-2">
           <Button
             variant="outline"
-            className="h-10 w-full bg-white"
+            className="h-10 w-full bg-card"
             onClick={() => openLineProfile(selectedNode.id)}
           >
             Open Line Profile
@@ -51,7 +51,7 @@ export function PedigreeActionsCard({
           </Button>
           <Button
             variant="outline"
-            className="h-10 w-full bg-white"
+            className="h-10 w-full bg-card"
             onClick={() => useAsParentB(selectedNode.id)}
           >
             Use as Parent B

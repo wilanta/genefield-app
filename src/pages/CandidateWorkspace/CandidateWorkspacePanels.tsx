@@ -80,7 +80,7 @@ function StatusBadge({ status }: { status: CandidateReviewStatus }) {
       variant="secondary"
       className={cn(
         "h-5 px-2 text-[11px] font-normal",
-        status === "review" && "bg-[#fcf1da] text-[#815000]",
+        status === "review" && "bg-[#fcf1da] dark:bg-amber-950/50 text-[#815000] dark:text-amber-200",
         status === "reviewed" && "bg-accent text-accent-foreground",
         (status === "draft" || status === "archived") &&
           "bg-muted text-muted-foreground",
@@ -595,7 +595,7 @@ export function CandidateDetail({
           {candidate.tags.includes("demo") && (
             <Badge
               variant="secondary"
-              className="mt-1.5 bg-[#fcf1da] text-[10px] font-normal text-[#815000]"
+              className="mt-1.5 bg-[#fcf1da] dark:bg-amber-950/50 text-[10px] font-normal text-[#815000] dark:text-amber-200"
             >
               Illustrative
             </Badge>

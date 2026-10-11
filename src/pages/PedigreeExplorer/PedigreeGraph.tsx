@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { useTheme } from "next-themes";
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -31,9 +32,9 @@ const KIND_STYLE: Record<
   PedigreeNode["kind"],
   { bg: string; border: string; text: string }
 > = {
-  normal: { bg: "#ffffff", border: "#c9c5bb", text: "#1b1f1d" },
-  selected: { bg: "#e3efe8", border: "#256b50", text: "#1d5a41" },
-  missing: { bg: "#f3f1ec", border: "#b9b5ab", text: "#5f6561" },
+  normal: { bg: "var(--card)", border: "var(--gf-graph-border)", text: "var(--foreground)" },
+  selected: { bg: "var(--accent)", border: "var(--primary)", text: "var(--accent-foreground)" },
+  missing: { bg: "var(--gf-graph-missing-bg)", border: "var(--gf-graph-missing-border)", text: "var(--muted-foreground)" },
 };
 
 function GidNode({ data, selected }: NodeProps) {
@@ -70,6 +71,7 @@ function GidNode({ data, selected }: NodeProps) {
 const nodeTypes: NodeTypes = { gid: GidNode };
 
 function PedigreeGraphInner({ data }: { data: PedigreeGraphData }) {
+  const { resolvedTheme } = useTheme();
   const { zoomIn, zoomOut, fitView } = useReactFlow();
   const [resetSignal, setResetSignal] = useState(0);
 
@@ -100,7 +102,7 @@ function PedigreeGraphInner({ data }: { data: PedigreeGraphData }) {
         source: e.source,
         target: e.target,
         type: "smoothstep",
-        style: { stroke: "#c9c5bb", strokeWidth: 1.5 },
+        style: { stroke: "var(--gf-graph-border)", strokeWidth: 1.5 },
       })),
     [data],
   );
@@ -131,6 +133,8 @@ function PedigreeGraphInner({ data }: { data: PedigreeGraphData }) {
       {/* Graph canvas (Figma 1:2941 background + 1:2944 graph area) */}
       <div className="relative min-h-0 flex-1 overflow-hidden rounded-xl border border-border bg-gf-panel-bg">
         <ReactFlow
+          colorMode={resolvedTheme === "dark" ? "dark" : "light"}
+          style={{ background: "var(--gf-panel-bg)" }}
           key={resetSignal}
           nodes={nodes}
           edges={edges}
@@ -143,7 +147,7 @@ function PedigreeGraphInner({ data }: { data: PedigreeGraphData }) {
           proOptions={{ hideAttribution: true }}
           defaultEdgeOptions={{ type: "smoothstep" }}
         >
-          <Background color="#e4e1da" gap={[20, 20]} size={1} />
+          <Background color="var(--border)" gap={[20, 20]} size={1} />
         </ReactFlow>
         {/* Generation column labels overlaid, not inside the panning viewport. */}
         <div className="pointer-events-none absolute inset-x-0 top-2 flex">

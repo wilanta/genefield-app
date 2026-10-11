@@ -105,7 +105,7 @@ export default function Overview() {
               DATASET OVERVIEW
             </CardTitle>
           </CardHeader>
-          <div className="mx-3 h-px bg-gray-200"></div>
+          <div className="mx-3 h-px bg-border"></div>
           <CardContent className="space-y-3">
             {/* Dataset Source */}
             <div className="flex w-full justify-between">
@@ -113,7 +113,7 @@ export default function Overview() {
               <p className="text-sm text-foreground font-normal">INIA Uruguay</p>
             </div>
 
-            <div className=" h-px bg-gray-200"></div>
+            <div className=" h-px bg-border"></div>
 
             {/* Data Categories */}
             <div className="flex w-full items-center justify-between gap-4">
@@ -178,8 +178,8 @@ export default function Overview() {
                 key={action.label}
                 href={action.href}
                 className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${action.primary
-                  ? "border-[#256B4E] bg-[#256B4E] text-white hover:bg-[#1f5a41]"
-                  : "border-stone-300 bg-white text-stone-900 hover:bg-stone-50"
+                  ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90"
+                  : "border-border bg-card text-foreground hover:bg-muted"
                   }`}
               >
                 {action.label}
@@ -255,7 +255,7 @@ export default function Overview() {
                       }`}
                   >
                     {item.dot && (
-                      <span className="size-2 rounded-full bg-[#256B4E]" />
+                      <span className="size-2 rounded-full bg-primary" />
                     )}
                     {item.value}
                   </span>

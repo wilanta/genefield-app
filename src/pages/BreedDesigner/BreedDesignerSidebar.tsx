@@ -91,11 +91,11 @@ export function BreedDesignerSidebar({ pool, filters, rules, candidates }: Props
       </Card>
 
       {/* Scientific Limitations */}
-      <div className="rounded-xl border border-amber-300 bg-amber-50/60 px-4 py-3.5 shadow-[var(--gf-card-shadow)]">
-        <div className="mb-2 text-[11px] font-medium uppercase tracking-wider text-amber-900">
+      <div className="rounded-xl border border-amber-300 dark:border-amber-700/50 bg-amber-50/60 dark:bg-amber-950/30 px-4 py-3.5 shadow-[var(--gf-card-shadow)]">
+        <div className="mb-2 text-[11px] font-medium uppercase tracking-wider text-amber-900 dark:text-amber-200">
           Scientific Limitations
         </div>
-        <ul className="list-disc space-y-1.5 pl-4 text-[12px] leading-[18px] text-amber-950/80">
+        <ul className="list-disc space-y-1.5 pl-4 text-[12px] leading-[18px] text-amber-950/80 dark:text-amber-200">
           <li>
             Breed Designer is a deterministic exploration tool; it does not
             rank or recommend crosses.

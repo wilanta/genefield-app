@@ -36,9 +36,9 @@ function DatasetAttributionCard() {
 
 function LimitationsPanel({ items }: { items: string[] }) {
   return (
-    <Card className="border-amber-500/30 bg-amber-50/40 shadow-[var(--gf-card-shadow)]">
+    <Card className="border-amber-500/30 bg-amber-50/40 dark:bg-amber-950/30 shadow-[var(--gf-card-shadow)]">
       <CardHeader className="px-4 pt-3">
-        <h3 className="text-[11px] font-semibold uppercase tracking-wider text-amber-800">
+        <h3 className="text-[11px] font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-200">
           Research and Scientific Limitations
         </h3>
       </CardHeader>
@@ -50,7 +50,7 @@ function LimitationsPanel({ items }: { items: string[] }) {
                 className="mt-[7px] size-1.5 shrink-0 rounded-full bg-amber-500/60"
                 aria-hidden
               />
-              <p className="text-[13px] leading-[19px] text-amber-900/90">{item}</p>
+              <p className="text-[13px] leading-[19px] text-amber-900/90 dark:text-amber-200">{item}</p>
             </li>
           ))}
         </ul>

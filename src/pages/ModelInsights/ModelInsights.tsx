@@ -146,7 +146,7 @@ function ValidationTable({
           <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
             Validation Results
           </h3>
-          <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 ring-1 ring-inset ring-amber-200/70">
+          <span className="rounded-full bg-amber-50 dark:bg-amber-950/30 px-3 py-1 text-xs font-medium text-amber-800 dark:text-amber-200 ring-1 ring-inset ring-amber-200/70">
             Placeholders · no verified metrics shown
           </span>
         </div>
@@ -218,9 +218,9 @@ function ValidationTable({
 
 function LimitationsPanel({ items }: { items: string[] }) {
   return (
-    <Card className="border-amber-500/30 bg-amber-50/40 shadow-[var(--gf-card-shadow)]">
+    <Card className="border-amber-500/30 bg-amber-50/40 dark:bg-amber-950/30 shadow-[var(--gf-card-shadow)]">
       <CardHeader className="px-4 pt-3">
-        <h3 className="text-[11px] font-semibold uppercase tracking-wider text-amber-800">
+        <h3 className="text-[11px] font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-200">
           Scientific Limitations
         </h3>
       </CardHeader>
@@ -232,7 +232,7 @@ function LimitationsPanel({ items }: { items: string[] }) {
                 className="mt-[7px] size-1.5 shrink-0 rounded-full bg-amber-500/60"
                 aria-hidden
               />
-              <p className="text-sm leading-[19px] text-amber-900/90">{item}</p>
+              <p className="text-sm leading-[19px] text-amber-900/90 dark:text-amber-200">{item}</p>
             </li>
           ))}
         </ul>
