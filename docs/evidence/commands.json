@@ -1,0 +1,35 @@
+{
+  "cwd": "C:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-app\\genefield-desktop",
+  "executed_build_validation_commands": [
+    "npm ci",
+    "npm install @tauri-apps/plugin-shell",
+    "npm install --save-dev playwright",
+    "rustc --print host-tuple",
+    "python -B scripts/import-sidecar.py --ml-root 'C:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-ml'",
+    "& 'C:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-ml\\.venv\\Scripts\\python.exe' -B scripts/build-reference.py --ml-root 'C:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-ml'",
+    "npx tsc --noEmit",
+    "npm run typecheck",
+    "npm run build",
+    "npm test",
+    "npx vitest run src/lib/genefield/real-client.test.ts",
+    "python -B scripts/test-reference.py",
+    "cargo check --manifest-path src-tauri/Cargo.toml",
+    "cargo test --manifest-path src-tauri/Cargo.toml --lib",
+    "cargo fmt --manifest-path src-tauri/Cargo.toml",
+    "cargo fmt --manifest-path src-tauri/Cargo.toml --check",
+    "$env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS='--remote-debugging-port=9223'; npm run tauri dev",
+    "node scripts/smoke-desktop.mjs",
+    "npm audit --json > docs/evidence/npm-audit.json",
+    "npx prettier --write src/lib/genefield/real-client.test.ts scripts/smoke-desktop.mjs",
+    "git status --short",
+    "git diff --check",
+    "git diff --stat"
+  ],
+  "additional_actions": [
+    "Get-Content / rg contract and source audits",
+    "Second independent reference build in TemporaryDirectory; exact SHA256 comparison",
+    "Playwright native CDP assertions; OS CloseMainWindow shutdown; reopen desktop and compare persisted snapshot",
+    "Targeted source formatting via node_modules/prettier/bin/prettier.cjs",
+    "git source inventory captured without staging; no commits or pushes"
+  ]
+}

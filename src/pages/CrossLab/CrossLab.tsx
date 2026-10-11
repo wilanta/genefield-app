@@ -11,12 +11,7 @@ import {
   X,
   Database,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -37,7 +32,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { mockLines } from "@/mocks/lines";
+import { referenceService } from "@/services/reference-service";
+import { inference } from "@/services/inference-service";
+import { useAsync } from "@/lib/use-async";
+import { analysisError } from "@/lib/genefield/errors";
+import type { PredictionResult } from "@/lib/genefield/types";
 import { candidateStore } from "@/services";
 import type { RiceLine, TraitCode } from "@/types/research";
 import { CandidateNameConflictError } from "@/types/research";
@@ -48,8 +47,8 @@ import { cn } from "@/lib/utils";
 const TRAITS: { code: TraitCode; name: string; unit: string }[] = [
   { code: "GY", name: "Grain Yield", unit: "kg/ha" },
   { code: "DTF", name: "Days to Flowering", unit: "days" },
-  { code: "NO", name: "Stem Rot", unit: "dataset-defined scale" },
-  { code: "LB", name: "Leaf Blast", unit: "dataset-defined scale" },
+  { code: "NO", name: "Stem Rot", unit: "modified SES IRRI rating points" },
+  { code: "LB", name: "Leaf Blast", unit: "SES IRRI rating points" },
 ];
 
 const EMPTY_ESTIMATES: Record<TraitCode, number | null> = {
@@ -59,12 +58,15 @@ const EMPTY_ESTIMATES: Record<TraitCode, number | null> = {
   LB: null,
 };
 
-/** Resolve a typed id (or query param) to a mock line. */
-function resolveLine(id: string | null | undefined): RiceLine | undefined {
+/** Resolve a typed id (or query param) to a real reference line. */
+function resolveLine(
+  lines: RiceLine[],
+  id: string | null | undefined,
+): RiceLine | undefined {
   if (!id) return undefined;
   const q = id.trim().toUpperCase();
   if (!q) return undefined;
-  return mockLines.find((l) => l.id.toUpperCase() === q);
+  return lines.find((l) => l.id.toUpperCase() === q);
 }
 
 function lineFlags(line: RiceLine): string {
@@ -109,13 +111,14 @@ function ParentCard({
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [open]);
 
+  const { data: lines = [] } = useAsync(() => referenceService.allLines());
   const query = value.trim().toLowerCase();
   const suggestions = useMemo(() => {
     const source = query
-      ? mockLines.filter((l) => l.id.toLowerCase().includes(query))
-      : mockLines;
+      ? lines.filter((l) => l.id.toLowerCase().includes(query))
+      : lines;
     return source.slice(0, 8);
-  }, [query]);
+  }, [query, lines]);
 
   const notFound = value.trim() !== "" && !line;
 
@@ -209,7 +212,9 @@ function ParentCard({
                         </span>
                         <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                           {lineFlags(l)}
-                          {selected && <Check className="size-3 text-primary" />}
+                          {selected && (
+                            <Check className="size-3 text-primary" />
+                          )}
                         </span>
                       </button>
                     </li>
@@ -273,12 +278,7 @@ function ModelRow({
   return (
     <div className="flex items-center justify-between py-[7px]">
       <span className="text-[13px] text-muted-foreground">{label}</span>
-      <span
-        className={cn(
-          "text-[13px] text-foreground",
-          mono && "font-mono",
-        )}
-      >
+      <span className={cn("text-[13px] text-foreground", mono && "font-mono")}>
         {value}
       </span>
     </div>
@@ -318,9 +318,7 @@ function ComparisonPane({
                 <span
                   className={cn(
                     "text-xs",
-                    value
-                      ? "text-accent-foreground"
-                      : "text-foreground",
+                    value ? "text-accent-foreground" : "text-foreground",
                   )}
                 >
                   {value ? "Available" : "Not available"}
@@ -342,42 +340,44 @@ type GenotypeWarning = "A" | "B" | "both" | null;
 
 export default function CrossLab() {
   const [params] = useSearchParams();
+  const { data: lines = [], error: referenceError } = useAsync(() =>
+    referenceService.allLines(),
+  );
+  const [result, setResult] = useState<PredictionResult>();
+  const [historical, setHistorical] = useState<boolean>();
+  const [error, setError] = useState<string>();
+  const pending = useRef(false);
+  const revision = useRef(0);
 
   const [parentA, setParentA] = useState(params.get("a") ?? "");
   const [parentB, setParentB] = useState(params.get("b") ?? "");
   const [phase, setPhase] = useState<Phase>("idle");
-  const [estimates, setEstimates] = useState<Record<TraitCode, number | null>>(
-    EMPTY_ESTIMATES,
-  );
+  const [estimates, setEstimates] =
+    useState<Record<TraitCode, number | null>>(EMPTY_ESTIMATES);
 
   /* ---- Research Note modal state (frame 1:3720) ---- */
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteText, setNoteText] = useState(
-    "Illustrative note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
+    "Research note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
   );
 
   /* ---- Save Candidate modal state (frame 1:4796) ---- */
   const [saveOpen, setSaveOpen] = useState(false);
-  const [candidateName, setCandidateName] = useState("GID_1233 × GID_3494");
+  const [candidateName, setCandidateName] = useState("");
   const [candidateNotes, setCandidateNotes] = useState("");
-  const [reviewStatus, setReviewStatus] = useState<"draft" | "review">(
-    "draft",
-  );
+  const [reviewStatus, setReviewStatus] = useState<"draft" | "review">("draft");
   const [tags, setTags] = useState<string[]>(["pilot"]);
   const [tagInput, setTagInput] = useState("");
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveSaving, setSaveSaving] = useState(false);
 
-  const timerRef = useRef<number | null>(null);
-  useEffect(
-    () => () => {
-      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
-    },
-    [],
-  );
-
   // Prefill when the page is reached via "Use as Parent A/B".
   useEffect(() => {
+    ++revision.current;
+    setResult(undefined);
+    setHistorical(undefined);
+    setEstimates(EMPTY_ESTIMATES);
+    setPhase("idle");
     const a = params.get("a");
     const b = params.get("b");
     if (a) setParentA(a);
@@ -386,8 +386,8 @@ export default function CrossLab() {
 
   const navigate = useNavigate();
 
-  const lineA = resolveLine(parentA);
-  const lineB = resolveLine(parentB);
+  const lineA = resolveLine(lines, parentA);
+  const lineB = resolveLine(lines, parentB);
 
   const idsMatch =
     parentA.trim().toUpperCase() === parentB.trim().toUpperCase() &&
@@ -416,25 +416,43 @@ export default function CrossLab() {
   const conflictMessage = "Parent B is the same line as Parent A.";
 
   /** Permission gates for footer action buttons. */
-  const canSave = !!(lineA && lineB && !idsMatch && phase !== "error");
+  const canSave = !!(result && phase === "done");
   const canNote = !!(lineA && lineB && !idsMatch && phase !== "error");
   const canPedigree = !!(lineA && lineB);
 
   /** Default candidate name built from the two selected line ids. */
   const defaultCandidateName =
-    lineA && lineB ? `${lineA.id} × ${lineB.id}` : "GID_1233 × GID_3494";
+    lineA && lineB ? `${lineA.id} × ${lineB.id}` : "";
 
   const compareRows: ComparisonRow[] = useMemo(
     () => [
-      { label: "Genotype", a: lineA?.hasGenotype, b: lineB?.hasGenotype, kind: "genotype" },
-      { label: "Phenotype", a: lineA?.hasPhenotype, b: lineB?.hasPhenotype, kind: "unchecked" },
-      { label: "Pedigree", a: lineA?.hasPedigree, b: lineB?.hasPedigree, kind: "unchecked" },
+      {
+        label: "Genotype",
+        a: lineA?.hasGenotype,
+        b: lineB?.hasGenotype,
+        kind: "genotype",
+      },
+      {
+        label: "Phenotype",
+        a: lineA?.hasPhenotype,
+        b: lineB?.hasPhenotype,
+        kind: "genotype",
+      },
+      {
+        label: "Pedigree",
+        a: lineA?.hasPedigree,
+        b: lineB?.hasPedigree,
+        kind: "genotype",
+      },
     ],
     [lineA, lineB],
   );
 
   /** Editing a parent invalidates the previous analysis. */
   const updateParent = (slot: "A" | "B", v: string) => {
+    ++revision.current;
+    setResult(undefined);
+    setHistorical(undefined);
     if (slot === "A") setParentA(v);
     else setParentB(v);
     if (phase !== "idle") {
@@ -444,29 +462,44 @@ export default function CrossLab() {
   };
 
   /* ---- Analyze / Retry handler (frame 1:6728) ---- */
-  const handleAnalyze = useCallback(() => {
-    if (analysisDisabled) return;
+  const handleAnalyze = useCallback(async () => {
+    if (analysisDisabled || pending.current || !lineA || !lineB) return;
+    pending.current = true;
+    const token = revision.current;
     setPhase("analyzing");
-    timerRef.current = window.setTimeout(() => {
-      /* Simulate ~33 % inference failure for demo purposes. */
-      if (Math.random() < 0.33) {
-        setEstimates(EMPTY_ESTIMATES);
-        setPhase("error");
-        return;
-      }
-      const next: Record<TraitCode, number | null> = { ...EMPTY_ESTIMATES };
-      for (const t of TRAITS) {
-        const a = lineA?.estimates?.find((e) => e.trait === t.code)?.value ?? null;
-        const b = lineB?.estimates?.find((e) => e.trait === t.code)?.value ?? null;
-        if (a != null && b != null) next[t.code] = Math.round((a + b) / 2);
-        else next[t.code] = a ?? b;
-      }
-      setEstimates(next);
+    setError(undefined);
+    setResult(undefined);
+    try {
+      await inference.start();
+      const history = await inference.historical(lineA.id, lineB.id);
+      if (token !== revision.current) return;
+      setHistorical(history.is_historical_pair);
+      const prediction = await inference.predict(lineA.id, lineB.id);
+      if (token !== revision.current) return;
+      setResult(prediction);
+      setEstimates(
+        Object.fromEntries(
+          TRAITS.map((t) => [
+            t.code,
+            prediction.predictions[t.code]?.value ?? null,
+          ]),
+        ) as Record<TraitCode, number | null>,
+      );
       setPhase("done");
-    }, 900);
+    } catch (e) {
+      if (token !== revision.current) return;
+      setError(analysisError(e));
+      setEstimates(EMPTY_ESTIMATES);
+      setPhase("error");
+    } finally {
+      pending.current = false;
+    }
   }, [analysisDisabled, lineA, lineB]);
 
   const handleReset = () => {
+    ++revision.current;
+    setResult(undefined);
+    setHistorical(undefined);
     setParentA("");
     setParentB("");
     setEstimates(EMPTY_ESTIMATES);
@@ -494,8 +527,13 @@ export default function CrossLab() {
     try {
       await candidateStore.create({
         name: candidateName,
-        parentA: lineA?.id ?? parentA,
-        parentB: lineB?.id ?? parentB,
+        parentA: result!.parent_ids[0],
+        parentB: result!.parent_ids[1],
+        analysis: {
+          bundleVersion: result!.bundle_version,
+          predictions: result!.predictions,
+          isHistoricalPair: result!.is_historical_pair,
+        },
         notes: candidateNotes,
         source: "cross-lab",
         reviewStatus,
@@ -518,7 +556,7 @@ export default function CrossLab() {
   const openNoteModal = () => {
     if (!canNote) return;
     setNoteText(
-      "Illustrative note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
+      "Research note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
     );
     setNoteOpen(true);
   };
@@ -544,6 +582,16 @@ export default function CrossLab() {
 
   return (
     <div className="p-6">
+      {referenceError && (
+        <p role="alert" className="text-destructive">
+          {referenceError}
+        </p>
+      )}
+      {error && (
+        <p role="alert" className="text-destructive">
+          {error}
+        </p>
+      )}
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_380px]">
         {/* Left column */}
         <div className="flex flex-col gap-3.5">
@@ -564,6 +612,9 @@ export default function CrossLab() {
                 className="h-8 w-8 rounded-full"
                 aria-label="Swap Parent A and Parent B"
                 onClick={() => {
+                  ++revision.current;
+                  setResult(undefined);
+                  setHistorical(undefined);
                   setParentA(parentB);
                   setParentB(parentA);
                   if (phase !== "idle") {
@@ -663,26 +714,30 @@ export default function CrossLab() {
                 </div>
                 <span className="text-[11px] text-muted-foreground">
                   {lineA && lineB
-                    ? "Observed data only · illustrative values"
+                    ? "Historical pedigree registry"
                     : "Observed data only"}
                 </span>
               </div>
             </CardHeader>
             <CardContent className="px-4">
               <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-                {lineA && lineB && phase === "done" ? (
+                {lineA && lineB && historical !== undefined ? (
                   <>
                     <EvidenceRow
                       label="Historical cross record"
-                      value="No recorded cross in dataset"
+                      value={
+                        historical
+                          ? "Recorded in historical registry"
+                          : "Not recorded in historical registry"
+                      }
                     />
                     <EvidenceRow
                       label="Recorded descendant count"
-                      value="0"
+                      value="Not supplied by pair lookup"
                     />
                     <EvidenceRow
                       label="Phenotype observations"
-                      value="None for this pair"
+                      value="See historical line profiles"
                     />
                     <div className="flex items-center justify-between gap-4">
                       <span className="text-[13px] text-muted-foreground">
@@ -691,11 +746,17 @@ export default function CrossLab() {
                       <span className="flex items-center gap-2 text-[13px] text-foreground">
                         <span className="inline-flex items-center gap-1">
                           <span className="size-[7px] rounded-full bg-primary" />
-                          A · Yes
+                          A ·{" "}
+                          {result
+                            ? "Yes (selected traits)"
+                            : "Not verified for all traits"}
                         </span>
                         <span className="inline-flex items-center gap-1">
                           <span className="size-[7px] rounded-full bg-primary" />
-                          B · Yes
+                          B ·{" "}
+                          {result
+                            ? "Yes (selected traits)"
+                            : "Not verified for all traits"}
                         </span>
                       </span>
                     </div>
@@ -706,10 +767,7 @@ export default function CrossLab() {
                       label="Historical cross record"
                       value="Unknown · Not yet checked"
                     />
-                    <EvidenceRow
-                      label="Recorded descendant count"
-                      value="—"
-                    />
+                    <EvidenceRow label="Recorded descendant count" value="—" />
                     <EvidenceRow label="Phenotype observations" value="—" />
                     <EvidenceRow
                       label="Training-parent membership"
@@ -725,7 +783,7 @@ export default function CrossLab() {
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
             <CardHeader className="flex flex-row items-center justify-between border-b border-border px-5">
               <CardTitle className="text-[15px] font-semibold tracking-tight">
-                Experimental Trait Estimates
+                Modeled Cross-level Estimates
               </CardTitle>
               <div className="flex items-center gap-2">
                 {/* Results badge (frame 1:410) */}
@@ -784,7 +842,11 @@ export default function CrossLab() {
                       </TableCell>
                       <TableCell className="px-3 py-2.5">
                         <span className="rounded-[10px] bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
-                          Disabled
+                          {t.code === "DTF"
+                            ? "Earlier / Later"
+                            : t.code === "GY"
+                              ? "Maximize"
+                              : "Minimize"}
                         </span>
                       </TableCell>
                     </TableRow>
@@ -795,10 +857,11 @@ export default function CrossLab() {
               {phase === "done" && (
                 <div className="mt-2 flex flex-col gap-0.5">
                   <p className="text-xs text-muted-foreground">
-                    Illustrative placeholder values
+                    Historical-descendant cross-level modeled estimates
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Interface demonstration only — not real model output.
+                    Represented INIA germplasm; no guaranteed offspring
+                    phenotype.
                   </p>
                 </div>
               )}
@@ -813,28 +876,10 @@ export default function CrossLab() {
                         Unable to complete local inference.
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        The research-v1 model bundle did not return a result
-                        for this parent pair. No estimates were produced and
-                        nothing was saved. Your parent selection is unchanged.
+                        The final-v1 model bundle did not return a result for
+                        this parent pair. No estimates were produced and nothing
+                        was saved. Your parent selection is unchanged.
                       </p>
-                      {/* Technical details sub-section (illustrative) */}
-                      <div className="mt-1.5">
-                        <p className="mb-1 text-[11px] font-medium text-muted-foreground">
-                          Technical details
-                        </p>
-                        <pre className="overflow-x-auto rounded bg-muted/50 p-2 font-mono text-[11px] leading-[16px] text-foreground/80">
-                          {JSON.stringify(
-                            {
-                              stage: "inference",
-                              bundle: "research-v1",
-                              parents: [lineA?.id ?? "—", lineB?.id ?? "—"],
-                              message: "Model bundle did not return a result for this parent pair.",
-                            },
-                            null,
-                            2,
-                          )}
-                        </pre>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -847,16 +892,15 @@ export default function CrossLab() {
                 </p>
               ) : phase === "idle" ? (
                 <p className="py-10 text-center text-xs text-muted-foreground">
-                  Run &ldquo;Analyze Cross&rdquo; to populate estimates for
-                  this parent pair.
+                  Run &ldquo;Analyze Cross&rdquo; to populate estimates for this
+                  parent pair.
                 </p>
               ) : null}
             </CardContent>
             <div className="border-t border-border px-5 pt-3">
               <p className="text-xs leading-[18px] text-muted-foreground">
                 Estimates describe modeled historical descendant phenotype
-                summaries, not F1 performance or guaranteed cross
-                outcomes.
+                summaries, not F1 performance or guaranteed cross outcomes.
               </p>
             </div>
           </Card>
@@ -923,10 +967,13 @@ export default function CrossLab() {
             </CardHeader>
             <CardContent className="px-4">
               <div className="divide-y divide-border">
-                <ModelRow label="Bundle" value="research-v1" mono />
+                <ModelRow label="Bundle" value="final-v1" mono />
                 <ModelRow label="Scientific review" value="Unreviewed" />
                 <ModelRow label="Usage" value="Research-only" />
-                <ModelRow label="Predictive ranking" value="Disabled" />
+                <ModelRow
+                  label="Predictive ranking"
+                  value="Enabled for represented parents"
+                />
                 <ModelRow label="Inference" value="Local / Offline" />
               </div>
             </CardContent>
@@ -982,8 +1029,8 @@ export default function CrossLab() {
               </div>
               <div className="rounded-lg border border-border px-3 py-2">
                 <p className="text-[11px] leading-[16px] text-muted-foreground">
-                  Attached to {lineA?.id ?? "—"} × {lineB?.id ?? "—"} ·
-                  research-v1 · not an approved recommendation
+                  Attached to {lineA?.id ?? "—"} × {lineB?.id ?? "—"} · final-v1
+                  · not an approved recommendation
                 </p>
               </div>
             </div>
@@ -1016,13 +1063,21 @@ export default function CrossLab() {
                   <label className="text-xs font-medium text-muted-foreground">
                     Parent A
                   </label>
-                  <Input value={lineA?.id ?? "—"} readOnly className="bg-primary/5" />
+                  <Input
+                    value={lineA?.id ?? "—"}
+                    readOnly
+                    className="bg-primary/5"
+                  />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-medium text-muted-foreground">
                     Parent B
                   </label>
-                  <Input value={lineB?.id ?? "—"} readOnly className="bg-primary/5" />
+                  <Input
+                    value={lineB?.id ?? "—"}
+                    readOnly
+                    className="bg-primary/5"
+                  />
                 </div>
               </div>
 
@@ -1145,7 +1200,9 @@ export default function CrossLab() {
             {saveError && (
               <div className="flex items-start gap-2 rounded-lg border border-destructive bg-destructive/5 px-3 py-2.5">
                 <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
-                <p className="text-xs leading-[18px] text-destructive">{saveError}</p>
+                <p className="text-xs leading-[18px] text-destructive">
+                  {saveError}
+                </p>
               </div>
             )}
 
@@ -1157,10 +1214,7 @@ export default function CrossLab() {
               <Button variant="outline" onClick={() => setSaveOpen(false)}>
                 Cancel
               </Button>
-              <Button
-                onClick={handleSaveCandidate}
-                disabled={saveSaving}
-              >
+              <Button onClick={handleSaveCandidate} disabled={saveSaving}>
                 {saveSaving ? (
                   <>
                     <Loader2 className="animate-spin size-4" />

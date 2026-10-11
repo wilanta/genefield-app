@@ -1,0 +1,73 @@
+{
+  "prediction": {
+    "bundle_version": "final-v1",
+    "parent_ids": [
+      "GID_10039",
+      "GID_10125"
+    ],
+    "target": "historical-descendant cross-level estimate; plot means to line means, then equal-weight descendant lines per canonical direct parent pair",
+    "is_historical_pair": false,
+    "predictions": {
+      "GY": {
+        "value": 7891.223511267753,
+        "units": "kg/ha",
+        "model_version": "final-v1/GY/1.0.0",
+        "parents_seen_in_training": [
+          true,
+          true
+        ],
+        "parent_training_pair_counts": [
+          1,
+          1
+        ]
+      },
+      "DTF": {
+        "value": 98.63343564424765,
+        "units": "days",
+        "model_version": "final-v1/DTF/1.0.0",
+        "parents_seen_in_training": [
+          true,
+          true
+        ],
+        "parent_training_pair_counts": [
+          1,
+          1
+        ]
+      },
+      "NO": {
+        "value": 4.591383457183838,
+        "units": "modified SES IRRI rating points",
+        "model_version": "final-v1/NO/1.0.0",
+        "parents_seen_in_training": [
+          true,
+          true
+        ],
+        "parent_training_pair_counts": [
+          1,
+          1
+        ]
+      },
+      "LB": {
+        "value": 0.8833725118415202,
+        "units": "SES IRRI rating points",
+        "model_version": "final-v1/LB/1.0.0",
+        "parents_seen_in_training": [
+          true,
+          true
+        ],
+        "parent_training_pair_counts": [
+          1,
+          1
+        ]
+      }
+    }
+  },
+  "history": {
+    "bundle_version": "final-v1",
+    "parent_ids": [
+      "GID_10039",
+      "GID_10125"
+    ],
+    "is_historical_pair": false
+  }
+}

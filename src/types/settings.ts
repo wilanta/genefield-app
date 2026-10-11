@@ -3,17 +3,16 @@
  *
  * This describes the local, per-device configuration surface shown on the
  * Settings page. Theme and interface density are persisted locally by their providers. Other
- * values are display-only in the current UI preview and are not yet wired
- * to a persistent store or the inference engine. Placeholder strings (e.g. `[user]`, `…`,
- * `[placeholder]`) are retained verbatim from the design.
+ * inference metadata and actual application paths are loaded in the desktop.
+ * Backup/log utilities remain outside the current integration scope.
  */
 
 export type ThemePreference = "light" | "dark" | "system";
 export type InterfaceDensity = "compact" | "comfortable";
 export type LanguagePreference = "english";
 
-/** Bundle integrity check status. Kept as "not-checked" — not simulated. */
-export type BundleIntegrityStatus = "not-checked";
+/** Verified means the frozen loader successfully checked the bundle. */
+export type BundleIntegrityStatus = "not-checked" | "verified";
 
 export interface SettingsData {
   theme: ThemePreference;
@@ -32,7 +31,7 @@ export interface SettingsData {
   /** Whether a local inference runtime is available. */
   localInferenceAvailable: boolean;
   localInferenceLabel: string;
-  /** Predictive ranking is disabled by the research bundle and locked. */
+  /** Predictive ranking follows the frozen bundle capabilities. */
   rankingEnabled: boolean;
   rankingLabel: string;
 

@@ -1,10 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -24,8 +19,8 @@ function phenotypeRows(line: RiceLine) {
   return [
     { trait: "GY", label: "Grain Yield (kg/ha)" },
     { trait: "DTF", label: "Days to Flowering (days)" },
-    { trait: "NO", label: "Stem Rot" },
-    { trait: "LB", label: "Leaf Blast" },
+    { trait: "NO", label: "Stem Rot (severity rating)" },
+    { trait: "LB", label: "Leaf Blast (severity rating)" },
   ].map((row) => {
     const found: TraitEstimate | undefined = line.estimates?.find(
       (e) => e.trait === row.trait,
@@ -100,7 +95,7 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
           <div className="flex items-center justify-between">
             <CardTitle className="font-mono text-lg">{line.id}</CardTitle>
             <Badge className="border-amber-200 dark:border-amber-700/50 bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-200">
-              Illustrative
+              Historical observations
             </Badge>
           </div>
         </CardHeader>
@@ -147,8 +142,8 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
               Data provenance
             </p>
             <p className="text-xs text-muted-foreground">
-              INIA Uruguay dataset - imported locally. Values above are
-              illustrative placeholders.
+              INIA Uruguay dataset. Historical line means from recorded
+              observations.
             </p>
           </div>
         </CardContent>

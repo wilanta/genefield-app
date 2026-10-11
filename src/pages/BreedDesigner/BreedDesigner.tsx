@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +12,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { generateCandidates, selectParentPool } from "@/mocks/breed-designer";
+import { referenceService } from "@/services/reference-service";
+import { inference, rankPool } from "@/services/inference-service";
+import { analysisError } from "@/lib/genefield/errors";
+import { useAsync } from "@/lib/use-async";
+import type { Trait, Objectives } from "@/lib/genefield/types";
+import type { BreedDesignerCandidate } from "./types";
 import type {
   BreedDesignerFilters,
   BreedDesignerGenerationRules,
@@ -40,7 +45,7 @@ const DEFAULT_FILTERS: BreedDesignerFilters = {
 const DEFAULT_RULES: BreedDesignerGenerationRules = {
   excludeSelfCrosses: true,
   excludeDuplicatePairs: true,
-  excludeHistorical: false,
+  excludeHistorical: true,
   maxCandidates: 50,
 };
 
@@ -66,7 +71,124 @@ export default function BreedDesigner() {
     useState<BreedDesignerGenerationRules>(DEFAULT_RULES);
   const [generated, setGenerated] = useState(false);
 
-  const pool = useMemo(() => selectParentPool(filters), [filters]);
+  const { data: loaded, error: loadError } = useAsync(async () => ({
+    lines: await referenceService.allLines(),
+    metadata: await inference.start(),
+  }));
+  const [weights, setWeights] = useState<Record<Trait, number>>({
+    GY: 1,
+    DTF: 0,
+    NO: 0,
+    LB: 0,
+  });
+  const [dtf, setDtf] = useState<"" | "minimize" | "maximize">("");
+  const [candidates, setCandidates] = useState<BreedDesignerCandidate[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
+  const [eligibleCount, setEligibleCount] = useState<number>();
+  const lock = useRef(false);
+  const revision = useRef(0);
+  const traits = (["GY", "DTF", "NO", "LB"] as Trait[]).filter(
+    (t) => weights[t] > 0,
+  );
+  const pool = useMemo(
+    () =>
+      (loaded?.lines ?? []).filter((l) => {
+        if (
+          !traits.length ||
+          !traits.every((t) =>
+            loaded?.metadata.traits[t].training_parent_ids.includes(l.id),
+          )
+        )
+          return false;
+        if (
+          filters.search &&
+          !l.id.toLowerCase().includes(filters.search.trim().toLowerCase())
+        )
+          return false;
+        return (["genotype", "phenotype", "pedigree"] as const).every(
+          (f) =>
+            filters[f] === "any" ||
+            l[
+              f === "genotype"
+                ? "hasGenotype"
+                : f === "phenotype"
+                  ? "hasPhenotype"
+                  : "hasPedigree"
+            ] ===
+              (filters[f] === "yes"),
+        );
+      }),
+    [loaded, filters, weights],
+  );
+  useEffect(() => {
+    ++revision.current;
+    setGenerated(false);
+    setCandidates([]);
+    setEligibleCount(undefined);
+  }, [filters, rules, weights, dtf]);
+  const generate = async () => {
+    if (lock.current || !loaded) return;
+    if (weights.DTF > 0 && !dtf) {
+      setError("Pilih prioritas Umur Berbunga: lebih cepat atau lebih lambat.");
+      return;
+    }
+    if (!traits.length) {
+      setError("Pilih setidaknya satu trait dengan bobot positif.");
+      return;
+    }
+    if (pool.length < 2) {
+      setError("Pilih sedikitnya dua parent yang memenuhi syarat.");
+      return;
+    }
+    lock.current = true;
+    setBusy(true);
+    setError(undefined);
+    const token = revision.current;
+    try {
+      const objectives: Objectives = {};
+      const selectedWeights: Partial<Record<Trait, number>> = {};
+      for (const t of traits) {
+        objectives[t] = (
+          t === "GY" ? "maximize" : t === "DTF" ? dtf : "minimize"
+        ) as never;
+        selectedWeights[t] = weights[t];
+      }
+      const result = await rankPool(
+        pool.map((l) => l.id),
+        objectives,
+        selectedWeights,
+        Math.min(500, rules.maxCandidates),
+      );
+      if (token !== revision.current) return;
+      setCandidates(
+        result.candidates.map((c, i) => ({
+          candidateId: `C-${String(i + 1).padStart(3, "0")}`,
+          parentA: c.parent_ids[0],
+          parentB: c.parent_ids[1],
+          genotype: "Both",
+          historical: "Not recorded",
+          historicalRecorded: false,
+          researchStatus: "Unreviewed",
+          analysis: {
+            bundleVersion: result.bundle_version,
+            predictions: c.predictions,
+            objectives: result.objectives,
+            weights: result.weights,
+            applicationScore: c.application_prioritization_score,
+            isHistoricalPair: false,
+          },
+        })),
+      );
+      setEligibleCount(result.eligible_candidate_count);
+      setGenerated(true);
+    } catch (e) {
+      setError(analysisError(e));
+    } finally {
+      lock.current = false;
+      setBusy(false);
+    }
+  };
 
   const poolStats = useMemo(() => {
     const total = pool.length;
@@ -75,12 +197,6 @@ export default function BreedDesigner() {
     const withPedigree = pool.filter((l) => l.hasPedigree).length;
     return { total, withGenotype, withPhenotype, withPedigree };
   }, [pool]);
-
-  // Candidates regenerate deterministically whenever the relevant state changes.
-  const candidates = useMemo(
-    () => (generated ? generateCandidates({ filters, rules }) : []),
-    [generated, filters, rules],
-  );
 
   const openInCrossLab = (a: string, b: string) => {
     navigate(
@@ -98,6 +214,20 @@ export default function BreedDesigner() {
 
   return (
     <div className="breed-designer">
+      {(loadError || error) && (
+        <p role="alert" className="text-destructive">
+          {loadError ?? error}
+        </p>
+      )}
+      {!loaded && !loadError && (
+        <p role="status">Memuat layanan analisis dan data lokal?</p>
+      )}
+      {eligibleCount !== undefined && (
+        <p className="text-xs text-muted-foreground">
+          {eligibleCount} eligible unrecorded pairs | authoritative ranking
+          order
+        </p>
+      )}
       <div className="breed-designer-layout">
         {/* Left column */}
         <div className="breed-designer-main">
@@ -223,11 +353,54 @@ export default function BreedDesigner() {
               <StepHeading step={2} title="Configure Cross Generation" />
             </CardHeader>
             <CardContent className="px-3.5 pb-5">
+              <div className="mb-4 flex flex-wrap gap-3">
+                {(["GY", "DTF", "NO", "LB"] as Trait[]).map((t) => (
+                  <label key={t} className="text-xs">
+                    {t} weight (0 = omit)
+                    <Input
+                      aria-label={`${t} weight`}
+                      type="number"
+                      min={0}
+                      step={0.1}
+                      value={weights[t]}
+                      disabled={busy}
+                      className="w-28"
+                      onChange={(e) =>
+                        setWeights((prev) => ({
+                          ...prev,
+                          [t]: Math.max(0, Number(e.target.value)),
+                        }))
+                      }
+                    />
+                  </label>
+                ))}
+                <label className="text-xs">
+                  DTF priority
+                  <Select
+                    value={dtf}
+                    onValueChange={(v) => setDtf(v as "minimize" | "maximize")}
+                    disabled={busy}
+                  >
+                    <SelectTrigger aria-label="DTF priority">
+                      <SelectValue placeholder="Pilih prioritas" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="minimize">
+                        Lebih cepat berbunga
+                      </SelectItem>
+                      <SelectItem value="maximize">
+                        Lebih lambat berbunga
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </label>
+              </div>
               <div className="breed-designer-generation">
                 <div className="flex flex-col gap-2.5">
                   <label className="breed-designer-rule">
                     <Switch
-                      checked={rules.excludeSelfCrosses}
+                      disabled
+                      checked={true}
                       onCheckedChange={(v) => setRule("excludeSelfCrosses", v)}
                       aria-label="Exclude self-crosses"
                     />
@@ -235,7 +408,8 @@ export default function BreedDesigner() {
                   </label>
                   <label className="breed-designer-rule">
                     <Switch
-                      checked={rules.excludeDuplicatePairs}
+                      disabled
+                      checked={true}
                       onCheckedChange={(v) =>
                         setRule("excludeDuplicatePairs", v)
                       }
@@ -245,7 +419,8 @@ export default function BreedDesigner() {
                   </label>
                   <label className="breed-designer-rule">
                     <Switch
-                      checked={rules.excludeHistorical}
+                      disabled
+                      checked={true}
                       onCheckedChange={(v) => setRule("excludeHistorical", v)}
                       aria-label="Exclude historically recorded crosses"
                     />
@@ -279,9 +454,10 @@ export default function BreedDesigner() {
                 </div>
                 <Button
                   className="breed-designer-generate h-[34px] px-4 text-[13px]"
-                  onClick={() => setGenerated(true)}
+                  onClick={generate}
+                  disabled={busy || !loaded}
                 >
-                  Generate Candidate Pairs
+                  {busy ? "Menganalisis..." : "Generate Candidate Pairs"}
                 </Button>
               </div>
             </CardContent>
@@ -295,6 +471,9 @@ export default function BreedDesigner() {
 
             {generated ? (
               <CandidateTable
+                key={JSON.stringify(
+                  candidates.map((c) => [c.parentA, c.parentB, c.analysis]),
+                )}
                 candidates={candidates}
                 onOpenInCrossLab={openInCrossLab}
                 onGoToWorkspace={() => navigate("/candidates")}

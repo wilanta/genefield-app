@@ -1,0 +1,148 @@
+{
+  "removed_test_rows": [
+    {
+      "id": "c40ae93f-ae43-40e6-9df1-c5f02978b5f7",
+      "name": "Integration smoke 2026-10-11T08:44:02.470Z",
+      "parentA": "GID_10039",
+      "parentB": "GID_10125",
+      "notes": "",
+      "source": "cross-lab",
+      "reviewStatus": "draft",
+      "tags": [
+        "pilot"
+      ],
+      "createdAt": "2026-10-11T08:44:02.891Z",
+      "updatedAt": "2026-10-11T08:44:02.891Z",
+      "analysis": {
+        "bundleVersion": "final-v1",
+        "predictions": {
+          "GY": {
+            "value": 7891.223511267753,
+            "units": "kg/ha",
+            "model_version": "final-v1/GY/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "DTF": {
+            "value": 98.63343564424765,
+            "units": "days",
+            "model_version": "final-v1/DTF/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "NO": {
+            "value": 4.591383457183838,
+            "units": "modified SES IRRI rating points",
+            "model_version": "final-v1/NO/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "LB": {
+            "value": 0.8833725118415202,
+            "units": "SES IRRI rating points",
+            "model_version": "final-v1/LB/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          }
+        },
+        "isHistoricalPair": false
+      }
+    },
+    {
+      "id": "0b78a84a-1ddf-4070-bd13-1d0fdcadc978",
+      "name": "Integration smoke 2026-10-11T08:40:38.788Z",
+      "parentA": "GID_10039",
+      "parentB": "GID_10125",
+      "notes": "",
+      "source": "cross-lab",
+      "reviewStatus": "draft",
+      "tags": [
+        "pilot"
+      ],
+      "createdAt": "2026-10-11T08:40:39.127Z",
+      "updatedAt": "2026-10-11T08:40:39.127Z",
+      "analysis": {
+        "bundleVersion": "final-v1",
+        "predictions": {
+          "GY": {
+            "value": 7891.223511267753,
+            "units": "kg/ha",
+            "model_version": "final-v1/GY/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "DTF": {
+            "value": 98.63343564424765,
+            "units": "days",
+            "model_version": "final-v1/DTF/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "NO": {
+            "value": 4.591383457183838,
+            "units": "modified SES IRRI rating points",
+            "model_version": "final-v1/NO/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "LB": {
+            "value": 0.8833725118415202,
+            "units": "SES IRRI rating points",
+            "model_version": "final-v1/LB/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          }
+        },
+        "isHistoricalPair": false
+      }
+    }
+  ]
+}

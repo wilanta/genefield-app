@@ -1,15 +1,15 @@
 import logoUrl from "@/assets/GeneField_vector.svg";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { mockModelInsights } from "@/mocks/modelInsights";
+import { limitations } from "@/lib/genefield/limitations";
 
-const LIMITATIONS = mockModelInsights.limitations;
+const LIMITATIONS = limitations;
 
 const DATASET_ATTRIBUTION =
-  "Dataset source: INIA Uruguay. Citation and license text: [placeholder — confirm before release].";
+  "Dataset source: INIA Uruguay historical rice breeding data. Dryad DOI: 10.5061/dryad.x69p8czn8.";
 
 const LICENSE_ROW_LABEL = "Third-party license notices";
-const LICENSE_ROW_VALUE = "Bundled at release · placeholder";
+const LICENSE_ROW_VALUE = "License notice review pending before distribution";
 
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -50,7 +50,9 @@ function LimitationsPanel({ items }: { items: string[] }) {
                 className="mt-[7px] size-1.5 shrink-0 rounded-full bg-amber-500/60"
                 aria-hidden
               />
-              <p className="text-[13px] leading-[19px] text-amber-900/90 dark:text-amber-200">{item}</p>
+              <p className="text-[13px] leading-[19px] text-amber-900/90 dark:text-amber-200">
+                {item}
+              </p>
             </li>
           ))}
         </ul>
@@ -65,8 +67,12 @@ function LicensesCard() {
       <SectionHeader title="Open-Source Licenses and Acknowledgements" />
       <CardContent className="px-4 pb-4">
         <div className="flex items-center justify-between">
-          <span className="text-[13px] text-foreground">{LICENSE_ROW_LABEL}</span>
-          <span className="text-[13px] text-muted-foreground">{LICENSE_ROW_VALUE}</span>
+          <span className="text-[13px] text-foreground">
+            {LICENSE_ROW_LABEL}
+          </span>
+          <span className="text-[13px] text-muted-foreground">
+            {LICENSE_ROW_VALUE}
+          </span>
         </div>
       </CardContent>
     </Card>
@@ -93,7 +99,7 @@ export default function About() {
             </p>
           </div>
           <Badge variant="secondary" className="shrink-0">
-            Version 0.1.0 · placeholder
+            Version 0.1.0
           </Badge>
         </CardContent>
       </Card>

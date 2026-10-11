@@ -172,9 +172,8 @@ function asStore(handle: FakeDbInternals): TauriSqliteCandidateStore {
   return new TauriSqliteCandidateStore(handle.db as unknown as DbHandle);
 }
 
-// Test-only fixture: two items to keep assertions simple. The production
-// data (src/mocks/candidates.ts) has six items and is exercised end-to-end
-// via CandidateWorkspace, not here.
+// Test-only fixture for the retained legacy seeding adapter. Production
+// CandidateWorkspace never calls seedDemo; new workspaces start empty.
 const DEMO: SavedCandidateInput[] = [
   { name: "Demo One", parentA: "A", parentB: "B", source: "cross-lab" },
   {

@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "stdout": "",
+  "result": "PASS",
+  "stderr_note": "Git emits normal LF/CRLF notices on this Windows checkout."
+}

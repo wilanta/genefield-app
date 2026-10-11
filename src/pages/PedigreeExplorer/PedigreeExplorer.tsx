@@ -1,17 +1,30 @@
-import { useNavigate } from "react-router-dom";
-import { mockPedigree } from "@/mocks/pedigree";
-import type { PedigreeGraphData } from "@/types/research";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { referenceService } from "@/services/reference-service";
+import { useAsync } from "@/lib/use-async";
 import PedigreeGraph from "./PedigreeGraph";
 import { PedigreeDetailCard } from "./PedigreeDetailCard";
 import { PedigreeActionsCard } from "./PedigreeActionsCard";
 
 export default function PedigreeExplorer() {
   const navigate = useNavigate();
-  const data: PedigreeGraphData = mockPedigree;
+  const [params, setParams] = useSearchParams();
+  const id = params.get("line") ?? params.get("select") ?? "GID_1233";
+  const { data, error } = useAsync(
+    () => referenceService.getPedigreeNeighborhood(id),
+    [id],
+  );
+  if (!data)
+    return (
+      <p className="p-6" role={error ? "alert" : "status"}>
+        {error ?? "Memuat silsilah lokal…"}
+      </p>
+    );
   const selectedNode =
     data.nodes.find((n) => n.id === data.selectedId) ?? data.nodes[0];
 
-  const ancestorCount = data.nodes.filter((n) => n.column === "ancestor").length;
+  const ancestorCount = data.nodes.filter(
+    (n) => n.column === "ancestor",
+  ).length;
   const descendantCount = data.nodes.filter(
     (n) => n.column === "descendant",
   ).length;
@@ -29,7 +42,7 @@ export default function PedigreeExplorer() {
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 lg:grid-cols-[800px_340px]">
         {/* Graph panel */}
         <section className="min-h-0" aria-label="Pedigree graph">
-          <PedigreeGraph data={data} />
+          <PedigreeGraph data={data} onSelect={(line) => setParams({ line })} />
         </section>
 
         {/* Detail panel */}
@@ -37,7 +50,10 @@ export default function PedigreeExplorer() {
           className="flex flex-col gap-4"
           aria-label="Selected line details"
         >
-          <PedigreeDetailCard selectedNode={selectedNode} detail={data.detail} />
+          <PedigreeDetailCard
+            selectedNode={selectedNode}
+            detail={data.detail}
+          />
           <PedigreeActionsCard
             selectedNode={selectedNode}
             onOpenLineProfile={openLineProfile}

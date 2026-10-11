@@ -1,30 +1,7 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-//
-// ─────────────────────────────────────────────────────────────────────────────
-// CANDIDATE STORE PERSISTENCE LAYER  (SQLite, via tauri-plugin-sql)
-//
-// STATUS: The Rust plugin has not been compiled in this environment (no
-// toolchain / cargo present), so run `cargo check` before relying on it
-// end-to-end. The API surface was verified against the authoritative
-// tauri-plugin-sql v2.5.0 source:
-//   - crate name is `tauri-plugin-sql` (feature `sqlite`), NOT a crate called
-//     `tauri-plugin-sqlite`. The old API (Sqlite / Connector / connect_db /
-//     query_all) does not exist in Tauri 2.
-//   - Query execution is owned by the plugin and driven from the frontend via
-//     `@tauri-apps/plugin-sql` (Database.load / .execute / .select / .close),
-//     which invokes the plugin's `plugin:sql|*` commands. The app-side Rust
-//     code below only (a) registers the plugin, (b) registers migrations that
-//     create the `candidates` schema, and (c) preloads the connection so the
-//     pool exists at startup.
-//
-// The database file resolves to the app's config/data directory (BaseDirectory::
-// App) via the plugin's path_mapper — NOT the CWD — so it is stable across runs.
-//
-// Contract implemented by the TS adapter:
-//   src/services/adapters/tauri-sqlite-candidate-store.ts
-// ─────────────────────────────────────────────────────────────────────────────
-
+// GeneField desktop persistence and lifecycle configuration.
+// Read-only reference SQLite is isolated from writable candidate migrations.
 use tauri::Manager;
+mod reference;
 use tauri_plugin_sql::{Builder, Migration, MigrationKind};
 
 /// Apply the same compact scale to text, fixed-pixel layouts, and overlays.
@@ -75,6 +52,12 @@ CREATE TABLE IF NOT EXISTS seed_state (
 );"#,
             kind: MigrationKind::Up,
         },
+        Migration {
+            version: 3,
+            description: "persist authoritative analysis snapshots",
+            sql: "ALTER TABLE candidates ADD COLUMN analysis_json TEXT;",
+            kind: MigrationKind::Up,
+        },
     ]
 }
 
@@ -94,14 +77,17 @@ pub fn run() {
             }
             Ok(())
         })
-        .plugin(tauri_plugin_sql::Builder::new().build())
+        .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(
             Builder::new()
                 .add_migrations(GENEFIELD_DB, migrations())
                 .build(),
         )
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            reference::reference_snapshot
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -49,7 +49,7 @@ export interface CrossAnalysis {
   parentB: string;
   estimates: TraitEstimate[];
   researchOnly: true;
-  rankingEnabled: false;
+  rankingEnabled: boolean;
   modelVersion: string;
   limitations: string[];
 }
@@ -60,7 +60,8 @@ export interface CrossAnalysis {
 export type CandidateSource = "cross-lab" | "breed-designer" | "manual";
 
 /** Review lifecycle for a saved candidate. */
-export type CandidateReviewStatus = "draft" | "review" | "reviewed" | "archived";
+export type CandidateReviewStatus =
+  "draft" | "review" | "reviewed" | "archived";
 
 /**
  * The shared, backend-facing shape of a saved cross candidate. This is the
@@ -69,6 +70,7 @@ export type CandidateReviewStatus = "draft" | "review" | "reviewed" | "archived"
  * (e.g. BreedDesignerCandidate) down to this before persisting.
  */
 export interface SavedCandidate {
+  analysis?: CandidateAnalysis;
   /** Stable unique id. Assigned by the store (uuid) on first save. */
   id: string;
   /** Human name, e.g. "GID_1233 × GID_3494". Uniqueness is enforced by the store. */
@@ -89,6 +91,7 @@ export interface SavedCandidate {
 
 /** Inputs for creating a new saved candidate. The store fills in ids + timestamps. */
 export interface SavedCandidateInput {
+  analysis?: CandidateAnalysis;
   name: string;
   parentA: string;
   parentB: string;
@@ -98,15 +101,18 @@ export interface SavedCandidateInput {
   tags?: string[];
 }
 
+export interface CandidateAnalysis {
+  bundleVersion: "final-v1";
+  predictions: Partial<Record<TraitCode, { value: number; units: string }>>;
+  objectives?: import("@/lib/genefield/types").Objectives;
+  weights?: Partial<Record<TraitCode, number>>;
+  applicationScore?: number;
+  isHistoricalPair: boolean;
+}
+
 /** Patchable fields when updating an existing candidate. */
 export type SavedCandidateUpdate = Partial<
-  Pick<
-    SavedCandidate,
-    | "name"
-    | "notes"
-    | "reviewStatus"
-    | "tags"
-  >
+  Pick<SavedCandidate, "name" | "notes" | "reviewStatus" | "tags">
 >;
 
 /** How the active CandidateStore is backed. Exposed for honest UI labelling. */
@@ -137,7 +143,10 @@ export interface CandidateStore {
   create(input: SavedCandidateInput): Promise<SavedCandidate>;
 
   /** Update mutable fields on an existing candidate. No-op (returns null) if id not found. */
-  update(id: string, patch: SavedCandidateUpdate): Promise<SavedCandidate | null>;
+  update(
+    id: string,
+    patch: SavedCandidateUpdate,
+  ): Promise<SavedCandidate | null>;
 
   /** Delete by id. Returns true if a row was removed. */
   remove(id: string): Promise<boolean>;

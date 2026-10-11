@@ -18,6 +18,7 @@ interface PedigreeToolbarProps {
   onZoomOut: () => void;
   onFit: () => void;
   onReset: () => void;
+  onSearch?: (id: string) => void;
 }
 
 export function PedigreeToolbar({
@@ -27,6 +28,7 @@ export function PedigreeToolbar({
   onZoomOut,
   onFit,
   onReset,
+  onSearch,
 }: PedigreeToolbarProps) {
   const [query, setQuery] = useState("");
 
@@ -39,6 +41,9 @@ export function PedigreeToolbar({
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && query.trim()) onSearch?.(query.trim());
+          }}
           placeholder="Search LINE_ID"
           className="pl-9 bg-card"
           aria-label="Search LINE_ID"
@@ -46,7 +51,10 @@ export function PedigreeToolbar({
       </div>
 
       {/* Ancestor count chip */}
-      <Badge variant="outline" className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-card">
+      <Badge
+        variant="outline"
+        className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-card"
+      >
         <span>
           Ancestors <span className="tabular-nums">{ancestors}</span>
         </span>
@@ -54,7 +62,10 @@ export function PedigreeToolbar({
       </Badge>
 
       {/* Descendant count chip */}
-      <Badge variant="outline" className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-card">
+      <Badge
+        variant="outline"
+        className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-card"
+      >
         <span>
           Descendants <span className="tabular-nums">{descendants}</span>
         </span>

@@ -20,6 +20,8 @@ tauri-build = { version = "2", features = [] }
 [dependencies]
 tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
+tauri-plugin-shell = "2"
+rusqlite = { version = "0.32", features = ["bundled"] }
 # `tauri-plugin-sql` (feature `sqlite`) backs the candidate-store persistence
 # layer. NOTE: no crate named `tauri-plugin-sqlite` exists in Tauri 2 — the
 # real crate is `tauri-plugin-sql` with a `sqlite` driver feature. The API was

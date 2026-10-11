@@ -33,8 +33,18 @@ const NAV: NavItem[] = [
   { label: "Pedigree Explorer", to: "/pedigree", icon: GitFork, enabled: true },
   { label: "Cross Lab", to: "/cross-lab", icon: FlaskConical, enabled: true },
   { label: "Breed Designer", to: "/breed-designer", icon: Dna, enabled: true },
-  { label: "Candidate Workspace", to: "/candidates", icon: FolderKanban, enabled: true },
-  { label: "Model Insights", to: "/model-insights", icon: BarChart3, enabled: true },
+  {
+    label: "Candidate Workspace",
+    to: "/candidates",
+    icon: FolderKanban,
+    enabled: true,
+  },
+  {
+    label: "Model Insights",
+    to: "/model-insights",
+    icon: BarChart3,
+    enabled: true,
+  },
 ];
 
 const BOTTOM_NAV: NavItem[] = [
@@ -66,7 +76,8 @@ const TITLES: Record<string, TitleMeta> = {
   },
   "/breed-designer": {
     title: "Breed Designer",
-    subtitle: "Construct and explore candidate crosses using user-defined criteria.",
+    subtitle:
+      "Construct and explore candidate crosses using user-defined criteria.",
   },
   "/candidates": {
     title: "Candidate Workspace",
@@ -74,7 +85,8 @@ const TITLES: Record<string, TitleMeta> = {
   },
   "/model-insights": {
     title: "Model Insights",
-    subtitle: "Understand model performance, validation protocols, and limitations.",
+    subtitle:
+      "Understand model performance, validation protocols, and limitations.",
   },
   "/settings": {
     title: "Settings",
@@ -114,7 +126,12 @@ function NavButton({ item }: { item: NavItem }) {
               )}
               aria-hidden
             />
-            <Icon className={cn("size-4 shrink-0", isActive && "text-gf-nav-accent")} />
+            <Icon
+              className={cn(
+                "size-4 shrink-0",
+                isActive && "text-gf-nav-accent",
+              )}
+            />
             <span className="truncate">{item.label}</span>
           </>
         )}
@@ -150,7 +167,12 @@ export default function AppShell() {
         <aside className="flex h-full w-[232px] shrink-0 flex-col bg-gf-sidebar-bg p-3 pt-4">
           {/* Brand */}
           <div className="mb-5 flex items-center gap-2.5 px-2">
-            <img src={logoUrl} alt="GeneField" className="size-10 shrink-0" aria-hidden />
+            <img
+              src={logoUrl}
+              alt="GeneField"
+              className="size-10 shrink-0"
+              aria-hidden
+            />
             <span className="text-lg font-semibold tracking-tight text-gf-wordmark">
               GeneField
             </span>
@@ -166,7 +188,10 @@ export default function AppShell() {
           <div className="my-3 h-px bg-border" aria-hidden />
 
           {/* Bottom nav */}
-          <nav className="mt-auto flex flex-col gap-0.5 border-t border-border pt-3" aria-label="Secondary">
+          <nav
+            className="mt-auto flex flex-col gap-0.5 border-t border-border pt-3"
+            aria-label="Secondary"
+          >
             {BOTTOM_NAV.map((item) => (
               <NavButton key={item.to} item={item} />
             ))}
@@ -187,12 +212,16 @@ export default function AppShell() {
 
             <div className="flex shrink-0 items-center gap-2">
               <span className="inline-flex h-7 items-center rounded-lg border border-gf-chip-border bg-gf-chip-bg px-2.5 text-sm text-foreground shadow-[var(--gf-card-shadow)]">
-                <span className="mr-1.5 text-xs text-muted-foreground">Dataset</span>
+                <span className="mr-1.5 text-xs text-muted-foreground">
+                  Dataset
+                </span>
                 INIA Uruguay
               </span>
               <span className="inline-flex h-7 items-center rounded-lg border border-gf-chip-border bg-gf-chip-bg px-2.5 text-sm text-foreground shadow-[var(--gf-card-shadow)]">
-                <span className="mr-1.5 text-xs text-muted-foreground">Model</span>
-                <span className="font-mono text-xs">research-v1</span>
+                <span className="mr-1.5 text-xs text-muted-foreground">
+                  Model
+                </span>
+                <span className="font-mono text-xs">final-v1</span>
               </span>
             </div>
           </header>

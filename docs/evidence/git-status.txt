@@ -1,0 +1,53 @@
+ M .gitignore
+ M package-lock.json
+ M package.json
+ M src-tauri/Cargo.lock
+ M src-tauri/Cargo.toml
+ M src-tauri/capabilities/default.json
+ M src-tauri/src/lib.rs
+ M src-tauri/tauri.conf.json
+ M src/components/layout/AppShell.tsx
+ M src/lib/tauri-runtime.ts
+ M src/main.tsx
+ D src/mocks/breed-designer.ts
+ D src/mocks/candidates.ts
+ D src/mocks/lines.ts
+ D src/mocks/modelInsights.ts
+ D src/mocks/pedigree.ts
+ D src/mocks/settings.ts
+ M src/pages/About/About.tsx
+ M src/pages/BreedDesigner/BreedDesigner.tsx
+ M src/pages/BreedDesigner/BreedDesignerSidebar.tsx
+ M src/pages/BreedDesigner/CandidateTable.tsx
+ M src/pages/BreedDesigner/types.ts
+ M src/pages/CandidateWorkspace/CandidateWorkspace.tsx
+ M src/pages/CandidateWorkspace/CandidateWorkspacePanels.tsx
+ M src/pages/CrossLab/CrossLab.tsx
+ M src/pages/LineExplorer/LineExplorer.tsx
+ M src/pages/LineExplorer/LineExplorerDetailPanel.tsx
+ M src/pages/LineExplorer/LineExplorerToolbar.tsx
+ M src/pages/ModelInsights/ModelInsights.tsx
+ M src/pages/Overview/Overview.tsx
+ M src/pages/PedigreeExplorer/PedigreeExplorer.tsx
+ M src/pages/PedigreeExplorer/PedigreeGraph.tsx
+ M src/pages/PedigreeExplorer/PedigreeToolbar.tsx
+ M src/pages/Settings/Settings.tsx
+ M src/services/adapters/memory-candidate-store.ts
+ D src/services/adapters/mock-data-service.ts
+ M src/services/adapters/tauri-sqlite-candidate-store.test.ts
+ M src/services/adapters/tauri-sqlite-candidate-store.ts
+ M src/services/index.ts
+ M src/types/research.ts
+ M src/types/settings.ts
+ M vite.config.ts
+?? docs/
+?? scripts/
+?? src-tauri/resources/
+?? src-tauri/src/reference.rs
+?? src/lib/genefield/
+?? src/lib/tauri-runtime.test.ts
+?? src/lib/use-async.ts
+?? src/services/inference-service.ts
+?? src/services/reference-service.test.ts
+?? src/services/reference-service.ts
+?? vitest.config.ts

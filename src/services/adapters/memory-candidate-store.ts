@@ -40,7 +40,10 @@ export class MemoryCandidateStore implements CandidateStore {
   async seedDemo(items: SavedCandidateInput[]): Promise<void> {
     if (this.rows.size > 0) return;
     for (const item of items) {
-      await this.create({ ...item, tags: Array.from(new Set(["demo", ...(item.tags ?? [])])) });
+      await this.create({
+        ...item,
+        tags: Array.from(new Set(["demo", ...(item.tags ?? [])])),
+      });
     }
   }
 
@@ -79,6 +82,7 @@ export class MemoryCandidateStore implements CandidateStore {
       tags: (input.tags ?? []).map((t) => t.trim()).filter(Boolean),
       createdAt: now,
       updatedAt: now,
+      analysis: input.analysis ? structuredClone(input.analysis) : undefined,
     };
     this.rows.set(row.id, row);
     this.seqBy.set(row.id, ++this.seq);
@@ -96,7 +100,9 @@ export class MemoryCandidateStore implements CandidateStore {
       name: patch.name?.trim() || current.name,
       notes: patch.notes ?? current.notes,
       reviewStatus: patch.reviewStatus ?? current.reviewStatus,
-      tags: patch.tags ? patch.tags.map((t) => t.trim()).filter(Boolean) : current.tags,
+      tags: patch.tags
+        ? patch.tags.map((t) => t.trim()).filter(Boolean)
+        : current.tags,
       updatedAt: new Date().toISOString(),
     };
     this.rows.set(id, next);

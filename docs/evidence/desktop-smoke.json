@@ -1,0 +1,2237 @@
+{
+  "scope": "Tauri development WebView2, actual native IPC and sidecar; no installer claim",
+  "checks": [
+    {
+      "name": "native Tauri WebView",
+      "value": true
+    },
+    {
+      "name": "Overview actual dataset counts",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nOverview\n\nExplore rice breeding data and manage your research workspace.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nRecorded lines\n20,628\nPhenotype observations\n91,636\nGenotyped lines\n965\nSNP markers\n61,260\nDATASET OVERVIEW\n\nDataset source\n\nINIA Uruguay\n\nData categories\n\nPedigree\nSNP genotypes\nPhenotypes: GY · DTF · NO · LB\n\nGenotype coverage\n\n965 of 20,628 lines · 4.7%\n\nPhenotype coverage\n\n19,447 of 20,628 lines · 94.3%\n\nPedigree availability\n\n18,039 of 20,628 lines · 87.4%\n\nQUICK ACTIONS\nExplore Lines\nOpen Pedigree Explorer\nAnalyze Cross\nOpen Breed Designer\nRESEARCH WORKSPACE\n\n0\n\nSaved candidates\n\n0\n\nDraft candidates\n\n0\n\nAwaiting review\n\nRECENT LOCAL ACTIVITY\n\nSYSTEM STATUS\nOffline\nLocal\nModel bundle\nfinal-v1\nScientific review\nSign-off pending\nPredictive ranking\nEnabled for eligible parents"
+    },
+    {
+      "name": "Line search and historical profile",
+      "value": "GID_10039\nHistorical observations\nGenotype availability\nAvailable\nPedigree availability\nAvailable\nPhenotype observations\n13\nKnown parents\nGID_12132 × GID_10396\n\nHISTORICAL PHENOTYPE SUMMARY\n\nGrain Yield (kg/ha)\n8,512.955\nDays to Flowering (days)\n112.2\nStem Rot (severity rating)\n5.1\nLeaf Blast (severity rating)\n—\n\nDATA PROVENANCE\n\nINIA Uruguay dataset. Historical line means from recorded observations.\n\nUse as Parent A\nUse as Parent B\nView Pedigree"
+    },
+    {
+      "name": "Pedigree actual GID_2980/GID_2052 parents",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nPedigree Explorer\n\nInvestigate recorded parent–offspring relationships.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nAncestors 0\nDescendants 0\nReset Graph\nGID_1\nGID_2980\nGID_2052\nANCESTORS · −2\nPARENTS · −1\nSELECTED\nDESCENDANTS · +1\nSelected\nGenotype available\nNo genotype\nMissing record\nRecorded relationships only · no inference from SNP similarity\nGID_1\nRecorded parents\nGID_2980, GID_2052\nRecorded descendants\n0\nGenotype availability\nNot available\nPhenotype availability\nAvailable\n\nExample data. Edges show recorded parent–offspring relationships only.\n\nOpen Line Profile\nUse as Parent A\nUse as Parent B\nAncestors: 0. Descendants: 0."
+    },
+    {
+      "name": "Cross Lab real four-trait output and historical lookup",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nCross Lab\n\nExplore parent combinations and experimental trait estimates.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nPARENT A\nGenotype available\nView line profile\nPARENT B\nGenotype available\nView line profile\nAnalyze Cross\nReset\nTwo distinct genotyped parent lines are required.\nHISTORICAL EVIDENCE\nHistorical pedigree registry\nHistorical cross record\nNot recorded in historical registry\nRecorded descendant count\nNot supplied by pair lookup\nPhenotype observations\nSee historical line profiles\nTraining-parent membership\nA · Yes (selected traits)\nB · Yes (selected traits)\nModeled Cross-level Estimates\nAnalysis complete\nResearch-only · Not validated for breeding decisions\nTRAIT\tESTIMATE\tUNIT\tPREDICTIVE RANKING\nGrain Yield (GY)\t7,891.224\tkg/ha\tMaximize\nDays to Flowering (DTF)\t98.633\tdays\tEarlier / Later\nStem Rot (NO)\t4.591\tmodified SES IRRI rating points\tMinimize\nLeaf Blast (LB)\t0.883\tSES IRRI rating points\tMinimize\n\nHistorical-descendant cross-level modeled estimates\n\nRepresented INIA germplasm; no guaranteed offspring phenotype.\n\nEstimates describe modeled historical descendant phenotype summaries, not F1 performance or guaranteed cross outcomes.\n\nSave Candidate\nAdd Research Note\nView Parent Pedigree\nPARENT COMPARISON\nParent A\nGID_10039\nGenotype\nAvailable\nPhenotype\nAvailable\nPedigree\nAvailable\nParent B\nGID_10125\nGenotype\nAvailable\nPhenotype\nAvailable\nPedigree\nAvailable\nMODEL INFORMATION\nBundle\nfinal-v1\nScientific review\nUnreviewed\nUsage\nResearch-only\nPredictive ranking\nEnabled for represented parents\nInference\nLocal / Offline\nSCIENTIFIC LIMITATIONS\nPredictions are experimental.\nGeneralization to unseen parents is not established.\nNo calibrated uncertainty intervals are available.\nEstimates must not be interpreted as validated breeding recommendations."
+    },
+    {
+      "name": "Candidate Workspace save and reopen real snapshot",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nCandidate Workspace\n\nOrganize candidate crosses and document research decisions.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nStatus\nAll\nSort\nCreated: newest\nList View\nCreate\nCANDIDATE NAME\tPARENT A\tPARENT B\tREVIEW STATUS\tTAGS\tLAST UPDATED\tACTIONS\nIntegration smoke 2026-10-11T08:55:23.577Z\tGID_10039\tGID_10125\tDraft\t\npilot\n\t2026-10-11\t\nIntegration smoke 2026-10-11T08:55:23.577Z\nParent pair\nGID_10039 × GID_10125\nReview status\nDraft\nModel bundle\nfinal-v1\nDate created\n2026-10-11\nLast updated\n2026-10-11\nRESEARCH NOTES\n\nNo research notes yet.\n\nSAVED EXPERIMENTAL ESTIMATES\n\nGY: 7891.2235 kg/ha\n\nDTF: 98.6334 days\n\nNO: 4.5914 modified SES IRRI rating points\n\nLB: 0.8834 SES IRRI rating points\n\nFor exploratory research review only.\n\nREVIEW HISTORY\nCurrent status: Draft\n2026-10-11\nCandidate created\n2026-10-11\nEdit Notes\nOpen in Cross Lab\nView Pedigree\nExport Candidate\nDelete Candidate\n\nStored locally in a SQLite workspace on this device."
+    },
+    {
+      "name": "Cross Lab recorded historical pair allowed",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nCross Lab\n\nExplore parent combinations and experimental trait estimates.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nPARENT A\nGenotype available\nView line profile\nPARENT B\nGenotype available\nView line profile\nAnalyze Cross\nReset\nTwo distinct genotyped parent lines are required.\nHISTORICAL EVIDENCE\nHistorical pedigree registry\nHistorical cross record\nRecorded in historical registry\nRecorded descendant count\nNot supplied by pair lookup\nPhenotype observations\nSee historical line profiles\nTraining-parent membership\nA · Yes (selected traits)\nB · Yes (selected traits)\nModeled Cross-level Estimates\nAnalysis complete\nResearch-only · Not validated for breeding decisions\nTRAIT\tESTIMATE\tUNIT\tPREDICTIVE RANKING\nGrain Yield (GY)\t8,099.957\tkg/ha\tMaximize\nDays to Flowering (DTF)\t99.962\tdays\tEarlier / Later\nStem Rot (NO)\t4.522\tmodified SES IRRI rating points\tMinimize\nLeaf Blast (LB)\t0.383\tSES IRRI rating points\tMinimize\n\nHistorical-descendant cross-level modeled estimates\n\nRepresented INIA germplasm; no guaranteed offspring phenotype.\n\nEstimates describe modeled historical descendant phenotype summaries, not F1 performance or guaranteed cross outcomes.\n\nSave Candidate\nAdd Research Note\nView Parent Pedigree\nPARENT COMPARISON\nParent A\nGID_10039\nGenotype\nAvailable\nPhenotype\nAvailable\nPedigree\nAvailable\nParent B\nGID_8938\nGenotype\nAvailable\nPhenotype\nAvailable\nPedigree\nAvailable\nMODEL INFORMATION\nBundle\nfinal-v1\nScientific review\nUnreviewed\nUsage\nResearch-only\nPredictive ranking\nEnabled for represented parents\nInference\nLocal / Offline\nSCIENTIFIC LIMITATIONS\nPredictions are experimental.\nGeneralization to unseen parents is not established.\nNo calibrated uncertainty intervals are available.\nEstimates must not be interpreted as validated breeding recommendations."
+    },
+    {
+      "name": "Breed Designer GY maximize native UI",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n3913 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 91 lines\n2\nConfigure Cross Generation\nGY weight (0 = omit)\nDTF weight (0 = omit)\nNO weight (0 = omit)\nLB weight (0 = omit)\nDTF priority\nPilih prioritas\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nMaximum candidate count\nGenerate Candidate Pairs\n3\nCandidate Results\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tRESEARCH\nSTATUS\tACTIONS\nC-001\nScore: 1.0000\n\nGY: 9677.96 kg/ha\n\tGID_10021\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-002\nScore: 0.9948\n\nGY: 9658.18 kg/ha\n\tGID_1350\tGID_5083\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-003\nScore: 0.9895\n\nGY: 9638.00 kg/ha\n\tGID_1350\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-004\nScore: 0.9822\n\nGY: 9609.92 kg/ha\n\tGID_19535\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-005\nScore: 0.9742\n\nGY: 9579.68 kg/ha\n\tGID_1350\tGID_13520\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-006\nScore: 0.9567\n\nGY: 9512.66 kg/ha\n\tGID_11055\tGID_19535\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-007\nScore: 0.9521\n\nGY: 9495.31 kg/ha\n\tGID_13648\tGID_2052\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-008\nScore: 0.9517\n\nGY: 9493.81 kg/ha\n\tGID_13648\tGID_19535\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-009\nScore: 0.9515\n\nGY: 9492.94 kg/ha\n\tGID_3497\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-010\nScore: 0.9491\n\nGY: 9483.71 kg/ha\n\tGID_1221\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-011\nScore: 0.9414\n\nGY: 9454.38 kg/ha\n\tGID_18855\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-012\nScore: 0.9299\n\nGY: 9410.44 kg/ha\n\tGID_20605\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-013\nScore: 0.9280\n\nGY: 9403.37 kg/ha\n\tGID_12203\tGID_3497\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-014\nScore: 0.9238\n\nGY: 9387.51 kg/ha\n\tGID_10452\tGID_1221\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-015\nScore: 0.9201\n\nGY: 9373.12 kg/ha\n\tGID_1350\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-016\nScore: 0.9196\n\nGY: 9371.33 kg/ha\n\tGID_10976\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-017\nScore: 0.9187\n\nGY: 9368.01 kg/ha\n\tGID_11055\tGID_1221\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-018\nScore: 0.9184\n\nGY: 9366.58 kg/ha\n\tGID_1276\tGID_13648\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-019\nScore: 0.9152\n\nGY: 9354.62 kg/ha\n\tGID_3540\tGID_7804\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-020\nScore: 0.9138\n\nGY: 9349.18 kg/ha\n\tGID_10976\tGID_3497\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-021\nScore: 0.9084\n\nGY: 9328.57 kg/ha\n\tGID_12516\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-022\nScore: 0.9057\n\nGY: 9318.19 kg/ha\n\tGID_12516\tGID_19321\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-023\nScore: 0.9052\n\nGY: 9316.47 kg/ha\n\tGID_1350\tGID_8990\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-024\nScore: 0.9034\n\nGY: 9309.37 kg/ha\n\tGID_1350\tGID_9411\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-025\nScore: 0.9029\n\nGY: 9307.81 kg/ha\n\tGID_1221\tGID_12524\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-026\nScore: 0.9026\n\nGY: 9306.46 kg/ha\n\tGID_12516\tGID_3497\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-027\nScore: 0.9025\n\nGY: 9306.13 kg/ha\n\tGID_1350\tGID_3497\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-028\nScore: 0.9023\n\nGY: 9305.42 kg/ha\n\tGID_3497\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-029\nScore: 0.9017\n\nGY: 9302.90 kg/ha\n\tGID_11055\tGID_3497\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-030\nScore: 0.9015\n\nGY: 9302.17 kg/ha\n\tGID_12203\tGID_19321\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-031\nScore: 0.9009\n\nGY: 9300.14 kg/ha\n\tGID_14902\tGID_19321\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-032\nScore: 0.9001\n\nGY: 9296.91 kg/ha\n\tGID_16416\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-033\nScore: 0.8999\n\nGY: 9296.34 kg/ha\n\tGID_1350\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-034\nScore: 0.8981\n\nGY: 9289.33 kg/ha\n\tGID_1221\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-035\nScore: 0.8979\n\nGY: 9288.38 kg/ha\n\tGID_19321\tGID_8234\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-036\nScore: 0.8955\n\nGY: 9279.57 kg/ha\n\tGID_12203\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-037\nScore: 0.8952\n\nGY: 9278.37 kg/ha\n\tGID_3497\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-038\nScore: 0.8930\n\nGY: 9269.91 kg/ha\n\tGID_12524\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-039\nScore: 0.8918\n\nGY: 9265.12 kg/ha\n\tGID_13311\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-040\nScore: 0.8877\n\nGY: 9249.55 kg/ha\n\tGID_20605\tGID_8234\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-041\nScore: 0.8859\n\nGY: 9242.78 kg/ha\n\tGID_1350\tGID_4519\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-042\nScore: 0.8851\n\nGY: 9239.80 kg/ha\n\tGID_13648\tGID_7208\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-043\nScore: 0.8850\n\nGY: 9239.23 kg/ha\n\tGID_4519\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-044\nScore: 0.8848\n\nGY: 9238.64 kg/ha\n\tGID_1350\tGID_19321\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-045\nScore: 0.8843\n\nGY: 9236.69 kg/ha\n\tGID_10976\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-046\nScore: 0.8834\n\nGY: 9233.39 kg/ha\n\tGID_16416\tGID_8990\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-047\nScore: 0.8818\n\nGY: 9227.14 kg/ha\n\tGID_10976\tGID_1221\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-048\nScore: 0.8809\n\nGY: 9223.55 kg/ha\n\tGID_10125\tGID_19321\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-049\nScore: 0.8801\n\nGY: 9220.59 kg/ha\n\tGID_1221\tGID_13648\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-050\nScore: 0.8799\n\nGY: 9219.84 kg/ha\n\tGID_12516\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n91\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "DTF requires explicit objective",
+      "value": true
+    },
+    {
+      "name": "DTF minimize native UI",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n4186 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 94 lines\n2\nConfigure Cross Generation\nGY weight (0 = omit)\nDTF weight (0 = omit)\nNO weight (0 = omit)\nLB weight (0 = omit)\nDTF priority\nLebih cepat berbunga\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nMaximum candidate count\nGenerate Candidate Pairs\n3\nCandidate Results\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tRESEARCH\nSTATUS\tACTIONS\nC-001\nScore: 1.0000\n\nDTF: 93.93 days\n\tGID_3497\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-002\nScore: 0.9827\n\nDTF: 94.26 days\n\tGID_10452\tGID_20605\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-003\nScore: 0.9805\n\nDTF: 94.30 days\n\tGID_11587\tGID_12203\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-004\nScore: 0.9762\n\nDTF: 94.38 days\n\tGID_12203\tGID_3497\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-005\nScore: 0.9726\n\nDTF: 94.45 days\n\tGID_3497\tGID_7018\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-006\nScore: 0.9706\n\nDTF: 94.49 days\n\tGID_18855\tGID_9673\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-007\nScore: 0.9644\n\nDTF: 94.60 days\n\tGID_10452\tGID_1221\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-008\nScore: 0.9643\n\nDTF: 94.61 days\n\tGID_7106\tGID_8990\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-009\nScore: 0.9618\n\nDTF: 94.65 days\n\tGID_11587\tGID_4437\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-010\nScore: 0.9578\n\nDTF: 94.73 days\n\tGID_12516\tGID_4519\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-011\nScore: 0.9561\n\nDTF: 94.76 days\n\tGID_19535\tGID_3745\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-012\nScore: 0.9503\n\nDTF: 94.87 days\n\tGID_20053\tGID_3745\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-013\nScore: 0.9490\n\nDTF: 94.90 days\n\tGID_18855\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-014\nScore: 0.9487\n\nDTF: 94.90 days\n\tGID_10587\tGID_12122\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-015\nScore: 0.9473\n\nDTF: 94.93 days\n\tGID_12203\tGID_3745\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-016\nScore: 0.9462\n\nDTF: 94.95 days\n\tGID_20053\tGID_7467\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-017\nScore: 0.9458\n\nDTF: 94.96 days\n\tGID_12203\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-018\nScore: 0.9450\n\nDTF: 94.97 days\n\tGID_18855\tGID_7106\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-019\nScore: 0.9416\n\nDTF: 95.04 days\n\tGID_14790\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-020\nScore: 0.9396\n\nDTF: 95.07 days\n\tGID_11587\tGID_14790\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-021\nScore: 0.9386\n\nDTF: 95.09 days\n\tGID_11587\tGID_1221\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-022\nScore: 0.9383\n\nDTF: 95.10 days\n\tGID_11587\tGID_19535\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-023\nScore: 0.9346\n\nDTF: 95.17 days\n\tGID_7467\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-024\nScore: 0.9326\n\nDTF: 95.21 days\n\tGID_11587\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-025\nScore: 0.9321\n\nDTF: 95.22 days\n\tGID_11333\tGID_19535\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-026\nScore: 0.9315\n\nDTF: 95.23 days\n\tGID_18855\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-027\nScore: 0.9311\n\nDTF: 95.24 days\n\tGID_19321\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-028\nScore: 0.9310\n\nDTF: 95.24 days\n\tGID_10976\tGID_1221\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-029\nScore: 0.9299\n\nDTF: 95.26 days\n\tGID_10976\tGID_3497\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-030\nScore: 0.9271\n\nDTF: 95.31 days\n\tGID_19321\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-031\nScore: 0.9257\n\nDTF: 95.34 days\n\tGID_20605\tGID_8990\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-032\nScore: 0.9253\n\nDTF: 95.34 days\n\tGID_3497\tGID_7106\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-033\nScore: 0.9249\n\nDTF: 95.35 days\n\tGID_3497\tGID_8990\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-034\nScore: 0.9244\n\nDTF: 95.36 days\n\tGID_11587\tGID_14770\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-035\nScore: 0.9231\n\nDTF: 95.39 days\n\tGID_12516\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-036\nScore: 0.9201\n\nDTF: 95.44 days\n\tGID_20053\tGID_4519\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-037\nScore: 0.9198\n\nDTF: 95.45 days\n\tGID_18754\tGID_8154\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-038\nScore: 0.9193\n\nDTF: 95.46 days\n\tGID_10976\tGID_19535\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-039\nScore: 0.9192\n\nDTF: 95.46 days\n\tGID_8520\tGID_8990\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-040\nScore: 0.9188\n\nDTF: 95.47 days\n\tGID_12203\tGID_20605\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-041\nScore: 0.9183\n\nDTF: 95.48 days\n\tGID_16416\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-042\nScore: 0.9180\n\nDTF: 95.48 days\n\tGID_12203\tGID_7467\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-043\nScore: 0.9177\n\nDTF: 95.49 days\n\tGID_20053\tGID_20605\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-044\nScore: 0.9160\n\nDTF: 95.52 days\n\tGID_7208\tGID_8154\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-045\nScore: 0.9158\n\nDTF: 95.53 days\n\tGID_8154\tGID_9411\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-046\nScore: 0.9157\n\nDTF: 95.53 days\n\tGID_10976\tGID_4437\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-047\nScore: 0.9157\n\nDTF: 95.53 days\n\tGID_19321\tGID_7106\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-048\nScore: 0.9151\n\nDTF: 95.54 days\n\tGID_10396\tGID_19535\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-049\nScore: 0.9148\n\nDTF: 95.54 days\n\tGID_3745\tGID_7018\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-050\nScore: 0.9144\n\nDTF: 95.55 days\n\tGID_11587\tGID_1276\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n94\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "DTF maximize native UI",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n4186 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 94 lines\n2\nConfigure Cross Generation\nGY weight (0 = omit)\nDTF weight (0 = omit)\nNO weight (0 = omit)\nLB weight (0 = omit)\nDTF priority\nLebih lambat berbunga\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nMaximum candidate count\nGenerate Candidate Pairs\n3\nCandidate Results\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tRESEARCH\nSTATUS\tACTIONS\nC-001\nScore: 1.0000\n\nDTF: 112.87 days\n\tGID_1350\tGID_13520\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-002\nScore: 0.9739\n\nDTF: 112.37 days\n\tGID_1350\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-003\nScore: 0.9728\n\nDTF: 112.35 days\n\tGID_1350\tGID_9411\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-004\nScore: 0.8815\n\nDTF: 110.62 days\n\tGID_1350\tGID_3723\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-005\nScore: 0.8807\n\nDTF: 110.61 days\n\tGID_1233\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-006\nScore: 0.8776\n\nDTF: 110.55 days\n\tGID_1350\tGID_391\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-007\nScore: 0.8509\n\nDTF: 110.04 days\n\tGID_1350\tGID_5083\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-008\nScore: 0.8225\n\nDTF: 109.51 days\n\tGID_16780\tGID_2770\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-009\nScore: 0.8143\n\nDTF: 109.35 days\n\tGID_12700\tGID_16780\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-010\nScore: 0.8141\n\nDTF: 109.35 days\n\tGID_10021\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-011\nScore: 0.8083\n\nDTF: 109.24 days\n\tGID_1233\tGID_9162\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-012\nScore: 0.8051\n\nDTF: 109.18 days\n\tGID_1233\tGID_13520\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-013\nScore: 0.8007\n\nDTF: 109.09 days\n\tGID_1233\tGID_7804\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-014\nScore: 0.7922\n\nDTF: 108.93 days\n\tGID_12700\tGID_2770\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-015\nScore: 0.7888\n\nDTF: 108.87 days\n\tGID_13324\tGID_16780\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-016\nScore: 0.7854\n\nDTF: 108.80 days\n\tGID_1233\tGID_5083\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-017\nScore: 0.7665\n\nDTF: 108.45 days\n\tGID_13324\tGID_2770\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-018\nScore: 0.7491\n\nDTF: 108.12 days\n\tGID_1233\tGID_391\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-019\nScore: 0.7465\n\nDTF: 108.07 days\n\tGID_1233\tGID_9411\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-020\nScore: 0.7450\n\nDTF: 108.04 days\n\tGID_12122\tGID_1233\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-021\nScore: 0.7399\n\nDTF: 107.94 days\n\tGID_1350\tGID_9162\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-022\nScore: 0.7390\n\nDTF: 107.93 days\n\tGID_1350\tGID_3540\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-023\nScore: 0.7327\n\nDTF: 107.81 days\n\tGID_11587\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-024\nScore: 0.7286\n\nDTF: 107.73 days\n\tGID_1350\tGID_19535\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-025\nScore: 0.7286\n\nDTF: 107.73 days\n\tGID_1350\tGID_7467\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-026\nScore: 0.7233\n\nDTF: 107.63 days\n\tGID_1350\tGID_3521\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-027\nScore: 0.7218\n\nDTF: 107.60 days\n\tGID_1350\tGID_4437\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-028\nScore: 0.7198\n\nDTF: 107.56 days\n\tGID_1350\tGID_2770\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-029\nScore: 0.7188\n\nDTF: 107.54 days\n\tGID_10396\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-030\nScore: 0.7161\n\nDTF: 107.49 days\n\tGID_1350\tGID_3745\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-031\nScore: 0.7146\n\nDTF: 107.46 days\n\tGID_1350\tGID_16780\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-032\nScore: 0.7140\n\nDTF: 107.45 days\n\tGID_1350\tGID_14770\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-033\nScore: 0.7139\n\nDTF: 107.45 days\n\tGID_1350\tGID_14790\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-034\nScore: 0.7121\n\nDTF: 107.42 days\n\tGID_1350\tGID_7208\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-035\nScore: 0.7105\n\nDTF: 107.38 days\n\tGID_1233\tGID_7208\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-036\nScore: 0.7096\n\nDTF: 107.37 days\n\tGID_1233\tGID_16825\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-037\nScore: 0.7082\n\nDTF: 107.34 days\n\tGID_1233\tGID_5306\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-038\nScore: 0.7082\n\nDTF: 107.34 days\n\tGID_1233\tGID_7467\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-039\nScore: 0.7075\n\nDTF: 107.33 days\n\tGID_13324\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-040\nScore: 0.7062\n\nDTF: 107.30 days\n\tGID_1350\tGID_343\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-041\nScore: 0.7036\n\nDTF: 107.26 days\n\tGID_3723\tGID_5878\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-042\nScore: 0.7031\n\nDTF: 107.24 days\n\tGID_12700\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-043\nScore: 0.7029\n\nDTF: 107.24 days\n\tGID_1350\tGID_7783\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-044\nScore: 0.7010\n\nDTF: 107.20 days\n\tGID_1233\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-045\nScore: 0.7007\n\nDTF: 107.20 days\n\tGID_12713\tGID_1350\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-046\nScore: 0.6999\n\nDTF: 107.18 days\n\tGID_1350\tGID_3921\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-047\nScore: 0.6990\n\nDTF: 107.17 days\n\tGID_1350\tGID_20053\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-048\nScore: 0.6989\n\nDTF: 107.17 days\n\tGID_1233\tGID_3745\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-049\nScore: 0.6968\n\nDTF: 107.13 days\n\tGID_1350\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-050\nScore: 0.6937\n\nDTF: 107.07 days\n\tGID_1350\tGID_13512\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n94\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "NO minimize native UI",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n2323 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 71 lines\n2\nConfigure Cross Generation\nGY weight (0 = omit)\nDTF weight (0 = omit)\nNO weight (0 = omit)\nLB weight (0 = omit)\nDTF priority\nLebih lambat berbunga\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nMaximum candidate count\nGenerate Candidate Pairs\n3\nCandidate Results\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tRESEARCH\nSTATUS\tACTIONS\nC-001\nScore: 1.0000\n\nNO: 3.49 modified SES IRRI rating points\n\tGID_15680\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-002\nScore: 0.9862\n\nNO: 3.54 modified SES IRRI rating points\n\tGID_15680\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-003\nScore: 0.9824\n\nNO: 3.55 modified SES IRRI rating points\n\tGID_15680\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-004\nScore: 0.9739\n\nNO: 3.58 modified SES IRRI rating points\n\tGID_12203\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-005\nScore: 0.9717\n\nNO: 3.59 modified SES IRRI rating points\n\tGID_13520\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-006\nScore: 0.9681\n\nNO: 3.61 modified SES IRRI rating points\n\tGID_14790\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-007\nScore: 0.9583\n\nNO: 3.64 modified SES IRRI rating points\n\tGID_15680\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-008\nScore: 0.9576\n\nNO: 3.65 modified SES IRRI rating points\n\tGID_15680\tGID_20053\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-009\nScore: 0.9497\n\nNO: 3.67 modified SES IRRI rating points\n\tGID_10452\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-010\nScore: 0.9420\n\nNO: 3.70 modified SES IRRI rating points\n\tGID_10159\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-011\nScore: 0.9344\n\nNO: 3.73 modified SES IRRI rating points\n\tGID_15680\tGID_16416\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-012\nScore: 0.9335\n\nNO: 3.74 modified SES IRRI rating points\n\tGID_15680\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-013\nScore: 0.9313\n\nNO: 3.74 modified SES IRRI rating points\n\tGID_14770\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-014\nScore: 0.9240\n\nNO: 3.77 modified SES IRRI rating points\n\tGID_15680\tGID_6687\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-015\nScore: 0.9225\n\nNO: 3.78 modified SES IRRI rating points\n\tGID_15680\tGID_5083\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-016\nScore: 0.9198\n\nNO: 3.79 modified SES IRRI rating points\n\tGID_12203\tGID_13520\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-017\nScore: 0.9189\n\nNO: 3.79 modified SES IRRI rating points\n\tGID_13520\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-018\nScore: 0.9148\n\nNO: 3.81 modified SES IRRI rating points\n\tGID_12203\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-019\nScore: 0.9143\n\nNO: 3.81 modified SES IRRI rating points\n\tGID_15680\tGID_3723\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-020\nScore: 0.9078\n\nNO: 3.83 modified SES IRRI rating points\n\tGID_15680\tGID_9411\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-021\nScore: 0.9059\n\nNO: 3.84 modified SES IRRI rating points\n\tGID_15680\tGID_18855\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-022\nScore: 0.9018\n\nNO: 3.85 modified SES IRRI rating points\n\tGID_11055\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-023\nScore: 0.9003\n\nNO: 3.86 modified SES IRRI rating points\n\tGID_10125\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-024\nScore: 0.8994\n\nNO: 3.86 modified SES IRRI rating points\n\tGID_15680\tGID_9844\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-025\nScore: 0.8994\n\nNO: 3.86 modified SES IRRI rating points\n\tGID_12516\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-026\nScore: 0.8941\n\nNO: 3.88 modified SES IRRI rating points\n\tGID_5190\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-027\nScore: 0.8937\n\nNO: 3.88 modified SES IRRI rating points\n\tGID_11333\tGID_12203\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-028\nScore: 0.8937\n\nNO: 3.88 modified SES IRRI rating points\n\tGID_10452\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-029\nScore: 0.8918\n\nNO: 3.89 modified SES IRRI rating points\n\tGID_10039\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-030\nScore: 0.8897\n\nNO: 3.90 modified SES IRRI rating points\n\tGID_15680\tGID_343\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-031\nScore: 0.8891\n\nNO: 3.90 modified SES IRRI rating points\n\tGID_12524\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-032\nScore: 0.8852\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_14790\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-033\nScore: 0.8849\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_10452\tGID_13520\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-034\nScore: 0.8838\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_14770\tGID_20053\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-035\nScore: 0.8836\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_15680\tGID_2553\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-036\nScore: 0.8826\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_12700\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-037\nScore: 0.8817\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_15680\tGID_9673\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-038\nScore: 0.8816\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_12203\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-039\nScore: 0.8803\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_15680\tGID_16780\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-040\nScore: 0.8798\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_13324\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-041\nScore: 0.8796\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_12906\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-042\nScore: 0.8784\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_15680\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-043\nScore: 0.8780\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_15680\tGID_8154\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-044\nScore: 0.8758\n\nNO: 3.95 modified SES IRRI rating points\n\tGID_12203\tGID_12516\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-045\nScore: 0.8742\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_12203\tGID_4437\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-046\nScore: 0.8742\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_12203\tGID_13512\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-047\nScore: 0.8737\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_10159\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-048\nScore: 0.8730\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_12516\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-049\nScore: 0.8720\n\nNO: 3.97 modified SES IRRI rating points\n\tGID_15680\tGID_2770\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-050\nScore: 0.8713\n\nNO: 3.97 modified SES IRRI rating points\n\tGID_4462\tGID_5190\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n71\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "LB minimize native UI",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n881 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 45 lines\n2\nConfigure Cross Generation\nGY weight (0 = omit)\nDTF weight (0 = omit)\nNO weight (0 = omit)\nLB weight (0 = omit)\nDTF priority\nLebih lambat berbunga\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nMaximum candidate count\nGenerate Candidate Pairs\n3\nCandidate Results\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tRESEARCH\nSTATUS\tACTIONS\nC-001\nScore: 1.0000\n\nLB: 0.22 SES IRRI rating points\n\tGID_10125\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-002\nScore: 0.9895\n\nLB: 0.26 SES IRRI rating points\n\tGID_11055\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-003\nScore: 0.9843\n\nLB: 0.28 SES IRRI rating points\n\tGID_10452\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-004\nScore: 0.9757\n\nLB: 0.32 SES IRRI rating points\n\tGID_12524\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-005\nScore: 0.9745\n\nLB: 0.32 SES IRRI rating points\n\tGID_8938\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-006\nScore: 0.9667\n\nLB: 0.35 SES IRRI rating points\n\tGID_12524\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-007\nScore: 0.9656\n\nLB: 0.36 SES IRRI rating points\n\tGID_10452\tGID_12524\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-008\nScore: 0.9645\n\nLB: 0.36 SES IRRI rating points\n\tGID_16416\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-009\nScore: 0.9639\n\nLB: 0.36 SES IRRI rating points\n\tGID_10125\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-010\nScore: 0.9619\n\nLB: 0.37 SES IRRI rating points\n\tGID_3143\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-011\nScore: 0.9595\n\nLB: 0.38 SES IRRI rating points\n\tGID_12203\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-012\nScore: 0.9595\n\nLB: 0.38 SES IRRI rating points\n\tGID_3921\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-013\nScore: 0.9586\n\nLB: 0.38 SES IRRI rating points\n\tGID_10125\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-014\nScore: 0.9572\n\nLB: 0.39 SES IRRI rating points\n\tGID_10125\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-015\nScore: 0.9561\n\nLB: 0.39 SES IRRI rating points\n\tGID_12524\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-016\nScore: 0.9538\n\nLB: 0.40 SES IRRI rating points\n\tGID_9201\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-017\nScore: 0.9535\n\nLB: 0.40 SES IRRI rating points\n\tGID_10159\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-018\nScore: 0.9516\n\nLB: 0.41 SES IRRI rating points\n\tGID_12524\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-019\nScore: 0.9502\n\nLB: 0.42 SES IRRI rating points\n\tGID_14902\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-020\nScore: 0.9459\n\nLB: 0.43 SES IRRI rating points\n\tGID_12203\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-021\nScore: 0.9438\n\nLB: 0.44 SES IRRI rating points\n\tGID_20053\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-022\nScore: 0.9423\n\nLB: 0.45 SES IRRI rating points\n\tGID_4437\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-023\nScore: 0.9398\n\nLB: 0.46 SES IRRI rating points\n\tGID_10125\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-024\nScore: 0.9365\n\nLB: 0.47 SES IRRI rating points\n\tGID_10125\tGID_12203\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-025\nScore: 0.9359\n\nLB: 0.47 SES IRRI rating points\n\tGID_14790\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-026\nScore: 0.9354\n\nLB: 0.47 SES IRRI rating points\n\tGID_10039\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-027\nScore: 0.9352\n\nLB: 0.47 SES IRRI rating points\n\tGID_14790\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-028\nScore: 0.9341\n\nLB: 0.48 SES IRRI rating points\n\tGID_11055\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-029\nScore: 0.9319\n\nLB: 0.49 SES IRRI rating points\n\tGID_10452\tGID_11055\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-030\nScore: 0.9317\n\nLB: 0.49 SES IRRI rating points\n\tGID_20053\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-031\nScore: 0.9316\n\nLB: 0.49 SES IRRI rating points\n\tGID_11055\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-032\nScore: 0.9308\n\nLB: 0.49 SES IRRI rating points\n\tGID_12524\tGID_14790\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-033\nScore: 0.9304\n\nLB: 0.49 SES IRRI rating points\n\tGID_10125\tGID_14790\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-034\nScore: 0.9292\n\nLB: 0.50 SES IRRI rating points\n\tGID_10125\tGID_12524\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-035\nScore: 0.9291\n\nLB: 0.50 SES IRRI rating points\n\tGID_10159\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-036\nScore: 0.9281\n\nLB: 0.50 SES IRRI rating points\n\tGID_10159\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-037\nScore: 0.9279\n\nLB: 0.50 SES IRRI rating points\n\tGID_10125\tGID_10159\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-038\nScore: 0.9273\n\nLB: 0.50 SES IRRI rating points\n\tGID_10452\tGID_3921\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-039\nScore: 0.9268\n\nLB: 0.51 SES IRRI rating points\n\tGID_10396\tGID_12524\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-040\nScore: 0.9264\n\nLB: 0.51 SES IRRI rating points\n\tGID_4788\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-041\nScore: 0.9261\n\nLB: 0.51 SES IRRI rating points\n\tGID_10452\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-042\nScore: 0.9233\n\nLB: 0.52 SES IRRI rating points\n\tGID_4462\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-043\nScore: 0.9197\n\nLB: 0.53 SES IRRI rating points\n\tGID_11055\tGID_12524\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-044\nScore: 0.9175\n\nLB: 0.54 SES IRRI rating points\n\tGID_3143\tGID_4437\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-045\nScore: 0.9175\n\nLB: 0.54 SES IRRI rating points\n\tGID_4462\tGID_7208\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-046\nScore: 0.9172\n\nLB: 0.54 SES IRRI rating points\n\tGID_20053\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-047\nScore: 0.9167\n\nLB: 0.55 SES IRRI rating points\n\tGID_10159\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-048\nScore: 0.9152\n\nLB: 0.55 SES IRRI rating points\n\tGID_14790\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-049\nScore: 0.9132\n\nLB: 0.56 SES IRRI rating points\n\tGID_10159\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-050\nScore: 0.9126\n\nLB: 0.56 SES IRRI rating points\n\tGID_6922\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n45\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "weighted four-trait native UI",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n881 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 45 lines\n2\nConfigure Cross Generation\nGY weight (0 = omit)\nDTF weight (0 = omit)\nNO weight (0 = omit)\nLB weight (0 = omit)\nDTF priority\nLebih lambat berbunga\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nMaximum candidate count\nGenerate Candidate Pairs\n3\nCandidate Results\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tRESEARCH\nSTATUS\tACTIONS\nC-001\nScore: 0.7214\n\nGY: 9092.43 kg/ha\nDTF: 98.84 days\nNO: 4.78 modified SES IRRI rating points\nLB: 0.32 SES IRRI rating points\n\tGID_8938\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-002\nScore: 0.7146\n\nGY: 8956.54 kg/ha\nDTF: 97.46 days\nNO: 4.27 modified SES IRRI rating points\nLB: 0.48 SES IRRI rating points\n\tGID_11055\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-003\nScore: 0.7060\n\nGY: 8614.15 kg/ha\nDTF: 100.67 days\nNO: 4.34 modified SES IRRI rating points\nLB: 0.56 SES IRRI rating points\n\tGID_10159\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-004\nScore: 0.7056\n\nGY: 9296.91 kg/ha\nDTF: 97.51 days\nNO: 4.77 modified SES IRRI rating points\nLB: 0.80 SES IRRI rating points\n\tGID_16416\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-005\nScore: 0.7050\n\nGY: 8836.60 kg/ha\nDTF: 98.52 days\nNO: 4.37 modified SES IRRI rating points\nLB: 0.51 SES IRRI rating points\n\tGID_10452\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-006\nScore: 0.7047\n\nGY: 9081.32 kg/ha\nDTF: 97.07 days\nNO: 4.68 modified SES IRRI rating points\nLB: 0.28 SES IRRI rating points\n\tGID_10452\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-007\nScore: 0.7029\n\nGY: 8335.52 kg/ha\nDTF: 99.57 days\nNO: 3.54 modified SES IRRI rating points\nLB: 0.78 SES IRRI rating points\n\tGID_15680\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-008\nScore: 0.7006\n\nGY: 8748.93 kg/ha\nDTF: 98.74 days\nNO: 4.24 modified SES IRRI rating points\nLB: 0.61 SES IRRI rating points\n\tGID_10452\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-009\nScore: 0.6953\n\nGY: 8467.05 kg/ha\nDTF: 99.65 days\nNO: 3.74 modified SES IRRI rating points\nLB: 1.00 SES IRRI rating points\n\tGID_15680\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-010\nScore: 0.6952\n\nGY: 9113.72 kg/ha\nDTF: 96.27 days\nNO: 4.66 modified SES IRRI rating points\nLB: 0.36 SES IRRI rating points\n\tGID_16416\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-011\nScore: 0.6937\n\nGY: 9157.39 kg/ha\nDTF: 97.39 days\nNO: 4.65 modified SES IRRI rating points\nLB: 0.82 SES IRRI rating points\n\tGID_3143\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-012\nScore: 0.6915\n\nGY: 9030.62 kg/ha\nDTF: 95.48 days\nNO: 4.22 modified SES IRRI rating points\nLB: 0.64 SES IRRI rating points\n\tGID_16416\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-013\nScore: 0.6902\n\nGY: 8839.08 kg/ha\nDTF: 97.63 days\nNO: 4.06 modified SES IRRI rating points\nLB: 1.01 SES IRRI rating points\n\tGID_12203\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-014\nScore: 0.6892\n\nGY: 8515.57 kg/ha\nDTF: 100.85 days\nNO: 4.54 modified SES IRRI rating points\nLB: 0.38 SES IRRI rating points\n\tGID_10125\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-015\nScore: 0.6885\n\nGY: 8900.67 kg/ha\nDTF: 100.17 days\nNO: 4.85 modified SES IRRI rating points\nLB: 0.74 SES IRRI rating points\n\tGID_12524\tGID_7208\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-016\nScore: 0.6882\n\nGY: 8516.06 kg/ha\nDTF: 99.84 days\nNO: 4.22 modified SES IRRI rating points\nLB: 0.60 SES IRRI rating points\n\tGID_10452\tGID_7208\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-017\nScore: 0.6881\n\nGY: 9068.94 kg/ha\nDTF: 96.52 days\nNO: 4.79 modified SES IRRI rating points\nLB: 0.26 SES IRRI rating points\n\tGID_11055\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-018\nScore: 0.6875\n\nGY: 8653.93 kg/ha\nDTF: 97.90 days\nNO: 4.14 modified SES IRRI rating points\nLB: 0.55 SES IRRI rating points\n\tGID_10159\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-019\nScore: 0.6874\n\nGY: 8785.84 kg/ha\nDTF: 98.42 days\nNO: 4.60 modified SES IRRI rating points\nLB: 0.36 SES IRRI rating points\n\tGID_10452\tGID_12524\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-020\nScore: 0.6862\n\nGY: 8644.06 kg/ha\nDTF: 100.89 days\nNO: 4.82 modified SES IRRI rating points\nLB: 0.37 SES IRRI rating points\n\tGID_3143\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-021\nScore: 0.6861\n\nGY: 8949.95 kg/ha\nDTF: 97.65 days\nNO: 4.61 modified SES IRRI rating points\nLB: 0.56 SES IRRI rating points\n\tGID_6922\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-022\nScore: 0.6839\n\nGY: 8747.81 kg/ha\nDTF: 98.34 days\nNO: 4.42 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_12203\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-023\nScore: 0.6839\n\nGY: 8505.57 kg/ha\nDTF: 99.15 days\nNO: 3.98 modified SES IRRI rating points\nLB: 0.82 SES IRRI rating points\n\tGID_15680\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-024\nScore: 0.6837\n\nGY: 8734.13 kg/ha\nDTF: 98.29 days\nNO: 4.39 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_12524\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-025\nScore: 0.6814\n\nGY: 8940.72 kg/ha\nDTF: 96.62 days\nNO: 4.49 modified SES IRRI rating points\nLB: 0.53 SES IRRI rating points\n\tGID_11055\tGID_12524\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-026\nScore: 0.6786\n\nGY: 8921.38 kg/ha\nDTF: 96.02 days\nNO: 4.13 modified SES IRRI rating points\nLB: 0.90 SES IRRI rating points\n\tGID_7218\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-027\nScore: 0.6774\n\nGY: 8344.72 kg/ha\nDTF: 100.94 days\nNO: 4.02 modified SES IRRI rating points\nLB: 0.97 SES IRRI rating points\n\tGID_15680\tGID_7208\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-028\nScore: 0.6770\n\nGY: 8935.36 kg/ha\nDTF: 97.67 days\nNO: 4.81 modified SES IRRI rating points\nLB: 0.41 SES IRRI rating points\n\tGID_12524\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-029\nScore: 0.6761\n\nGY: 8669.20 kg/ha\nDTF: 99.26 days\nNO: 4.61 modified SES IRRI rating points\nLB: 0.49 SES IRRI rating points\n\tGID_11055\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-030\nScore: 0.6756\n\nGY: 8918.14 kg/ha\nDTF: 98.18 days\nNO: 4.71 modified SES IRRI rating points\nLB: 0.69 SES IRRI rating points\n\tGID_11055\tGID_3143\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-031\nScore: 0.6745\n\nGY: 8488.80 kg/ha\nDTF: 98.73 days\nNO: 4.06 modified SES IRRI rating points\nLB: 0.73 SES IRRI rating points\n\tGID_10452\tGID_12203\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-032\nScore: 0.6739\n\nGY: 8707.41 kg/ha\nDTF: 98.66 days\nNO: 4.54 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_12524\tGID_20053\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-033\nScore: 0.6732\n\nGY: 8742.21 kg/ha\nDTF: 98.67 days\nNO: 4.62 modified SES IRRI rating points\nLB: 0.55 SES IRRI rating points\n\tGID_14790\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-034\nScore: 0.6726\n\nGY: 8937.52 kg/ha\nDTF: 97.98 days\nNO: 4.80 modified SES IRRI rating points\nLB: 0.62 SES IRRI rating points\n\tGID_10159\tGID_7011\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-035\nScore: 0.6724\n\nGY: 8840.80 kg/ha\nDTF: 96.95 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.67 SES IRRI rating points\n\tGID_11055\tGID_20053\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-036\nScore: 0.6720\n\nGY: 8925.34 kg/ha\nDTF: 97.29 days\nNO: 4.44 modified SES IRRI rating points\nLB: 0.94 SES IRRI rating points\n\tGID_11055\tGID_16416\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-037\nScore: 0.6716\n\nGY: 8358.04 kg/ha\nDTF: 97.87 days\nNO: 3.55 modified SES IRRI rating points\nLB: 0.95 SES IRRI rating points\n\tGID_15680\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-038\nScore: 0.6713\n\nGY: 8359.74 kg/ha\nDTF: 98.57 days\nNO: 3.61 modified SES IRRI rating points\nLB: 1.08 SES IRRI rating points\n\tGID_14790\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-039\nScore: 0.6706\n\nGY: 8491.18 kg/ha\nDTF: 98.96 days\nNO: 4.31 modified SES IRRI rating points\nLB: 0.50 SES IRRI rating points\n\tGID_10159\tGID_4462\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-040\nScore: 0.6705\n\nGY: 8661.36 kg/ha\nDTF: 97.35 days\nNO: 4.35 modified SES IRRI rating points\nLB: 0.43 SES IRRI rating points\n\tGID_12203\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-041\nScore: 0.6700\n\nGY: 8741.85 kg/ha\nDTF: 98.87 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.99 SES IRRI rating points\n\tGID_6687\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-042\nScore: 0.6678\n\nGY: 8304.80 kg/ha\nDTF: 98.26 days\nNO: 3.67 modified SES IRRI rating points\nLB: 0.82 SES IRRI rating points\n\tGID_10452\tGID_15680\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-043\nScore: 0.6677\n\nGY: 8323.16 kg/ha\nDTF: 99.78 days\nNO: 4.27 modified SES IRRI rating points\nLB: 0.40 SES IRRI rating points\n\tGID_10159\tGID_8938\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-044\nScore: 0.6664\n\nGY: 8810.55 kg/ha\nDTF: 95.85 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.40 SES IRRI rating points\n\tGID_9201\tGID_9577\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-045\nScore: 0.6660\n\nGY: 8452.49 kg/ha\nDTF: 99.52 days\nNO: 4.36 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_4462\tGID_4788\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-046\nScore: 0.6647\n\nGY: 8826.94 kg/ha\nDTF: 97.35 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.89 SES IRRI rating points\n\tGID_16416\tGID_20053\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-047\nScore: 0.6646\n\nGY: 8792.12 kg/ha\nDTF: 99.38 days\nNO: 4.72 modified SES IRRI rating points\nLB: 0.89 SES IRRI rating points\n\tGID_12524\tGID_4437\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-048\nScore: 0.6644\n\nGY: 9049.85 kg/ha\nDTF: 96.30 days\nNO: 4.79 modified SES IRRI rating points\nLB: 0.61 SES IRRI rating points\n\tGID_16416\tGID_9201\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-049\nScore: 0.6641\n\nGY: 8945.19 kg/ha\nDTF: 96.43 days\nNO: 4.62 modified SES IRRI rating points\nLB: 0.63 SES IRRI rating points\n\tGID_10452\tGID_6922\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\n\nC-050\nScore: 0.6639\n\nGY: 8895.20 kg/ha\nDTF: 95.78 days\nNO: 4.49 modified SES IRRI rating points\nLB: 0.52 SES IRRI rating points\n\tGID_4462\tGID_7218\t\nBoth\tNot recorded\tUnreviewed\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n45\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "Settings actual paths and native health",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nSettings\n\nConfigure appearance, local storage, and the inference engine.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nAPPEARANCE\nTheme\nLight\nDark\nSystem\nInterface density\n\nCompact fits more content; Comfortable adds space to menus, cards, and table rows.\n\nCompact\nComfortable\nDATA AND STORAGE\nDatabase\nSQLite - local\nStorage location\nC:\\Users\\sheil\\AppData\\Roaming\\com.genefield.desktop\nDatabase size\nNot measured\nExport workspace data\nBackup local workspace\nRestore backup\nINFERENCE ENGINE\nModel bundle location\nC:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-app\\genefield-desktop\\src-tauri\\target\\debug\\_internal\\bundles\\final-v1\nCheck\nModel bundle version\nfinal-v1\nBundle integrity status\nVerified by final-v1 loader\nLocal inference availability\nAvailable - offline\nPredictive ranking\nEnabled for eligible represented parents\nLocked\nTest inference connection\n\nLayanan final-v1 siap. Integritas bundle diverifikasi saat pemuatan.\n\nRestart local analysis\nAPPLICATION\nLanguage preference\nEnglish\nApplication version\n0.1.0\nDiagnostic logs\nOpen log folder\nExport logs\n\nSettings are stored locally. No account or network connection is required."
+    },
+    {
+      "name": "Model Insights authoritative metadata",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nModel Insights\n\nUnderstand model performance, validation protocols, and limitations.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nMODEL OVERVIEW\n\nModel bundle\n\nfinal-v1\n\nScientific review\n\nUnreviewed\n\nUsage\n\nResearch-only\n\nTraining\n\nCompleted\n\nPredictive ranking\n\nEnabled\n\nTRAIT MODEL SUMMARY\nTRAIT\tSELECTED MODEL FAMILY\tHYPERPARAMETERS\nGY\tExtraTrees\tmin_samples_leaf = 3, n_estimators = 100\nDTF\tExtraTrees\tmin_samples_leaf = 3, n_estimators = 100\nNO\tRidge\talpha = 100\nLB\tExtraTrees\tmin_samples_leaf = 3, n_estimators = 100\nVALIDATION RESULTS\nDetailed validation evidence remains in frozen model cards\nTRAIT\tNESTED CV MAE\tPARENT-DISJOINT MAE\tSPEARMAN (NESTED CV)\tSPEARMAN (PARENT-DISJOINT)\tBASELINE MAE\nHistorical pedigree registry pairs\n209\n\nINIA historical rice breeding dataset\n\nGY: kg/ha | 160 training pairs | 91 eligible parents | maximize\n\nDTF: days | 172 training pairs | 94 eligible parents | minimize / maximize\n\nNO: modified SES IRRI rating points | 137 training pairs | 71 eligible parents | minimize\n\nLB: SES IRRI rating points | 61 training pairs | 45 eligible parents | minimize\n\nHISTORICAL SCOPE\n\nHistorical-descendant cross-level estimates among represented INIA parents. Validation is same-dataset; external germplasm is not supported.\n\nAPPLICATION PRIORITIZATION\n\nRanking scores express selected trait objectives and weights. Scientific and breeder sign-off remains pending.\n\nSCIENTIFIC LIMITATIONS\n\nengineering release candidate; target-device resources and breeder/scientific sign-off pending\n\nSame previously inspected historical INIA dataset; no independent validation.\n\nSelected historical descendant means, not F1, causal or field predictions.\n\nEnvironment, generations, selection, relatedness and target uncertainty unadjusted.\n\nDependent repeated folds; descriptive distributions are not confidence intervals.\n\nNo arbitrary external germplasm inference; target-device deployment review pending.\n\nControlled LB stress was not estimable in development."
+    },
+    {
+      "name": "native metadata, prediction, history, deterministic ranking, pair safety, SQLite snapshot",
+      "value": {
+        "metadata": {
+          "bundle_name": "GeneField final-v1",
+          "bundle_version": "final-v1",
+          "artifact_version": "2.0.0",
+          "created_utc": "2026-10-07T12:47:11.310689+00:00",
+          "source_dataset": "INIA historical rice breeding dataset",
+          "dryad_doi": "10.5061/dryad.x69p8czn8",
+          "source_sha256": {
+            "data/raw/GenomicInformation.txt": "d5ca3cba8f7e66bb50bbfea038698ddbf109c0f9c346845420a3807751733608",
+            "data/raw/Lines.txt": "644417788d35a4e236e084ecc24a230c9ed13c5896befdd052409470e6fed4f6",
+            "data/raw/Phenotypes.txt": "8e587890c3d5d479f4f43b7202eb365c4b866f4fe6f15c5d709ff2bc3eb33d0b",
+            "data/raw/README.md": "da3cee8cee3121dc1f90c8b86604a070eda7bc4e2215b6106329235e0488ea52",
+            "data/raw/SNPs.txt": "e00be78a14c446de7f5ed5996542719ddd54cb3b63bd74653298c9da1477196a",
+            "data/raw/Trials.txt": "2a75b0b5488fd243093bb4f6178e31142c0f42e8e739f58130782529f7dc103a"
+          },
+          "processed_sha256": {
+            "genotyped_crosses.parquet": "800af1e441da49ea1dacb920fb047133056cd07f0c2051941eb856de6cc6a7e4",
+            "genotype_matrix.npy": "eddd54c19d7302966cbfd9be915c22f672fdcc7a712182596a153c07230d5fe4",
+            "genotype_ids.csv": "9572e604e33cc54eaa9275bffa5b6da345b18f4c8ddcf562222d6be6b2427d5b",
+            "distinct_parent_registry.parquet": "0633adcedef6ac8d788cfb0fd5dd1375ac72ffbf152435c6224d32632a1f0f52"
+          },
+          "code_git_commit": "5a5f8b148b063fc1b5cd248c01a1a5bea2e5bb2c",
+          "code_git_state": [
+            "?? reports/final-v1/",
+            "?? src/final_contract.py",
+            "?? src/final_inference.py",
+            "?? src/final_refit.py",
+            "?? src/final_sidecar.py"
+          ],
+          "code_sha256": {
+            "final_contract.py": "ff5e5c7b7eec5138e724feccb70cbabad8420bf3d5dea0298548b96bb95f7f93",
+            "final_inference.py": "f87912ffcfd0ecd7aba3158fcacd99d5ea40c20a3316a040563c5bd9f84c097f",
+            "final_sidecar.py": "3ec5c0289af95ae117045d2e900f0ae2b2a507164a275eebaa03f7a6a7fe86af",
+            "features.py": "b7adf03eb8063167b3b8fac2e4b22c13846b5fb04aa8be22f38bdf4a10fb8c3e",
+            "pair_registry.py": "987ca8df942ff1176234241f7474b16e815c55f17266cc23b6411c8a5e32c4c0",
+            "traits.py": "6dce77c2ec8e9c92e95ed51797b7d093d23e539007b9547e7194a770a25992c2",
+            "final_refit.py": "f9a6b1ef13cacfd1cafb9b7d6e43b2d291b77887352a116b986bdb369a90e3f7"
+          },
+          "dependencies": {
+            "python": "3.11.9",
+            "numpy": "2.4.6",
+            "scipy": "1.17.1",
+            "scikit-learn": "1.9.1",
+            "joblib": "1.6.0",
+            "threadpoolctl": "3.7.0"
+          },
+          "input_markers": 61260,
+          "genotyped_parent_count": 965,
+          "target_interpretation": "historical-descendant cross-level estimate; plot means to line means, then equal-weight descendant lines per canonical direct parent pair",
+          "intended_use": "candidate prioritization among eligible represented bundled INIA germplasm",
+          "parent_eligibility": "both parents must occur in final training pairs for every selected trait; multi-trait intersection",
+          "prohibited_claims": [
+            "F1 phenotype prediction",
+            "guaranteed offspring phenotype",
+            "causal genetic effect",
+            "guaranteed field superiority",
+            "universal rice prediction",
+            "external-germplasm generalization",
+            "calibrated success probability"
+          ],
+          "support_policy": {
+            "confidence_percentages": false,
+            "confidence_tiers": false,
+            "success_probability": false,
+            "composite_support_score": false,
+            "factual_metadata_only": true
+          },
+          "review_status": "engineering release candidate; target-device resources and breeder/scientific sign-off pending",
+          "accepted_evidence_sha256": {
+            "configs/release_candidate_v1.json": "b9145fb9e8e0807fe1328982193ec24bc42119b70ec4a7b349e43535ba78f83b",
+            "configs/release_candidate_precommit.json": "7ccc168207d61301012413ed410faa5f549a51a858f513e3c3ce5803dba2bcef",
+            "configs/dtf_remediation_candidate.json": "6cd3cc55c7e27dfeb899da433dab43f232e493c1ff5e49797d3f7f3be6426c6e",
+            "configs/dtf_remediation_candidate_precommit.json": "08cb0c5d5084917a077e4d356b1fac7fa2e1d820726861935053612f2ba501c3",
+            "experiments/v0.7.0/e-confirmatory/release_outcomes.json": "27d2fd3cd8bd1690eb3caf319d098e7e59d771d9a4794774fcaadab10fc280f2",
+            "experiments/v0.7.0/e-confirmatory/claim_matrix.json": "f6ec4700c28afc3cd1214cd5b62dec582234416f1ef65355894881173843edbc",
+            "experiments/v0.7.0/e-confirmatory/regression_metrics.csv": "e9f0ed3509421e015849256df7bf120ce9cac0d1da5b5d59362a3d683c9dac80",
+            "experiments/v0.7.0/e-confirmatory/ranking_metrics.csv": "4128af4cbe97f280c6b27d762d9f093fa4c3a8698d0ffd18c0955a6e03590943",
+            "experiments/v0.7.0/e-confirmatory/heldout_predictions.csv": "45d10d8d22caf53029443b4c255ac24c5e905b054fd5d998277d4b03d2c37a3f",
+            "experiments/v0.7.0/e-confirmatory/checksums.json": "25cb7814a26543241650a0061e4d25d5685e3e367c2b6a5299173da29c1e9ccd",
+            "experiments/v0.7.1/dtf-remediation/release_outcomes.json": "3722c8e67acc9873443d05cb4e3f854bbddc296d8f5e219dcd3810f181ab5d99",
+            "experiments/v0.7.1/dtf-remediation/claim_matrix.json": "beea5e924dc43ff18b61762a74b3959f1c9d226fa238301e9a0c355d99464af5",
+            "experiments/v0.7.1/dtf-remediation/regression_metrics.csv": "b94bbf5405bd335fbddde74b21694afacb55a629546b9b19c7a13148c970bfe2",
+            "experiments/v0.7.1/dtf-remediation/ranking_metrics.csv": "c4a3b3414689b9815b1a47d4afd502f47de5c5f548a50c9727496f245fe194b8",
+            "experiments/v0.7.1/dtf-remediation/heldout_predictions.csv": "fd1e529a38c04c57a5104184d15656e9e07c7a1288372d11849fc8d59a6fcc91",
+            "experiments/v0.7.1/dtf-remediation/checksums.json": "d71f87d748ab97bb27e5d31d9c947464b3656ac60585527df1508348c40f1128"
+          },
+          "traits": {
+            "GY": {
+              "min_descendants": 5,
+              "pca_components": 20,
+              "max_markers": 0,
+              "feature": {
+                "id": "D",
+                "mode": "MIDPOINT_PLUS_CONTRAST",
+                "n_features": 40
+              },
+              "model_configuration": {
+                "family": "ExtraTrees",
+                "min_samples_leaf": 3,
+                "n_estimators": 100
+              },
+              "units": "kg/ha",
+              "ranking_directions": [
+                "maximize"
+              ],
+              "preconfirm_ranking_eligibility": {
+                "maximize": "ELIGIBLE_PENDING_CONFIRMATION"
+              },
+              "prediction_eligible": true,
+              "known_limitations": [
+                "Same previously inspected historical INIA dataset; no independent validation.",
+                "Selected historical descendant means, not F1, causal or field predictions.",
+                "Environment, generations, selection, relatedness and target uncertainty unadjusted.",
+                "Dependent repeated folds; descriptive distributions are not confidence intervals.",
+                "No arbitrary external germplasm inference; target-device deployment review pending."
+              ],
+              "selection_rationale": "Existing predictive gates and six ordered tie-breaks select the family. Within that family, pooled sample-weighted saved primary inner MAE and original configuration index lock hyperparameters, without any new fit/search. Family evidence used fold-specific tuning; exact-config subset is explicitly separate.",
+              "development_comparison": {
+                "family_procedure_folds": 10,
+                "exact_configuration_folds": 5,
+                "exact_configuration_attempts": [
+                  3,
+                  5,
+                  6,
+                  7,
+                  9
+                ]
+              },
+              "trait": "GY",
+              "display_meaning": "Grain yield",
+              "model_version": "final-v1/GY/1.0.0",
+              "prediction_enabled": true,
+              "ranking_enabled": true,
+              "training_pair_count": 160,
+              "training_parent_count": 91,
+              "training_parent_ids": [
+                "GID_10021",
+                "GID_10039",
+                "GID_10125",
+                "GID_10159",
+                "GID_10396",
+                "GID_10452",
+                "GID_10587",
+                "GID_10624",
+                "GID_10976",
+                "GID_11055",
+                "GID_11333",
+                "GID_11587",
+                "GID_12122",
+                "GID_12132",
+                "GID_12203",
+                "GID_1221",
+                "GID_1233",
+                "GID_12516",
+                "GID_12524",
+                "GID_12654",
+                "GID_12700",
+                "GID_12713",
+                "GID_1276",
+                "GID_12906",
+                "GID_13311",
+                "GID_13324",
+                "GID_1350",
+                "GID_13512",
+                "GID_13520",
+                "GID_13648",
+                "GID_14770",
+                "GID_14790",
+                "GID_14818",
+                "GID_14902",
+                "GID_15482",
+                "GID_15680",
+                "GID_16416",
+                "GID_16641",
+                "GID_16780",
+                "GID_16825",
+                "GID_17081",
+                "GID_18855",
+                "GID_19321",
+                "GID_19470",
+                "GID_19535",
+                "GID_20053",
+                "GID_20225",
+                "GID_2052",
+                "GID_20605",
+                "GID_2553",
+                "GID_2770",
+                "GID_3143",
+                "GID_343",
+                "GID_3497",
+                "GID_3521",
+                "GID_3540",
+                "GID_3723",
+                "GID_3745",
+                "GID_391",
+                "GID_3921",
+                "GID_4437",
+                "GID_4462",
+                "GID_4519",
+                "GID_4788",
+                "GID_5083",
+                "GID_5190",
+                "GID_5306",
+                "GID_5878",
+                "GID_6687",
+                "GID_6749",
+                "GID_6784",
+                "GID_6922",
+                "GID_7011",
+                "GID_7208",
+                "GID_7218",
+                "GID_7467",
+                "GID_7783",
+                "GID_7804",
+                "GID_8062",
+                "GID_8154",
+                "GID_8234",
+                "GID_8520",
+                "GID_8938",
+                "GID_8990",
+                "GID_9162",
+                "GID_9189",
+                "GID_9201",
+                "GID_9411",
+                "GID_9577",
+                "GID_9673",
+                "GID_9844"
+              ],
+              "training_parent_pair_counts": {
+                "GID_10021": 1,
+                "GID_10039": 1,
+                "GID_10125": 1,
+                "GID_10159": 9,
+                "GID_10396": 18,
+                "GID_10452": 7,
+                "GID_10587": 4,
+                "GID_10624": 6,
+                "GID_10976": 1,
+                "GID_11055": 13,
+                "GID_11333": 9,
+                "GID_11587": 3,
+                "GID_12122": 1,
+                "GID_12132": 4,
+                "GID_12203": 7,
+                "GID_1221": 1,
+                "GID_1233": 1,
+                "GID_12516": 2,
+                "GID_12524": 2,
+                "GID_12654": 1,
+                "GID_12700": 1,
+                "GID_12713": 2,
+                "GID_1276": 2,
+                "GID_12906": 1,
+                "GID_13311": 1,
+                "GID_13324": 2,
+                "GID_1350": 2,
+                "GID_13512": 3,
+                "GID_13520": 9,
+                "GID_13648": 4,
+                "GID_14770": 1,
+                "GID_14790": 8,
+                "GID_14818": 8,
+                "GID_14902": 3,
+                "GID_15482": 2,
+                "GID_15680": 3,
+                "GID_16416": 8,
+                "GID_16641": 1,
+                "GID_16780": 4,
+                "GID_16825": 1,
+                "GID_17081": 2,
+                "GID_18855": 1,
+                "GID_19321": 1,
+                "GID_19470": 1,
+                "GID_19535": 2,
+                "GID_20053": 3,
+                "GID_20225": 11,
+                "GID_2052": 2,
+                "GID_20605": 1,
+                "GID_2553": 1,
+                "GID_2770": 2,
+                "GID_3143": 11,
+                "GID_343": 3,
+                "GID_3497": 1,
+                "GID_3521": 2,
+                "GID_3540": 1,
+                "GID_3723": 1,
+                "GID_3745": 3,
+                "GID_391": 1,
+                "GID_3921": 4,
+                "GID_4437": 11,
+                "GID_4462": 4,
+                "GID_4519": 2,
+                "GID_4788": 1,
+                "GID_5083": 1,
+                "GID_5190": 2,
+                "GID_5306": 8,
+                "GID_5878": 1,
+                "GID_6687": 5,
+                "GID_6749": 3,
+                "GID_6784": 3,
+                "GID_6922": 4,
+                "GID_7011": 2,
+                "GID_7208": 7,
+                "GID_7218": 5,
+                "GID_7467": 1,
+                "GID_7783": 1,
+                "GID_7804": 1,
+                "GID_8062": 1,
+                "GID_8154": 2,
+                "GID_8234": 1,
+                "GID_8520": 1,
+                "GID_8938": 10,
+                "GID_8990": 1,
+                "GID_9162": 6,
+                "GID_9189": 3,
+                "GID_9201": 8,
+                "GID_9411": 4,
+                "GID_9577": 6,
+                "GID_9673": 1,
+                "GID_9844": 2
+              },
+              "retained_markers": 59971,
+              "fit_seed": 42,
+              "estimator_parameters": {
+                "bootstrap": false,
+                "ccp_alpha": 0,
+                "criterion": "squared_error",
+                "max_depth": null,
+                "max_features": 1,
+                "max_leaf_nodes": null,
+                "max_samples": null,
+                "min_impurity_decrease": 0,
+                "min_samples_leaf": 3,
+                "min_samples_split": 2,
+                "min_weight_fraction_leaf": 0,
+                "monotonic_cst": null,
+                "n_estimators": 100,
+                "n_jobs": 1,
+                "oob_score": false,
+                "random_state": 42,
+                "verbose": 0,
+                "warm_start": false
+              },
+              "artifacts": {
+                "model": "GY_model.joblib",
+                "preprocessing": "GY_preprocessing.joblib",
+                "markers": "GY_markers.npy"
+              },
+              "validation_evidence": "GY_validation_evidence.json",
+              "model_card": "GY_model_card.md"
+            },
+            "DTF": {
+              "min_descendants": 3,
+              "pca_components": 20,
+              "max_markers": 0,
+              "feature": {
+                "id": "D",
+                "mode": "MIDPOINT_PLUS_CONTRAST",
+                "n_features": 40
+              },
+              "model_configuration": {
+                "family": "ExtraTrees",
+                "min_samples_leaf": 3,
+                "n_estimators": 100
+              },
+              "units": "days",
+              "ranking_directions": [
+                "minimize",
+                "maximize"
+              ],
+              "preconfirm_ranking_eligibility": {
+                "minimize": "ELIGIBLE_PENDING_CONFIRMATION",
+                "maximize": "ELIGIBLE_PENDING_CONFIRMATION"
+              },
+              "prediction_eligible": true,
+              "known_limitations": [
+                "Same previously inspected historical INIA dataset; no independent validation.",
+                "Selected historical descendant means, not F1, causal or field predictions.",
+                "Environment, generations, selection, relatedness and target uncertainty unadjusted.",
+                "Dependent repeated folds; descriptive distributions are not confidence intervals.",
+                "No arbitrary external germplasm inference; target-device deployment review pending."
+              ],
+              "selection_rationale": "Existing predictive gates filter saved C2 native DTF3 family procedures. The six unchanged tie-breaks select the family. Pooled sample-weighted saved inner-CV MAE, then original grid index, fixes hyperparameters, exactly as Phase E. No new search/fit. Full development family predictions were tuned per fold; the exact-configuration subset is separately labeled.",
+              "development_comparison": {
+                "family_procedure_folds": 10,
+                "exact_configuration_folds": 5,
+                "exact_configuration_attempts": [
+                  2,
+                  5,
+                  7,
+                  9,
+                  10
+                ]
+              },
+              "trait": "DTF",
+              "display_meaning": "Days to flowering",
+              "model_version": "final-v1/DTF/1.0.0",
+              "prediction_enabled": true,
+              "ranking_enabled": true,
+              "training_pair_count": 172,
+              "training_parent_count": 94,
+              "training_parent_ids": [
+                "GID_10021",
+                "GID_10039",
+                "GID_10125",
+                "GID_10159",
+                "GID_10396",
+                "GID_10452",
+                "GID_10587",
+                "GID_10624",
+                "GID_10976",
+                "GID_11055",
+                "GID_11333",
+                "GID_11587",
+                "GID_12122",
+                "GID_12132",
+                "GID_12203",
+                "GID_1221",
+                "GID_1233",
+                "GID_12516",
+                "GID_12524",
+                "GID_12654",
+                "GID_12700",
+                "GID_12713",
+                "GID_1276",
+                "GID_12906",
+                "GID_13311",
+                "GID_13324",
+                "GID_1350",
+                "GID_13512",
+                "GID_13520",
+                "GID_13648",
+                "GID_14770",
+                "GID_14790",
+                "GID_14818",
+                "GID_14902",
+                "GID_15482",
+                "GID_15680",
+                "GID_16416",
+                "GID_16641",
+                "GID_16780",
+                "GID_16825",
+                "GID_17081",
+                "GID_18754",
+                "GID_18855",
+                "GID_19321",
+                "GID_19470",
+                "GID_19535",
+                "GID_20053",
+                "GID_20225",
+                "GID_2052",
+                "GID_20605",
+                "GID_2553",
+                "GID_2770",
+                "GID_3143",
+                "GID_343",
+                "GID_3497",
+                "GID_3521",
+                "GID_3540",
+                "GID_3723",
+                "GID_3745",
+                "GID_391",
+                "GID_3921",
+                "GID_4437",
+                "GID_4462",
+                "GID_4519",
+                "GID_4788",
+                "GID_5083",
+                "GID_5190",
+                "GID_5306",
+                "GID_5878",
+                "GID_6687",
+                "GID_6749",
+                "GID_6784",
+                "GID_6922",
+                "GID_7011",
+                "GID_7018",
+                "GID_7106",
+                "GID_7208",
+                "GID_7218",
+                "GID_7467",
+                "GID_7783",
+                "GID_7804",
+                "GID_8062",
+                "GID_8154",
+                "GID_8234",
+                "GID_8520",
+                "GID_8938",
+                "GID_8990",
+                "GID_9162",
+                "GID_9189",
+                "GID_9201",
+                "GID_9411",
+                "GID_9577",
+                "GID_9673",
+                "GID_9844"
+              ],
+              "training_parent_pair_counts": {
+                "GID_10021": 1,
+                "GID_10039": 1,
+                "GID_10125": 1,
+                "GID_10159": 10,
+                "GID_10396": 21,
+                "GID_10452": 9,
+                "GID_10587": 4,
+                "GID_10624": 6,
+                "GID_10976": 1,
+                "GID_11055": 13,
+                "GID_11333": 11,
+                "GID_11587": 3,
+                "GID_12122": 1,
+                "GID_12132": 4,
+                "GID_12203": 7,
+                "GID_1221": 1,
+                "GID_1233": 1,
+                "GID_12516": 2,
+                "GID_12524": 3,
+                "GID_12654": 1,
+                "GID_12700": 2,
+                "GID_12713": 2,
+                "GID_1276": 2,
+                "GID_12906": 1,
+                "GID_13311": 1,
+                "GID_13324": 3,
+                "GID_1350": 2,
+                "GID_13512": 4,
+                "GID_13520": 9,
+                "GID_13648": 4,
+                "GID_14770": 1,
+                "GID_14790": 8,
+                "GID_14818": 8,
+                "GID_14902": 3,
+                "GID_15482": 2,
+                "GID_15680": 3,
+                "GID_16416": 9,
+                "GID_16641": 1,
+                "GID_16780": 4,
+                "GID_16825": 1,
+                "GID_17081": 2,
+                "GID_18754": 1,
+                "GID_18855": 2,
+                "GID_19321": 2,
+                "GID_19470": 1,
+                "GID_19535": 2,
+                "GID_20053": 3,
+                "GID_20225": 12,
+                "GID_2052": 3,
+                "GID_20605": 1,
+                "GID_2553": 1,
+                "GID_2770": 2,
+                "GID_3143": 11,
+                "GID_343": 4,
+                "GID_3497": 1,
+                "GID_3521": 2,
+                "GID_3540": 1,
+                "GID_3723": 1,
+                "GID_3745": 4,
+                "GID_391": 1,
+                "GID_3921": 4,
+                "GID_4437": 11,
+                "GID_4462": 4,
+                "GID_4519": 2,
+                "GID_4788": 1,
+                "GID_5083": 1,
+                "GID_5190": 2,
+                "GID_5306": 9,
+                "GID_5878": 1,
+                "GID_6687": 5,
+                "GID_6749": 3,
+                "GID_6784": 3,
+                "GID_6922": 4,
+                "GID_7011": 2,
+                "GID_7018": 1,
+                "GID_7106": 1,
+                "GID_7208": 7,
+                "GID_7218": 5,
+                "GID_7467": 1,
+                "GID_7783": 1,
+                "GID_7804": 1,
+                "GID_8062": 1,
+                "GID_8154": 2,
+                "GID_8234": 2,
+                "GID_8520": 1,
+                "GID_8938": 10,
+                "GID_8990": 1,
+                "GID_9162": 6,
+                "GID_9189": 3,
+                "GID_9201": 8,
+                "GID_9411": 4,
+                "GID_9577": 6,
+                "GID_9673": 1,
+                "GID_9844": 2
+              },
+              "retained_markers": 59982,
+              "fit_seed": 42,
+              "estimator_parameters": {
+                "bootstrap": false,
+                "ccp_alpha": 0,
+                "criterion": "squared_error",
+                "max_depth": null,
+                "max_features": 1,
+                "max_leaf_nodes": null,
+                "max_samples": null,
+                "min_impurity_decrease": 0,
+                "min_samples_leaf": 3,
+                "min_samples_split": 2,
+                "min_weight_fraction_leaf": 0,
+                "monotonic_cst": null,
+                "n_estimators": 100,
+                "n_jobs": 1,
+                "oob_score": false,
+                "random_state": 42,
+                "verbose": 0,
+                "warm_start": false
+              },
+              "artifacts": {
+                "model": "DTF_model.joblib",
+                "preprocessing": "DTF_preprocessing.joblib",
+                "markers": "DTF_markers.npy"
+              },
+              "validation_evidence": "DTF_validation_evidence.json",
+              "model_card": "DTF_model_card.md"
+            },
+            "NO": {
+              "min_descendants": 5,
+              "pca_components": 20,
+              "max_markers": 0,
+              "feature": {
+                "id": "E",
+                "mode": "ALL_CURRENT_FEATURES",
+                "n_features": 41
+              },
+              "model_configuration": {
+                "family": "Ridge",
+                "alpha": 100
+              },
+              "units": "modified SES IRRI rating points",
+              "ranking_directions": [
+                "minimize"
+              ],
+              "preconfirm_ranking_eligibility": {
+                "minimize": "ELIGIBLE_PENDING_CONFIRMATION"
+              },
+              "prediction_eligible": true,
+              "known_limitations": [
+                "Same previously inspected historical INIA dataset; no independent validation.",
+                "Selected historical descendant means, not F1, causal or field predictions.",
+                "Environment, generations, selection, relatedness and target uncertainty unadjusted.",
+                "Dependent repeated folds; descriptive distributions are not confidence intervals.",
+                "No arbitrary external germplasm inference; target-device deployment review pending."
+              ],
+              "selection_rationale": "Existing predictive gates and six ordered tie-breaks select the family. Within that family, pooled sample-weighted saved primary inner MAE and original configuration index lock hyperparameters, without any new fit/search. Family evidence used fold-specific tuning; exact-config subset is explicitly separate.",
+              "development_comparison": {
+                "family_procedure_folds": 10,
+                "exact_configuration_folds": 10,
+                "exact_configuration_attempts": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10
+                ]
+              },
+              "trait": "NO",
+              "display_meaning": "Stem rot rating",
+              "model_version": "final-v1/NO/1.0.0",
+              "prediction_enabled": true,
+              "ranking_enabled": true,
+              "training_pair_count": 137,
+              "training_parent_count": 71,
+              "training_parent_ids": [
+                "GID_10039",
+                "GID_10125",
+                "GID_10159",
+                "GID_10396",
+                "GID_10452",
+                "GID_10624",
+                "GID_11055",
+                "GID_11333",
+                "GID_11587",
+                "GID_12132",
+                "GID_12203",
+                "GID_1233",
+                "GID_12516",
+                "GID_12524",
+                "GID_12700",
+                "GID_12713",
+                "GID_1276",
+                "GID_12906",
+                "GID_13324",
+                "GID_13512",
+                "GID_13520",
+                "GID_13648",
+                "GID_14770",
+                "GID_14790",
+                "GID_14818",
+                "GID_14902",
+                "GID_15482",
+                "GID_15680",
+                "GID_16416",
+                "GID_16780",
+                "GID_16825",
+                "GID_17081",
+                "GID_18855",
+                "GID_19470",
+                "GID_20053",
+                "GID_20225",
+                "GID_2553",
+                "GID_2770",
+                "GID_3143",
+                "GID_343",
+                "GID_3521",
+                "GID_3723",
+                "GID_3745",
+                "GID_391",
+                "GID_3921",
+                "GID_4437",
+                "GID_4462",
+                "GID_4788",
+                "GID_5083",
+                "GID_5190",
+                "GID_5306",
+                "GID_5878",
+                "GID_6687",
+                "GID_6749",
+                "GID_6784",
+                "GID_6922",
+                "GID_7011",
+                "GID_7208",
+                "GID_7218",
+                "GID_7783",
+                "GID_8062",
+                "GID_8154",
+                "GID_8520",
+                "GID_8938",
+                "GID_9162",
+                "GID_9189",
+                "GID_9201",
+                "GID_9411",
+                "GID_9577",
+                "GID_9673",
+                "GID_9844"
+              ],
+              "training_parent_pair_counts": {
+                "GID_10039": 1,
+                "GID_10125": 1,
+                "GID_10159": 9,
+                "GID_10396": 17,
+                "GID_10452": 5,
+                "GID_10624": 6,
+                "GID_11055": 13,
+                "GID_11333": 9,
+                "GID_11587": 3,
+                "GID_12132": 3,
+                "GID_12203": 7,
+                "GID_1233": 1,
+                "GID_12516": 1,
+                "GID_12524": 2,
+                "GID_12700": 1,
+                "GID_12713": 2,
+                "GID_1276": 1,
+                "GID_12906": 1,
+                "GID_13324": 2,
+                "GID_13512": 3,
+                "GID_13520": 6,
+                "GID_13648": 4,
+                "GID_14770": 1,
+                "GID_14790": 8,
+                "GID_14818": 8,
+                "GID_14902": 3,
+                "GID_15482": 2,
+                "GID_15680": 3,
+                "GID_16416": 8,
+                "GID_16780": 3,
+                "GID_16825": 1,
+                "GID_17081": 2,
+                "GID_18855": 1,
+                "GID_19470": 1,
+                "GID_20053": 3,
+                "GID_20225": 11,
+                "GID_2553": 1,
+                "GID_2770": 2,
+                "GID_3143": 6,
+                "GID_343": 2,
+                "GID_3521": 2,
+                "GID_3723": 1,
+                "GID_3745": 3,
+                "GID_391": 1,
+                "GID_3921": 4,
+                "GID_4437": 11,
+                "GID_4462": 4,
+                "GID_4788": 1,
+                "GID_5083": 1,
+                "GID_5190": 1,
+                "GID_5306": 8,
+                "GID_5878": 1,
+                "GID_6687": 5,
+                "GID_6749": 3,
+                "GID_6784": 3,
+                "GID_6922": 4,
+                "GID_7011": 2,
+                "GID_7208": 7,
+                "GID_7218": 5,
+                "GID_7783": 1,
+                "GID_8062": 1,
+                "GID_8154": 2,
+                "GID_8520": 1,
+                "GID_8938": 10,
+                "GID_9162": 5,
+                "GID_9189": 3,
+                "GID_9201": 8,
+                "GID_9411": 3,
+                "GID_9577": 6,
+                "GID_9673": 1,
+                "GID_9844": 2
+              },
+              "retained_markers": 58342,
+              "fit_seed": 42,
+              "estimator_parameters": {
+                "memory": null,
+                "transform_input": null,
+                "verbose": false,
+                "standardscaler__copy": true,
+                "standardscaler__with_mean": true,
+                "standardscaler__with_std": true,
+                "ridge__alpha": 100,
+                "ridge__copy_X": true,
+                "ridge__fit_intercept": true,
+                "ridge__max_iter": null,
+                "ridge__positive": false,
+                "ridge__random_state": null,
+                "ridge__solver": "auto",
+                "ridge__tol": 0.0001
+              },
+              "artifacts": {
+                "model": "NO_model.joblib",
+                "preprocessing": "NO_preprocessing.joblib",
+                "markers": "NO_markers.npy"
+              },
+              "validation_evidence": "NO_validation_evidence.json",
+              "model_card": "NO_model_card.md"
+            },
+            "LB": {
+              "min_descendants": 5,
+              "pca_components": 20,
+              "max_markers": 0,
+              "feature": {
+                "id": "A",
+                "mode": "MIDPOINT_ONLY",
+                "n_features": 20
+              },
+              "model_configuration": {
+                "family": "ExtraTrees",
+                "min_samples_leaf": 3,
+                "n_estimators": 100
+              },
+              "units": "SES IRRI rating points",
+              "ranking_directions": [
+                "minimize"
+              ],
+              "preconfirm_ranking_eligibility": {
+                "minimize": "ELIGIBLE_PENDING_CONFIRMATION"
+              },
+              "prediction_eligible": true,
+              "known_limitations": [
+                "Same previously inspected historical INIA dataset; no independent validation.",
+                "Selected historical descendant means, not F1, causal or field predictions.",
+                "Environment, generations, selection, relatedness and target uncertainty unadjusted.",
+                "Dependent repeated folds; descriptive distributions are not confidence intervals.",
+                "No arbitrary external germplasm inference; target-device deployment review pending.",
+                "Controlled LB stress was not estimable in development."
+              ],
+              "selection_rationale": "Existing predictive gates and six ordered tie-breaks select the family. Within that family, pooled sample-weighted saved primary inner MAE and original configuration index lock hyperparameters, without any new fit/search. Family evidence used fold-specific tuning; exact-config subset is explicitly separate.",
+              "development_comparison": {
+                "family_procedure_folds": 10,
+                "exact_configuration_folds": 8,
+                "exact_configuration_attempts": [
+                  1,
+                  2,
+                  3,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9
+                ]
+              },
+              "trait": "LB",
+              "display_meaning": "Leaf blast rating",
+              "model_version": "final-v1/LB/1.0.0",
+              "prediction_enabled": true,
+              "ranking_enabled": true,
+              "training_pair_count": 61,
+              "training_parent_count": 45,
+              "training_parent_ids": [
+                "GID_10039",
+                "GID_10125",
+                "GID_10159",
+                "GID_10396",
+                "GID_10452",
+                "GID_10624",
+                "GID_11055",
+                "GID_11333",
+                "GID_12203",
+                "GID_12524",
+                "GID_12713",
+                "GID_13512",
+                "GID_13520",
+                "GID_13648",
+                "GID_14790",
+                "GID_14902",
+                "GID_15680",
+                "GID_16416",
+                "GID_16780",
+                "GID_20053",
+                "GID_20225",
+                "GID_2553",
+                "GID_2770",
+                "GID_3143",
+                "GID_343",
+                "GID_3521",
+                "GID_3723",
+                "GID_391",
+                "GID_3921",
+                "GID_4437",
+                "GID_4462",
+                "GID_4788",
+                "GID_5306",
+                "GID_6687",
+                "GID_6749",
+                "GID_6922",
+                "GID_7011",
+                "GID_7208",
+                "GID_7218",
+                "GID_8154",
+                "GID_8938",
+                "GID_9201",
+                "GID_9411",
+                "GID_9577",
+                "GID_9844"
+              ],
+              "training_parent_pair_counts": {
+                "GID_10039": 1,
+                "GID_10125": 1,
+                "GID_10159": 7,
+                "GID_10396": 2,
+                "GID_10452": 1,
+                "GID_10624": 1,
+                "GID_11055": 8,
+                "GID_11333": 5,
+                "GID_12203": 1,
+                "GID_12524": 1,
+                "GID_12713": 1,
+                "GID_13512": 2,
+                "GID_13520": 4,
+                "GID_13648": 4,
+                "GID_14790": 5,
+                "GID_14902": 2,
+                "GID_15680": 2,
+                "GID_16416": 4,
+                "GID_16780": 3,
+                "GID_20053": 1,
+                "GID_20225": 8,
+                "GID_2553": 1,
+                "GID_2770": 1,
+                "GID_3143": 4,
+                "GID_343": 2,
+                "GID_3521": 2,
+                "GID_3723": 1,
+                "GID_391": 1,
+                "GID_3921": 1,
+                "GID_4437": 8,
+                "GID_4462": 3,
+                "GID_4788": 1,
+                "GID_5306": 1,
+                "GID_6687": 2,
+                "GID_6749": 2,
+                "GID_6922": 3,
+                "GID_7011": 2,
+                "GID_7208": 4,
+                "GID_7218": 3,
+                "GID_8154": 1,
+                "GID_8938": 7,
+                "GID_9201": 2,
+                "GID_9411": 1,
+                "GID_9577": 4,
+                "GID_9844": 1
+              },
+              "retained_markers": 56969,
+              "fit_seed": 42,
+              "estimator_parameters": {
+                "bootstrap": false,
+                "ccp_alpha": 0,
+                "criterion": "squared_error",
+                "max_depth": null,
+                "max_features": 1,
+                "max_leaf_nodes": null,
+                "max_samples": null,
+                "min_impurity_decrease": 0,
+                "min_samples_leaf": 3,
+                "min_samples_split": 2,
+                "min_weight_fraction_leaf": 0,
+                "monotonic_cst": null,
+                "n_estimators": 100,
+                "n_jobs": 1,
+                "oob_score": false,
+                "random_state": 42,
+                "verbose": 0,
+                "warm_start": false
+              },
+              "artifacts": {
+                "model": "LB_model.joblib",
+                "preprocessing": "LB_preprocessing.joblib",
+                "markers": "LB_markers.npy"
+              },
+              "validation_evidence": "LB_validation_evidence.json",
+              "model_card": "LB_model_card.md"
+            }
+          },
+          "historical_pair_registry": {
+            "file": "historical_pairs.json",
+            "definition": "genotyped_distinct_parent_pedigree",
+            "pair_count": 209,
+            "pair_sha256": "06462d2c09a274d84091f3b1fea8fd4a9ff188b08d533872a356795f5982d689",
+            "sha256": "a10a68fb10a367e3ceea2fd177ceb7868f220c6b9c033e34d9d4099740c66ca0",
+            "provenance": {
+              "source_sha256": {
+                "distinct_parent_registry.parquet": "0633adcedef6ac8d788cfb0fd5dd1375ac72ffbf152435c6224d32632a1f0f52",
+                "genotype_ids.csv": "9572e604e33cc54eaa9275bffa5b6da345b18f4c8ddcf562222d6be6b2427d5b"
+              }
+            }
+          }
+        },
+        "prediction": {
+          "bundle_version": "final-v1",
+          "parent_ids": [
+            "GID_10039",
+            "GID_10125"
+          ],
+          "target": "historical-descendant cross-level estimate; plot means to line means, then equal-weight descendant lines per canonical direct parent pair",
+          "is_historical_pair": false,
+          "predictions": {
+            "GY": {
+              "value": 7891.223511267753,
+              "units": "kg/ha",
+              "model_version": "final-v1/GY/1.0.0",
+              "parents_seen_in_training": [
+                true,
+                true
+              ],
+              "parent_training_pair_counts": [
+                1,
+                1
+              ]
+            },
+            "DTF": {
+              "value": 98.63343564424765,
+              "units": "days",
+              "model_version": "final-v1/DTF/1.0.0",
+              "parents_seen_in_training": [
+                true,
+                true
+              ],
+              "parent_training_pair_counts": [
+                1,
+                1
+              ]
+            },
+            "NO": {
+              "value": 4.591383457183838,
+              "units": "modified SES IRRI rating points",
+              "model_version": "final-v1/NO/1.0.0",
+              "parents_seen_in_training": [
+                true,
+                true
+              ],
+              "parent_training_pair_counts": [
+                1,
+                1
+              ]
+            },
+            "LB": {
+              "value": 0.8833725118415202,
+              "units": "SES IRRI rating points",
+              "model_version": "final-v1/LB/1.0.0",
+              "parents_seen_in_training": [
+                true,
+                true
+              ],
+              "parent_training_pair_counts": [
+                1,
+                1
+              ]
+            }
+          }
+        },
+        "history": {
+          "bundle_version": "final-v1",
+          "parent_ids": [
+            "GID_10039",
+            "GID_8938"
+          ],
+          "is_historical_pair": true
+        },
+        "ranking": {
+          "bundle_version": "final-v1",
+          "objectives": {
+            "GY": "maximize",
+            "DTF": "minimize",
+            "NO": "minimize",
+            "LB": "minimize"
+          },
+          "weights": {
+            "GY": 2,
+            "DTF": 1,
+            "NO": 1,
+            "LB": 1
+          },
+          "score_interpretation": "application-level prioritization score; candidate-set min-max utilities; not biological probability or offspring fitness",
+          "normalization": {
+            "GY": {
+              "minimum": 6266.442801115713,
+              "maximum": 9296.906167477708,
+              "constant_utility": 0.5
+            },
+            "DTF": {
+              "minimum": 95.47751830442687,
+              "maximum": 109.50679832651966,
+              "constant_utility": 0.5
+            },
+            "NO": {
+              "minimum": 3.5381622314453125,
+              "maximum": 6.175806522369385,
+              "constant_utility": 0.5
+            },
+            "LB": {
+              "minimum": 0.221181419939726,
+              "maximum": 4.1214143074711105,
+              "constant_utility": 0.5
+            }
+          },
+          "eligible_candidate_count": 881,
+          "exclusions": {
+            "self_cross_rows": 0,
+            "reverse_or_duplicate_rows": 0,
+            "historical_unique_pairs": 109
+          },
+          "candidates": [
+            {
+              "parent_ids": [
+                "GID_16416",
+                "GID_9577"
+              ],
+              "application_prioritization_score": 0.8915336221746923,
+              "predictions": {
+                "GY": {
+                  "value": 9030.617412981192,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 95.47751830442687,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.2209367752075195,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.6413646941419887,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_16416",
+                "GID_4462"
+              ],
+              "application_prioritization_score": 0.8727155548507748,
+              "predictions": {
+                "GY": {
+                  "value": 9113.717742018734,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.26771270658035,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.655829429626465,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.35949410603365545,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_7218",
+                "GID_9577"
+              ],
+              "application_prioritization_score": 0.8631382774697793,
+              "predictions": {
+                "GY": {
+                  "value": 8921.37953638225,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.01884007750903,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.128242492675781,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.9005012189295103,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_10452",
+                "GID_3143"
+              ],
+              "application_prioritization_score": 0.8594356188362519,
+              "predictions": {
+                "GY": {
+                  "value": 9081.323066446705,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 97.0660540690214,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.676540851593018,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.28251424159504523,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_11055",
+                "GID_4462"
+              ],
+              "application_prioritization_score": 0.8583890623671929,
+              "predictions": {
+                "GY": {
+                  "value": 9068.9420940685,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.5208819687683,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.785029411315918,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.2621958697843149,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_11055",
+                "GID_9577"
+              ],
+              "application_prioritization_score": 0.8580761736836778,
+              "predictions": {
+                "GY": {
+                  "value": 8956.536239723184,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 97.46148742849734,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.270571231842041,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.47818793486291106,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_9201",
+                "GID_9577"
+              ],
+              "application_prioritization_score": 0.8557530292119555,
+              "predictions": {
+                "GY": {
+                  "value": 8810.54587524488,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 95.85054947007427,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.401973247528076,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.4012598008994241,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_4462",
+                "GID_7218"
+              ],
+              "application_prioritization_score": 0.8551706535199648,
+              "predictions": {
+                "GY": {
+                  "value": 8895.196676471713,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 95.78490835444198,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.488709926605225,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.5205021528417793,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_10452",
+                "GID_11055"
+              ],
+              "application_prioritization_score": 0.8533217038321863,
+              "predictions": {
+                "GY": {
+                  "value": 8861.773374507982,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 95.77393290994942,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.479867935180664,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.4866527127516648,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_10452",
+                "GID_16416"
+              ],
+              "application_prioritization_score": 0.8529977462148917,
+              "predictions": {
+                "GY": {
+                  "value": 8821.183547357732,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 95.78530327787577,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.348552703857422,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.5795034061888473,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_11055",
+                "GID_12524"
+              ],
+              "application_prioritization_score": 0.8488535450148891,
+              "predictions": {
+                "GY": {
+                  "value": 8940.716434828262,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.6186140880625,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.485224723815918,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.5342399608414372,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_16416",
+                "GID_3143"
+              ],
+              "application_prioritization_score": 0.8474877192124222,
+              "predictions": {
+                "GY": {
+                  "value": 9296.906167477708,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 97.5145598670496,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.774924278259277,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.8002616547245758,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_16416",
+                "GID_9201"
+              ],
+              "application_prioritization_score": 0.8410398737764524,
+              "predictions": {
+                "GY": {
+                  "value": 9049.84603455571,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.29689812350482,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.790800094604492,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.6051077675780175,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_3143",
+                "GID_7218"
+              ],
+              "application_prioritization_score": 0.8391165179092366,
+              "predictions": {
+                "GY": {
+                  "value": 9157.38647918079,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 97.39349538599076,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.65280294418335,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.8186188700740182,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_10452",
+                "GID_6922"
+              ],
+              "application_prioritization_score": 0.8368721425933071,
+              "predictions": {
+                "GY": {
+                  "value": 8945.194407600122,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.43096460359311,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.6183180809021,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.6347826407339217,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_14790",
+                "GID_7218"
+              ],
+              "application_prioritization_score": 0.8311352766526312,
+              "predictions": {
+                "GY": {
+                  "value": 8764.535905885972,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.00843953058657,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.288259983062744,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.8871555230429486,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_12203",
+                "GID_3143"
+              ],
+              "application_prioritization_score": 0.8307004158842953,
+              "predictions": {
+                "GY": {
+                  "value": 8757.986273996052,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.40888602239886,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.550805568695068,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.379229053212987,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_11055",
+                "GID_20053"
+              ],
+              "application_prioritization_score": 0.830360784409226,
+              "predictions": {
+                "GY": {
+                  "value": 8840.797547208429,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.95054053565805,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.399627208709717,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.6719710182825592,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_12203",
+                "GID_7218"
+              ],
+              "application_prioritization_score": 0.828696183538216,
+              "predictions": {
+                "GY": {
+                  "value": 8839.075438099284,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 97.63373528504815,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.062727928161621,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 1.008233246692436,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            },
+            {
+              "parent_ids": [
+                "GID_6922",
+                "GID_9577"
+              ],
+              "application_prioritization_score": 0.8272920945109815,
+              "predictions": {
+                "GY": {
+                  "value": 8840.588005783446,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 96.03393428490804,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.666396617889404,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.5916303883004388,
+                  "units": "SES IRRI rating points"
+                }
+              }
+            }
+          ]
+        },
+        "deterministic": true,
+        "recorded": [
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_16416",
+              "GID_9577"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_16416",
+              "GID_4462"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_7218",
+              "GID_9577"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_10452",
+              "GID_3143"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_11055",
+              "GID_4462"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_11055",
+              "GID_9577"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_9201",
+              "GID_9577"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_4462",
+              "GID_7218"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_10452",
+              "GID_11055"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_10452",
+              "GID_16416"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_11055",
+              "GID_12524"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_16416",
+              "GID_3143"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_16416",
+              "GID_9201"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_3143",
+              "GID_7218"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_10452",
+              "GID_6922"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_14790",
+              "GID_7218"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_12203",
+              "GID_3143"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_11055",
+              "GID_20053"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_12203",
+              "GID_7218"
+            ],
+            "is_historical_pair": false
+          },
+          {
+            "bundle_version": "final-v1",
+            "parent_ids": [
+              "GID_6922",
+              "GID_9577"
+            ],
+            "is_historical_pair": false
+          }
+        ],
+        "summary": {
+          "genotyped_line_count": 965,
+          "line_count": 20628,
+          "pedigree_line_count": 18039,
+          "phenotype_observation_count": 91636,
+          "phenotyped_line_count": 19447,
+          "source": "INIA historical rice breeding dataset",
+          "source_sha256": {
+            "data/processed/genotype_ids.csv": "9572e604e33cc54eaa9275bffa5b6da345b18f4c8ddcf562222d6be6b2427d5b",
+            "data/processed/line_phenotypes.parquet": "977e4e2d2c59a954a3593fb4b4b5ca94726696b340c06bb8f0e48f1c2226e74a",
+            "data/raw/Lines.txt": "644417788d35a4e236e084ecc24a230c9ed13c5896befdd052409470e6fed4f6",
+            "data/raw/Phenotypes.txt": "8e587890c3d5d479f4f43b7202eb365c4b866f4fe6f15c5d709ff2bc3eb33d0b"
+          }
+        },
+        "pedigree": {
+          "nodes": [
+            {
+              "id": "GID_1",
+              "label": "GID_1",
+              "column": "selected",
+              "depth": 0,
+              "kind": "selected",
+              "hasGenotype": false,
+              "hasPhenotype": true
+            },
+            {
+              "id": "GID_2980",
+              "label": "GID_2980",
+              "column": "parent",
+              "depth": -1,
+              "kind": "normal",
+              "hasGenotype": false,
+              "hasPhenotype": false
+            },
+            {
+              "id": "GID_2052",
+              "label": "GID_2052",
+              "column": "parent",
+              "depth": -1,
+              "kind": "normal",
+              "hasGenotype": true,
+              "hasPhenotype": true
+            }
+          ],
+          "edges": [
+            {
+              "source": "GID_2980",
+              "target": "GID_1"
+            },
+            {
+              "source": "GID_2052",
+              "target": "GID_1"
+            }
+          ],
+          "selectedId": "GID_1",
+          "detail": {
+            "recordedParents": [
+              "GID_2980",
+              "GID_2052"
+            ],
+            "recordedDescendants": 0,
+            "genotype": "none",
+            "phenotype": "available"
+          }
+        },
+        "saved": [
+          {
+            "id": "4a83354b-8b40-4ade-8872-704731e9cede",
+            "name": "GID_8938 × GID_9201",
+            "parentA": "GID_8938",
+            "parentB": "GID_9201",
+            "notes": "Generated by Breed Designer · candidate C-001. Genotype: Both. Historical: Not recorded.",
+            "source": "breed-designer",
+            "reviewStatus": "draft",
+            "tags": [
+              "save"
+            ],
+            "createdAt": "2026-10-11T08:55:27.694Z",
+            "updatedAt": "2026-10-11T08:55:27.694Z",
+            "analysis": {
+              "bundleVersion": "final-v1",
+              "predictions": {
+                "GY": {
+                  "value": 9092.43481907213,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 98.84207412583154,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.784241676330566,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.32050333127039693,
+                  "units": "SES IRRI rating points"
+                }
+              },
+              "objectives": {
+                "GY": "maximize",
+                "DTF": "maximize",
+                "NO": "minimize",
+                "LB": "minimize"
+              },
+              "weights": {
+                "GY": 2,
+                "DTF": 1,
+                "NO": 1,
+                "LB": 1
+              },
+              "applicationScore": 0.7213985843579936,
+              "isHistoricalPair": false
+            }
+          },
+          {
+            "id": "716b242d-53f9-4571-8960-4e29e3f8a582",
+            "name": "Integration smoke 2026-10-11T08:55:23.577Z",
+            "parentA": "GID_10039",
+            "parentB": "GID_10125",
+            "notes": "",
+            "source": "cross-lab",
+            "reviewStatus": "draft",
+            "tags": [
+              "pilot"
+            ],
+            "createdAt": "2026-10-11T08:55:23.839Z",
+            "updatedAt": "2026-10-11T08:55:23.839Z",
+            "analysis": {
+              "bundleVersion": "final-v1",
+              "predictions": {
+                "GY": {
+                  "value": 7891.223511267753,
+                  "units": "kg/ha",
+                  "model_version": "final-v1/GY/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                },
+                "DTF": {
+                  "value": 98.63343564424765,
+                  "units": "days",
+                  "model_version": "final-v1/DTF/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                },
+                "NO": {
+                  "value": 4.591383457183838,
+                  "units": "modified SES IRRI rating points",
+                  "model_version": "final-v1/NO/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                },
+                "LB": {
+                  "value": 0.8833725118415202,
+                  "units": "SES IRRI rating points",
+                  "model_version": "final-v1/LB/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                }
+              },
+              "isHistoricalPair": false
+            }
+          }
+        ],
+        "performance": {
+          "metadata_ms": 14.099999964237213,
+          "prediction_ms": 58.60000002384186,
+          "ranking_ms": 132.30000001192093
+        }
+      }
+    },
+    {
+      "name": "controlled sidecar restart and metadata",
+      "value": {
+        "bundle": "final-v1",
+        "controlled_startup_ms": 1626.300000011921
+      }
+    },
+    {
+      "name": "SQLite persistence after WebView reload",
+      "value": {
+        "backend": "sqlite-tauri",
+        "rows": [
+          {
+            "id": "4a83354b-8b40-4ade-8872-704731e9cede",
+            "name": "GID_8938 × GID_9201",
+            "parentA": "GID_8938",
+            "parentB": "GID_9201",
+            "notes": "Generated by Breed Designer · candidate C-001. Genotype: Both. Historical: Not recorded.",
+            "source": "breed-designer",
+            "reviewStatus": "draft",
+            "tags": [
+              "save"
+            ],
+            "createdAt": "2026-10-11T08:55:27.694Z",
+            "updatedAt": "2026-10-11T08:55:27.694Z",
+            "analysis": {
+              "bundleVersion": "final-v1",
+              "predictions": {
+                "GY": {
+                  "value": 9092.43481907213,
+                  "units": "kg/ha"
+                },
+                "DTF": {
+                  "value": 98.84207412583154,
+                  "units": "days"
+                },
+                "NO": {
+                  "value": 4.784241676330566,
+                  "units": "modified SES IRRI rating points"
+                },
+                "LB": {
+                  "value": 0.32050333127039693,
+                  "units": "SES IRRI rating points"
+                }
+              },
+              "objectives": {
+                "GY": "maximize",
+                "DTF": "maximize",
+                "NO": "minimize",
+                "LB": "minimize"
+              },
+              "weights": {
+                "GY": 2,
+                "DTF": 1,
+                "NO": 1,
+                "LB": 1
+              },
+              "applicationScore": 0.7213985843579936,
+              "isHistoricalPair": false
+            }
+          },
+          {
+            "id": "716b242d-53f9-4571-8960-4e29e3f8a582",
+            "name": "Integration smoke 2026-10-11T08:55:23.577Z",
+            "parentA": "GID_10039",
+            "parentB": "GID_10125",
+            "notes": "",
+            "source": "cross-lab",
+            "reviewStatus": "draft",
+            "tags": [
+              "pilot"
+            ],
+            "createdAt": "2026-10-11T08:55:23.839Z",
+            "updatedAt": "2026-10-11T08:55:23.839Z",
+            "analysis": {
+              "bundleVersion": "final-v1",
+              "predictions": {
+                "GY": {
+                  "value": 7891.223511267753,
+                  "units": "kg/ha",
+                  "model_version": "final-v1/GY/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                },
+                "DTF": {
+                  "value": 98.63343564424765,
+                  "units": "days",
+                  "model_version": "final-v1/DTF/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                },
+                "NO": {
+                  "value": 4.591383457183838,
+                  "units": "modified SES IRRI rating points",
+                  "model_version": "final-v1/NO/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                },
+                "LB": {
+                  "value": 0.8833725118415202,
+                  "units": "SES IRRI rating points",
+                  "model_version": "final-v1/LB/1.0.0",
+                  "parents_seen_in_training": [
+                    true,
+                    true
+                  ],
+                  "parent_training_pair_counts": [
+                    1,
+                    1
+                  ]
+                }
+              },
+              "isHistoricalPair": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "test-created workspace rows cleaned up",
+      "value": [
+        "4a83354b-8b40-4ade-8872-704731e9cede",
+        "716b242d-53f9-4571-8960-4e29e3f8a582"
+      ]
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [
+    "Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template)."
+  ],
+  "performance": {
+    "cross_ui_ms": 184.07130000000052,
+    "gy_ui_ms": 286.6303000000007
+  },
+  "result": "PASS"
+}

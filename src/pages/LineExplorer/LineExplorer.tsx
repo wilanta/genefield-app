@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { mockLines, TOTAL_LINES } from "@/mocks/lines";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { referenceService } from "@/services/reference-service";
+import { useAsync } from "@/lib/use-async";
 import type { LineExplorerFilters, RiceLine } from "@/types/research";
 import { LineExplorerToolbar } from "./LineExplorerToolbar";
 import { LineExplorerTable } from "./LineExplorerTable";
@@ -10,11 +11,11 @@ import { LineExplorerNoResults } from "./LineExplorerNoResults";
 const PAGE_SIZE = 10;
 
 interface LineExplorerProps {
-  /** The full dataset to filter/paginate (defaults to local mocks). */
+  /** Optional supplied dataset, primarily for component tests. */
   lines?: RiceLine[];
-  /** Simulated dataset total, independent of `lines` length. */
+  /** Optional supplied dataset total. */
   totalCount?: number;
-  /** Currently selected line ID (defaults to GID_1233 — the Figma reference). */
+  /** Optional selected line ID; navigation also accepts ?select=. */
   selectedId?: string | null;
   /** Called when the user selects a line (e.g. via its Profile link). */
   onSelectLine?: (id: string) => void;
@@ -31,43 +32,57 @@ const DEFAULT_FILTERS: LineExplorerFilters = {
   pedigree: "any",
 };
 
-function matchesFilters(
-  line: RiceLine,
-  filters: LineExplorerFilters,
-): boolean {
+function matchesFilters(line: RiceLine, filters: LineExplorerFilters): boolean {
   const q = filters.search.trim().toLowerCase();
   if (q && !line.id.toLowerCase().includes(q)) return false;
-  if (filters.genotype !== "any" && line.hasGenotype !== (filters.genotype === "yes"))
+  if (
+    filters.genotype !== "any" &&
+    line.hasGenotype !== (filters.genotype === "yes")
+  )
     return false;
-  if (filters.phenotype !== "any" && line.hasPhenotype !== (filters.phenotype === "yes"))
+  if (
+    filters.phenotype !== "any" &&
+    line.hasPhenotype !== (filters.phenotype === "yes")
+  )
     return false;
-  if (filters.pedigree !== "any" && line.hasPedigree !== (filters.pedigree === "yes"))
+  if (
+    filters.pedigree !== "any" &&
+    line.hasPedigree !== (filters.pedigree === "yes")
+  )
     return false;
   return true;
 }
 
 export default function LineExplorer({
-  lines = mockLines,
-  totalCount = TOTAL_LINES,
-  selectedId = "GID_1233",
+  lines: suppliedLines,
+  totalCount: suppliedTotal,
+  selectedId = null,
   onSelectLine,
   onUseAsParent,
   filters: initialFilters = DEFAULT_FILTERS,
 }: LineExplorerProps) {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const { data: loadedLines, error } = useAsync(() =>
+    referenceService.allLines(),
+  );
+  const lines = suppliedLines ?? loadedLines ?? [];
+  const totalCount = suppliedTotal ?? lines.length;
   const [filters, setFilters] = useState<LineExplorerFilters>(initialFilters);
   const [selected, setSelected] = useState<string | null>(selectedId);
 
   // Default: "Use as Parent A/B" navigates to Cross Lab, prefilling that slot.
-  const handleUseAsParent = onUseAsParent ?? ((id: string, slot: "A" | "B") => {
-    const target = slot === "A" ? "a" : "b";
-    navigate(`/cross-lab?${target}=${encodeURIComponent(id)}`);
-  });
+  const handleUseAsParent =
+    onUseAsParent ??
+    ((id: string, slot: "A" | "B") => {
+      const target = slot === "A" ? "a" : "b";
+      navigate(`/cross-lab?${target}=${encodeURIComponent(id)}`);
+    });
 
   // Keep internal selection in sync when a parent-driven selectedId is provided.
   useEffect(() => {
-    setSelected(selectedId);
-  }, [selectedId]);
+    setSelected(params.get("select") ?? selectedId);
+  }, [selectedId, params]);
 
   const filtered = useMemo(
     () => lines.filter((line) => matchesFilters(line, filters)),
@@ -88,12 +103,22 @@ export default function LineExplorer({
 
   const queryLabel =
     filters.search.trim() ||
-    (filters.genotype !== "any" || filters.phenotype !== "any" || filters.pedigree !== "any"
+    (filters.genotype !== "any" ||
+    filters.phenotype !== "any" ||
+    filters.pedigree !== "any"
       ? "any of your filters"
       : "any of your filters");
 
   return (
     <div className="flex h-full min-h-0 flex-col p-6">
+      {error && (
+        <p role="alert" className="text-destructive">
+          {error}
+        </p>
+      )}
+      {!loadedLines && !error && (
+        <p role="status">Memuat data referensi lokal…</p>
+      )}
       {/* Toolbar */}
       <div className="shrink-0">
         <LineExplorerToolbar

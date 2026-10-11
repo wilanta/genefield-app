@@ -8,17 +8,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  AvailabilityFilter,
-  LineExplorerFilters,
-} from "@/types/research";
+import { AvailabilityFilter, LineExplorerFilters } from "@/types/research";
 
 interface Props {
   filters: LineExplorerFilters;
   onChange: (filters: LineExplorerFilters) => void;
-  /** Number of mock rows matching the current search + filters. */
+  /** Number of reference rows matching current search and filters. */
   matchCount: number;
-  /** Simulated dataset total (independent of the local mock rows). */
+  /** Actual reference dataset total. */
   totalCount: number;
 }
 
@@ -35,7 +32,10 @@ function AvailabilitySelect({
 }) {
   const display = `${label} ${value.charAt(0).toUpperCase() + value.slice(1)}`;
   return (
-    <Select value={value} onValueChange={(v) => onChange(v as AvailabilityFilter)}>
+    <Select
+      value={value}
+      onValueChange={(v) => onChange(v as AvailabilityFilter)}
+    >
       <SelectTrigger className="h-9 w-36 gap-1.5 bg-card text-muted-foreground">
         <SelectValue>{display}</SelectValue>
       </SelectTrigger>
@@ -63,7 +63,12 @@ export function LineExplorerToolbar({
     filters.pedigree !== "any";
 
   const clear = () =>
-    onChange({ search: "", genotype: "any", phenotype: "any", pedigree: "any" });
+    onChange({
+      search: "",
+      genotype: "any",
+      phenotype: "any",
+      pedigree: "any",
+    });
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -106,8 +111,7 @@ export function LineExplorerToolbar({
       </Button>
 
       <span className="ml-auto text-sm tabular-nums text-muted-foreground">
-        {matchCount.toLocaleString()} of{" "}
-        {totalCount.toLocaleString()} lines
+        {matchCount.toLocaleString()} of {totalCount.toLocaleString()} lines
       </span>
     </div>
   );

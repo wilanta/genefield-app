@@ -80,7 +80,8 @@ function StatusBadge({ status }: { status: CandidateReviewStatus }) {
       variant="secondary"
       className={cn(
         "h-5 px-2 text-[11px] font-normal",
-        status === "review" && "bg-[#fcf1da] dark:bg-amber-950/50 text-[#815000] dark:text-amber-200",
+        status === "review" &&
+          "bg-[#fcf1da] dark:bg-amber-950/50 text-[#815000] dark:text-amber-200",
         status === "reviewed" && "bg-accent text-accent-foreground",
         (status === "draft" || status === "archived") &&
           "bg-muted text-muted-foreground",
@@ -570,7 +571,9 @@ export function CandidateDetail({
           </div>
           <div className={detailRow}>
             <dt className="text-muted-foreground">Model bundle</dt>
-            <dd className="text-xs text-muted-foreground">Not recorded</dd>
+            <dd className="text-xs text-muted-foreground">
+              {candidate.analysis?.bundleVersion ?? "Not recorded"}
+            </dd>
           </div>
           <div className={detailRow}>
             <dt className="text-muted-foreground">Date created</dt>
@@ -589,9 +592,41 @@ export function CandidateDetail({
         </section>
         <section className="mt-3" aria-label="Saved experimental estimates">
           <h3 className={sectionHeading}>Saved Experimental Estimates</h3>
-          <p className="text-xs text-muted-foreground">
-            No experimental estimates saved.
-          </p>
+          {candidate.analysis ? (
+            <div className="space-y-1 text-xs">
+              {Object.entries(candidate.analysis.predictions).map(
+                ([trait, p]) => (
+                  <p key={trait}>
+                    {trait}: {p.value.toFixed(4)} {p.units}
+                  </p>
+                ),
+              )}
+              {candidate.analysis.objectives && (
+                <p>
+                  Objectives:{" "}
+                  {Object.entries(candidate.analysis.objectives)
+                    .map(([t, d]) => `${t} ${d}`)
+                    .join(", ")}
+                </p>
+              )}
+              {candidate.analysis.weights && (
+                <p>
+                  Weights:{" "}
+                  {Object.entries(candidate.analysis.weights)
+                    .map(([t, w]) => `${t} ${w}`)
+                    .join(", ")}
+                </p>
+              )}
+              {candidate.analysis.applicationScore !== undefined && (
+                <p>
+                  Application prioritization score:{" "}
+                  {candidate.analysis.applicationScore.toFixed(4)}
+                </p>
+              )}
+            </div>
+          ) : (
+            <p className="text-xs text-muted-foreground">No estimates saved.</p>
+          )}
           {candidate.tags.includes("demo") && (
             <Badge
               variant="secondary"

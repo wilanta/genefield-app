@@ -13,7 +13,7 @@ export interface BreedDesignerGenerationRules {
   excludeSelfCrosses: boolean;
   /** Deduplicate unordered pairs so (A,B) and (B,A) are treated the same. ON by default. */
   excludeDuplicatePairs: boolean;
-  /** Skip pairs already recorded as historical crosses (illustrative, no real record). OFF by default. */
+  /** Historical exclusions are mandatory and authoritative in final-v1. */
   excludeHistorical: boolean;
   /** Cap the number of generated candidates. */
   maxCandidates: number;
@@ -21,15 +21,16 @@ export interface BreedDesignerGenerationRules {
 
 /** A single deterministic candidate cross. */
 export interface BreedDesignerCandidate {
+  analysis?: import("@/types/research").CandidateAnalysis;
   /** Stable display id, e.g. "C-001". */
   candidateId: string;
   parentA: string;
   parentB: string;
   /** "Both" when both parents carry genotype data, "A only" when only Parent A does. */
   genotype: "Both" | "A only";
-  /** Only "Recorded" when a local mock confirms it; otherwise "Not recorded". */
+  /** final-v1 ranking returns unrecorded pairs only. */
   historical: "Recorded" | "Not recorded";
-  /** Illustrative: whether the pair is present in the recorded mock history. */
+  /** Ranking excludes every historical pair using the backend registry. */
   historicalRecorded: boolean;
   researchStatus: "Unreviewed";
 }

@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Reproducible frozen sidecar import; keep trusted hashes in docs/evidence.
+src-tauri/binaries/
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+__pycache__/
+*.pyc

@@ -47,7 +47,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { candidateStore } from "@/services";
-import { demoCandidates } from "@/mocks/candidates";
 import type {
   CandidateReviewStatus,
   CandidateSource,
@@ -129,13 +128,10 @@ export default function CandidateWorkspace() {
   // Status update guard
   const [updatingStatus, setUpdatingStatus] = useState(false);
 
-  const reload = useCallback(async (seedIfEmpty: boolean) => {
+  const reload = useCallback(async (_seedIfEmpty: boolean) => {
     setLoadError(null);
     setLoading(true);
     try {
-      if (seedIfEmpty && candidateStore.seedDemo) {
-        await candidateStore.seedDemo(demoCandidates);
-      }
       const list = await candidateStore.list();
       setItems(list);
     } catch (e) {

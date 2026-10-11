@@ -1,0 +1,57 @@
+{
+  "counts": {
+    "line_count": 20628,
+    "phenotype_observation_count": 91636,
+    "phenotyped_line_count": 19447,
+    "genotyped_line_count": 965,
+    "pedigree_line_count": 18039,
+    "source": "INIA historical rice breeding dataset",
+    "source_sha256": {
+      "data/raw/Lines.txt": "644417788d35a4e236e084ecc24a230c9ed13c5896befdd052409470e6fed4f6",
+      "data/raw/Phenotypes.txt": "8e587890c3d5d479f4f43b7202eb365c4b866f4fe6f15c5d709ff2bc3eb33d0b",
+      "data/processed/line_phenotypes.parquet": "977e4e2d2c59a954a3593fb4b4b5ca94726696b340c06bb8f0e48f1c2226e74a",
+      "data/processed/genotype_ids.csv": "9572e604e33cc54eaa9275bffa5b6da345b18f4c8ddcf562222d6be6b2427d5b"
+    }
+  },
+  "trait_rows": 77788,
+  "duplicate_ids": 0,
+  "unknown_parent_references": [],
+  "pedigree_cycle_audit": "PASS",
+  "missing_trait_values": {
+    "GY": 1059,
+    "DTF": 2018,
+    "NO": 8947,
+    "LB": 16448
+  },
+  "observed_mean_ranges": {
+    "GY": {
+      "minimum": 85.0,
+      "maximum": 18466.877394636,
+      "observation_count": 88910
+    },
+    "DTF": {
+      "minimum": 66.5,
+      "maximum": 160.0,
+      "observation_count": 73741
+    },
+    "NO": {
+      "minimum": 0.5,
+      "maximum": 9.0,
+      "observation_count": 40726
+    },
+    "LB": {
+      "minimum": 0.0,
+      "maximum": 9.0,
+      "observation_count": 5114
+    }
+  },
+  "units": {
+    "GY": "kg/ha",
+    "DTF": "days",
+    "NO": "modified SES IRRI rating points",
+    "LB": "SES IRRI rating points"
+  },
+  "mean_reproduction": "PASS",
+  "integrity": "PASS",
+  "database_sha256": "35f35c8fd98eb8196f7b39fb5b8fdd551474b35bc345ec4a3102fd12494bf030"
+}

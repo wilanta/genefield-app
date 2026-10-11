@@ -1,0 +1,5 @@
+{
+  "result": "PASS",
+  "database_sha256": "35f35c8fd98eb8196f7b39fb5b8fdd551474b35bc345ec4a3102fd12494bf030",
+  "method": "Second independent build in temporary directory; exact SHA256 comparison"
+}

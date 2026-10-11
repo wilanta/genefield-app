@@ -10,11 +10,7 @@ import {
   Cpu,
   Info,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -24,7 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { mockSettings } from "@/mocks/settings";
+import { useAsync } from "@/lib/use-async";
+import { inference } from "@/services/inference-service";
+import { analysisError } from "@/lib/genefield/errors";
+import { appConfigDir, resourceDir, join } from "@tauri-apps/api/path";
+import { getVersion } from "@tauri-apps/api/app";
 import type {
   ThemePreference,
   InterfaceDensity,
@@ -103,7 +103,9 @@ function SettingRow({
       <div>
         <span className="text-[13px] text-foreground">{label}</span>
         {description && (
-          <p className="mt-1 max-w-[260px] text-xs text-muted-foreground">{description}</p>
+          <p className="mt-1 max-w-[260px] text-xs text-muted-foreground">
+            {description}
+          </p>
         )}
       </div>
       <div className="sm:pl-3">{children}</div>
@@ -113,7 +115,13 @@ function SettingRow({
 
 /* ── Section header ─────────────────────────────────────────────────────── */
 
-function SectionHeader({ title, icon }: { title: string; icon: React.ReactNode }) {
+function SectionHeader({
+  title,
+  icon,
+}: {
+  title: string;
+  icon: React.ReactNode;
+}) {
   return (
     <CardHeader className="px-4 pt-3">
       <div className="flex items-center gap-2">
@@ -139,7 +147,53 @@ function NotConnectedNotice() {
 /* ── Page ───────────────────────────────────────────────────────────────── */
 
 export default function Settings() {
-  const data = mockSettings;
+  const [revision, setRevision] = useState(0);
+  const { data: runtime, error: runtimeError } = useAsync(async () => {
+    const metadata = await inference.start();
+    return {
+      metadata,
+      storage: await appConfigDir(),
+      bundle: await join(
+        await resourceDir(),
+        "_internal",
+        "bundles",
+        "final-v1",
+      ),
+      version: await getVersion(),
+    };
+  }, [revision]);
+  const [connection, setConnection] = useState<string>();
+  const [checking, setChecking] = useState(false);
+  const check = async (restart = false) => {
+    if (checking) return;
+    setChecking(true);
+    try {
+      await (restart ? inference.restart() : inference.health());
+      setConnection(
+        "Layanan final-v1 siap. Integritas bundle diverifikasi saat pemuatan.",
+      );
+      setRevision((r) => r + 1);
+    } catch (e) {
+      setConnection(analysisError(e));
+    } finally {
+      setChecking(false);
+    }
+  };
+  const data = {
+    language: "english" as LanguagePreference,
+    databaseEngine: "SQLite - local",
+    storageLocation: runtime?.storage ?? "Unavailable",
+    databaseSize: null,
+    modelBundleLocation: runtime?.bundle ?? "Unavailable",
+    modelBundleVersion: runtime?.metadata.bundle_version ?? "Unavailable",
+    localInferenceAvailable: !!runtime,
+    localInferenceLabel: runtime ? "Available - offline" : "Unavailable",
+    rankingLabel: runtime
+      ? "Enabled for eligible represented parents"
+      : "Unavailable",
+    applicationVersion: runtime?.version ?? "Unavailable",
+    versionPlaceholderNote: "",
+  };
 
   const { theme = "light", setTheme } = useTheme();
   const { density, setDensity } = useInterfaceDensity();
@@ -148,10 +202,7 @@ export default function Settings() {
   // Track which action (if any) was attempted, so only the relevant card
   // shows the "not connected" notice. Keys map to card identifiers.
   const [notConnected, setNotConnected] = useState<
-    | "storage"
-    | "inference"
-    | "application"
-    | null
+    "storage" | "inference" | "application" | null
   >(null);
 
   const notify = (card: "storage" | "inference" | "application") => {
@@ -181,7 +232,10 @@ export default function Settings() {
         <div className="flex flex-col gap-3.5">
           {/* Appearance */}
           <Card className="shadow-[var(--gf-card-shadow)]">
-            <SectionHeader title="Appearance" icon={<Info className="size-3.5" />} />
+            <SectionHeader
+              title="Appearance"
+              icon={<Info className="size-3.5" />}
+            />
             <CardContent className="px-0 pb-2">
               <SettingRow label="Theme">
                 <SegmentedControl
@@ -207,10 +261,15 @@ export default function Settings() {
 
           {/* Data and Storage */}
           <Card className="shadow-[var(--gf-card-shadow)]">
-            <SectionHeader title="Data and Storage" icon={<HardDrive className="size-3.5" />} />
+            <SectionHeader
+              title="Data and Storage"
+              icon={<HardDrive className="size-3.5" />}
+            />
             <CardContent className="px-0 pb-2">
               <SettingRow label="Database" first>
-                <span className="text-[13px] text-muted-foreground">{data.databaseEngine}</span>
+                <span className="text-[13px] text-muted-foreground">
+                  {data.databaseEngine}
+                </span>
               </SettingRow>
               <SettingRow label="Storage location">
                 <span className="text-[13px] font-mono text-muted-foreground">
@@ -218,17 +277,31 @@ export default function Settings() {
                 </span>
               </SettingRow>
               <SettingRow label="Database size">
-                <span className="text-[13px] text-muted-foreground">[placeholder]</span>
+                <span className="text-[13px] text-muted-foreground">
+                  Not measured
+                </span>
               </SettingRow>
               <div className="flex flex-wrap gap-2 px-4 pb-4">
-                <Button variant="outline" size="sm" onClick={() => notify("storage")}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => notify("storage")}
+                >
                   <FileDown className="size-3.5" />
                   Export workspace data
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => notify("storage")}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => notify("storage")}
+                >
                   Backup local workspace
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => notify("storage")}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => notify("storage")}
+                >
                   Restore backup
                 </Button>
               </div>
@@ -241,62 +314,113 @@ export default function Settings() {
         <div className="flex flex-col gap-3.5">
           {/* Inference Engine */}
           <Card className="shadow-[var(--gf-card-shadow)]">
-            <SectionHeader title="Inference Engine" icon={<Cpu className="size-3.5" />} />
+            <SectionHeader
+              title="Inference Engine"
+              icon={<Cpu className="size-3.5" />}
+            />
             <CardContent className="px-0 pb-2">
               <SettingRow label="Model bundle location" first>
                 <div className="flex items-center gap-2">
                   <span className="text-[13px] font-mono text-muted-foreground">
                     {data.modelBundleLocation}
                   </span>
-                  <Button variant="outline" size="sm" onClick={() => notify("inference")}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => void check()}
+                    disabled={checking}
+                  >
                     <FolderOpen className="size-3.5" />
-                    Browse
+                    Check
                   </Button>
                 </div>
               </SettingRow>
               <SettingRow label="Model bundle version">
-                <span className="text-[13px] font-mono text-foreground">{data.modelBundleVersion}</span>
+                <span className="text-[13px] font-mono text-foreground">
+                  {data.modelBundleVersion}
+                </span>
               </SettingRow>
               <SettingRow label="Bundle integrity status">
-                <Badge variant="outline">Not checked</Badge>
+                <Badge variant="outline">
+                  {runtime ? "Verified by final-v1 loader" : "Not checked"}
+                </Badge>
               </SettingRow>
               <SettingRow label="Local inference availability">
                 <span className="flex items-center gap-1.5">
                   <span
                     className={cn(
                       "size-2 rounded-full",
-                      data.localInferenceAvailable ? "bg-[#4D9E5C]" : "bg-muted-foreground/40",
+                      data.localInferenceAvailable
+                        ? "bg-[#4D9E5C]"
+                        : "bg-muted-foreground/40",
                     )}
                     aria-hidden
                   />
-                  <span className="text-[13px] text-foreground">{data.localInferenceLabel}</span>
+                  <span className="text-[13px] text-foreground">
+                    {data.localInferenceLabel}
+                  </span>
                 </span>
               </SettingRow>
               <SettingRow label="Predictive ranking">
                 <div className="flex items-center gap-2">
-                  <Lock className="size-3.5 text-muted-foreground" aria-hidden />
-                  <span className="text-[13px] text-foreground">{data.rankingLabel}</span>
+                  <Lock
+                    className="size-3.5 text-muted-foreground"
+                    aria-hidden
+                  />
+                  <span className="text-[13px] text-foreground">
+                    {data.rankingLabel}
+                  </span>
                   <Badge variant="outline">Locked</Badge>
                 </div>
               </SettingRow>
               <div className="px-4 pb-4">
-                <Button variant="outline" size="sm" onClick={() => notify("inference")}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => void check()}
+                  disabled={checking}
+                >
                   <Database className="size-3.5" />
-                  Test inference connection
+                  {checking ? "Memeriksa..." : "Test inference connection"}
                 </Button>
               </div>
-              {notConnected === "inference" ? <NotConnectedNotice /> : null}
+              {connection && (
+                <p className="px-4 text-xs" role="status">
+                  {connection}
+                </p>
+              )}
+              {runtimeError && (
+                <p className="px-4 text-xs text-destructive" role="alert">
+                  {runtimeError}
+                </p>
+              )}
+              <Button
+                className="mx-4 mb-3"
+                variant="outline"
+                disabled={checking}
+                onClick={() => void check(true)}
+              >
+                Restart local analysis
+              </Button>
             </CardContent>
           </Card>
 
           {/* Application */}
           <Card className="shadow-[var(--gf-card-shadow)]">
-            <SectionHeader title="Application" icon={<Info className="size-3.5" />} />
+            <SectionHeader
+              title="Application"
+              icon={<Info className="size-3.5" />}
+            />
             <CardContent className="px-0 pb-2">
               <SettingRow label="Language preference" first>
-                <Select value={language} onValueChange={(v) => setLanguage(v as LanguagePreference)}>
+                <Select
+                  value={language}
+                  onValueChange={(v) => setLanguage(v as LanguagePreference)}
+                >
                   <SelectTrigger className="h-7 w-[110px] text-[13px]">
-                    <SelectValue>{languageOptions.find((o) => o.value === language)?.label}</SelectValue>
+                    <SelectValue>
+                      {languageOptions.find((o) => o.value === language)?.label}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {languageOptions.map((o) => (
@@ -310,15 +434,22 @@ export default function Settings() {
               <SettingRow label="Application version">
                 <span className="text-[13px] text-foreground">
                   {data.applicationVersion}
-                  <span className="ml-1.5 text-muted-foreground">· {data.versionPlaceholderNote}</span>
                 </span>
               </SettingRow>
               <SettingRow label="Diagnostic logs">
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" onClick={() => notify("application")}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => notify("application")}
+                  >
                     Open log folder
                   </Button>
-                  <Button variant="outline" size="sm" onClick={() => notify("application")}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => notify("application")}
+                  >
                     Export logs
                   </Button>
                 </div>
@@ -330,7 +461,8 @@ export default function Settings() {
       </div>
 
       <p className="mt-4 text-sm text-muted-foreground">
-        Settings are stored locally. No account or network connection is required.
+        Settings are stored locally. No account or network connection is
+        required.
       </p>
     </div>
   );

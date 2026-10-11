@@ -9,6 +9,8 @@ import {
   type Node,
   type NodeProps,
   type NodeTypes,
+  Handle,
+  Position,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { cn } from "@/lib/utils";
@@ -32,9 +34,21 @@ const KIND_STYLE: Record<
   PedigreeNode["kind"],
   { bg: string; border: string; text: string }
 > = {
-  normal: { bg: "var(--card)", border: "var(--gf-graph-border)", text: "var(--foreground)" },
-  selected: { bg: "var(--accent)", border: "var(--primary)", text: "var(--accent-foreground)" },
-  missing: { bg: "var(--gf-graph-missing-bg)", border: "var(--gf-graph-missing-border)", text: "var(--muted-foreground)" },
+  normal: {
+    bg: "var(--card)",
+    border: "var(--gf-graph-border)",
+    text: "var(--foreground)",
+  },
+  selected: {
+    bg: "var(--accent)",
+    border: "var(--primary)",
+    text: "var(--accent-foreground)",
+  },
+  missing: {
+    bg: "var(--gf-graph-missing-bg)",
+    border: "var(--gf-graph-missing-border)",
+    text: "var(--muted-foreground)",
+  },
 };
 
 function GidNode({ data, selected }: NodeProps) {
@@ -48,6 +62,8 @@ function GidNode({ data, selected }: NodeProps) {
       )}
       style={{ background: s.bg, borderColor: s.border, color: s.text }}
     >
+      <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
       <span className="flex-1 truncate font-mono text-xs font-medium">
         {node.label}
       </span>
@@ -70,7 +86,13 @@ function GidNode({ data, selected }: NodeProps) {
 
 const nodeTypes: NodeTypes = { gid: GidNode };
 
-function PedigreeGraphInner({ data }: { data: PedigreeGraphData }) {
+function PedigreeGraphInner({
+  data,
+  onSelect,
+}: {
+  data: PedigreeGraphData;
+  onSelect?: (id: string) => void;
+}) {
   const { resolvedTheme } = useTheme();
   const { zoomIn, zoomOut, fitView } = useReactFlow();
   const [resetSignal, setResetSignal] = useState(0);
@@ -128,6 +150,7 @@ function PedigreeGraphInner({ data }: { data: PedigreeGraphData }) {
         onZoomOut={zoomOut}
         onFit={() => fitView({ padding: 0.12 })}
         onReset={handleReset}
+        onSearch={onSelect}
       />
 
       {/* Graph canvas (Figma 1:2941 background + 1:2944 graph area) */}
@@ -144,6 +167,7 @@ function PedigreeGraphInner({ data }: { data: PedigreeGraphData }) {
           nodesConnectable={false}
           nodesDraggable={false}
           elementsSelectable
+          onNodeClick={(_, node) => onSelect?.(node.id)}
           proOptions={{ hideAttribution: true }}
           defaultEdgeOptions={{ type: "smoothstep" }}
         >
@@ -178,10 +202,16 @@ const COLUMN_LABELS: Record<PedigreeNode["column"], string> = {
 };
 
 /** Public wrapper that provides the React Flow context. */
-export default function PedigreeGraph({ data }: { data: PedigreeGraphData }) {
+export default function PedigreeGraph({
+  data,
+  onSelect,
+}: {
+  data: PedigreeGraphData;
+  onSelect?: (id: string) => void;
+}) {
   return (
     <ReactFlowProvider>
-      <PedigreeGraphInner data={data} />
+      <PedigreeGraphInner data={data} onSelect={onSelect} />
     </ReactFlowProvider>
   );
 }

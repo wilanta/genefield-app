@@ -1,7 +1,8 @@
+import { isTauri } from "@tauri-apps/api/core";
 /**
  * Runtime detection for Tauri v2. When the app runs inside the desktop shell,
- * Tauri injects the `window.__TAURI__` bridge (and `__TAURI_INTERNALS__`).
- * A plain browser (vite preview) has neither, so `__TAURI__` is undefined.
+ * Tauri injects `__TAURI_INTERNALS__`. The optional global `__TAURI__`
+ * requires withGlobalTauri and is not a reliable runtime detector.
  *
  * We read through `window` at call time (not at module import) so the check
  * also works under SSR-free Vite dev without triggering a global at load.
@@ -14,7 +15,7 @@ declare global {
 
 /** True only when running inside the Tauri desktop shell. */
 export function isTauriRuntime(): boolean {
-  return typeof window !== "undefined" && window.__TAURI__ != null;
+  return isTauri();
 }
 
 export type TauriInvokeFn = <T>(

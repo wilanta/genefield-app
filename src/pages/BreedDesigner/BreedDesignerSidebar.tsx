@@ -107,11 +107,16 @@ export function BreedDesignerSidebar({
         </div>
         <ul className="list-disc space-y-1.5 pl-4 text-[12px] leading-[18px] text-amber-950/80 dark:text-amber-200">
           <li>
-            Breed Designer is a deterministic exploration tool; it does not rank
-            or recommend crosses.
+            Breed Designer prioritizes unrecorded crosses using selected trait
+            objectives.
           </li>
-          <li>Predictive ranking is disabled for GY, DTF, NO, and LB.</li>
-          <li>Pairs are illustrative candidates for research review only.</li>
+          <li>
+            final-v1 supports ranking for eligible represented INIA parents.
+          </li>
+          <li>
+            Scores prioritize candidates for review; they are not breeding
+            success probabilities.
+          </li>
         </ul>
       </div>
     </div>

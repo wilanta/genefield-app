@@ -17,6 +17,7 @@ const GENEFIELD_DB = "sqlite:genefield.db";
 
 /** Shape of a raw `candidates` row as returned by @tauri-apps/plugin-sql. */
 interface RawCandidateRow {
+  analysis_json?: string | null;
   id: string;
   name: string;
   parent_a: string;
@@ -38,10 +39,12 @@ function rowToCandidate(r: RawCandidateRow): SavedCandidate {
     parentB: r.parent_b,
     notes: r.notes,
     source: (r.source as SavedCandidate["source"]) ?? "manual",
-    reviewStatus: (r.review_status as SavedCandidate["reviewStatus"]) ?? "draft",
+    reviewStatus:
+      (r.review_status as SavedCandidate["reviewStatus"]) ?? "draft",
     tags: safeTagArray(r.tags),
     createdAt: r.created_at,
     updatedAt: r.updated_at,
+    analysis: r.analysis_json ? JSON.parse(r.analysis_json) : undefined,
   };
 }
 
@@ -61,12 +64,8 @@ function safeTagArray(raw: string): string[] {
  * migration registered on the Rust side (see src-tauri/src/lib.rs); this
  * adapter only issues the DML. It is only active under the Tauri runtime.
  *
- * Status: the JS-side API surface was verified against tauri-plugin-sql
- * v2.5.0 source — crate `tauri-plugin-sql` (feature `sqlite`), JS package
- * `@tauri-apps/plugin-sql`; `Database.select/execute` return rows keyed by
- * column name and (rowsAffected, lastInsertId) respectively. The Rust plugin
- * itself has not been compiled in this environment (no toolchain), so run
- * `cargo check` in src-tauri before relying on it end-to-end.
+ * Compiled and exercised through native Tauri development IPC; migration v3
+ * stores final-v1 analysis snapshots separately from editable review fields.
  */
 export class TauriSqliteCandidateStore implements CandidateStore {
   readonly backend: CandidateStoreBackend = "sqlite-tauri";
@@ -87,9 +86,7 @@ export class TauriSqliteCandidateStore implements CandidateStore {
    * Load the database pool. Dynamic-imports the plugin so the browser build
    * never references Tauri-only APIs.
    */
-  private async getDb(): Promise<
-    import("@tauri-apps/plugin-sql").default
-  > {
+  private async getDb(): Promise<import("@tauri-apps/plugin-sql").default> {
     if (this.db) return this.db;
     const Database = (await import("@tauri-apps/plugin-sql")).default;
     this.db = await Database.load(GENEFIELD_DB);
@@ -99,7 +96,7 @@ export class TauriSqliteCandidateStore implements CandidateStore {
   async list(): Promise<SavedCandidate[]> {
     const db = await this.getDb();
     const rows = await db.select<RawCandidateRow[]>(
-      "SELECT id, name, parent_a, parent_b, notes, source, review_status, tags, created_at, updated_at FROM candidates ORDER BY updated_at DESC",
+      "SELECT id, name, parent_a, parent_b, notes, source, review_status, tags, created_at, updated_at, analysis_json FROM candidates ORDER BY updated_at DESC",
       [],
     );
     return (rows ?? []).map(rowToCandidate);
@@ -108,7 +105,7 @@ export class TauriSqliteCandidateStore implements CandidateStore {
   async get(id: string): Promise<SavedCandidate | null> {
     const db = await this.getDb();
     const rows = await db.select<RawCandidateRow[]>(
-      "SELECT id, name, parent_a, parent_b, notes, source, review_status, tags, created_at, updated_at FROM candidates WHERE id = $1",
+      "SELECT id, name, parent_a, parent_b, notes, source, review_status, tags, created_at, updated_at, analysis_json FROM candidates WHERE id = $1",
       [id],
     );
     const row = rows?.[0];
@@ -141,7 +138,7 @@ export class TauriSqliteCandidateStore implements CandidateStore {
     }
 
     await db.execute(
-      "INSERT INTO candidates (id, name, parent_a, parent_b, notes, source, review_status, tags, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+      "INSERT INTO candidates (id, name, parent_a, parent_b, notes, source, review_status, tags, created_at, updated_at, analysis_json) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)",
       [
         id,
         name,
@@ -153,6 +150,7 @@ export class TauriSqliteCandidateStore implements CandidateStore {
         JSON.stringify(tags),
         now,
         now,
+        input.analysis ? JSON.stringify(input.analysis) : null,
       ],
     );
 
@@ -167,6 +165,7 @@ export class TauriSqliteCandidateStore implements CandidateStore {
       tags,
       createdAt: now,
       updatedAt: now,
+      analysis: input.analysis,
     };
   }
 
@@ -309,9 +308,9 @@ export class TauriSqliteCandidateStore implements CandidateStore {
     }
 
     // Step 4: finalize. Only mark completed after every insert succeeded.
-    await db.execute(
-      "UPDATE seed_state SET status = $1 WHERE key = $2",
-      ["completed", "demo"],
-    );
+    await db.execute("UPDATE seed_state SET status = $1 WHERE key = $2", [
+      "completed",
+      "demo",
+    ]);
   }
 }

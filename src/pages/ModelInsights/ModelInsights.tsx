@@ -1,8 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,10 +7,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  mockModelInsights,
-  methodologyNotes,
-} from "@/mocks/modelInsights";
+import { useAsync } from "@/lib/use-async";
+import { inference } from "@/services/inference-service";
+const methodologyNotes = [
+  {
+    title: "Historical scope",
+    description:
+      "Historical-descendant cross-level estimates among represented INIA parents. Validation is same-dataset; external germplasm is not supported.",
+  },
+  {
+    title: "Application prioritization",
+    description:
+      "Ranking scores express selected trait objectives and weights. Scientific and breeder sign-off remains pending.",
+  },
+];
 import type {
   ModelInsightsData,
   TraitModelSelection,
@@ -111,7 +117,10 @@ function TraitModelTable({ rows }: { rows: TraitModelSelection[] }) {
           </TableHeader>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.trait} className="h-[42px] hover:bg-transparent">
+              <TableRow
+                key={row.trait}
+                className="h-[42px] hover:bg-transparent"
+              >
                 <TableCell className="px-3 text-sm font-medium text-foreground">
                   {row.trait}
                 </TableCell>
@@ -147,7 +156,7 @@ function ValidationTable({
             Validation Results
           </h3>
           <span className="rounded-full bg-amber-50 dark:bg-amber-950/30 px-3 py-1 text-xs font-medium text-amber-800 dark:text-amber-200 ring-1 ring-inset ring-amber-200/70">
-            Placeholders · no verified metrics shown
+            Detailed validation evidence remains in frozen model cards
           </span>
         </div>
       </CardHeader>
@@ -177,7 +186,10 @@ function ValidationTable({
           </TableHeader>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.trait} className="h-[42px] hover:bg-transparent">
+              <TableRow
+                key={row.trait}
+                className="h-[42px] hover:bg-transparent"
+              >
                 <TableCell className="px-3 text-sm font-medium text-foreground">
                   {row.trait}
                 </TableCell>
@@ -203,10 +215,10 @@ function ValidationTable({
 
         <div className="flex items-center justify-between border-t border-border px-4 py-2.5">
           <span className="text-sm text-muted-foreground">
-            Eligible historical crosses
+            Historical pedigree registry pairs
           </span>
           <span className="text-sm text-muted-foreground">
-            {metric(eligibleCrosses)} · placeholder
+            {metric(eligibleCrosses)}
           </span>
         </div>
       </CardContent>
@@ -232,7 +244,9 @@ function LimitationsPanel({ items }: { items: string[] }) {
                 className="mt-[7px] size-1.5 shrink-0 rounded-full bg-amber-500/60"
                 aria-hidden
               />
-              <p className="text-sm leading-[19px] text-amber-900/90 dark:text-amber-200">{item}</p>
+              <p className="text-sm leading-[19px] text-amber-900/90 dark:text-amber-200">
+                {item}
+              </p>
             </li>
           ))}
         </ul>
@@ -267,7 +281,36 @@ function MethodologyCards() {
 /* ── Page ───────────────────────────────────────────────────────────────── */
 
 export default function ModelInsights() {
-  const data = mockModelInsights;
+  const { data: metadata, error } = useAsync(() => inference.start());
+  if (!metadata)
+    return (
+      <p className="p-6" role={error ? "alert" : "status"}>
+        {error ?? "Memuat metadata final-v1..."}
+      </p>
+    );
+  const data: ModelInsightsData = {
+    modelBundle: metadata.bundle_version,
+    scientificReview: "unreviewed",
+    usage: "research-only",
+    trainingStatus: "completed",
+    rankingEnabled: true,
+    traitModels: Object.entries(metadata.traits).map(([trait, info]) => ({
+      trait: trait as TraitModelSelection["trait"],
+      modelFamily: info.model_configuration.family,
+      hyperparameters: Object.entries(info.model_configuration)
+        .filter(([k]) => k !== "family")
+        .map(([k, v]) => `${k} = ${v}`)
+        .join(", "),
+    })),
+    validationMetrics: [],
+    eligibleHistoricalCrosses: metadata.historical_pair_registry.pair_count,
+    limitations: [
+      metadata.review_status,
+      ...new Set(
+        Object.values(metadata.traits).flatMap((t) => t.known_limitations),
+      ),
+    ],
+  };
 
   return (
     <div className="mx-auto max-w-[1208px] p-6">
@@ -280,6 +323,16 @@ export default function ModelInsights() {
             rows={data.validationMetrics}
             eligibleCrosses={data.eligibleHistoricalCrosses}
           />
+          <Card className="p-4 text-sm">
+            <p>{metadata.source_dataset}</p>
+            {Object.entries(metadata.traits).map(([t, info]) => (
+              <p key={t}>
+                {t}: {info.units} | {info.training_pair_count} training pairs |{" "}
+                {info.training_parent_count} eligible parents |{" "}
+                {info.ranking_directions.join(" / ")}
+              </p>
+            ))}
+          </Card>
           <MethodologyCards />
         </div>
 

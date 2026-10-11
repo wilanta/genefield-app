@@ -1,0 +1,28 @@
+{
+  "typecheck": "PASS",
+  "frontend_build": "PASS",
+  "frontend_tests": {
+    "result": "PASS",
+    "files": 6,
+    "passed": 37
+  },
+  "reference_tests": {
+    "result": "PASS",
+    "passed": 4
+  },
+  "cargo_check": "PASS",
+  "cargo_tests": {
+    "result": "PASS",
+    "passed": 1
+  },
+  "rust_format": "PASS",
+  "tauri_config": "validated by cargo build and native startup",
+  "native_desktop_smoke": "PASS",
+  "desktop_restart_persistence": "PASS",
+  "sidecar_integrity": "PASS",
+  "database_determinism": "PASS",
+  "diff_check": "PASS",
+  "lint": "no configured lint script",
+  "installer": "not built or installed",
+  "scientific_approval": "not claimed"
+}

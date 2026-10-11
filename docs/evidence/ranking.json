@@ -1,0 +1,2000 @@
+{
+  "single_trait": [
+    {
+      "trait": "GY",
+      "direction": "maximize",
+      "roundtrip_ms": 165.00059999999985,
+      "result": {
+        "bundle_version": "final-v1",
+        "objectives": {
+          "GY": "maximize"
+        },
+        "weights": {
+          "GY": 1
+        },
+        "score_interpretation": "application-level prioritization score; candidate-set min-max utilities; not biological probability or offspring fitness",
+        "normalization": {
+          "GY": {
+            "minimum": 5864.104385675036,
+            "maximum": 9677.955118952199,
+            "constant_utility": 0.5
+          }
+        },
+        "eligible_candidate_count": 3913,
+        "exclusions": {
+          "self_cross_rows": 0,
+          "reverse_or_duplicate_rows": 0,
+          "historical_unique_pairs": 182
+        },
+        "candidates": [
+          {
+            "parent_ids": [
+              "GID_10021",
+              "GID_1350"
+            ],
+            "application_prioritization_score": 1,
+            "predictions": {
+              "GY": {
+                "value": 9677.955118952199,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_5083"
+            ],
+            "application_prioritization_score": 0.9948151322756186,
+            "predictions": {
+              "GY": {
+                "value": 9658.180807379622,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_5190"
+            ],
+            "application_prioritization_score": 0.989523250371899,
+            "predictions": {
+              "GY": {
+                "value": 9637.998359700705,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_19535",
+              "GID_7218"
+            ],
+            "application_prioritization_score": 0.9821600149174712,
+            "predictions": {
+              "GY": {
+                "value": 9609.916078763543,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_13520"
+            ],
+            "application_prioritization_score": 0.9742320810994308,
+            "predictions": {
+              "GY": {
+                "value": 9579.680122558237,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_11055",
+              "GID_19535"
+            ],
+            "application_prioritization_score": 0.9566597747587077,
+            "predictions": {
+              "GY": {
+                "value": 9512.661969135299,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_13648",
+              "GID_2052"
+            ],
+            "application_prioritization_score": 0.9521098742823357,
+            "predictions": {
+              "GY": {
+                "value": 9495.30932786715,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_13648",
+              "GID_19535"
+            ],
+            "application_prioritization_score": 0.9517178043229338,
+            "predictions": {
+              "GY": {
+                "value": 9493.814031564989,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_3497",
+              "GID_9577"
+            ],
+            "application_prioritization_score": 0.9514893385687226,
+            "predictions": {
+              "GY": {
+                "value": 9492.942697280761,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1221",
+              "GID_7218"
+            ],
+            "application_prioritization_score": 0.9490695620767927,
+            "predictions": {
+              "GY": {
+                "value": 9483.714030932648,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_18855",
+              "GID_8938"
+            ],
+            "application_prioritization_score": 0.9413771626261987,
+            "predictions": {
+              "GY": {
+                "value": 9454.376367647339,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_20605",
+              "GID_7218"
+            ],
+            "application_prioritization_score": 0.9298559642824428,
+            "predictions": {
+              "GY": {
+                "value": 9410.436236895774,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_3497"
+            ],
+            "application_prioritization_score": 0.9280027370535694,
+            "predictions": {
+              "GY": {
+                "value": 9403.368304870006,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10452",
+              "GID_1221"
+            ],
+            "application_prioritization_score": 0.923844741224146,
+            "predictions": {
+              "GY": {
+                "value": 9387.510329426996,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_18855"
+            ],
+            "application_prioritization_score": 0.9200711695351403,
+            "predictions": {
+              "GY": {
+                "value": 9373.118490273808,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10976",
+              "GID_18855"
+            ],
+            "application_prioritization_score": 0.9196016650108912,
+            "predictions": {
+              "GY": {
+                "value": 9371.327870099723,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_11055",
+              "GID_1221"
+            ],
+            "application_prioritization_score": 0.9187328474641224,
+            "predictions": {
+              "GY": {
+                "value": 9368.014329661895,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1276",
+              "GID_13648"
+            ],
+            "application_prioritization_score": 0.918356042624444,
+            "predictions": {
+              "GY": {
+                "value": 9366.577252247786,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_3540",
+              "GID_7804"
+            ],
+            "application_prioritization_score": 0.9152208248619762,
+            "predictions": {
+              "GY": {
+                "value": 9354.619999685414,
+                "units": "kg/ha"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10976",
+              "GID_3497"
+            ],
+            "application_prioritization_score": 0.9137956679811846,
+            "predictions": {
+              "GY": {
+                "value": 9349.184664070572,
+                "units": "kg/ha"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trait": "DTF",
+      "direction": "minimize",
+      "roundtrip_ms": 166.10729999999967,
+      "result": {
+        "bundle_version": "final-v1",
+        "objectives": {
+          "DTF": "minimize"
+        },
+        "weights": {
+          "DTF": 1
+        },
+        "score_interpretation": "application-level prioritization score; candidate-set min-max utilities; not biological probability or offspring fitness",
+        "normalization": {
+          "DTF": {
+            "minimum": 93.93006520594489,
+            "maximum": 112.86791093332724,
+            "constant_utility": 0.5
+          }
+        },
+        "eligible_candidate_count": 4186,
+        "exclusions": {
+          "self_cross_rows": 0,
+          "reverse_or_duplicate_rows": 0,
+          "historical_unique_pairs": 185
+        },
+        "candidates": [
+          {
+            "parent_ids": [
+              "GID_3497",
+              "GID_9577"
+            ],
+            "application_prioritization_score": 1,
+            "predictions": {
+              "DTF": {
+                "value": 93.93006520594489,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10452",
+              "GID_20605"
+            ],
+            "application_prioritization_score": 0.9826549536638978,
+            "predictions": {
+              "DTF": {
+                "value": 94.25854301759229,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_11587",
+              "GID_12203"
+            ],
+            "application_prioritization_score": 0.9804716428014677,
+            "predictions": {
+              "DTF": {
+                "value": 94.2998902218799,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_3497"
+            ],
+            "application_prioritization_score": 0.9762097089580607,
+            "predictions": {
+              "DTF": {
+                "value": 94.38060206750666,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_3497",
+              "GID_7018"
+            ],
+            "application_prioritization_score": 0.9726035952395232,
+            "predictions": {
+              "DTF": {
+                "value": 94.44889409278372,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_18855",
+              "GID_9673"
+            ],
+            "application_prioritization_score": 0.9705831011735815,
+            "predictions": {
+              "DTF": {
+                "value": 94.48715789769761,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10452",
+              "GID_1221"
+            ],
+            "application_prioritization_score": 0.9644381825381516,
+            "predictions": {
+              "DTF": {
+                "value": 94.6035294188227,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_7106",
+              "GID_8990"
+            ],
+            "application_prioritization_score": 0.9643313962816047,
+            "predictions": {
+              "DTF": {
+                "value": 94.60555172047499,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_11587",
+              "GID_4437"
+            ],
+            "application_prioritization_score": 0.9617729620335459,
+            "predictions": {
+              "DTF": {
+                "value": 94.65400295356838,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12516",
+              "GID_4519"
+            ],
+            "application_prioritization_score": 0.9577593473815516,
+            "predictions": {
+              "DTF": {
+                "value": 94.73001216865701,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_19535",
+              "GID_3745"
+            ],
+            "application_prioritization_score": 0.9561100822600992,
+            "predictions": {
+              "DTF": {
+                "value": 94.76124569709063,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_20053",
+              "GID_3745"
+            ],
+            "application_prioritization_score": 0.9503133494973918,
+            "predictions": {
+              "DTF": {
+                "value": 94.87102332787364,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_18855",
+              "GID_4462"
+            ],
+            "application_prioritization_score": 0.9490233900266613,
+            "predictions": {
+              "DTF": {
+                "value": 94.89545238132492,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10587",
+              "GID_12122"
+            ],
+            "application_prioritization_score": 0.9487305408932384,
+            "predictions": {
+              "DTF": {
+                "value": 94.90099831303507,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_3745"
+            ],
+            "application_prioritization_score": 0.9472917848028544,
+            "predictions": {
+              "DTF": {
+                "value": 94.9282452539141,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_20053",
+              "GID_7467"
+            ],
+            "application_prioritization_score": 0.9461899877164651,
+            "predictions": {
+              "DTF": {
+                "value": 94.94911091715902,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_18855"
+            ],
+            "application_prioritization_score": 0.9458264380067269,
+            "predictions": {
+              "DTF": {
+                "value": 94.95599576547627,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_18855",
+              "GID_7106"
+            ],
+            "application_prioritization_score": 0.9450178770870458,
+            "predictions": {
+              "DTF": {
+                "value": 94.97130816743439,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_14790",
+              "GID_18855"
+            ],
+            "application_prioritization_score": 0.9416127571041241,
+            "predictions": {
+              "DTF": {
+                "value": 95.03579380435418,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_11587",
+              "GID_14790"
+            ],
+            "application_prioritization_score": 0.939557590588354,
+            "predictions": {
+              "DTF": {
+                "value": 95.07471423077392,
+                "units": "days"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trait": "DTF",
+      "direction": "maximize",
+      "roundtrip_ms": 124.84969999999976,
+      "result": {
+        "bundle_version": "final-v1",
+        "objectives": {
+          "DTF": "maximize"
+        },
+        "weights": {
+          "DTF": 1
+        },
+        "score_interpretation": "application-level prioritization score; candidate-set min-max utilities; not biological probability or offspring fitness",
+        "normalization": {
+          "DTF": {
+            "minimum": 93.93006520594489,
+            "maximum": 112.86791093332724,
+            "constant_utility": 0.5
+          }
+        },
+        "eligible_candidate_count": 4186,
+        "exclusions": {
+          "self_cross_rows": 0,
+          "reverse_or_duplicate_rows": 0,
+          "historical_unique_pairs": 185
+        },
+        "candidates": [
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_13520"
+            ],
+            "application_prioritization_score": 1,
+            "predictions": {
+              "DTF": {
+                "value": 112.86791093332724,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_5190"
+            ],
+            "application_prioritization_score": 0.9738547353031252,
+            "predictions": {
+              "DTF": {
+                "value": 112.37277594399625,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_9411"
+            ],
+            "application_prioritization_score": 0.9728067638732202,
+            "predictions": {
+              "DTF": {
+                "value": 112.35292962273,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_3723"
+            ],
+            "application_prioritization_score": 0.8814501385505202,
+            "predictions": {
+              "DTF": {
+                "value": 110.62283194619444,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1233",
+              "GID_1350"
+            ],
+            "application_prioritization_score": 0.8806711705854984,
+            "predictions": {
+              "DTF": {
+                "value": 110.60807997104628,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_391"
+            ],
+            "application_prioritization_score": 0.8776084236911845,
+            "predictions": {
+              "DTF": {
+                "value": 110.55007814285975,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1350",
+              "GID_5083"
+            ],
+            "application_prioritization_score": 0.8509206743261211,
+            "predictions": {
+              "DTF": {
+                "value": 110.04466966257313,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_16780",
+              "GID_2770"
+            ],
+            "application_prioritization_score": 0.8225187460499942,
+            "predictions": {
+              "DTF": {
+                "value": 109.50679832651966,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12700",
+              "GID_16780"
+            ],
+            "application_prioritization_score": 0.8143498457038527,
+            "predictions": {
+              "DTF": {
+                "value": 109.35209695200207,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10021",
+              "GID_1350"
+            ],
+            "application_prioritization_score": 0.8140933287500463,
+            "predictions": {
+              "DTF": {
+                "value": 109.34723907350443,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1233",
+              "GID_9162"
+            ],
+            "application_prioritization_score": 0.8083337874957692,
+            "predictions": {
+              "DTF": {
+                "value": 109.23816576977043,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1233",
+              "GID_13520"
+            ],
+            "application_prioritization_score": 0.8051242345513181,
+            "predictions": {
+              "DTF": {
+                "value": 109.17738375125455,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1233",
+              "GID_7804"
+            ],
+            "application_prioritization_score": 0.8006576045730214,
+            "predictions": {
+              "DTF": {
+                "value": 109.09279540180427,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12700",
+              "GID_2770"
+            ],
+            "application_prioritization_score": 0.7922387177673644,
+            "predictions": {
+              "DTF": {
+                "value": 108.93335982228244,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_13324",
+              "GID_16780"
+            ],
+            "application_prioritization_score": 0.788807996860309,
+            "predictions": {
+              "DTF": {
+                "value": 108.86838935901092,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1233",
+              "GID_5083"
+            ],
+            "application_prioritization_score": 0.7854116526299747,
+            "predictions": {
+              "DTF": {
+                "value": 108.80406991593976,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_13324",
+              "GID_2770"
+            ],
+            "application_prioritization_score": 0.766473434249135,
+            "predictions": {
+              "DTF": {
+                "value": 108.44542085789195,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1233",
+              "GID_391"
+            ],
+            "application_prioritization_score": 0.7490791169932673,
+            "predictions": {
+              "DTF": {
+                "value": 108.11600996116718,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_1233",
+              "GID_9411"
+            ],
+            "application_prioritization_score": 0.7465480850972745,
+            "predictions": {
+              "DTF": {
+                "value": 108.06807766958978,
+                "units": "days"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12122",
+              "GID_1233"
+            ],
+            "application_prioritization_score": 0.7449909867225507,
+            "predictions": {
+              "DTF": {
+                "value": 108.0385895807869,
+                "units": "days"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trait": "NO",
+      "direction": "minimize",
+      "roundtrip_ms": 143.88639999999987,
+      "result": {
+        "bundle_version": "final-v1",
+        "objectives": {
+          "NO": "minimize"
+        },
+        "weights": {
+          "NO": 1
+        },
+        "score_interpretation": "application-level prioritization score; candidate-set min-max utilities; not biological probability or offspring fitness",
+        "normalization": {
+          "NO": {
+            "minimum": 3.4866561889648438,
+            "maximum": 7.230681419372559,
+            "constant_utility": 0.5
+          }
+        },
+        "eligible_candidate_count": 2323,
+        "exclusions": {
+          "self_cross_rows": 0,
+          "reverse_or_duplicate_rows": 0,
+          "historical_unique_pairs": 162
+        },
+        "candidates": [
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_5190"
+            ],
+            "application_prioritization_score": 1,
+            "predictions": {
+              "NO": {
+                "value": 3.4866561889648438,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_8938"
+            ],
+            "application_prioritization_score": 0.9862431287765503,
+            "predictions": {
+              "NO": {
+                "value": 3.5381622314453125,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_9577"
+            ],
+            "application_prioritization_score": 0.9823722839355469,
+            "predictions": {
+              "NO": {
+                "value": 3.55265474319458,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_15680"
+            ],
+            "application_prioritization_score": 0.9739438891410828,
+            "predictions": {
+              "NO": {
+                "value": 3.5842108726501465,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_13520",
+              "GID_15680"
+            ],
+            "application_prioritization_score": 0.9716798067092896,
+            "predictions": {
+              "NO": {
+                "value": 3.5926876068115234,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_14790",
+              "GID_15680"
+            ],
+            "application_prioritization_score": 0.9681168794631958,
+            "predictions": {
+              "NO": {
+                "value": 3.606027364730835,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_7218"
+            ],
+            "application_prioritization_score": 0.9583398699760437,
+            "predictions": {
+              "NO": {
+                "value": 3.6426327228546143,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_20053"
+            ],
+            "application_prioritization_score": 0.9576126337051392,
+            "predictions": {
+              "NO": {
+                "value": 3.645355463027954,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10452",
+              "GID_15680"
+            ],
+            "application_prioritization_score": 0.9497030377388,
+            "predictions": {
+              "NO": {
+                "value": 3.67496919631958,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10159",
+              "GID_15680"
+            ],
+            "application_prioritization_score": 0.9420450925827026,
+            "predictions": {
+              "NO": {
+                "value": 3.703640937805176,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_16416"
+            ],
+            "application_prioritization_score": 0.9343922734260559,
+            "predictions": {
+              "NO": {
+                "value": 3.732293128967285,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_4788"
+            ],
+            "application_prioritization_score": 0.9334855675697327,
+            "predictions": {
+              "NO": {
+                "value": 3.7356879711151123,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_14770",
+              "GID_15680"
+            ],
+            "application_prioritization_score": 0.9313262104988098,
+            "predictions": {
+              "NO": {
+                "value": 3.743772506713867,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_6687"
+            ],
+            "application_prioritization_score": 0.9240316152572632,
+            "predictions": {
+              "NO": {
+                "value": 3.7710838317871094,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_5083"
+            ],
+            "application_prioritization_score": 0.922470211982727,
+            "predictions": {
+              "NO": {
+                "value": 3.7769296169281006,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_13520"
+            ],
+            "application_prioritization_score": 0.9198432564735413,
+            "predictions": {
+              "NO": {
+                "value": 3.7867650985717773,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_13520",
+              "GID_9577"
+            ],
+            "application_prioritization_score": 0.9188594818115234,
+            "predictions": {
+              "NO": {
+                "value": 3.7904484272003174,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_5190"
+            ],
+            "application_prioritization_score": 0.9148022532463074,
+            "predictions": {
+              "NO": {
+                "value": 3.8056387901306152,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_3723"
+            ],
+            "application_prioritization_score": 0.914334237575531,
+            "predictions": {
+              "NO": {
+                "value": 3.8073909282684326,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_15680",
+              "GID_9411"
+            ],
+            "application_prioritization_score": 0.9078221321105957,
+            "predictions": {
+              "NO": {
+                "value": 3.831772565841675,
+                "units": "modified SES IRRI rating points"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "trait": "LB",
+      "direction": "minimize",
+      "roundtrip_ms": 61.98959999999988,
+      "result": {
+        "bundle_version": "final-v1",
+        "objectives": {
+          "LB": "minimize"
+        },
+        "weights": {
+          "LB": 1
+        },
+        "score_interpretation": "application-level prioritization score; candidate-set min-max utilities; not biological probability or offspring fitness",
+        "normalization": {
+          "LB": {
+            "minimum": 0.221181419939726,
+            "maximum": 4.1214143074711105,
+            "constant_utility": 0.5
+          }
+        },
+        "eligible_candidate_count": 881,
+        "exclusions": {
+          "self_cross_rows": 0,
+          "reverse_or_duplicate_rows": 0,
+          "historical_unique_pairs": 109
+        },
+        "candidates": [
+          {
+            "parent_ids": [
+              "GID_10125",
+              "GID_4462"
+            ],
+            "application_prioritization_score": 1,
+            "predictions": {
+              "LB": {
+                "value": 0.221181419939726,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_11055",
+              "GID_4462"
+            ],
+            "application_prioritization_score": 0.9894841023530396,
+            "predictions": {
+              "LB": {
+                "value": 0.2621958697843149,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10452",
+              "GID_3143"
+            ],
+            "application_prioritization_score": 0.9842745745128724,
+            "predictions": {
+              "LB": {
+                "value": 0.28251424159504523,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12524",
+              "GID_4462"
+            ],
+            "application_prioritization_score": 0.9757407662732764,
+            "predictions": {
+              "LB": {
+                "value": 0.31579808114700375,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_8938",
+              "GID_9201"
+            ],
+            "application_prioritization_score": 0.9745343639226796,
+            "predictions": {
+              "LB": {
+                "value": 0.32050333127039693,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12524",
+              "GID_9201"
+            ],
+            "application_prioritization_score": 0.9667403000490375,
+            "predictions": {
+              "LB": {
+                "value": 0.3509019955178957,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10452",
+              "GID_12524"
+            ],
+            "application_prioritization_score": 0.9656191150475458,
+            "predictions": {
+              "LB": {
+                "value": 0.3552748781337208,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_16416",
+              "GID_4462"
+            ],
+            "application_prioritization_score": 0.9645373263386143,
+            "predictions": {
+              "LB": {
+                "value": 0.35949410603365545,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10125",
+              "GID_8938"
+            ],
+            "application_prioritization_score": 0.9638506708327241,
+            "predictions": {
+              "LB": {
+                "value": 0.3621722224201329,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_3143",
+              "GID_4788"
+            ],
+            "application_prioritization_score": 0.9619114532595842,
+            "predictions": {
+              "LB": {
+                "value": 0.369735622574972,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_3143"
+            ],
+            "application_prioritization_score": 0.959477385625222,
+            "predictions": {
+              "LB": {
+                "value": 0.379229053212987,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_3921",
+              "GID_4462"
+            ],
+            "application_prioritization_score": 0.9594773712712167,
+            "predictions": {
+              "LB": {
+                "value": 0.37922910919695063,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10125",
+              "GID_4788"
+            ],
+            "application_prioritization_score": 0.9586075439658088,
+            "predictions": {
+              "LB": {
+                "value": 0.3826216382599755,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10125",
+              "GID_9201"
+            ],
+            "application_prioritization_score": 0.9571665995357608,
+            "predictions": {
+              "LB": {
+                "value": 0.38824165711515385,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12524",
+              "GID_4788"
+            ],
+            "application_prioritization_score": 0.956086633035685,
+            "predictions": {
+              "LB": {
+                "value": 0.3924537779761817,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_9201",
+              "GID_9577"
+            ],
+            "application_prioritization_score": 0.9538288132651287,
+            "predictions": {
+              "LB": {
+                "value": 0.4012598008994241,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_10159",
+              "GID_8938"
+            ],
+            "application_prioritization_score": 0.9535345631142438,
+            "predictions": {
+              "LB": {
+                "value": 0.40240744501506626,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12524",
+              "GID_3143"
+            ],
+            "application_prioritization_score": 0.9515892271626486,
+            "predictions": {
+              "LB": {
+                "value": 0.409994708270775,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_14902",
+              "GID_8938"
+            ],
+            "application_prioritization_score": 0.9502332074935398,
+            "predictions": {
+              "LB": {
+                "value": 0.4152835007803728,
+                "units": "SES IRRI rating points"
+              }
+            }
+          },
+          {
+            "parent_ids": [
+              "GID_12203",
+              "GID_9201"
+            ],
+            "application_prioritization_score": 0.9458853506364577,
+            "predictions": {
+              "LB": {
+                "value": 0.432241155084643,
+                "units": "SES IRRI rating points"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "weighted": {
+    "bundle_version": "final-v1",
+    "objectives": {
+      "GY": "maximize",
+      "DTF": "minimize",
+      "NO": "minimize",
+      "LB": "minimize"
+    },
+    "weights": {
+      "GY": 2,
+      "DTF": 1,
+      "NO": 1,
+      "LB": 1
+    },
+    "score_interpretation": "application-level prioritization score; candidate-set min-max utilities; not biological probability or offspring fitness",
+    "normalization": {
+      "GY": {
+        "minimum": 6266.442801115713,
+        "maximum": 9296.906167477708,
+        "constant_utility": 0.5
+      },
+      "DTF": {
+        "minimum": 95.47751830442687,
+        "maximum": 109.50679832651966,
+        "constant_utility": 0.5
+      },
+      "NO": {
+        "minimum": 3.5381622314453125,
+        "maximum": 6.175806522369385,
+        "constant_utility": 0.5
+      },
+      "LB": {
+        "minimum": 0.221181419939726,
+        "maximum": 4.1214143074711105,
+        "constant_utility": 0.5
+      }
+    },
+    "eligible_candidate_count": 881,
+    "exclusions": {
+      "self_cross_rows": 0,
+      "reverse_or_duplicate_rows": 0,
+      "historical_unique_pairs": 109
+    },
+    "candidates": [
+      {
+        "parent_ids": [
+          "GID_16416",
+          "GID_9577"
+        ],
+        "application_prioritization_score": 0.8915336221746923,
+        "predictions": {
+          "GY": {
+            "value": 9030.617412981192,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 95.47751830442687,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.2209367752075195,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.6413646941419887,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_16416",
+          "GID_4462"
+        ],
+        "application_prioritization_score": 0.8727155548507748,
+        "predictions": {
+          "GY": {
+            "value": 9113.717742018734,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.26771270658035,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.655829429626465,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.35949410603365545,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_7218",
+          "GID_9577"
+        ],
+        "application_prioritization_score": 0.8631382774697793,
+        "predictions": {
+          "GY": {
+            "value": 8921.37953638225,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.01884007750903,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.128242492675781,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.9005012189295103,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_10452",
+          "GID_3143"
+        ],
+        "application_prioritization_score": 0.8594356188362519,
+        "predictions": {
+          "GY": {
+            "value": 9081.323066446705,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 97.0660540690214,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.676540851593018,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.28251424159504523,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_11055",
+          "GID_4462"
+        ],
+        "application_prioritization_score": 0.8583890623671929,
+        "predictions": {
+          "GY": {
+            "value": 9068.9420940685,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.5208819687683,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.785029411315918,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.2621958697843149,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_11055",
+          "GID_9577"
+        ],
+        "application_prioritization_score": 0.8580761736836778,
+        "predictions": {
+          "GY": {
+            "value": 8956.536239723184,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 97.46148742849734,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.270571231842041,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.47818793486291106,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_9201",
+          "GID_9577"
+        ],
+        "application_prioritization_score": 0.8557530292119555,
+        "predictions": {
+          "GY": {
+            "value": 8810.54587524488,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 95.85054947007427,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.401973247528076,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.4012598008994241,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_4462",
+          "GID_7218"
+        ],
+        "application_prioritization_score": 0.8551706535199648,
+        "predictions": {
+          "GY": {
+            "value": 8895.196676471713,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 95.78490835444198,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.488709926605225,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.5205021528417793,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_10452",
+          "GID_11055"
+        ],
+        "application_prioritization_score": 0.8533217038321863,
+        "predictions": {
+          "GY": {
+            "value": 8861.773374507982,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 95.77393290994942,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.479867935180664,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.4866527127516648,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_10452",
+          "GID_16416"
+        ],
+        "application_prioritization_score": 0.8529977462148917,
+        "predictions": {
+          "GY": {
+            "value": 8821.183547357732,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 95.78530327787577,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.348552703857422,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.5795034061888473,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_11055",
+          "GID_12524"
+        ],
+        "application_prioritization_score": 0.8488535450148891,
+        "predictions": {
+          "GY": {
+            "value": 8940.716434828262,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.6186140880625,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.485224723815918,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.5342399608414372,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_16416",
+          "GID_3143"
+        ],
+        "application_prioritization_score": 0.8474877192124222,
+        "predictions": {
+          "GY": {
+            "value": 9296.906167477708,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 97.5145598670496,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.774924278259277,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.8002616547245758,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_16416",
+          "GID_9201"
+        ],
+        "application_prioritization_score": 0.8410398737764524,
+        "predictions": {
+          "GY": {
+            "value": 9049.84603455571,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.29689812350482,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.790800094604492,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.6051077675780175,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_3143",
+          "GID_7218"
+        ],
+        "application_prioritization_score": 0.8391165179092366,
+        "predictions": {
+          "GY": {
+            "value": 9157.38647918079,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 97.39349538599076,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.65280294418335,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.8186188700740182,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_10452",
+          "GID_6922"
+        ],
+        "application_prioritization_score": 0.8368721425933071,
+        "predictions": {
+          "GY": {
+            "value": 8945.194407600122,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.43096460359311,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.6183180809021,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.6347826407339217,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_14790",
+          "GID_7218"
+        ],
+        "application_prioritization_score": 0.8311352766526312,
+        "predictions": {
+          "GY": {
+            "value": 8764.535905885972,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.00843953058657,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.288259983062744,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.8871555230429486,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_12203",
+          "GID_3143"
+        ],
+        "application_prioritization_score": 0.8307004158842953,
+        "predictions": {
+          "GY": {
+            "value": 8757.986273996052,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.40888602239886,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.550805568695068,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.379229053212987,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_11055",
+          "GID_20053"
+        ],
+        "application_prioritization_score": 0.830360784409226,
+        "predictions": {
+          "GY": {
+            "value": 8840.797547208429,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.95054053565805,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.399627208709717,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.6719710182825592,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_12203",
+          "GID_7218"
+        ],
+        "application_prioritization_score": 0.828696183538216,
+        "predictions": {
+          "GY": {
+            "value": 8839.075438099284,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 97.63373528504815,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.062727928161621,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 1.008233246692436,
+            "units": "SES IRRI rating points"
+          }
+        }
+      },
+      {
+        "parent_ids": [
+          "GID_6922",
+          "GID_9577"
+        ],
+        "application_prioritization_score": 0.8272920945109815,
+        "predictions": {
+          "GY": {
+            "value": 8840.588005783446,
+            "units": "kg/ha"
+          },
+          "DTF": {
+            "value": 96.03393428490804,
+            "units": "days"
+          },
+          "NO": {
+            "value": 4.666396617889404,
+            "units": "modified SES IRRI rating points"
+          },
+          "LB": {
+            "value": 0.5916303883004388,
+            "units": "SES IRRI rating points"
+          }
+        }
+      }
+    ]
+  }
+}
