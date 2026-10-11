@@ -120,7 +120,12 @@ function ParentCard({
   const notFound = value.trim() !== "" && !line;
 
   return (
-    <Card className="flex-1 rounded-xl shadow-[var(--gf-card-shadow)]">
+    <Card
+      className={cn(
+        "relative flex-1 overflow-visible rounded-xl shadow-[var(--gf-card-shadow)]",
+        open && "z-30",
+      )}
+    >
       <CardHeader className="px-4 ">
         <div className="flex items-center justify-between">
           <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
