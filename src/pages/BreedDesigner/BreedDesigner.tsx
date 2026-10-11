@@ -12,7 +12,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { mockLines } from "@/mocks/lines";
 import { generateCandidates, selectParentPool } from "@/mocks/breed-designer";
 import type {
   BreedDesignerFilters,
@@ -105,122 +104,106 @@ export default function BreedDesigner() {
     value: BreedDesignerGenerationRules[K],
   ) => setRules((prev) => ({ ...prev, [key]: value }));
 
-  const clearFilters = () => setFilters(DEFAULT_FILTERS);
-
   return (
     <div className="flex h-full min-h-0 flex-col p-6">
       {/* Two-column layout: left ~800px, right sidebar ~340px */}
-      <div className="mt-0 grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-auto lg:grid-cols-[800px_340px]">
+      <div className="mt-0 grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-auto lg:grid-cols-[940px_340px]">
         {/* Left column */}
         <div className="flex min-h-0 flex-col gap-3.5">
           {/* Step 1 — Select Parent Pool */}
-          <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
+          <Card className="h-[120px] shrink-0 rounded-xl shadow-[var(--gf-card-shadow)]">
             <CardHeader className="px-4 pt-3">
-              <StepHeading
-                step={1}
-                title="Select Parent Pool"
-                detail="Search and filter the available parent lines."
-              />
+              <StepHeading step={1} title="Select Parent Pool" />
             </CardHeader>
-            <CardContent className="flex flex-col gap-3 px-4 pb-3.5">
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    value={filters.search}
-                    onChange={(e) => setPool({ search: e.target.value })}
-                    placeholder="Search parent lines"
-                    aria-label="Search parent lines"
-                    className="w-[220px] pl-9"
-                  />
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">Genotype</span>
-                  <Select
-                    value={filters.genotype}
-                    onValueChange={(v) => setPool({ genotype: v as PoolFilterValue })}
-                  >
-                    <SelectTrigger className="w-[92px]">
-                      <SelectValue>{poolLabel(filters.genotype)}</SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {POOL_AVAILABILITY_OPTIONS.map((opt) => (
-                        <SelectItem key={opt} value={opt}>
-                          {poolLabel(opt)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">Phenotype</span>
-                  <Select
-                    value={filters.phenotype}
-                    onValueChange={(v) => setPool({ phenotype: v as PoolFilterValue })}
-                  >
-                    <SelectTrigger className="w-[92px]">
-                      <SelectValue>{poolLabel(filters.phenotype)}</SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {POOL_AVAILABILITY_OPTIONS.map((opt) => (
-                        <SelectItem key={opt} value={opt}>
-                          {poolLabel(opt)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">Pedigree</span>
-                  <Select
-                    value={filters.pedigree}
-                    onValueChange={(v) => setPool({ pedigree: v as PoolFilterValue })}
-                  >
-                    <SelectTrigger className="w-[92px]">
-                      <SelectValue>{poolLabel(filters.pedigree)}</SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {POOL_AVAILABILITY_OPTIONS.map((opt) => (
-                        <SelectItem key={opt} value={opt}>
-                          {poolLabel(opt)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={clearFilters}
-                  disabled={
-                    filters.search === "" &&
-                    filters.genotype === DEFAULT_FILTERS.genotype &&
-                    filters.phenotype === DEFAULT_FILTERS.phenotype &&
-                    filters.pedigree === DEFAULT_FILTERS.pedigree
-                  }
-                >
-                  Clear
-                </Button>
+            <CardContent className="flex flex-wrap items-center gap-3 px-4 pb-3.5">
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={filters.search}
+                  onChange={(e) => setPool({ search: e.target.value })}
+                  placeholder="Search parent lines"
+                  aria-label="Search parent lines"
+                  className="w-[220px] pl-9"
+                />
               </div>
 
-              <p className="text-sm tabular-nums text-muted-foreground">
-                <span className="font-medium text-foreground">
-                  {poolStats.total}
-                </span>{" "}
-                of {mockLines.length} local mock lines selected
-                {poolStats.total !== mockLines.length
-                  ? " (filtered pool)"
-                  : ""}
-              </p>
+              <div className="flex items-center">
+                <Select
+                  value={filters.genotype}
+                  onValueChange={(v) => setPool({ genotype: v as PoolFilterValue })}
+                >
+                  <SelectTrigger className="h-8 w-auto rounded-lg border border-input bg-transparent px-3 py-1.5 text-sm shadow-none">
+                    <SelectValue>
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-muted-foreground">Genotype</span>
+                        <span className="text-foreground">{poolLabel(filters.genotype)}</span>
+                      </span>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {POOL_AVAILABILITY_OPTIONS.map((opt) => (
+                      <SelectItem key={opt} value={opt}>
+                        {poolLabel(opt)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center">
+                <Select
+                  value={filters.phenotype}
+                  onValueChange={(v) => setPool({ phenotype: v as PoolFilterValue })}
+                >
+                  <SelectTrigger className="h-8 w-auto rounded-lg border border-input bg-transparent px-3 py-1.5 text-sm shadow-none">
+                    <SelectValue>
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-muted-foreground">Phenotype</span>
+                        <span className="text-foreground">{poolLabel(filters.phenotype)}</span>
+                      </span>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {POOL_AVAILABILITY_OPTIONS.map((opt) => (
+                      <SelectItem key={opt} value={opt}>
+                        {poolLabel(opt)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center">
+                <Select
+                  value={filters.pedigree}
+                  onValueChange={(v) => setPool({ pedigree: v as PoolFilterValue })}
+                >
+                  <SelectTrigger className="h-8 w-auto rounded-lg border border-input bg-transparent px-3 py-1.5 text-sm shadow-none">
+                    <SelectValue>
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-muted-foreground">Pedigree</span>
+                        <span className="text-foreground">{poolLabel(filters.pedigree)}</span>
+                      </span>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {POOL_AVAILABILITY_OPTIONS.map((opt) => (
+                      <SelectItem key={opt} value={opt}>
+                        {poolLabel(opt)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <span className="ml-auto text-sm tabular-nums text-muted-foreground">
+                Selected: <span className="font-medium text-foreground">{poolStats.total} lines</span>{" "}
+              </span>
             </CardContent>
           </Card>
 
           {/* Step 2 — Configure Cross Generation */}
-          <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
+          <Card className="h-[190px] shrink-0 rounded-xl shadow-[var(--gf-card-shadow)]">
             <CardHeader className="px-4 pt-3">
               <StepHeading
                 step={2}
@@ -228,72 +211,73 @@ export default function BreedDesigner() {
                 detail="Choose which candidate pairs to keep and the maximum result size."
               />
             </CardHeader>
-            <CardContent className="flex flex-col gap-3 px-4 pb-3.5">
-              <div className="flex flex-col gap-2.5">
-                <label className="flex items-center justify-between gap-3">
-                  <span className="text-sm text-foreground">
-                    Exclude self-crosses
-                  </span>
-                  <Switch
-                    checked={rules.excludeSelfCrosses}
-                    onCheckedChange={(v) => setRule("excludeSelfCrosses", v)}
-                    aria-label="Exclude self-crosses"
-                  />
-                </label>
-                <label className="flex items-center justify-between gap-3">
-                  <span className="text-sm text-foreground">
-                    Exclude duplicate parent pairs
-                  </span>
-                  <Switch
-                    checked={rules.excludeDuplicatePairs}
-                    onCheckedChange={(v) => setRule("excludeDuplicatePairs", v)}
-                    aria-label="Exclude duplicate parent pairs"
-                  />
-                </label>
-                <label className="flex items-center justify-between gap-3">
-                  <span className="text-sm text-foreground">
-                    Exclude historically recorded crosses
-                  </span>
-                  <Switch
-                    checked={rules.excludeHistorical}
-                    onCheckedChange={(v) => setRule("excludeHistorical", v)}
-                    aria-label="Exclude historically recorded crosses"
-                  />
-                </label>
-              </div>
+            <CardContent className="px-4 pb-3.5">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                <div className="flex flex-col gap-2.5">
+                  <label className="flex items-center justify-between gap-3">
+                    <span className="text-sm text-foreground">
+                      Exclude self-crosses
+                    </span>
+                    <Switch
+                      checked={rules.excludeSelfCrosses}
+                      onCheckedChange={(v) => setRule("excludeSelfCrosses", v)}
+                      aria-label="Exclude self-crosses"
+                    />
+                  </label>
+                  <label className="flex items-center justify-between gap-3">
+                    <span className="text-sm text-foreground">
+                      Exclude duplicate parent pairs
+                    </span>
+                    <Switch
+                      checked={rules.excludeDuplicatePairs}
+                      onCheckedChange={(v) => setRule("excludeDuplicatePairs", v)}
+                      aria-label="Exclude duplicate parent pairs"
+                    />
+                  </label>
+                  <label className="flex items-center justify-between gap-3">
+                    <span className="text-sm text-foreground">
+                      Exclude historically recorded crosses
+                    </span>
+                    <Switch
+                      checked={rules.excludeHistorical}
+                      onCheckedChange={(v) => setRule("excludeHistorical", v)}
+                      aria-label="Exclude historically recorded crosses"
+                    />
+                  </label>
+                </div>
 
-              <div className="flex flex-col gap-1">
-                <label
-                  htmlFor="max-candidates"
-                  className="text-sm text-foreground"
-                >
-                  Maximum candidate count
-                </label>
-                <Input
-                  id="max-candidates"
-                  type="number"
-                  min={1}
-                  max={500}
-                  value={rules.maxCandidates}
-                  onChange={(e) => {
-                    const raw = e.target.value;
-                    const n = raw === "" ? 0 : Number(raw);
-                    setRule(
-                      "maxCandidates",
-                      Number.isFinite(n) ? Math.max(1, Math.floor(n)) : 50,
-                    );
-                  }}
-                  className="w-24 tabular-nums"
-                />
-              </div>
-
-              <div className="mt-1">
-                <Button
-                  className="h-[34px] min-w-[210px]"
-                  onClick={() => setGenerated(true)}
-                >
-                  Generate Candidate Pairs
-                </Button>
+                <div className="flex items-end gap-4">
+                  <div className="flex flex-col gap-1">
+                    <label
+                      htmlFor="max-candidates"
+                      className="text-sm text-muted-foreground"
+                    >
+                      Maximum candidate count
+                    </label>
+                    <Input
+                      id="max-candidates"
+                      type="number"
+                      min={1}
+                      max={500}
+                      value={rules.maxCandidates}
+                      onChange={(e) => {
+                        const raw = e.target.value;
+                        const n = raw === "" ? 0 : Number(raw);
+                        setRule(
+                          "maxCandidates",
+                          Number.isFinite(n) ? Math.max(1, Math.floor(n)) : 50,
+                        );
+                      }}
+                      className="w-24 tabular-nums"
+                    />
+                  </div>
+                  <Button
+                    className="h-[34px] min-w-[210px]"
+                    onClick={() => setGenerated(true)}
+                  >
+                    Generate Candidate Pairs
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -305,9 +289,8 @@ export default function BreedDesigner() {
                 <StepHeading
                   step={3}
                   title="Candidate Results"
-                  detail={`${candidates.length} candidate pair${
-                    candidates.length === 1 ? "" : "s"
-                  } generated`}
+                  detail={`${candidates.length} candidate pair${candidates.length === 1 ? "" : "s"
+                    } generated`}
                 />
               </CardHeader>
             </Card>

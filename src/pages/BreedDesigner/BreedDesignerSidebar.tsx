@@ -1,4 +1,3 @@
-import { Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type {
   BreedDesignerCandidate,
@@ -18,130 +17,88 @@ interface Props {
   candidates: BreedDesignerCandidate[];
 }
 
-function filterLabel(f: BreedDesignerFilters): string {
-  const parts = [
-    f.search.trim() ? `“${f.search.trim()}”` : null,
-    f.genotype !== "any" ? `genotype ${f.genotype}` : null,
-    f.phenotype !== "any" ? `phenotype ${f.phenotype}` : null,
-    f.pedigree !== "any" ? `pedigree ${f.pedigree}` : null,
-  ].filter(Boolean) as string[];
-  return parts.length ? parts.join(" · ") : "All lines (no filters)";
-}
-
-function RuleRow({ on, label }: { on: boolean; label: string }) {
-  return (
-    <div className="flex items-center justify-between py-[5px]">
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <span
-        className={
-          "text-xs font-medium " +
-          (on ? "text-accent-foreground" : "text-muted-foreground")
-        }
-      >
-        {on ? "On" : "Off"}
-      </span>
-    </div>
-  );
-}
-
 export function BreedDesignerSidebar({ pool, filters, rules, candidates }: Props) {
-  const pct = pool.total ? Math.round((pool.withGenotype / pool.total) * 100) : 0;
-
   return (
     <div className="flex flex-col gap-3.5">
-      {/* Parent Pool Summary */}
-      <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-        <CardHeader className="px-4 pt-3">
-          <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
+      {/* Parent Pool Summary + Generation Rules */}
+      <Card className="gap-0 rounded-xl border border-border py-0 shadow-[var(--gf-card-shadow)] ring-0">
+        <CardHeader className="px-4 pb-2 pt-4">
+          <CardTitle className="text-xs font-medium uppercase leading-4 tracking-wider text-muted-foreground">
             Parent Pool Summary
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-3 px-4 pb-3">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-[11px] text-muted-foreground">Lines in pool</p>
-              <p className="text-2xl font-semibold tabular-nums text-foreground">
+        <CardContent className="flex flex-col gap-4 px-4 pb-4">
+          <dl className="divide-y divide-muted border-t border-muted text-sm leading-5">
+            <div className="flex items-center justify-between gap-3 py-2">
+              <dt className="text-muted-foreground">Lines in pool</dt>
+              <dd className="text-right tabular-nums text-foreground">
                 {pool.total}
-              </p>
+              </dd>
             </div>
-            <p className="pb-1 text-right text-[11px] leading-tight text-muted-foreground">
-              of {pool.total} local<br /> mock lines
+            <div className="flex items-center justify-between gap-3 py-2">
+              <dt className="text-muted-foreground">With genotype</dt>
+              <dd className="text-right text-foreground">All selected</dd>
+            </div>
+          </dl>
+
+          {/* Active filters */}
+          <div>
+            <p className="mb-2 text-xs font-medium uppercase leading-4 tracking-wider text-muted-foreground">
+              Active Filters
             </p>
-          </div>
-
-          {/* Genotype availability bar */}
-          <div>
-            <div className="flex items-center justify-between text-[11px] text-muted-foreground">
-              <span>Genotype available</span>
-              <span className="tabular-nums text-foreground">
-                {pool.withGenotype}/{pool.total} ({pct}%)
-              </span>
-            </div>
-            <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-              <div
-                className="h-full rounded-full bg-primary"
-                style={{ width: `${pct}%` }}
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 text-[11px]">
-            <div className="rounded-lg bg-gf-panel-bg px-2.5 py-1.5">
-              <p className="text-muted-foreground">Phenotype</p>
-              <p className="font-mono text-[13px] text-foreground">{pool.withPhenotype}</p>
-            </div>
-            <div className="rounded-lg bg-gf-panel-bg px-2.5 py-1.5">
-              <p className="text-muted-foreground">Pedigree</p>
-              <p className="font-mono text-[13px] text-foreground">{pool.withPedigree}</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Active filters + generation rules */}
-      <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
-        <CardHeader className="px-4 pt-3">
-          <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
-            Filters &amp; Generation Rules
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3 px-4 pb-3">
-          <div>
-            <p className="mb-1 text-[11px] text-muted-foreground">Active filters</p>
-            <p className="text-xs leading-[18px] text-foreground">{filterLabel(filters)}</p>
-          </div>
-          <div className="divide-y divide-border">
-            <RuleRow on={rules.excludeSelfCrosses} label="Exclude self-crosses" />
-            <RuleRow on={rules.excludeDuplicatePairs} label="Exclude duplicate pairs" />
-            <RuleRow on={rules.excludeHistorical} label="Exclude recorded crosses" />
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">Max candidates</span>
-            <span className="font-mono text-[13px] text-foreground">
-              {rules.maxCandidates}
+            <span className="inline-flex items-center rounded-full bg-accent px-2 py-0.5 text-xs font-medium leading-[18px] text-accent-foreground">
+              Genotype: {filters.genotype === "yes"
+                ? "Available"
+                : filters.genotype === "no"
+                  ? "Unavailable"
+                  : "Any"}
             </span>
           </div>
-          <div className="flex items-center justify-between border-t border-border pt-2">
-            <span className="text-xs text-muted-foreground">Generated candidates</span>
-            <span className="font-mono text-[13px] text-foreground">
-              {candidates.length}
-            </span>
+
+          {/* Generation Rules */}
+          <div>
+            <p className="mb-2 text-xs font-medium uppercase leading-4 tracking-wider text-muted-foreground">
+              Generation Rules
+            </p>
+            <dl className="divide-y divide-muted border-t border-muted text-sm leading-5">
+              <div className="flex items-center justify-between gap-3 py-2">
+                <dt className="text-muted-foreground">Self-crosses</dt>
+                <dd className="text-right text-foreground">
+                  {rules.excludeSelfCrosses ? "Excluded" : "Included"}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between gap-3 py-2">
+                <dt className="text-muted-foreground">Duplicate pairs</dt>
+                <dd className="text-right text-foreground">
+                  {rules.excludeDuplicatePairs ? "Excluded" : "Included"}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between gap-3 py-2">
+                <dt className="text-muted-foreground">Recorded crosses</dt>
+                <dd className="text-right text-foreground">
+                  {rules.excludeHistorical ? "Excluded" : "Included"}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between gap-3 py-2">
+                <dt className="text-muted-foreground">Candidate count</dt>
+                <dd className="text-right tabular-nums text-foreground">
+                  {candidates.length} of max {rules.maxCandidates}
+                </dd>
+              </div>
+            </dl>
           </div>
         </CardContent>
       </Card>
 
       {/* Scientific Limitations */}
       <div className="rounded-xl border border-amber-300 bg-amber-50/60 px-4 py-3.5 shadow-[var(--gf-card-shadow)]">
-        <div className="mb-2 flex items-center gap-1.5">
-          <Info className="size-4 text-amber-800" />
-          <span className="font-semibold uppercase tracking-wider text-[11px] text-amber-900">
-            Scientific Limitations
-          </span>
+        <div className="mb-2 text-[11px] font-medium uppercase tracking-wider text-amber-900">
+          Scientific Limitations
         </div>
-        <ul className="list-disc space-y-1.5 pl-5 text-[12.5px] leading-[19px] text-amber-950/80">
+        <ul className="list-disc space-y-1.5 pl-4 text-[12px] leading-[18px] text-amber-950/80">
           <li>
-            Breed Designer is a deterministic exploration tool; it does not rank
-            or recommend crosses.
+            Breed Designer is a deterministic exploration tool; it does not
+            rank or recommend crosses.
           </li>
           <li>Predictive ranking is disabled for GY, DTF, NO, and LB.</li>
           <li>Pairs are illustrative candidates for research review only.</li>

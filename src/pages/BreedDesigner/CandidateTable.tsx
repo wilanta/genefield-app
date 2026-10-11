@@ -1,12 +1,5 @@
 import { useState } from "react";
 import {
-  ExternalLink,
-  BookmarkPlus,
-  Plus,
-  FolderKanban,
-  Check,
-} from "lucide-react";
-import {
   Table,
   TableBody,
   TableCell,
@@ -14,8 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import type { BreedDesignerCandidate } from "@/pages/BreedDesigner/types";
 import { candidateStore } from "@/services";
 import { CandidateNameConflictError } from "@/types/research";
@@ -135,72 +126,72 @@ export function CandidateTable({
                     <span className="font-mono">{c.parentB}</span>
                   </TableCell>
                   <TableCell className="px-3 text-sm">
-                    <Badge
-                      variant={c.genotype === "Both" ? "secondary" : "outline"}
-                      className="text-[11px] font-medium"
-                    >
+                    <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <span
+                        className={
+                          "size-2.5 rounded-full " +
+                          (c.genotype === "Both"
+                            ? "bg-primary"
+                            : "border-2 border-muted-foreground bg-transparent")
+                        }
+                      />
                       {c.genotype}
-                    </Badge>
+                    </span>
                   </TableCell>
                   <TableCell className="px-3 text-sm">
-                    <span className={c.historicalRecorded ? "text-foreground" : "text-muted-foreground"}>
+                    <span
+                      className={
+                        "rounded-md px-1.5 py-0.5 text-xs " +
+                        (c.historicalRecorded
+                          ? "text-foreground"
+                          : "text-muted-foreground")
+                      }
+                    >
                       {c.historical}
                     </span>
                   </TableCell>
-                  <TableCell className="px-3 text-sm text-muted-foreground">
-                    {c.researchStatus}
+                  <TableCell className="px-3 text-sm">
+                    <span className="rounded-md border border-border px-1.5 py-0.5 text-xs text-muted-foreground">
+                      {c.researchStatus}
+                    </span>
                   </TableCell>
                   <TableCell className="px-3">
-                    <div className="flex items-center justify-end gap-1.5">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-7 gap-1.5 px-2 text-xs"
+                    <div className="flex items-center gap-3 whitespace-nowrap">
+                      <button
+                        type="button"
+                        className="text-xs font-medium text-foreground underline underline-offset-2 hover:text-primary"
                         onClick={() => onOpenInCrossLab(c.parentA, c.parentB)}
                       >
-                        <ExternalLink className="size-3.5" />
                         Open in Cross Lab
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
+                      </button>
+                      <button
+                        type="button"
                         className={
-                          "h-7 gap-1.5 px-2 text-xs" +
+                          "text-xs font-medium " +
                           (justSaved
-                            ? " text-primary"
+                            ? "text-primary"
                             : conflicted
-                              ? " text-destructive"
-                              : "")
+                              ? "text-destructive"
+                              : "text-foreground underline underline-offset-2 hover:text-primary")
                         }
                         disabled={s === "saving"}
                         onClick={() => save(c, "save")}
                       >
-                        {justSaved ? (
-                          <Check className="size-3.5" />
-                        ) : (
-                          <BookmarkPlus className="size-3.5" />
-                        )}
-                        {s === "saving"
-                          ? "Saving…"
-                          : justSaved
-                            ? "Saved"
-                            : conflicted
-                              ? "Conflict"
-                              : "Save"}
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
+                        {s === "saving" ? "Saving…" : justSaved ? "Saved" : conflicted ? "Conflict" : "Save"}
+                      </button>
+                      <button
+                        type="button"
                         className={
-                          "h-7 gap-1.5 px-2 text-xs" +
-                          (conflicted ? " text-destructive" : "")
+                          "text-xs font-medium " +
+                          (conflicted
+                            ? "text-destructive"
+                            : "text-foreground underline underline-offset-2 hover:text-primary")
                         }
                         disabled={s === "saving"}
                         onClick={() => save(c, "add")}
                       >
-                        <Plus className="size-3.5" />
                         Add
-                      </Button>
+                      </button>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -223,19 +214,16 @@ export function CandidateTable({
         {errorMsg ? (
           <p className="text-xs text-destructive">{errorMsg}</p>
         ) : (
-          <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <FolderKanban className="size-3.5" />
-            <span>
-              Saved candidates go to your Candidate
-              <button
-                type="button"
-                onClick={onGoToWorkspace}
-                className="mx-0.5 font-medium text-primary hover:underline"
-              >
-                Workspace
-              </button>
-              . In preview mode they stay in-session only.
-            </span>
+          <p className="text-xs text-muted-foreground">
+            Saved candidates go to your Candidate
+            <button
+              type="button"
+              onClick={onGoToWorkspace}
+              className="mx-0.5 font-medium text-primary hover:underline"
+            >
+              Workspace
+            </button>
+            . In preview mode they stay in-session only.
           </p>
         )}
       </div>
