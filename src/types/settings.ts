@@ -2,14 +2,14 @@
  * Settings page data model.
  *
  * This describes the local, per-device configuration surface shown on the
- * Settings page. Theme and interface density are persisted locally by their providers. Other
+ * Settings page. Theme, interface density and language are persisted locally by their providers. Other
  * inference metadata and actual application paths are loaded in the desktop.
  * Backup/log utilities remain outside the current integration scope.
  */
 
 export type ThemePreference = "light" | "dark" | "system";
 export type InterfaceDensity = "compact" | "comfortable";
-export type LanguagePreference = "english";
+export type LanguagePreference = "english" | "indonesian";
 
 /** Verified means the frozen loader successfully checked the bundle. */
 export type BundleIntegrityStatus = "not-checked" | "verified";

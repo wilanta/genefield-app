@@ -16,7 +16,7 @@ export function useAsync<T>(
       .catch((e) => {
         console.error("GeneField", e);
         if (live)
-          setError("Data atau layanan lokal GeneField tidak dapat dimuat.");
+          setError("Local GeneField data or services could not be loaded.");
       });
     return () => {
       live = false;

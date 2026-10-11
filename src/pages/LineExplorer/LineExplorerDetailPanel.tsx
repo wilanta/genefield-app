@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -47,9 +48,10 @@ function Row({
   label: string;
   children: React.ReactNode;
 }) {
+  const { t: tr } = useTranslation();
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="text-sm text-muted-foreground">{label}</span>
+      <span className="text-sm text-muted-foreground">{tr(label)}</span>
       <span className="text-right text-sm font-medium text-foreground">
         {children}
       </span>
@@ -58,6 +60,7 @@ function Row({
 }
 
 function AvailabilityBadge({ value }: { value: boolean }) {
+  const { t: tr } = useTranslation();
   return (
     <span className="inline-flex items-center gap-1.5">
       <span
@@ -67,19 +70,20 @@ function AvailabilityBadge({ value }: { value: boolean }) {
             : "size-[7px] rounded-full border border-foreground/40 bg-transparent"
         }
       />
-      {value ? "Available" : "Not available"}
+      {value ? tr("Available") : tr("Not available")}
     </span>
   );
 }
 
 export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
+  const { t: tr } = useTranslation();
   const navigate = useNavigate();
 
   if (!line) {
     return (
       <div className="flex h-full min-h-[400px] items-center justify-center rounded-xl border border-border bg-card px-6 shadow-[var(--gf-card-shadow)]">
         <p className="text-sm text-muted-foreground">
-          Select a line to see its profile.
+          {tr("Select a line to see its profile.")}
         </p>
       </div>
     );
@@ -95,25 +99,25 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
           <div className="flex items-center justify-between">
             <CardTitle className="font-mono text-lg">{line.id}</CardTitle>
             <Badge className="border-amber-200 dark:border-amber-700/50 bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-200">
-              Historical observations
+              {tr("Historical observations")}
             </Badge>
           </div>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="space-y-2">
-            <Row label="Genotype availability">
+            <Row label={tr("Genotype availability")}>
               <AvailabilityBadge value={line.hasGenotype} />
             </Row>
             <Separator />
-            <Row label="Pedigree availability">
+            <Row label={tr("Pedigree availability")}>
               <AvailabilityBadge value={line.hasPedigree} />
             </Row>
             <Separator />
-            <Row label="Phenotype observations">
+            <Row label={tr("Phenotype observations")}>
               {line.phenotypeObservations ?? "—"}
             </Row>
             <Separator />
-            <Row label="Known parents">
+            <Row label={tr("Known parents")}>
               {knownParents && knownParents.length > 0 ? (
                 <span className="font-mono">{knownParents}</span>
               ) : (
@@ -124,12 +128,12 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
 
           <div>
             <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Historical phenotype summary
+              {tr("Historical phenotype summary")}
             </p>
             <div className="space-y-2">
               {phenotypeRows(line).map((row) => (
                 <div key={row.trait}>
-                  <Row label={row.label}>{row.value}</Row>
+                  <Row label={tr(row.label)}>{row.value}</Row>
                 </div>
               ))}
             </div>
@@ -139,11 +143,12 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
 
           <div>
             <p className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Data provenance
+              {tr("Data provenance")}
             </p>
             <p className="text-xs text-muted-foreground">
-              INIA Uruguay dataset. Historical line means from recorded
-              observations.
+              {tr(
+                "INIA Uruguay dataset. Historical line means from recorded observations.",
+              )}
             </p>
           </div>
         </CardContent>
@@ -156,21 +161,21 @@ export function LineExplorerDetailPanel({ line, onUseAsParent }: Props) {
             className="h-9 w-full justify-center bg-primary text-primary-foreground hover:bg-primary/90"
             onClick={() => onUseAsParent(line.id, "A")}
           >
-            Use as Parent A
+            {tr("Use as Parent A")}
           </Button>
           <Button
             variant="outline"
             className="h-9 w-full justify-center"
             onClick={() => onUseAsParent(line.id, "B")}
           >
-            Use as Parent B
+            {tr("Use as Parent B")}
           </Button>
           <Button
             variant="outline"
             className="h-9 w-full justify-center"
             onClick={() => navigate(`/pedigree?line=${line.id}`)}
           >
-            View Pedigree
+            {tr("View Pedigree")}
           </Button>
         </CardContent>
       </Card>

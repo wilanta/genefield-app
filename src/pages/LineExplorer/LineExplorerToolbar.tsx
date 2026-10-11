@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { Search } from "lucide-react";
 import {
   Select,
@@ -30,7 +31,10 @@ function AvailabilitySelect({
   value: AvailabilityFilter;
   onChange: (v: AvailabilityFilter) => void;
 }) {
-  const display = `${label} ${value.charAt(0).toUpperCase() + value.slice(1)}`;
+  const { t: tr } = useTranslation();
+  const availabilityLabel = (option: AvailabilityFilter) =>
+    tr(option === "any" ? "Any" : option === "yes" ? "Yes" : "No");
+  const display = `${label} ${availabilityLabel(value)}`;
   return (
     <Select
       value={value}
@@ -42,7 +46,7 @@ function AvailabilitySelect({
       <SelectContent>
         {AVAILABILITY_OPTIONS.map((opt) => (
           <SelectItem key={opt} value={opt}>
-            {opt.charAt(0).toUpperCase() + opt.slice(1)}
+            {availabilityLabel(opt)}
           </SelectItem>
         ))}
       </SelectContent>
@@ -56,6 +60,7 @@ export function LineExplorerToolbar({
   matchCount,
   totalCount,
 }: Props) {
+  const { t: tr } = useTranslation();
   const isClearable =
     filters.search !== "" ||
     filters.genotype !== "any" ||
@@ -78,24 +83,24 @@ export function LineExplorerToolbar({
         <Input
           value={filters.search}
           onChange={(e) => onChange({ ...filters, search: e.target.value })}
-          placeholder="Search LINE_ID"
-          aria-label="Search LINE_ID"
+          placeholder={tr("Search LINE_ID")}
+          aria-label={tr("Search LINE_ID")}
           className="w-48 bg-card pl-9 text-foreground"
         />
       </div>
 
       <AvailabilitySelect
-        label="Genotype"
+        label={tr("Genotype")}
         value={filters.genotype}
         onChange={(genotype) => onChange({ ...filters, genotype })}
       />
       <AvailabilitySelect
-        label="Phenotype"
+        label={tr("Phenotype")}
         value={filters.phenotype}
         onChange={(phenotype) => onChange({ ...filters, phenotype })}
       />
       <AvailabilitySelect
-        label="Pedigree"
+        label={tr("Pedigree")}
         value={filters.pedigree}
         onChange={(pedigree) => onChange({ ...filters, pedigree })}
       />
@@ -107,11 +112,12 @@ export function LineExplorerToolbar({
         disabled={!isClearable}
         className="bg-card font-semibold text-foreground hover:bg-transparent"
       >
-        Clear
+        {tr("Clear")}
       </Button>
 
       <span className="ml-auto text-sm tabular-nums text-muted-foreground">
-        {matchCount.toLocaleString()} of {totalCount.toLocaleString()} lines
+        {matchCount.toLocaleString()} {tr("of")} {totalCount.toLocaleString()}{" "}
+        {tr("lines")}
       </span>
     </div>
   );

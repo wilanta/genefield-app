@@ -62,5 +62,5 @@ test("pedigree expansion deduplicates nodes and rejects accidental cycles", asyn
   graph.nodes.forEach((n) => visit(n.id, new Set()));
   await expect(
     referenceService.getPedigreeNeighborhood("unknown"),
-  ).rejects.toThrow("Line tidak ditemukan");
+  ).rejects.toThrow("Line not found in GeneField data.");
 });

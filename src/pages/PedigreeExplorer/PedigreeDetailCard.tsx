@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { Card, CardContent } from "@/components/ui/card";
 import type { PedigreeDetail, PedigreeNode } from "@/types/research";
 
@@ -13,15 +14,17 @@ function AvailabilityRow({
   label: string;
   available: boolean;
 }) {
+  const { t: tr } = useTranslation();
   return (
     <div className="flex items-center justify-between text-sm">
-      <span className="text-muted-foreground">{label}</span>
+      <span className="text-muted-foreground">{tr(label)}</span>
       <span className="flex items-center gap-1.5 font-medium">
         <span
-          className={`h-1.5 w-1.5 rounded-full ${available ? "bg-primary" : "bg-muted"
-            }`}
+          className={`h-1.5 w-1.5 rounded-full ${
+            available ? "bg-primary" : "bg-muted"
+          }`}
         />
-        {available ? "Available" : "Not available"}
+        {available ? tr("Available") : tr("Not available")}
       </span>
     </div>
   );
@@ -31,6 +34,7 @@ export function PedigreeDetailCard({
   selectedNode,
   detail,
 }: PedigreeDetailCardProps) {
+  const { t: tr } = useTranslation();
   const parents =
     detail.recordedParents.length > 0
       ? detail.recordedParents.join(", ")
@@ -45,42 +49,46 @@ export function PedigreeDetailCard({
 
         <div className="mt-4 divide-y divide-gray-200">
           <div className="flex items-center justify-between py-2.5 text-sm">
-            <span className="text-muted-foreground">Recorded parents</span>
+            <span className="text-muted-foreground">
+              {tr("Recorded parents")}
+            </span>
             {parents ? (
               <span className="text-right font-mono font-medium">
                 {parents}
               </span>
             ) : (
-              <span className="text-muted-foreground">None recorded</span>
+              <span className="text-muted-foreground">
+                {tr("None recorded")}
+              </span>
             )}
           </div>
 
           <div className="flex items-center justify-between py-2.5 text-sm">
             <span className="text-muted-foreground">
-              Recorded descendants
+              {tr("Recorded descendants")}
             </span>
-            <span className="font-medium">
-              {detail.recordedDescendants}
-            </span>
+            <span className="font-medium">{detail.recordedDescendants}</span>
           </div>
 
           <div className="py-2.5">
             <AvailabilityRow
-              label="Genotype availability"
+              label={tr("Genotype availability")}
               available={selectedNode.hasGenotype}
             />
           </div>
 
           <div className="py-2.5">
             <AvailabilityRow
-              label="Phenotype availability"
+              label={tr("Phenotype availability")}
               available={selectedNode.hasPhenotype}
             />
           </div>
         </div>
 
         <p className="pt-3 text-xs leading-relaxed text-muted-foreground">
-          Example data. Edges show recorded parent–offspring relationships only.
+          {tr(
+            "Example data. Edges show recorded parent–offspring relationships only.",
+          )}
         </p>
       </CardContent>
     </Card>

@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
@@ -69,13 +70,15 @@ function resolveLine(
   return lines.find((l) => l.id.toUpperCase() === q);
 }
 
-function lineFlags(line: RiceLine): string {
+function lineFlags(line: RiceLine, tr: (message: string) => string): string {
   const flags = [
     line.hasGenotype && "Genotype",
     line.hasPhenotype && "Phenotype",
     line.hasPedigree && "Pedigree",
   ].filter(Boolean);
-  return flags.length > 0 ? flags.join(" · ") : "No data";
+  return flags.length > 0
+    ? flags.map((flag) => tr(String(flag))).join(" · ")
+    : tr("No data");
 }
 
 interface ParentCardProps {
@@ -97,6 +100,7 @@ function ParentCard({
   line,
   conflictMessage,
 }: ParentCardProps) {
+  const { t: tr } = useTranslation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -132,7 +136,7 @@ function ParentCard({
       <CardHeader className="px-4 ">
         <div className="flex items-center justify-between">
           <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
-            Parent {slot}
+            {tr("Parent")} {slot}
           </CardTitle>
           {/* Genotype availability indicator */}
           <span className="inline-flex items-center gap-1.5">
@@ -150,7 +154,7 @@ function ParentCard({
                 available ? "text-primary" : "text-muted-foreground",
               )}
             >
-              {available ? "Genotype available" : "No genotype"}
+              {available ? tr("Genotype available") : tr("No genotype")}
             </span>
           </span>
         </div>
@@ -177,19 +181,20 @@ function ParentCard({
                 if (e.key === "Escape") setOpen(false);
               }}
               placeholder="GID_1233"
-              aria-label={`Parent ${slot}`}
+              aria-label={tr("Parent {slot}", { slot })}
               className="h-auto border-0 bg-transparent px-0 shadow-none ring-0 focus-visible:ring-0"
             />
           </div>
           {open && (
             <ul
               role="listbox"
-              aria-label={`Parent ${slot} suggestions`}
+              aria-label={tr("Parent {slot} suggestions", { slot })}
               className="absolute inset-x-0 top-[calc(100%+4px)] z-20 max-h-64 overflow-auto rounded-lg border border-border bg-popover p-1 shadow-lg"
             >
               {suggestions.length === 0 ? (
                 <li className="px-2.5 py-2 text-xs text-muted-foreground">
-                  No lines match “{value.trim()}”.
+                  {tr("No lines match “")}
+                  {value.trim()}”.
                 </li>
               ) : (
                 suggestions.map((l) => {
@@ -211,7 +216,7 @@ function ParentCard({
                           {l.id}
                         </span>
                         <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                          {lineFlags(l)}
+                          {lineFlags(l, tr)}
                           {selected && (
                             <Check className="size-3 text-primary" />
                           )}
@@ -228,7 +233,7 @@ function ParentCard({
           <p className="text-xs text-destructive">{conflictMessage}</p>
         ) : notFound ? (
           <p className="text-xs text-muted-foreground">
-            Line not found in the local dataset.
+            {tr("Line not found in the local dataset.")}
           </p>
         ) : null}
         <button
@@ -242,7 +247,7 @@ function ParentCard({
               : "cursor-not-allowed text-muted-foreground/50",
           )}
         >
-          View line profile
+          {tr("View line profile")}
           <ExternalLink className="size-3" />
         </button>
       </CardContent>
@@ -258,10 +263,11 @@ interface ComparisonRow {
 }
 
 function EvidenceRow({ label, value }: { label: string; value: string }) {
+  const { t: tr } = useTranslation();
   return (
     <div className="flex items-center justify-between gap-4">
-      <span className="text-[13px] text-muted-foreground">{label}</span>
-      <span className="text-[13px] text-foreground">{value}</span>
+      <span className="text-[13px] text-muted-foreground">{tr(label)}</span>
+      <span className="text-[13px] text-foreground">{tr(value)}</span>
     </div>
   );
 }
@@ -275,11 +281,12 @@ function ModelRow({
   value: string;
   mono?: boolean;
 }) {
+  const { t: tr } = useTranslation();
   return (
     <div className="flex items-center justify-between py-[7px]">
-      <span className="text-[13px] text-muted-foreground">{label}</span>
+      <span className="text-[13px] text-muted-foreground">{tr(label)}</span>
       <span className={cn("text-[13px] text-foreground", mono && "font-mono")}>
-        {value}
+        {tr(value)}
       </span>
     </div>
   );
@@ -296,11 +303,12 @@ function ComparisonPane({
   rows: ComparisonRow[];
   side?: "A" | "B";
 }) {
+  const { t: tr } = useTranslation();
   const key = side === "B" ? "b" : "a";
   return (
     <div className="rounded-lg border border-border bg-gf-panel-bg px-3 py-2">
       <div className="flex flex-col gap-1">
-        <span className="text-[11px] text-muted-foreground">{label}</span>
+        <span className="text-[11px] text-muted-foreground">{tr(label)}</span>
         <span className="font-mono text-[13px] font-medium text-foreground">
           {id || "—"}
         </span>
@@ -313,7 +321,9 @@ function ComparisonPane({
               key={row.label}
               className="flex items-center justify-between border-t border-border py-[7px] first:border-t-0"
             >
-              <span className="text-xs text-muted-foreground">{row.label}</span>
+              <span className="text-xs text-muted-foreground">
+                {tr(row.label)}
+              </span>
               {row.kind === "genotype" ? (
                 <span
                   className={cn(
@@ -321,10 +331,12 @@ function ComparisonPane({
                     value ? "text-accent-foreground" : "text-foreground",
                   )}
                 >
-                  {value ? "Available" : "Not available"}
+                  {value ? tr("Available") : tr("Not available")}
                 </span>
               ) : (
-                <span className="text-xs text-foreground">Not checked</span>
+                <span className="text-xs text-foreground">
+                  {tr("Not checked")}
+                </span>
               )}
             </div>
           );
@@ -339,6 +351,7 @@ type Phase = "idle" | "analyzing" | "done" | "error";
 type GenotypeWarning = "A" | "B" | "both" | null;
 
 export default function CrossLab() {
+  const { t: tr } = useTranslation();
   const [params] = useSearchParams();
   const { data: lines = [], error: referenceError } = useAsync(() =>
     referenceService.allLines(),
@@ -358,7 +371,9 @@ export default function CrossLab() {
   /* ---- Research Note modal state (frame 1:3720) ---- */
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteText, setNoteText] = useState(
-    "Research note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
+    tr(
+      "Research note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
+    ),
   );
 
   /* ---- Save Candidate modal state (frame 1:4796) ---- */
@@ -413,7 +428,7 @@ export default function CrossLab() {
     !lineB ||
     phase === "analyzing" ||
     genotypeWarning !== null;
-  const conflictMessage = "Parent B is the same line as Parent A.";
+  const conflictMessage = tr("Parent B is the same line as Parent A.");
 
   /** Permission gates for footer action buttons. */
   const canSave = !!(result && phase === "done");
@@ -427,25 +442,25 @@ export default function CrossLab() {
   const compareRows: ComparisonRow[] = useMemo(
     () => [
       {
-        label: "Genotype",
+        label: tr("Genotype"),
         a: lineA?.hasGenotype,
         b: lineB?.hasGenotype,
         kind: "genotype",
       },
       {
-        label: "Phenotype",
+        label: tr("Phenotype"),
         a: lineA?.hasPhenotype,
         b: lineB?.hasPhenotype,
         kind: "genotype",
       },
       {
-        label: "Pedigree",
+        label: tr("Pedigree"),
         a: lineA?.hasPedigree,
         b: lineB?.hasPedigree,
         kind: "genotype",
       },
     ],
-    [lineA, lineB],
+    [lineA, lineB, tr],
   );
 
   /** Editing a parent invalidates the previous analysis. */
@@ -542,9 +557,13 @@ export default function CrossLab() {
       setSaveOpen(false);
     } catch (e) {
       if (e instanceof CandidateNameConflictError) {
-        setSaveError(e.message);
+        setSaveError(
+          tr('A candidate named "{name}" already exists.', {
+            name: candidateName,
+          }),
+        );
       } else {
-        setSaveError("Could not save candidate. " + (e as Error).message);
+        setSaveError(tr("Could not save candidate. ") + (e as Error).message);
       }
       // Dialog stays open so the user can correct the name or retry.
     } finally {
@@ -556,7 +575,9 @@ export default function CrossLab() {
   const openNoteModal = () => {
     if (!canNote) return;
     setNoteText(
-      "Research note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
+      tr(
+        "Research note: compare phenotype coverage for both parents before drawing conclusions. Estimates are exploratory only.",
+      ),
     );
     setNoteOpen(true);
   };
@@ -584,12 +605,12 @@ export default function CrossLab() {
     <div className="p-6">
       {referenceError && (
         <p role="alert" className="text-destructive">
-          {referenceError}
+          {tr(referenceError)}
         </p>
       )}
       {error && (
         <p role="alert" className="text-destructive">
-          {error}
+          {tr(error)}
         </p>
       )}
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_380px]">
@@ -610,7 +631,7 @@ export default function CrossLab() {
                 variant="outline"
                 size="icon"
                 className="h-8 w-8 rounded-full"
-                aria-label="Swap Parent A and Parent B"
+                aria-label={tr("Swap Parent A and Parent B")}
                 onClick={() => {
                   ++revision.current;
                   setResult(undefined);
@@ -642,11 +663,17 @@ export default function CrossLab() {
               <AlertTriangle className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-200" />
               <p className="text-xs leading-[18px] text-amber-900 dark:text-amber-200">
                 {genotypeWarning === "A" &&
-                  "No genotype data available for Parent A. Trait estimation is unavailable until genotypes are recorded."}
+                  tr(
+                    "No genotype data available for Parent A. Trait estimation is unavailable until genotypes are recorded.",
+                  )}
                 {genotypeWarning === "B" &&
-                  "No genotype data available for Parent B. Trait estimation is unavailable until genotypes are recorded."}
+                  tr(
+                    "No genotype data available for Parent B. Trait estimation is unavailable until genotypes are recorded.",
+                  )}
                 {genotypeWarning === "both" &&
-                  "No genotype data available for either parent. Trait estimation is unavailable until genotypes are recorded."}
+                  tr(
+                    "No genotype data available for either parent. Trait estimation is unavailable until genotypes are recorded.",
+                  )}
               </p>
             </div>
           )}
@@ -660,10 +687,10 @@ export default function CrossLab() {
                   onClick={handleAnalyze}
                 >
                   <Loader2 className="size-4" />
-                  Retry Analysis
+                  {tr("Retry Analysis")}
                 </Button>
                 <span className="text-xs text-destructive">
-                  Analysis failed · no results available.
+                  {tr("Analysis failed · no results available.")}
                 </span>
               </>
             ) : (
@@ -676,10 +703,10 @@ export default function CrossLab() {
                   {phase === "analyzing" ? (
                     <>
                       <Loader2 className="animate-spin" />
-                      Analyzing…
+                      {tr("Analyzing…")}
                     </>
                   ) : (
-                    "Analyze Cross"
+                    tr("Analyze Cross")
                   )}
                 </Button>
               </>
@@ -690,14 +717,14 @@ export default function CrossLab() {
               onClick={handleReset}
               disabled={phase === "analyzing"}
             >
-              Reset
+              {tr("Reset")}
             </Button>
             <span className="text-xs text-muted-foreground">
-              Two distinct genotyped parent lines are required.
+              {tr("Two distinct genotyped parent lines are required.")}
             </span>
             {idsMatch && (
               <span className="text-xs text-destructive">
-                Choose two distinct lines to continue.
+                {tr("Choose two distinct lines to continue.")}
               </span>
             )}
           </div>
@@ -709,13 +736,13 @@ export default function CrossLab() {
                 <div className="flex items-center gap-1.5">
                   <Info className="size-3.5 text-primary" />
                   <CardTitle className="text-[11px] font-semibold uppercase tracking-wider text-primary">
-                    Historical Evidence
+                    {tr("Historical Evidence")}
                   </CardTitle>
                 </div>
                 <span className="text-[11px] text-muted-foreground">
                   {lineA && lineB
-                    ? "Historical pedigree registry"
-                    : "Observed data only"}
+                    ? tr("Historical pedigree registry")
+                    : tr("Observed data only")}
                 </span>
               </div>
             </CardHeader>
@@ -724,39 +751,39 @@ export default function CrossLab() {
                 {lineA && lineB && historical !== undefined ? (
                   <>
                     <EvidenceRow
-                      label="Historical cross record"
+                      label={tr("Historical cross record")}
                       value={
                         historical
-                          ? "Recorded in historical registry"
-                          : "Not recorded in historical registry"
+                          ? tr("Recorded in historical registry")
+                          : tr("Not recorded in historical registry")
                       }
                     />
                     <EvidenceRow
-                      label="Recorded descendant count"
+                      label={tr("Recorded descendant count")}
                       value="Not supplied by pair lookup"
                     />
                     <EvidenceRow
-                      label="Phenotype observations"
+                      label={tr("Phenotype observations")}
                       value="See historical line profiles"
                     />
                     <div className="flex items-center justify-between gap-4">
                       <span className="text-[13px] text-muted-foreground">
-                        Training-parent membership
+                        {tr("Training-parent membership")}
                       </span>
                       <span className="flex items-center gap-2 text-[13px] text-foreground">
                         <span className="inline-flex items-center gap-1">
                           <span className="size-[7px] rounded-full bg-primary" />
                           A ·{" "}
                           {result
-                            ? "Yes (selected traits)"
-                            : "Not verified for all traits"}
+                            ? tr("Yes (selected traits)")
+                            : tr("Not verified for all traits")}
                         </span>
                         <span className="inline-flex items-center gap-1">
                           <span className="size-[7px] rounded-full bg-primary" />
                           B ·{" "}
                           {result
-                            ? "Yes (selected traits)"
-                            : "Not verified for all traits"}
+                            ? tr("Yes (selected traits)")
+                            : tr("Not verified for all traits")}
                         </span>
                       </span>
                     </div>
@@ -764,13 +791,19 @@ export default function CrossLab() {
                 ) : (
                   <>
                     <EvidenceRow
-                      label="Historical cross record"
+                      label={tr("Historical cross record")}
                       value="Unknown · Not yet checked"
                     />
-                    <EvidenceRow label="Recorded descendant count" value="—" />
-                    <EvidenceRow label="Phenotype observations" value="—" />
                     <EvidenceRow
-                      label="Training-parent membership"
+                      label={tr("Recorded descendant count")}
+                      value="—"
+                    />
+                    <EvidenceRow
+                      label={tr("Phenotype observations")}
+                      value="—"
+                    />
+                    <EvidenceRow
+                      label={tr("Training-parent membership")}
                       value="Pending analysis"
                     />
                   </>
@@ -783,7 +816,7 @@ export default function CrossLab() {
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
             <CardHeader className="flex flex-row items-center justify-between border-b border-border px-5">
               <CardTitle className="text-[15px] font-semibold tracking-tight">
-                Modeled Cross-level Estimates
+                {tr("Modeled Cross-level Estimates")}
               </CardTitle>
               <div className="flex items-center gap-2">
                 {/* Results badge (frame 1:410) */}
@@ -793,7 +826,7 @@ export default function CrossLab() {
                     className="flex items-center gap-1.5 rounded-lg border-primary bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary"
                   >
                     <Check className="size-3.5" />
-                    Analysis complete
+                    {tr("Analysis complete")}
                   </Badge>
                 )}
                 <Badge
@@ -801,7 +834,7 @@ export default function CrossLab() {
                   className="flex items-center gap-1.5 rounded-lg border-amber-300 dark:border-amber-700/50 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 text-[11px] font-medium text-amber-800 dark:text-amber-200"
                 >
                   <AlertTriangle className="size-3.5" />
-                  Research-only · Not validated for breeding decisions
+                  {tr("Research-only · Not validated for breeding decisions")}
                 </Badge>
               </div>
             </CardHeader>
@@ -810,16 +843,16 @@ export default function CrossLab() {
                 <TableHeader>
                   <TableRow className="bg-(--spring-wood)">
                     <TableHead className="px-3 py-2 text-[11px] uppercase tracking-wider text-muted-foreground">
-                      Trait
+                      {tr("Trait")}
                     </TableHead>
                     <TableHead className="px-3 py-2 text-[11px] uppercase tracking-wider text-muted-foreground">
-                      Estimate
+                      {tr("Estimate")}
                     </TableHead>
                     <TableHead className="px-3 py-2 text-[11px] uppercase tracking-wider text-muted-foreground">
-                      Unit
+                      {tr("Unit")}
                     </TableHead>
                     <TableHead className="px-3 py-2 text-[11px] uppercase tracking-wider text-muted-foreground">
-                      Predictive Ranking
+                      {tr("Predictive Ranking")}
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -828,7 +861,7 @@ export default function CrossLab() {
                     <TableRow key={t.code}>
                       <TableCell className="px-3 py-2.5">
                         <span className="text-sm font-medium">
-                          {t.name}{" "}
+                          {tr(t.name)}{" "}
                           <span className="font-mono font-normal text-muted-foreground">
                             ({t.code})
                           </span>
@@ -838,15 +871,15 @@ export default function CrossLab() {
                         {estimateCell(t.code)}
                       </TableCell>
                       <TableCell className="px-3 py-2.5 text-sm text-muted-foreground">
-                        {t.unit}
+                        {tr(t.unit)}
                       </TableCell>
                       <TableCell className="px-3 py-2.5">
                         <span className="rounded-[10px] bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
                           {t.code === "DTF"
                             ? "Earlier / Later"
                             : t.code === "GY"
-                              ? "Maximize"
-                              : "Minimize"}
+                              ? tr("Maximize")
+                              : tr("Minimize")}
                         </span>
                       </TableCell>
                     </TableRow>
@@ -857,11 +890,12 @@ export default function CrossLab() {
               {phase === "done" && (
                 <div className="mt-2 flex flex-col gap-0.5">
                   <p className="text-xs text-muted-foreground">
-                    Historical-descendant cross-level modeled estimates
+                    {tr("Historical-descendant cross-level modeled estimates")}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Represented INIA germplasm; no guaranteed offspring
-                    phenotype.
+                    {tr(
+                      "Represented INIA germplasm; no guaranteed offspring phenotype.",
+                    )}
                   </p>
                 </div>
               )}
@@ -873,12 +907,12 @@ export default function CrossLab() {
                     <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
                     <div className="flex flex-col gap-1.5">
                       <p className="text-xs font-medium text-destructive">
-                        Unable to complete local inference.
+                        {tr("Unable to complete local inference.")}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        The final-v1 model bundle did not return a result for
-                        this parent pair. No estimates were produced and nothing
-                        was saved. Your parent selection is unchanged.
+                        {tr(
+                          "The final-v1 model bundle did not return a result for this parent pair. No estimates were produced and nothing was saved. Your parent selection is unchanged.",
+                        )}
                       </p>
                     </div>
                   </div>
@@ -888,19 +922,21 @@ export default function CrossLab() {
               {/* Empty / idle states */}
               {phase === "idle" && !lineA && !lineB ? (
                 <p className="py-10 text-center text-xs text-muted-foreground">
-                  No cross selected yet.
+                  {tr("No cross selected yet.")}
                 </p>
               ) : phase === "idle" ? (
                 <p className="py-10 text-center text-xs text-muted-foreground">
-                  Run &ldquo;Analyze Cross&rdquo; to populate estimates for this
-                  parent pair.
+                  {tr(
+                    "Run “Analyze Cross” to populate estimates for this parent pair.",
+                  )}
                 </p>
               ) : null}
             </CardContent>
             <div className="border-t border-border px-5 pt-3">
               <p className="text-xs leading-[18px] text-muted-foreground">
-                Estimates describe modeled historical descendant phenotype
-                summaries, not F1 performance or guaranteed cross outcomes.
+                {tr(
+                  "Estimates describe modeled historical descendant phenotype summaries, not F1 performance or guaranteed cross outcomes.",
+                )}
               </p>
             </div>
           </Card>
@@ -913,7 +949,7 @@ export default function CrossLab() {
               disabled={!canSave}
               onClick={openSaveModal}
             >
-              Save Candidate
+              {tr("Save Candidate")}
             </Button>
             <Button
               variant="outline"
@@ -921,7 +957,7 @@ export default function CrossLab() {
               disabled={!canNote}
               onClick={openNoteModal}
             >
-              Add Research Note
+              {tr("Add Research Note")}
             </Button>
             <Button
               variant="outline"
@@ -929,7 +965,7 @@ export default function CrossLab() {
               disabled={!canPedigree}
               onClick={() => navigate("/pedigree?select=" + lineA!.id)}
             >
-              View Parent Pedigree
+              {tr("View Parent Pedigree")}
             </Button>
           </div>
         </div>
@@ -940,17 +976,17 @@ export default function CrossLab() {
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
             <CardHeader className="px-5">
               <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
-                Parent Comparison
+                {tr("Parent Comparison")}
               </CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-4 px-5">
               <ComparisonPane
-                label="Parent A"
+                label={tr("Parent A")}
                 id={lineA?.id ?? parentA}
                 rows={compareRows}
               />
               <ComparisonPane
-                label="Parent B"
+                label={tr("Parent B")}
                 id={lineB?.id ?? parentB}
                 rows={compareRows}
                 side="B"
@@ -962,19 +998,19 @@ export default function CrossLab() {
           <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
             <CardHeader className="px-4">
               <CardTitle className="font-semibold uppercase tracking-wider text-[11px] text-muted-foreground">
-                Model Information
+                {tr("Model Information")}
               </CardTitle>
             </CardHeader>
             <CardContent className="px-4">
               <div className="divide-y divide-border">
-                <ModelRow label="Bundle" value="final-v1" mono />
-                <ModelRow label="Scientific review" value="Unreviewed" />
-                <ModelRow label="Usage" value="Research-only" />
+                <ModelRow label={tr("Bundle")} value="final-v1" mono />
+                <ModelRow label={tr("Scientific review")} value="Unreviewed" />
+                <ModelRow label={tr("Usage")} value="Research-only" />
                 <ModelRow
-                  label="Predictive ranking"
+                  label={tr("Predictive ranking")}
                   value="Enabled for represented parents"
                 />
-                <ModelRow label="Inference" value="Local / Offline" />
+                <ModelRow label={tr("Inference")} value="Local / Offline" />
               </div>
             </CardContent>
           </Card>
@@ -984,16 +1020,21 @@ export default function CrossLab() {
             <div className="mb-2 flex items-center gap-1.5">
               <Info className="size-4 text-amber-800 dark:text-amber-200" />
               <span className="font-semibold uppercase tracking-wider text-[11px] text-amber-900 dark:text-amber-200">
-                Scientific Limitations
+                {tr("Scientific Limitations")}
               </span>
             </div>
             <ul className="list-disc space-y-1.5 pl-5 text-[12.5px] leading-[19px] text-amber-950/80 dark:text-amber-200">
-              <li>Predictions are experimental.</li>
-              <li>Generalization to unseen parents is not established.</li>
-              <li>No calibrated uncertainty intervals are available.</li>
+              <li>{tr("Predictions are experimental.")}</li>
               <li>
-                Estimates must not be interpreted as validated breeding
-                recommendations.
+                {tr("Generalization to unseen parents is not established.")}
+              </li>
+              <li>
+                {tr("No calibrated uncertainty intervals are available.")}
+              </li>
+              <li>
+                {tr(
+                  "Estimates must not be interpreted as validated breeding recommendations.",
+                )}
               </li>
             </ul>
           </div>
@@ -1003,9 +1044,9 @@ export default function CrossLab() {
         <Dialog open={noteOpen} onOpenChange={setNoteOpen}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Add Research Note</DialogTitle>
+              <DialogTitle>{tr("Add Research Note")}</DialogTitle>
               <DialogDescription>
-                Document your reasoning for this parent pair.
+                {tr("Document your reasoning for this parent pair.")}
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-3">
@@ -1014,7 +1055,7 @@ export default function CrossLab() {
                   htmlFor="research-note-textarea"
                   className="text-xs font-medium text-muted-foreground"
                 >
-                  Note
+                  {tr("Note")}
                 </label>
                 <Textarea
                   id="research-note-textarea"
@@ -1029,20 +1070,22 @@ export default function CrossLab() {
               </div>
               <div className="rounded-lg border border-border px-3 py-2">
                 <p className="text-[11px] leading-[16px] text-muted-foreground">
-                  Attached to {lineA?.id ?? "—"} × {lineB?.id ?? "—"} · final-v1
-                  · not an approved recommendation
+                  {tr("Attached to")} {lineA?.id ?? "—"} × {lineB?.id ?? "—"}{" "}
+                  {tr("· final-v1 · not an approved recommendation")}
                 </p>
               </div>
             </div>
             <DialogFooter>
               <div className="mr-auto flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <Database className="size-3.5" />
-                Local SQLite workspace · no cloud sync
+                {tr("Local SQLite workspace · no cloud sync")}
               </div>
               <Button variant="outline" onClick={() => setNoteOpen(false)}>
-                Cancel
+                {tr("Cancel")}
               </Button>
-              <Button onClick={() => setNoteOpen(false)}>Save Note</Button>
+              <Button onClick={() => setNoteOpen(false)}>
+                {tr("Save Note")}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -1051,9 +1094,9 @@ export default function CrossLab() {
         <Dialog open={saveOpen} onOpenChange={setSaveOpen}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Save Cross Candidate</DialogTitle>
+              <DialogTitle>{tr("Save Cross Candidate")}</DialogTitle>
               <DialogDescription>
-                Saved to your local workspace on this device.
+                {tr("Saved to your local workspace on this device.")}
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-4">
@@ -1061,7 +1104,7 @@ export default function CrossLab() {
               <div className="grid grid-cols-2 gap-2">
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-medium text-muted-foreground">
-                    Parent A
+                    {tr("Parent A")}
                   </label>
                   <Input
                     value={lineA?.id ?? "—"}
@@ -1071,7 +1114,7 @@ export default function CrossLab() {
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-medium text-muted-foreground">
-                    Parent B
+                    {tr("Parent B")}
                   </label>
                   <Input
                     value={lineB?.id ?? "—"}
@@ -1087,7 +1130,7 @@ export default function CrossLab() {
                   htmlFor="candidate-name"
                   className="text-xs font-medium text-muted-foreground"
                 >
-                  Candidate name
+                  {tr("Candidate name")}
                 </label>
                 <Input
                   id="candidate-name"
@@ -1102,13 +1145,13 @@ export default function CrossLab() {
                   htmlFor="candidate-notes"
                   className="text-xs font-medium text-muted-foreground"
                 >
-                  Research notes
+                  {tr("Research notes")}
                 </label>
                 <Textarea
                   id="candidate-notes"
                   value={candidateNotes}
                   onChange={(e) => setCandidateNotes(e.target.value)}
-                  placeholder="Why this pair is worth reviewing…"
+                  placeholder={tr("Why this pair is worth reviewing…")}
                   className="min-h-[60px]"
                   maxLength={2000}
                 />
@@ -1120,7 +1163,7 @@ export default function CrossLab() {
               {/* Review status */}
               <div className="flex flex-col gap-1.5">
                 <span className="text-xs font-medium text-muted-foreground">
-                  Review status
+                  {tr("Review status")}
                 </span>
                 <div className="flex gap-2">
                   <button
@@ -1133,7 +1176,7 @@ export default function CrossLab() {
                         : "border-border bg-transparent text-muted-foreground hover:bg-muted",
                     )}
                   >
-                    Draft
+                    {tr("Draft")}
                   </button>
                   <button
                     type="button"
@@ -1145,7 +1188,7 @@ export default function CrossLab() {
                         : "border-border bg-transparent text-muted-foreground hover:bg-muted",
                     )}
                   >
-                    For Review
+                    {tr("For Review")}
                   </button>
                 </div>
               </div>
@@ -1153,7 +1196,7 @@ export default function CrossLab() {
               {/* Tags */}
               <div className="flex flex-col gap-1.5">
                 <span className="text-xs font-medium text-muted-foreground">
-                  Tags (optional)
+                  {tr("Tags (optional)")}
                 </span>
                 <div className="flex flex-wrap items-center gap-1.5">
                   {tags.map((tag) => (
@@ -1164,7 +1207,7 @@ export default function CrossLab() {
                       {tag}
                       <button
                         type="button"
-                        aria-label={`Remove tag ${tag}`}
+                        aria-label={tr("Remove tag {tag}", { tag })}
                         onClick={() =>
                           setTags((prev) => prev.filter((t) => t !== tag))
                         }
@@ -1181,7 +1224,7 @@ export default function CrossLab() {
                       onKeyDown={(e) => {
                         if (e.key === "Enter") addTag();
                       }}
-                      placeholder="Add tag"
+                      placeholder={tr("Add tag")}
                       className="h-7 w-24 px-2 text-xs"
                     />
                     <Button
@@ -1190,7 +1233,7 @@ export default function CrossLab() {
                       onClick={addTag}
                       className="h-7 px-2 text-xs"
                     >
-                      Add
+                      {tr("Add")}
                     </Button>
                   </div>
                 </div>
@@ -1201,7 +1244,7 @@ export default function CrossLab() {
               <div className="flex items-start gap-2 rounded-lg border border-destructive bg-destructive/5 px-3 py-2.5">
                 <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" />
                 <p className="text-xs leading-[18px] text-destructive">
-                  {saveError}
+                  {tr(saveError)}
                 </p>
               </div>
             )}
@@ -1209,19 +1252,19 @@ export default function CrossLab() {
             <DialogFooter>
               <div className="mr-auto flex items-center gap-1.5 text-[11px] text-muted-foreground">
                 <Database className="size-3.5" />
-                Local SQLite workspace · no cloud sync
+                {tr("Local SQLite workspace · no cloud sync")}
               </div>
               <Button variant="outline" onClick={() => setSaveOpen(false)}>
-                Cancel
+                {tr("Cancel")}
               </Button>
               <Button onClick={handleSaveCandidate} disabled={saveSaving}>
                 {saveSaving ? (
                   <>
                     <Loader2 className="animate-spin size-4" />
-                    Saving…
+                    {tr("Saving…")}
                   </>
                 ) : (
-                  "Save Candidate"
+                  tr("Save Candidate")
                 )}
               </Button>
             </DialogFooter>

@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import * as React from "react";
 import {
   LayoutDashboard,
@@ -99,6 +100,7 @@ const TITLES: Record<string, TitleMeta> = {
 };
 
 function NavButton({ item }: { item: NavItem }) {
+  const { t: tr } = useTranslation();
   const Icon = item.icon;
 
   if (item.enabled) {
@@ -132,7 +134,7 @@ function NavButton({ item }: { item: NavItem }) {
                 isActive && "text-gf-nav-accent",
               )}
             />
-            <span className="truncate">{item.label}</span>
+            <span className="truncate">{tr(item.label)}</span>
           </>
         )}
       </NavLink>
@@ -148,15 +150,16 @@ function NavButton({ item }: { item: NavItem }) {
           className="group relative flex h-(--gf-nav-height) items-center gap-2.5 rounded-lg px-3 text-sm text-gf-nav-label opacity-50 transition-opacity cursor-not-allowed"
         >
           <Icon className="size-4 shrink-0" />
-          <span className="truncate">{item.label}</span>
+          <span className="truncate">{tr(item.label)}</span>
         </button>
       </TooltipTrigger>
-      <TooltipContent>Coming soon</TooltipContent>
+      <TooltipContent>{tr("Coming soon")}</TooltipContent>
     </Tooltip>
   );
 }
 
 export default function AppShell() {
+  const { t: tr } = useTranslation();
   const location = useLocation();
   const meta = TITLES[location.pathname] ?? TITLES["/"];
 
@@ -179,7 +182,7 @@ export default function AppShell() {
           </div>
 
           {/* Primary nav */}
-          <nav className="flex flex-col gap-0.5" aria-label="Primary">
+          <nav className="flex flex-col gap-0.5" aria-label={tr("Primary")}>
             {NAV.map((item) => (
               <NavButton key={item.to} item={item} />
             ))}
@@ -190,7 +193,7 @@ export default function AppShell() {
           {/* Bottom nav */}
           <nav
             className="mt-auto flex flex-col gap-0.5 border-t border-border pt-3"
-            aria-label="Secondary"
+            aria-label={tr("Secondary")}
           >
             {BOTTOM_NAV.map((item) => (
               <NavButton key={item.to} item={item} />
@@ -203,23 +206,23 @@ export default function AppShell() {
           <header className="flex h-[68px] shrink-0 items-center justify-between gap-6 border-b border-border bg-gf-app-bg px-6">
             <div className="min-w-0">
               <h1 className="truncate text-xl font-semibold leading-tight text-foreground">
-                {meta.title}
+                {tr(meta.title)}
               </h1>
               <p className="truncate text-sm text-muted-foreground">
-                {meta.subtitle}
+                {tr(meta.subtitle)}
               </p>
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
               <span className="inline-flex h-7 items-center rounded-lg border border-gf-chip-border bg-gf-chip-bg px-2.5 text-sm text-foreground shadow-[var(--gf-card-shadow)]">
                 <span className="mr-1.5 text-xs text-muted-foreground">
-                  Dataset
+                  {tr("Dataset")}
                 </span>
                 INIA Uruguay
               </span>
               <span className="inline-flex h-7 items-center rounded-lg border border-gf-chip-border bg-gf-chip-bg px-2.5 text-sm text-foreground shadow-[var(--gf-card-shadow)]">
                 <span className="mr-1.5 text-xs text-muted-foreground">
-                  Model
+                  {tr("Model")}
                 </span>
                 <span className="font-mono text-xs">final-v1</span>
               </span>

@@ -164,12 +164,12 @@ test("actual single-trait objectives, weighted ranking, determinism and candidat
     JSON.stringify({ single_trait: results, weighted }, null, 2) + "\n",
   );
 });
-test("backend authoritative errors stay Indonesian in the UI", async () => {
+test("backend authoritative errors are displayed in English in the UI", async () => {
   try {
     await client.predict("GID_10039", "GID_10039");
     throw new Error("Expected SELF_CROSS");
   } catch (error) {
-    expect(analysisError(error)).toBe("Pilih dua parent yang berbeda.");
+    expect(analysisError(error)).toBe("Select two different parents.");
   }
   await expect(client.predict("GID_999999", "GID_10039")).rejects.toMatchObject(
     { code: "PARENT_UNKNOWN" },

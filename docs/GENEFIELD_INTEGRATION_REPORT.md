@@ -22,18 +22,18 @@ Development integration completed on 2026-10-11 (Asia/Jakarta). Frozen final-v1 
 | P | Line Explorer | PASS real loading, search, filters, existing pagination and native profile navigation. Example GID_10039 returns one actual match. |
 | Q | Line Profile | PASS actual historical line means, observation counts, parents, native units and null missing values; no prediction or resistance-category labels. |
 | R | Pedigree | PASS actual GID_1 parents GID_2980 / GID_2052, graph edges, direct descendants, two-level ancestry, search and node navigation; visited/cycle guards. |
-| S | Cross Lab | PASS actual four-trait inference, Indonesian errors and loading guards; historical lookup runs independently before predict so factual history can remain visible when prediction is ineligible. |
+| S | Cross Lab | PASS actual four-trait inference, user-facing errors and loading guards; error messages are now in English. Historical lookup runs independently before predict so factual history can remain visible when prediction is ineligible. |
 | T | Representative prediction | GID_10039 x GID_10125: GY 7891.223511267753 kg/ha; DTF 98.63343564424765 days; NO 4.591383457183838 modified SES IRRI points; LB 0.8833725118415202 SES IRRI points. Historical-descendant cross-level modeled estimates. |
 | U | Historical lookup | PASS recorded GID_10039 x GID_8938 and unrecorded GID_10039 x GID_10125. No frontend registry; Cross Lab allows recorded pair analysis. |
 | V | Breed Designer | PASS authoritative GY maximize (3,913 eligible candidates), NO minimize (2,323), LB minimize (881); finite native predictions/scores, backend order preserved. |
-| W | DTF minimize | PASS native UI and real IPC; 4,186 eligible unrecorded candidates; explicit lebih cepat berbunga selection. |
-| X | DTF maximize | PASS native UI and real IPC; 4,186 eligible unrecorded candidates; explicit lebih lambat berbunga selection. Missing direction blocks UI request. |
+| W | DTF minimize | PASS native UI and real IPC; 4,186 eligible unrecorded candidates; explicit earlier flowering selection. |
+| X | DTF maximize | PASS native UI and real IPC; 4,186 eligible unrecorded candidates; explicit later flowering selection. Missing direction blocks UI request. |
 | Y | Multi-trait | PASS weights GY 2 / DTF 1 / NO 1 / LB 1, both applicable DTF directions exercised; 881 eligible unrecorded pairs and exact repeated-response determinism. |
 | Z | Candidate safety | PASS: no self pairs, no reverse/duplicate recommendations, every returned recommendation checked by sidecar historical lookup and found unrecorded. Full eligible universe counts verified; backend remains filtering authority. |
 | AA | Workspace | PASS existing SQLite CRUD adapted; canonical parents, predictions, bundle, objectives, weights, application score and timestamps persisted. Saved/open after WebView reload and whole desktop restart; test-created rows cleaned up. No separate compare UI existed. |
 | AB | Model Insights | PASS runtime manifest: actual families (GY/DTF/LB ExtraTrees, NO Ridge), parameters, trait units, training-pair/parent counts, registry 209, provenance and limitations. No fabricated metric values. |
 | AC | Overview/dataset | PASS source counts and coverage from reference SQLite, marker count from manifest; workspace counts/recent saves from actual store. ML training-pair counts remain separate. |
-| AD | Error mapping | Indonesian mappings for actual PARENT_UNKNOWN/PARENT_INELIGIBLE and requested aliases, genotype unavailable, self cross, DTF required, invalid traits/objectives/weights and service/corruption failure. Technical diagnostics remain in logs. |
+| AD | Error mapping | English mappings for actual PARENT_UNKNOWN/PARENT_INELIGIBLE and requested aliases, genotype unavailable, self cross, DTF required, invalid traits/objectives/weights and service/corruption failure. Technical diagnostics remain in logs. |
 | AE | Remaining mocks | A: all production reference/ML fixtures removed. B: synthetic unit-test transport/store fixtures and legacy seedDemo helper tested but never called by production. C: no blocking mocks or production fallback. |
 | AF | TypeScript | PASS npm run typecheck and TypeScript stage of npm run build. Configuration compiles in actual Vite/Tauri startup. |
 | AG | Frontend tests | PASS 37 tests across six files, including real copied-EXE client tests and synthetic lifecycle/error/timeout tests. No configured lint script; targeted formatting checked separately. |

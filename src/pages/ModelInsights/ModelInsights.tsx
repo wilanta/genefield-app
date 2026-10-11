@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Table,
@@ -50,14 +51,18 @@ const TRAINING_LABEL: Record<ModelInsightsData["trainingStatus"], string> = {
 };
 
 function ModelOverview({ data }: { data: ModelInsightsData }) {
+  const { t: tr } = useTranslation();
   const fields: Array<{ label: string; value: string }> = [
-    { label: "Model bundle", value: data.modelBundle },
-    { label: "Scientific review", value: REVIEW_LABEL[data.scientificReview] },
-    { label: "Usage", value: USAGE_LABEL[data.usage] },
-    { label: "Training", value: TRAINING_LABEL[data.trainingStatus] },
+    { label: tr("Model bundle"), value: data.modelBundle },
     {
-      label: "Predictive ranking",
-      value: data.rankingEnabled ? "Enabled" : "Disabled",
+      label: tr("Scientific review"),
+      value: REVIEW_LABEL[data.scientificReview],
+    },
+    { label: tr("Usage"), value: USAGE_LABEL[data.usage] },
+    { label: tr("Training"), value: TRAINING_LABEL[data.trainingStatus] },
+    {
+      label: tr("Predictive ranking"),
+      value: data.rankingEnabled ? tr("Enabled") : tr("Disabled"),
     },
   ];
 
@@ -65,7 +70,7 @@ function ModelOverview({ data }: { data: ModelInsightsData }) {
     <Card className="shadow-[var(--gf-card-shadow)]">
       <CardHeader className="px-4 pt-3">
         <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Model Overview
+          {tr("Model Overview")}
         </h3>
       </CardHeader>
       <CardContent className="px-0 pb-4">
@@ -78,9 +83,9 @@ function ModelOverview({ data }: { data: ModelInsightsData }) {
                 (i < fields.length - 1 ? " border-r border-border" : "")
               }
             >
-              <p className="text-[11px] text-muted-foreground">{f.label}</p>
+              <p className="text-[11px] text-muted-foreground">{tr(f.label)}</p>
               <p className="mt-1 text-sm font-medium text-foreground">
-                {f.value}
+                {tr(f.value)}
               </p>
             </div>
           ))}
@@ -93,11 +98,12 @@ function ModelOverview({ data }: { data: ModelInsightsData }) {
 /* ── Trait Model Summary ────────────────────────────────────────────────── */
 
 function TraitModelTable({ rows }: { rows: TraitModelSelection[] }) {
+  const { t: tr } = useTranslation();
   return (
     <Card className="shadow-[var(--gf-card-shadow)]">
       <CardHeader className="px-4 pt-3">
         <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-          Trait Model Summary
+          {tr("Trait Model Summary")}
         </h3>
       </CardHeader>
       <CardContent className="px-0 pb-2">
@@ -105,13 +111,13 @@ function TraitModelTable({ rows }: { rows: TraitModelSelection[] }) {
           <TableHeader>
             <TableRow className="border-b hover:bg-transparent">
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Trait
+                {tr("Trait")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Selected model family
+                {tr("Selected model family")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Hyperparameters
+                {tr("Hyperparameters")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -148,15 +154,16 @@ function ValidationTable({
   rows: ValidationMetricRow[];
   eligibleCrosses: number | null;
 }) {
+  const { t: tr } = useTranslation();
   return (
     <Card className="shadow-[var(--gf-card-shadow)]">
       <CardHeader className="px-4 pt-3">
         <div className="flex items-center justify-between gap-3">
           <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Validation Results
+            {tr("Validation Results")}
           </h3>
           <span className="rounded-full bg-amber-50 dark:bg-amber-950/30 px-3 py-1 text-xs font-medium text-amber-800 dark:text-amber-200 ring-1 ring-inset ring-amber-200/70">
-            Detailed validation evidence remains in frozen model cards
+            {tr("Detailed validation evidence remains in frozen model cards")}
           </span>
         </div>
       </CardHeader>
@@ -165,22 +172,22 @@ function ValidationTable({
           <TableHeader>
             <TableRow className="border-b hover:bg-transparent">
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Trait
+                {tr("Trait")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Nested CV MAE
+                {tr("Nested CV MAE")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Parent-disjoint MAE
+                {tr("Parent-disjoint MAE")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Spearman (nested CV)
+                {tr("Spearman (nested CV)")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Spearman (parent-disjoint)
+                {tr("Spearman (parent-disjoint)")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Baseline MAE
+                {tr("Baseline MAE")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -215,7 +222,7 @@ function ValidationTable({
 
         <div className="flex items-center justify-between border-t border-border px-4 py-2.5">
           <span className="text-sm text-muted-foreground">
-            Historical pedigree registry pairs
+            {tr("Historical pedigree registry pairs")}
           </span>
           <span className="text-sm text-muted-foreground">
             {metric(eligibleCrosses)}
@@ -229,11 +236,12 @@ function ValidationTable({
 /* ── Scientific Limitations ────────────────────────────────────────────── */
 
 function LimitationsPanel({ items }: { items: string[] }) {
+  const { t: tr } = useTranslation();
   return (
     <Card className="border-amber-500/30 bg-amber-50/40 dark:bg-amber-950/30 shadow-[var(--gf-card-shadow)]">
       <CardHeader className="px-4 pt-3">
         <h3 className="text-[11px] font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-200">
-          Scientific Limitations
+          {tr("Scientific Limitations")}
         </h3>
       </CardHeader>
       <CardContent className="px-4 pb-4">
@@ -245,7 +253,7 @@ function LimitationsPanel({ items }: { items: string[] }) {
                 aria-hidden
               />
               <p className="text-sm leading-[19px] text-amber-900/90 dark:text-amber-200">
-                {item}
+                {tr(item)}
               </p>
             </li>
           ))}
@@ -258,18 +266,19 @@ function LimitationsPanel({ items }: { items: string[] }) {
 /* ── Methodology notes ─────────────────────────────────────────────────── */
 
 function MethodologyCards() {
+  const { t: tr } = useTranslation();
   return (
     <div className="grid grid-cols-2 gap-3.5">
       {methodologyNotes.map((note) => (
         <Card key={note.title} className="shadow-[var(--gf-card-shadow)]">
           <CardHeader className="px-4 pt-3">
             <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-              {note.title}
+              {tr(note.title)}
             </h3>
           </CardHeader>
           <CardContent className="px-4 pb-3.5">
             <p className="text-sm leading-[19px] text-muted-foreground">
-              {note.description}
+              {tr(note.description)}
             </p>
           </CardContent>
         </Card>
@@ -281,11 +290,12 @@ function MethodologyCards() {
 /* ── Page ───────────────────────────────────────────────────────────────── */
 
 export default function ModelInsights() {
+  const { t: tr } = useTranslation();
   const { data: metadata, error } = useAsync(() => inference.start());
   if (!metadata)
     return (
       <p className="p-6" role={error ? "alert" : "status"}>
-        {error ?? "Memuat metadata final-v1..."}
+        {tr(error ?? "Loading final-v1 metadata...")}
       </p>
     );
   const data: ModelInsightsData = {
@@ -324,12 +334,17 @@ export default function ModelInsights() {
             eligibleCrosses={data.eligibleHistoricalCrosses}
           />
           <Card className="p-4 text-sm">
-            <p>{metadata.source_dataset}</p>
+            <p>{tr(metadata.source_dataset)}</p>
             {Object.entries(metadata.traits).map(([t, info]) => (
               <p key={t}>
-                {t}: {info.units} | {info.training_pair_count} training pairs |{" "}
-                {info.training_parent_count} eligible parents |{" "}
-                {info.ranking_directions.join(" / ")}
+                {t}: {tr(info.units)} | {info.training_pair_count}{" "}
+                {tr("training pairs |")} {info.training_parent_count}{" "}
+                {tr("eligible parents |")}{" "}
+                {info.ranking_directions
+                  .map((direction) =>
+                    tr(direction === "maximize" ? "Maximize" : "Minimize"),
+                  )
+                  .join(" / ")}
               </p>
             ))}
           </Card>

@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { referenceService } from "@/services/reference-service";
 import { useAsync } from "@/lib/use-async";
@@ -6,6 +7,7 @@ import { PedigreeDetailCard } from "./PedigreeDetailCard";
 import { PedigreeActionsCard } from "./PedigreeActionsCard";
 
 export default function PedigreeExplorer() {
+  const { t: tr } = useTranslation();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const id = params.get("line") ?? params.get("select") ?? "GID_1233";
@@ -16,7 +18,7 @@ export default function PedigreeExplorer() {
   if (!data)
     return (
       <p className="p-6" role={error ? "alert" : "status"}>
-        {error ?? "Memuat silsilah lokal…"}
+        {tr(error ?? "Loading local pedigree…")}
       </p>
     );
   const selectedNode =
@@ -41,14 +43,14 @@ export default function PedigreeExplorer() {
       {/* Content row: graph (800) + detail (340) */}
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 lg:grid-cols-[800px_340px]">
         {/* Graph panel */}
-        <section className="min-h-0" aria-label="Pedigree graph">
+        <section className="min-h-0" aria-label={tr("Pedigree graph")}>
           <PedigreeGraph data={data} onSelect={(line) => setParams({ line })} />
         </section>
 
         {/* Detail panel */}
         <aside
           className="flex flex-col gap-4"
-          aria-label="Selected line details"
+          aria-label={tr("Selected line details")}
         >
           <PedigreeDetailCard
             selectedNode={selectedNode}
@@ -65,7 +67,8 @@ export default function PedigreeExplorer() {
 
       {/* Toolbar callbacks surface (counts already reflected in the graph). */}
       <span className="sr-only">
-        Ancestors: {ancestorCount}. Descendants: {descendantCount}.
+        {tr("Ancestors:")} {ancestorCount}
+        {tr(". Descendants:")} {descendantCount}.
       </span>
     </div>
   );

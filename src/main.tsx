@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "next-themes";
 import App from "./App";
 import { InterfaceDensityProvider } from "@/components/interface-density-provider";
+import { LanguageProvider } from "@/components/language-provider";
 import { isTauriRuntime } from "@/lib/tauri-runtime";
 import { inference } from "@/services/inference-service";
 import { getCurrentWindow } from "@tauri-apps/api/window";
@@ -31,7 +32,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       disableTransitionOnChange
     >
       <InterfaceDensityProvider>
-        <App />
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
       </InterfaceDensityProvider>
     </ThemeProvider>
   </React.StrictMode>,

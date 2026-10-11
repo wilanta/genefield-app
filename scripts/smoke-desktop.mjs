@@ -160,13 +160,15 @@ try {
     .click();
   await page
     .getByRole("alert")
-    .filter({ hasText: "Pilih prioritas" })
+    .filter({
+      hasText: "Select a flowering time priority: earlier or later flowering.",
+    })
     .waitFor();
   record("DTF requires explicit objective", true);
   await page
     .getByRole("combobox", { name: "DTF priority", exact: true })
     .click();
-  await page.getByRole("option", { name: "Lebih cepat berbunga" }).click();
+  await page.getByRole("option", { name: "Earlier flowering" }).click();
   await page
     .getByRole("button", { name: "Generate Candidate Pairs", exact: true })
     .click();
@@ -175,7 +177,7 @@ try {
   await page
     .getByRole("combobox", { name: "DTF priority", exact: true })
     .click();
-  await page.getByRole("option", { name: "Lebih lambat berbunga" }).click();
+  await page.getByRole("option", { name: "Later flowering" }).click();
   await page
     .getByRole("button", { name: "Generate Candidate Pairs", exact: true })
     .click();
@@ -219,7 +221,7 @@ try {
     .click();
   await page
     .getByText(
-      "Layanan final-v1 siap. Integritas bundle diverifikasi saat pemuatan.",
+      "The final-v1 service is ready. Bundle integrity was verified during loading.",
     )
     .waitFor();
   await page.getByText("Verified by final-v1 loader").waitFor();

@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useEffect, useMemo, useState } from "react";
 import {
   useTable,
@@ -43,6 +44,7 @@ const features = tableFeatures({
 
 /** Dot + label used for Genotype/Phenotype/Pedigree availability cells. */
 function AvailabilityCell({ value }: { value: boolean }) {
+  const { t: tr } = useTranslation();
   return (
     <span className="inline-flex items-center gap-2">
       <span
@@ -51,7 +53,7 @@ function AvailabilityCell({ value }: { value: boolean }) {
           value ? "bg-primary" : "border border-foreground/40 bg-transparent",
         )}
       />
-      <span className="text-sm">{value ? "Yes" : "No"}</span>
+      <span className="text-sm">{value ? tr("Yes") : tr("No")}</span>
     </span>
   );
 }
@@ -72,6 +74,7 @@ export function LineExplorerTable({
   onProfile,
   onUseAsParent,
 }: Props) {
+  const { t: tr } = useTranslation();
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize,
@@ -85,23 +88,23 @@ export function LineExplorerTable({
   const columns = useMemo(() => {
     const base = createColumnHelper<typeof features, RiceLine>();
 
-    const traitColumns = (["GY", "DTF", "NO", "LB"] as const).map(
-      (trait) => {
-        const [full, code] = TRAIT_LABELS[trait];
-        return base.display({
-          id: trait,
-          header: () => (
-            <div className="leading-tight">
-              <div>{full}</div>
-              <div className="text-muted-foreground">{code}</div>
-            </div>
-          ),
-          cell: ({ row }) => (
-            <span className="tabular-nums">{traitValue(row.original, trait)}</span>
-          ),
-        });
-      },
-    );
+    const traitColumns = (["GY", "DTF", "NO", "LB"] as const).map((trait) => {
+      const [full, code] = TRAIT_LABELS[trait];
+      return base.display({
+        id: trait,
+        header: () => (
+          <div className="leading-tight">
+            <div>{tr(full)}</div>
+            <div className="text-muted-foreground">{code}</div>
+          </div>
+        ),
+        cell: ({ row }) => (
+          <span className="tabular-nums">
+            {traitValue(row.original, trait)}
+          </span>
+        ),
+      });
+    });
 
     return [
       base.accessor("id", {
@@ -113,23 +116,23 @@ export function LineExplorerTable({
       }),
       base.accessor("hasGenotype", {
         id: "genotype",
-        header: "Genotype",
+        header: tr("Genotype"),
         cell: ({ getValue }) => <AvailabilityCell value={getValue()} />,
       }),
       base.accessor("hasPhenotype", {
         id: "phenotype",
-        header: "Phenotype",
+        header: tr("Phenotype"),
         cell: ({ getValue }) => <AvailabilityCell value={getValue()} />,
       }),
       base.accessor("hasPedigree", {
         id: "pedigree",
-        header: "Pedigree",
+        header: tr("Pedigree"),
         cell: ({ getValue }) => <AvailabilityCell value={getValue()} />,
       }),
       ...traitColumns,
       base.display({
         id: "actions",
-        header: "Actions",
+        header: tr("Actions"),
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
             <Button
@@ -138,13 +141,15 @@ export function LineExplorerTable({
               className="h-auto p-0 text-primary hover:bg-transparent hover:text-primary hover:underline"
               onClick={() => onProfile(row.original)}
             >
-              Profile
+              {tr("Profile")}
             </Button>
             <Button
               variant="outline"
               size="sm"
               className="h-6 w-6 rounded-full p-0 text-xs"
-              aria-label={`Use as Parent A for ${row.original.id}`}
+              aria-label={tr("Use as Parent A for {id}", {
+                id: row.original.id,
+              })}
               onClick={() => onUseAsParent(row.original.id, "A")}
             >
               A
@@ -153,7 +158,9 @@ export function LineExplorerTable({
               variant="outline"
               size="sm"
               className="h-6 w-6 rounded-full p-0 text-xs"
-              aria-label={`Use as Parent B for ${row.original.id}`}
+              aria-label={tr("Use as Parent B for {id}", {
+                id: row.original.id,
+              })}
               onClick={() => onUseAsParent(row.original.id, "B")}
             >
               B
@@ -162,7 +169,7 @@ export function LineExplorerTable({
         ),
       }),
     ] as ReadonlyArray<ColumnDef<typeof features, RiceLine>>;
-  }, [onProfile, onUseAsParent]);
+  }, [onProfile, onUseAsParent, tr]);
 
   const table = useTable({
     features,
@@ -174,9 +181,7 @@ export function LineExplorerTable({
 
   const pageRows = table.getRowModel().rows;
   const from =
-    pageRows.length === 0
-      ? 0
-      : pagination.pageIndex * pagination.pageSize + 1;
+    pageRows.length === 0 ? 0 : pagination.pageIndex * pagination.pageSize + 1;
   const to = from + pageRows.length - 1;
 
   return (
@@ -225,7 +230,7 @@ export function LineExplorerTable({
                     colSpan={columns.length}
                     className="px-3 py-8 text-center text-sm text-muted-foreground"
                   >
-                    No lines match the current filters.
+                    {tr("No lines match the current filters.")}
                   </TableCell>
                 </TableRow>
               ) : null}
@@ -236,7 +241,7 @@ export function LineExplorerTable({
         {/* Pagination — inside the card at the bottom */}
         <div className="flex items-center justify-between border-t border-border px-4 py-2.5 text-sm">
           <span className="tabular-nums text-muted-foreground">
-            Rows {from}–{to}
+            {tr("Rows")} {from}–{to}
           </span>
           <div className="flex items-center gap-2">
             <Button
@@ -245,7 +250,7 @@ export function LineExplorerTable({
               disabled={!table.getCanPreviousPage()}
               onClick={() => table.previousPage()}
             >
-              Previous
+              {tr("Previous")}
             </Button>
             <Button
               variant="outline"
@@ -253,7 +258,7 @@ export function LineExplorerTable({
               disabled={!table.getCanNextPage()}
               onClick={() => table.nextPage()}
             >
-              Next
+              {tr("Next")}
             </Button>
           </div>
         </div>

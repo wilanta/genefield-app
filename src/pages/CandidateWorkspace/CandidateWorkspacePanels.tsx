@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import {
   ChevronDown,
   LayoutGrid,
@@ -75,6 +76,7 @@ function formatDate(value: string): string {
 }
 
 function StatusBadge({ status }: { status: CandidateReviewStatus }) {
+  const { t: tr } = useTranslation();
   return (
     <Badge
       variant="secondary"
@@ -87,7 +89,7 @@ function StatusBadge({ status }: { status: CandidateReviewStatus }) {
           "bg-muted text-muted-foreground",
       )}
     >
-      {reviewLabel(status)}
+      {tr(reviewLabel(status))}
     </Badge>
   );
 }
@@ -109,25 +111,26 @@ interface ToolbarProps {
 }
 
 export function CandidateToolbar(props: ToolbarProps) {
+  const { t: tr } = useTranslation();
   const sortLabels: Record<CandidateSort, string> = {
-    "created-newest": "Created: newest",
-    "created-oldest": "Created: oldest",
-    "updated-newest": "Updated: newest",
-    name: "Name: A–Z",
+    "created-newest": tr("Created: newest"),
+    "created-oldest": tr("Created: oldest"),
+    "updated-newest": tr("Updated: newest"),
+    name: tr("Name: A–Z"),
   };
   const ViewIcon = props.view === "list" ? List : LayoutGrid;
   return (
     <div
       className="flex shrink-0 flex-wrap items-center gap-2.5"
-      aria-label="Candidate filters and actions"
+      aria-label={tr("Candidate filters and actions")}
     >
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
         <Input
           value={props.search}
           onChange={(event) => props.onSearch(event.target.value)}
-          placeholder="Search candidates"
-          aria-label="Search candidates"
+          placeholder={tr("Search candidates")}
+          aria-label={tr("Search candidates")}
           className="h-[35px] w-[180px] bg-card pl-8 text-[13px]"
         />
       </div>
@@ -138,19 +141,19 @@ export function CandidateToolbar(props: ToolbarProps) {
         }
       >
         <SelectTrigger
-          aria-label="Filter by review status"
+          aria-label={tr("Filter by review status")}
           className="h-[35px] w-auto min-w-[104px] gap-2 bg-card px-2.5 text-[13px]"
         >
           <SelectValue>
-            <span className="mr-2 text-muted-foreground">Status</span>
-            {props.status === "all" ? "All" : reviewLabel(props.status)}
+            <span className="mr-2 text-muted-foreground">{tr("Status")}</span>
+            {props.status === "all" ? tr("All") : reviewLabel(props.status)}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="all">{tr("All")}</SelectItem>
           {REVIEW_STATUSES.map((status) => (
             <SelectItem key={status} value={status}>
-              {reviewLabel(status)}
+              {tr(reviewLabel(status))}
             </SelectItem>
           ))}
         </SelectContent>
@@ -160,18 +163,18 @@ export function CandidateToolbar(props: ToolbarProps) {
         onValueChange={(value) => props.onSort(value as CandidateSort)}
       >
         <SelectTrigger
-          aria-label="Sort candidates"
+          aria-label={tr("Sort candidates")}
           className="h-[35px] w-[184px] gap-2 bg-card px-2.5 text-[13px]"
         >
           <SelectValue>
-            <span className="mr-2 text-muted-foreground">Sort</span>
-            {sortLabels[props.sort]}
+            <span className="mr-2 text-muted-foreground">{tr("Sort")}</span>
+            {tr(sortLabels[props.sort])}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {Object.entries(sortLabels).map(([value, label]) => (
             <SelectItem key={value} value={value}>
-              {label}
+              {tr(label)}
             </SelectItem>
           ))}
         </SelectContent>
@@ -183,7 +186,7 @@ export function CandidateToolbar(props: ToolbarProps) {
             className="h-[35px] gap-2 bg-accent px-2.5 text-[13px] font-semibold text-accent-foreground"
           >
             <ViewIcon className="size-3.5" />
-            {props.view === "list" ? "List View" : "Grid View"}
+            {props.view === "list" ? tr("List View") : tr("Grid View")}
             <ChevronDown className="size-3" />
           </Button>
         </DropdownMenuTrigger>
@@ -193,10 +196,10 @@ export function CandidateToolbar(props: ToolbarProps) {
             onValueChange={(value) => props.onView(value as CandidateView)}
           >
             <DropdownMenuRadioItem value="list">
-              List View
+              {tr("List View")}
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="grid">
-              Grid View
+              {tr("Grid View")}
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
@@ -205,7 +208,7 @@ export function CandidateToolbar(props: ToolbarProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            aria-label="More workspace options"
+            aria-label={tr("More workspace options")}
             className={cn(
               "h-[35px] gap-1.5 bg-secondary px-2.5",
               props.source !== "all" && "border-primary text-primary",
@@ -216,7 +219,7 @@ export function CandidateToolbar(props: ToolbarProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-44">
-          <DropdownMenuLabel>Candidate source</DropdownMenuLabel>
+          <DropdownMenuLabel>{tr("Candidate source")}</DropdownMenuLabel>
           <DropdownMenuRadioGroup
             value={props.source}
             onValueChange={(value) =>
@@ -224,11 +227,11 @@ export function CandidateToolbar(props: ToolbarProps) {
             }
           >
             <DropdownMenuRadioItem value="all">
-              All sources
+              {tr("All sources")}
             </DropdownMenuRadioItem>
             {SOURCES.map((source) => (
               <DropdownMenuRadioItem key={source} value={source}>
-                {sourceLabel(source)}
+                {tr(sourceLabel(source))}
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>
@@ -240,13 +243,13 @@ export function CandidateToolbar(props: ToolbarProps) {
               props.onSource("all");
             }}
           >
-            Clear filters
+            {tr("Clear filters")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={props.onExport}
             disabled={!props.hasCandidates}
           >
-            Export visible candidates
+            {tr("Export visible candidates")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -255,7 +258,7 @@ export function CandidateToolbar(props: ToolbarProps) {
         className="h-9 gap-2 px-3.5 text-[13px] font-semibold"
       >
         <Plus className="size-4" />
-        Create
+        {tr("Create")}
       </Button>
     </div>
   );
@@ -278,13 +281,14 @@ function RowActions({
   candidate: SavedCandidate;
   actions: CandidateActions;
 }) {
+  const { t: tr } = useTranslation();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
           size="icon-xs"
-          aria-label={`Actions for ${candidate.name}`}
+          aria-label={tr("Actions for {name}", { name: candidate.name })}
           onClick={(event) => event.stopPropagation()}
           className="text-muted-foreground"
         >
@@ -297,19 +301,19 @@ function RowActions({
         onClick={(event) => event.stopPropagation()}
       >
         <DropdownMenuItem onSelect={() => actions.onSelect(candidate)}>
-          View details
+          {tr("View details")}
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => actions.onEdit(candidate)}>
-          Edit notes
+          {tr("Edit notes")}
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => actions.onOpen(candidate)}>
-          Open in Cross Lab
+          {tr("Open in Cross Lab")}
         </DropdownMenuItem>
         <DropdownMenuItem onSelect={() => actions.onExport(candidate)}>
-          Export candidate
+          {tr("Export candidate")}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuLabel>Review status</DropdownMenuLabel>
+        <DropdownMenuLabel>{tr("Review status")}</DropdownMenuLabel>
         <DropdownMenuRadioGroup
           value={candidate.reviewStatus}
           onValueChange={(value) =>
@@ -322,7 +326,7 @@ function RowActions({
               value={status}
               disabled={actions.updatingStatus}
             >
-              {reviewLabel(status)}
+              {tr(reviewLabel(status))}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
@@ -331,7 +335,7 @@ function RowActions({
           variant="destructive"
           onSelect={() => actions.onDelete(candidate)}
         >
-          Delete candidate
+          {tr("Delete candidate")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -349,6 +353,7 @@ export function CandidateList({
   actions: CandidateActions;
   view: CandidateView;
 }) {
+  const { t: tr } = useTranslation();
   if (view === "grid") {
     return (
       <div className="grid grid-cols-1 gap-3 p-3 @min-[600px]:grid-cols-2">
@@ -386,7 +391,7 @@ export function CandidateList({
               ))}
             </div>
             <p className="mt-3 text-xs text-muted-foreground">
-              Updated {formatDate(candidate.updatedAt)}
+              {tr("Updated")} {formatDate(candidate.updatedAt)}
             </p>
           </div>
         ))}
@@ -407,19 +412,19 @@ export function CandidateList({
       <TableHeader className="bg-gf-sidebar-bg/70">
         <TableRow className="hover:bg-transparent">
           {[
-            "Candidate Name",
-            "Parent A",
-            "Parent B",
-            "Review Status",
-            "Tags",
-            "Last Updated",
-            "Actions",
+            tr("Candidate Name"),
+            tr("Parent A"),
+            tr("Parent B"),
+            tr("Review Status"),
+            tr("Tags"),
+            tr("Last Updated"),
+            tr("Actions"),
           ].map((label) => (
             <TableHead
               key={label}
               className="h-[30px] px-3 text-[10px] font-semibold uppercase tracking-[0.04em] text-muted-foreground"
             >
-              {label}
+              {tr(label)}
             </TableHead>
           ))}
         </TableRow>
@@ -513,12 +518,13 @@ export function CandidateDetail({
   onStatus: (status: CandidateReviewStatus) => void;
   updatingStatus: boolean;
 }) {
+  const { t: tr } = useTranslation();
   if (!candidate)
     return (
       <Card className="gap-2 p-4 shadow-[var(--gf-card-shadow)]">
-        <h2 className="text-sm font-semibold">Candidate details</h2>
+        <h2 className="text-sm font-semibold">{tr("Candidate details")}</h2>
         <p className="text-[13px] text-muted-foreground">
-          Select a candidate to view its details.
+          {tr("Select a candidate to view its details.")}
         </p>
       </Card>
     );
@@ -534,18 +540,20 @@ export function CandidateDetail({
         </h2>
         <dl>
           <div className={detailRow}>
-            <dt className="shrink-0 text-muted-foreground">Parent pair</dt>
+            <dt className="shrink-0 text-muted-foreground">
+              {tr("Parent pair")}
+            </dt>
             <dd className="text-right font-mono text-xs">
               {candidate.parentA} × {candidate.parentB}
             </dd>
           </div>
           <div className={detailRow}>
-            <dt className="text-muted-foreground">Review status</dt>
+            <dt className="text-muted-foreground">{tr("Review status")}</dt>
             <dd>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button
-                    aria-label="Change candidate review status"
+                    aria-label={tr("Change candidate review status")}
                     disabled={updatingStatus}
                     className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50"
                   >
@@ -561,7 +569,7 @@ export function CandidateDetail({
                   >
                     {REVIEW_STATUSES.map((status) => (
                       <DropdownMenuRadioItem key={status} value={status}>
-                        {reviewLabel(status)}
+                        {tr(reviewLabel(status))}
                       </DropdownMenuRadioItem>
                     ))}
                   </DropdownMenuRadioGroup>
@@ -570,40 +578,45 @@ export function CandidateDetail({
             </dd>
           </div>
           <div className={detailRow}>
-            <dt className="text-muted-foreground">Model bundle</dt>
+            <dt className="text-muted-foreground">{tr("Model bundle")}</dt>
             <dd className="text-xs text-muted-foreground">
-              {candidate.analysis?.bundleVersion ?? "Not recorded"}
+              {candidate.analysis?.bundleVersion ?? tr("Not recorded")}
             </dd>
           </div>
           <div className={detailRow}>
-            <dt className="text-muted-foreground">Date created</dt>
+            <dt className="text-muted-foreground">{tr("Date created")}</dt>
             <dd className="tabular-nums">{formatDate(candidate.createdAt)}</dd>
           </div>
           <div className={cn(detailRow, "border-0")}>
-            <dt className="text-muted-foreground">Last updated</dt>
+            <dt className="text-muted-foreground">{tr("Last updated")}</dt>
             <dd className="tabular-nums">{formatDate(candidate.updatedAt)}</dd>
           </div>
         </dl>
-        <section className="mt-4" aria-label="Research notes">
-          <h3 className={sectionHeading}>Research Notes</h3>
+        <section className="mt-4" aria-label={tr("Research notes")}>
+          <h3 className={sectionHeading}>{tr("Research Notes")}</h3>
           <p className="max-h-40 overflow-auto whitespace-pre-wrap break-words rounded-lg border bg-gf-panel-bg px-3 py-2.5 text-[12.5px] leading-[18px]">
-            {candidate.notes || "No research notes yet."}
+            {candidate.notes || tr("No research notes yet.")}
           </p>
         </section>
-        <section className="mt-3" aria-label="Saved experimental estimates">
-          <h3 className={sectionHeading}>Saved Experimental Estimates</h3>
+        <section
+          className="mt-3"
+          aria-label={tr("Saved experimental estimates")}
+        >
+          <h3 className={sectionHeading}>
+            {tr("Saved Experimental Estimates")}
+          </h3>
           {candidate.analysis ? (
             <div className="space-y-1 text-xs">
               {Object.entries(candidate.analysis.predictions).map(
                 ([trait, p]) => (
                   <p key={trait}>
-                    {trait}: {p.value.toFixed(4)} {p.units}
+                    {trait}: {p.value.toFixed(4)} {tr(p.units)}
                   </p>
                 ),
               )}
               {candidate.analysis.objectives && (
                 <p>
-                  Objectives:{" "}
+                  {tr("Objectives:")}{" "}
                   {Object.entries(candidate.analysis.objectives)
                     .map(([t, d]) => `${t} ${d}`)
                     .join(", ")}
@@ -611,7 +624,7 @@ export function CandidateDetail({
               )}
               {candidate.analysis.weights && (
                 <p>
-                  Weights:{" "}
+                  {tr("Weights:")}{" "}
                   {Object.entries(candidate.analysis.weights)
                     .map(([t, w]) => `${t} ${w}`)
                     .join(", ")}
@@ -619,38 +632,42 @@ export function CandidateDetail({
               )}
               {candidate.analysis.applicationScore !== undefined && (
                 <p>
-                  Application prioritization score:{" "}
+                  {tr("Application prioritization score:")}{" "}
                   {candidate.analysis.applicationScore.toFixed(4)}
                 </p>
               )}
             </div>
           ) : (
-            <p className="text-xs text-muted-foreground">No estimates saved.</p>
+            <p className="text-xs text-muted-foreground">
+              {tr("No estimates saved.")}
+            </p>
           )}
           {candidate.tags.includes("demo") && (
             <Badge
               variant="secondary"
               className="mt-1.5 bg-[#fcf1da] dark:bg-amber-950/50 text-[10px] font-normal text-[#815000] dark:text-amber-200"
             >
-              Illustrative
+              {tr("Illustrative")}
             </Badge>
           )}
           <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground">
-            For exploratory research review only.
+            {tr("For exploratory research review only.")}
           </p>
         </section>
-        <section className="mt-3" aria-label="Review history">
-          <h3 className={sectionHeading}>Review History</h3>
+        <section className="mt-3" aria-label={tr("Review history")}>
+          <h3 className={sectionHeading}>{tr("Review History")}</h3>
           <div className={cn(detailRow, "border-t")}>
             <span className="text-muted-foreground">
-              Current status: {reviewLabel(candidate.reviewStatus)}
+              {tr("Current status:")} {tr(reviewLabel(candidate.reviewStatus))}
             </span>
             <span className="tabular-nums">
               {formatDate(candidate.updatedAt)}
             </span>
           </div>
           <div className={cn(detailRow, "border-0")}>
-            <span className="text-muted-foreground">Candidate created</span>
+            <span className="text-muted-foreground">
+              {tr("Candidate created")}
+            </span>
             <span className="tabular-nums">
               {formatDate(candidate.createdAt)}
             </span>
@@ -664,24 +681,24 @@ export function CandidateDetail({
             onClick={onEdit}
             className="h-[27px] bg-card text-xs font-normal"
           >
-            Edit Notes
+            {tr("Edit Notes")}
           </Button>
           <Button onClick={onOpen} className="h-[27px] text-xs font-normal">
-            Open in Cross Lab
+            {tr("Open in Cross Lab")}
           </Button>
           <Button
             variant="outline"
             onClick={onPedigree}
             className="h-[27px] bg-card text-xs font-normal"
           >
-            View Pedigree
+            {tr("View Pedigree")}
           </Button>
           <Button
             variant="outline"
             onClick={onExport}
             className="h-[27px] bg-card text-xs font-normal"
           >
-            Export Candidate
+            {tr("Export Candidate")}
           </Button>
         </div>
         <Button
@@ -689,7 +706,7 @@ export function CandidateDetail({
           onClick={onDelete}
           className="h-[27px] w-full bg-card text-xs font-normal text-destructive hover:bg-destructive/5 hover:text-destructive"
         >
-          Delete Candidate
+          {tr("Delete Candidate")}
         </Button>
       </Card>
     </>

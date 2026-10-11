@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
@@ -50,6 +51,7 @@ const DEFAULT_RULES: BreedDesignerGenerationRules = {
 };
 
 function StepHeading({ step, title }: { step: number; title: string }) {
+  const { t: tr } = useTranslation();
   return (
     <div className="flex items-center gap-2">
       <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
@@ -57,7 +59,7 @@ function StepHeading({ step, title }: { step: number; title: string }) {
       </span>
       <div className="flex min-w-0 flex-col">
         <CardTitle className="text-sm font-semibold tracking-tight text-foreground">
-          {title}
+          {tr(title)}
         </CardTitle>
       </div>
     </div>
@@ -65,6 +67,7 @@ function StepHeading({ step, title }: { step: number; title: string }) {
 }
 
 export default function BreedDesigner() {
+  const { t: tr } = useTranslation();
   const navigate = useNavigate();
   const [filters, setFilters] = useState<BreedDesignerFilters>(DEFAULT_FILTERS);
   const [rules, setRules] =
@@ -130,15 +133,17 @@ export default function BreedDesigner() {
   const generate = async () => {
     if (lock.current || !loaded) return;
     if (weights.DTF > 0 && !dtf) {
-      setError("Pilih prioritas Umur Berbunga: lebih cepat atau lebih lambat.");
+      setError(
+        tr("Select a flowering time priority: earlier or later flowering."),
+      );
       return;
     }
     if (!traits.length) {
-      setError("Pilih setidaknya satu trait dengan bobot positif.");
+      setError(tr("Select at least one trait with a positive weight."));
       return;
     }
     if (pool.length < 2) {
-      setError("Pilih sedikitnya dua parent yang memenuhi syarat.");
+      setError(tr("Select at least two eligible parents."));
       return;
     }
     lock.current = true;
@@ -216,16 +221,16 @@ export default function BreedDesigner() {
     <div className="breed-designer">
       {(loadError || error) && (
         <p role="alert" className="text-destructive">
-          {loadError ?? error}
+          {tr(loadError ?? error ?? "")}
         </p>
       )}
       {!loaded && !loadError && (
-        <p role="status">Memuat layanan analisis dan data lokal?</p>
+        <p role="status">{tr("Loading analysis services and local data...")}</p>
       )}
       {eligibleCount !== undefined && (
         <p className="text-xs text-muted-foreground">
-          {eligibleCount} eligible unrecorded pairs | authoritative ranking
-          order
+          {eligibleCount}{" "}
+          {tr("eligible unrecorded pairs | authoritative ranking order")}
         </p>
       )}
       <div className="breed-designer-layout">
@@ -234,7 +239,7 @@ export default function BreedDesigner() {
           {/* Step 1 — Select Parent Pool */}
           <Card className="breed-designer-card shrink-0">
             <CardHeader className="px-3.5 pb-2.5 pt-3.5">
-              <StepHeading step={1} title="Select Parent Pool" />
+              <StepHeading step={1} title={tr("Select Parent Pool")} />
             </CardHeader>
             <CardContent className="breed-designer-pool px-3.5 pb-3.5">
               <div className="breed-designer-search relative">
@@ -242,8 +247,8 @@ export default function BreedDesigner() {
                 <Input
                   value={filters.search}
                   onChange={(e) => setPool({ search: e.target.value })}
-                  placeholder="Search parent lines"
-                  aria-label="Search parent lines"
+                  placeholder={tr("Search parent lines")}
+                  aria-label={tr("Search parent lines")}
                   className="h-[34px] w-full pl-9 text-[13px]"
                 />
               </div>
@@ -256,14 +261,16 @@ export default function BreedDesigner() {
                   }
                 >
                   <SelectTrigger
-                    aria-label="Genotype availability"
+                    aria-label={tr("Genotype availability")}
                     className="breed-designer-filter"
                   >
                     <SelectValue>
                       <span className="flex items-center gap-1.5">
-                        <span className="text-muted-foreground">Genotype</span>
+                        <span className="text-muted-foreground">
+                          {tr("Genotype")}
+                        </span>
                         <span className="text-foreground">
-                          {poolLabel(filters.genotype)}
+                          {tr(poolLabel(filters.genotype))}
                         </span>
                       </span>
                     </SelectValue>
@@ -271,7 +278,7 @@ export default function BreedDesigner() {
                   <SelectContent>
                     {POOL_AVAILABILITY_OPTIONS.map((opt) => (
                       <SelectItem key={opt} value={opt}>
-                        {poolLabel(opt)}
+                        {tr(poolLabel(opt))}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -286,14 +293,16 @@ export default function BreedDesigner() {
                   }
                 >
                   <SelectTrigger
-                    aria-label="Phenotype availability"
+                    aria-label={tr("Phenotype availability")}
                     className="breed-designer-filter"
                   >
                     <SelectValue>
                       <span className="flex items-center gap-1.5">
-                        <span className="text-muted-foreground">Phenotype</span>
+                        <span className="text-muted-foreground">
+                          {tr("Phenotype")}
+                        </span>
                         <span className="text-foreground">
-                          {poolLabel(filters.phenotype)}
+                          {tr(poolLabel(filters.phenotype))}
                         </span>
                       </span>
                     </SelectValue>
@@ -301,7 +310,7 @@ export default function BreedDesigner() {
                   <SelectContent>
                     {POOL_AVAILABILITY_OPTIONS.map((opt) => (
                       <SelectItem key={opt} value={opt}>
-                        {poolLabel(opt)}
+                        {tr(poolLabel(opt))}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -316,14 +325,16 @@ export default function BreedDesigner() {
                   }
                 >
                   <SelectTrigger
-                    aria-label="Pedigree availability"
+                    aria-label={tr("Pedigree availability")}
                     className="breed-designer-filter"
                   >
                     <SelectValue>
                       <span className="flex items-center gap-1.5">
-                        <span className="text-muted-foreground">Pedigree</span>
+                        <span className="text-muted-foreground">
+                          {tr("Pedigree")}
+                        </span>
                         <span className="text-foreground">
-                          {poolLabel(filters.pedigree)}
+                          {tr(poolLabel(filters.pedigree))}
                         </span>
                       </span>
                     </SelectValue>
@@ -331,7 +342,7 @@ export default function BreedDesigner() {
                   <SelectContent>
                     {POOL_AVAILABILITY_OPTIONS.map((opt) => (
                       <SelectItem key={opt} value={opt}>
-                        {poolLabel(opt)}
+                        {tr(poolLabel(opt))}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -339,9 +350,9 @@ export default function BreedDesigner() {
               </div>
 
               <span className="breed-designer-selected text-xs tabular-nums text-muted-foreground">
-                Selected:{" "}
+                {tr("Selected:")}{" "}
                 <span className="font-mono font-semibold text-foreground">
-                  {poolStats.total} lines
+                  {poolStats.total} {tr("lines")}
                 </span>
               </span>
             </CardContent>
@@ -350,21 +361,25 @@ export default function BreedDesigner() {
           {/* Step 2 — Configure Cross Generation */}
           <Card className="breed-designer-card shrink-0">
             <CardHeader className="px-3.5 pb-3.5 pt-3.5">
-              <StepHeading step={2} title="Configure Cross Generation" />
+              <StepHeading step={2} title={tr("Configure Cross Generation")} />
             </CardHeader>
-            <CardContent className="px-3.5 pb-5">
-              <div className="mb-4 flex flex-wrap gap-3">
+            <CardContent className="breed-designer-configuration px-3.5 pb-5">
+              <div className="breed-designer-weights">
                 {(["GY", "DTF", "NO", "LB"] as Trait[]).map((t) => (
-                  <label key={t} className="text-xs">
-                    {t} weight (0 = omit)
+                  <div key={t} className="breed-designer-field">
+                    <label htmlFor={`weight-${t}`}>
+                      {t} {tr("weight")}
+                    </label>
                     <Input
+                      id={`weight-${t}`}
                       aria-label={`${t} weight`}
+                      aria-describedby="trait-weight-hint"
                       type="number"
                       min={0}
                       step={0.1}
                       value={weights[t]}
                       disabled={busy}
-                      className="w-28"
+                      className="font-mono tabular-nums"
                       onChange={(e) =>
                         setWeights((prev) => ({
                           ...prev,
@@ -372,68 +387,39 @@ export default function BreedDesigner() {
                         }))
                       }
                     />
-                  </label>
+                  </div>
                 ))}
-                <label className="text-xs">
-                  DTF priority
+              </div>
+              <p id="trait-weight-hint" className="breed-designer-weight-hint">
+                {tr("Set a weight to 0 to omit a trait.")}
+              </p>
+              <div className="breed-designer-options">
+                <div className="breed-designer-field">
+                  <label htmlFor="dtf-priority">{tr("DTF priority")}</label>
                   <Select
                     value={dtf}
                     onValueChange={(v) => setDtf(v as "minimize" | "maximize")}
                     disabled={busy}
                   >
-                    <SelectTrigger aria-label="DTF priority">
-                      <SelectValue placeholder="Pilih prioritas" />
+                    <SelectTrigger
+                      id="dtf-priority"
+                      aria-label={tr("DTF priority")}
+                    >
+                      <SelectValue placeholder={tr("Select priority")} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="minimize">
-                        Lebih cepat berbunga
+                        {tr("Earlier flowering")}
                       </SelectItem>
                       <SelectItem value="maximize">
-                        Lebih lambat berbunga
+                        {tr("Later flowering")}
                       </SelectItem>
                     </SelectContent>
                   </Select>
-                </label>
-              </div>
-              <div className="breed-designer-generation">
-                <div className="flex flex-col gap-2.5">
-                  <label className="breed-designer-rule">
-                    <Switch
-                      disabled
-                      checked={true}
-                      onCheckedChange={(v) => setRule("excludeSelfCrosses", v)}
-                      aria-label="Exclude self-crosses"
-                    />
-                    <span>Exclude self-crosses</span>
-                  </label>
-                  <label className="breed-designer-rule">
-                    <Switch
-                      disabled
-                      checked={true}
-                      onCheckedChange={(v) =>
-                        setRule("excludeDuplicatePairs", v)
-                      }
-                      aria-label="Exclude duplicate parent pairs"
-                    />
-                    <span>Exclude duplicate parent pairs</span>
-                  </label>
-                  <label className="breed-designer-rule">
-                    <Switch
-                      disabled
-                      checked={true}
-                      onCheckedChange={(v) => setRule("excludeHistorical", v)}
-                      aria-label="Exclude historically recorded crosses"
-                    />
-                    <span>Exclude historically recorded crosses</span>
-                  </label>
                 </div>
-
-                <div className="breed-designer-limit flex flex-col gap-1">
-                  <label
-                    htmlFor="max-candidates"
-                    className="text-xs text-muted-foreground"
-                  >
-                    Maximum candidate count
+                <div className="breed-designer-field">
+                  <label htmlFor="max-candidates">
+                    {tr("Maximum candidate count")}
                   </label>
                   <Input
                     id="max-candidates"
@@ -449,15 +435,49 @@ export default function BreedDesigner() {
                         Number.isFinite(n) ? Math.max(1, Math.floor(n)) : 50,
                       );
                     }}
-                    className="h-[34px] w-[120px] font-mono text-[13px] tabular-nums"
+                    className="font-mono tabular-nums"
                   />
                 </div>
+              </div>
+              <div className="breed-designer-generation">
+                <div className="breed-designer-rules">
+                  <label className="breed-designer-rule">
+                    <Switch
+                      disabled
+                      checked={true}
+                      onCheckedChange={(v) => setRule("excludeSelfCrosses", v)}
+                      aria-label={tr("Exclude self-crosses")}
+                    />
+                    <span>{tr("Exclude self-crosses")}</span>
+                  </label>
+                  <label className="breed-designer-rule">
+                    <Switch
+                      disabled
+                      checked={true}
+                      onCheckedChange={(v) =>
+                        setRule("excludeDuplicatePairs", v)
+                      }
+                      aria-label={tr("Exclude duplicate parent pairs")}
+                    />
+                    <span>{tr("Exclude duplicate parent pairs")}</span>
+                  </label>
+                  <label className="breed-designer-rule">
+                    <Switch
+                      disabled
+                      checked={true}
+                      onCheckedChange={(v) => setRule("excludeHistorical", v)}
+                      aria-label={tr("Exclude historically recorded crosses")}
+                    />
+                    <span>{tr("Exclude historically recorded crosses")}</span>
+                  </label>
+                </div>
+
                 <Button
-                  className="breed-designer-generate h-[34px] px-4 text-[13px]"
+                  className="breed-designer-generate px-4 text-[13px]"
                   onClick={generate}
                   disabled={busy || !loaded}
                 >
-                  {busy ? "Menganalisis..." : "Generate Candidate Pairs"}
+                  {busy ? tr("Analyzing…") : tr("Generate Candidate Pairs")}
                 </Button>
               </div>
             </CardContent>
@@ -466,7 +486,7 @@ export default function BreedDesigner() {
           {/* Step 3 — Candidate Results */}
           <Card className="breed-designer-card breed-designer-results">
             <CardHeader className="px-3.5 pb-1.5 pt-3.5">
-              <StepHeading step={3} title="Candidate Results" />
+              <StepHeading step={3} title={tr("Candidate Results")} />
             </CardHeader>
 
             {generated ? (
@@ -481,7 +501,7 @@ export default function BreedDesigner() {
             ) : (
               <div className="px-4 py-10 text-center">
                 <p className="text-sm text-muted-foreground">
-                  Generate candidate pairs to see results.
+                  {tr("Generate candidate pairs to see results.")}
                 </p>
               </div>
             )}

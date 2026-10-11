@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useCallback, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 import {
@@ -52,6 +53,7 @@ const KIND_STYLE: Record<
 };
 
 function GidNode({ data, selected }: NodeProps) {
+  const { t: tr } = useTranslation();
   const node = data.node as PedigreeNode;
   const s = KIND_STYLE[node.kind];
   return (
@@ -70,14 +72,14 @@ function GidNode({ data, selected }: NodeProps) {
       {node.hasGenotype ? (
         <span
           className="size-[7px] shrink-0 rounded-full bg-primary"
-          aria-label="Genotype available"
-          title="Genotype available"
+          aria-label={tr("Genotype available")}
+          title={tr("Genotype available")}
         />
       ) : (
         <span
           className="size-[7px] shrink-0 rounded-full border border-foreground/40 bg-transparent"
-          aria-label="No genotype"
-          title="No genotype"
+          aria-label={tr("No genotype")}
+          title={tr("No genotype")}
         />
       )}
     </div>
@@ -93,6 +95,7 @@ function PedigreeGraphInner({
   data: PedigreeGraphData;
   onSelect?: (id: string) => void;
 }) {
+  const { t: tr } = useTranslation();
   const { resolvedTheme } = useTheme();
   const { zoomIn, zoomOut, fitView } = useReactFlow();
   const [resetSignal, setResetSignal] = useState(0);
@@ -181,7 +184,7 @@ function PedigreeGraphInner({
                 key={col}
                 className="flex-1 text-center text-[11px] font-medium uppercase tracking-wider text-muted-foreground"
               >
-                {COLUMN_LABELS[col]}
+                {tr(COLUMN_LABELS[col])}
               </div>
             ),
           )}

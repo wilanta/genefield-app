@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Database,
@@ -83,6 +84,7 @@ function exportCandidates(candidates: SavedCandidate[]) {
 }
 
 export default function CandidateWorkspace() {
+  const { t: tr } = useTranslation();
   const navigate = useNavigate();
   const isMemory = candidateStore.backend === "session-memory";
 
@@ -136,8 +138,8 @@ export default function CandidateWorkspace() {
       setItems(list);
     } catch (e) {
       setLoadError(
-        "Failed to load candidates. " +
-          (e instanceof Error ? e.message : "Unknown error."),
+        tr("Failed to load candidates. ") +
+          (e instanceof Error ? e.message : tr("Unknown error.")),
       );
     } finally {
       setLoading(false);
@@ -208,13 +210,13 @@ export default function CandidateWorkspace() {
       const updated = await candidateStore.update(editingCandidate.id, {
         notes: editedNotes.trim(),
       });
-      if (!updated) throw new Error("This candidate no longer exists.");
+      if (!updated) throw new Error(tr("This candidate no longer exists."));
       setEditingCandidate(null);
       await reload(false);
     } catch (error) {
       setNotesError(
-        "Could not save notes. " +
-          (error instanceof Error ? error.message : "Unknown error."),
+        tr("Could not save notes. ") +
+          (error instanceof Error ? error.message : tr("Unknown error.")),
       );
     } finally {
       setSavingNotes(false);
@@ -244,9 +246,11 @@ export default function CandidateWorkspace() {
       setSelectedId(created.id);
     } catch (e) {
       if (e instanceof CandidateNameConflictError) {
-        setCreateError(e.message);
+        setCreateError(
+          tr('A candidate named "{name}" already exists.', { name: newName }),
+        );
       } else {
-        setCreateError("Could not save candidate. " + (e as Error).message);
+        setCreateError(tr("Could not save candidate. ") + (e as Error).message);
       }
     } finally {
       setSaving(false);
@@ -276,8 +280,8 @@ export default function CandidateWorkspace() {
       }
     } catch (e) {
       setDeleteError(
-        "Could not delete candidate. " +
-          (e instanceof Error ? e.message : "Unknown error."),
+        tr("Could not delete candidate. ") +
+          (e instanceof Error ? e.message : tr("Unknown error.")),
       );
     } finally {
       setDeleting(false);
@@ -297,8 +301,8 @@ export default function CandidateWorkspace() {
       await reload(false);
     } catch (e) {
       setUpdateError(
-        "Could not update status. " +
-          (e instanceof Error ? e.message : "Unknown error."),
+        tr("Could not update status. ") +
+          (e instanceof Error ? e.message : tr("Unknown error.")),
       );
     } finally {
       setUpdatingStatus(false);
@@ -316,7 +320,7 @@ export default function CandidateWorkspace() {
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <section
           className="flex min-h-0 min-w-0 flex-col gap-3"
-          aria-label="Candidate workspace"
+          aria-label={tr("Candidate workspace")}
         >
           <CandidateToolbar
             search={search}
@@ -355,14 +359,16 @@ export default function CandidateWorkspace() {
             {loading && (
               <div className="flex items-center gap-2 px-4 py-6 text-sm text-muted-foreground">
                 <Loader2 className="size-4 animate-spin" />
-                Loading candidates…
+                {tr("Loading candidates…")}
               </div>
             )}
             {!loading && !loadError && filtered.length === 0 && (
               <p className="px-4 py-10 text-center text-sm text-muted-foreground">
                 {items.length === 0
-                  ? "No candidates yet. Create a candidate or save a pair from Cross Lab or Breed Designer."
-                  : "No candidates match the current filters."}
+                  ? tr(
+                      "No candidates yet. Create a candidate or save a pair from Cross Lab or Breed Designer.",
+                    )
+                  : tr("No candidates match the current filters.")}
               </p>
             )}
             {loadError && (
@@ -372,14 +378,14 @@ export default function CandidateWorkspace() {
               >
                 <AlertTriangle className="size-4 shrink-0" />
                 <div>
-                  <p>{loadError}</p>
+                  <p>{tr(loadError)}</p>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => reload(false)}
                     className="mt-2"
                   >
-                    Retry
+                    {tr("Retry")}
                   </Button>
                 </div>
               </div>
@@ -389,14 +395,14 @@ export default function CandidateWorkspace() {
                 role="alert"
                 className="border-t bg-destructive/5 px-4 py-3 text-xs text-destructive"
               >
-                {deleteError ?? updateError}
+                {tr(deleteError ?? updateError ?? "")}
               </p>
             )}
           </div>
         </section>
         <aside
           className="flex min-h-0 min-w-0 flex-col gap-3.5 xl:overflow-y-auto"
-          aria-label="Selected candidate details"
+          aria-label={tr("Selected candidate details")}
         >
           <CandidateDetail
             candidate={selected}
@@ -415,8 +421,10 @@ export default function CandidateWorkspace() {
       <p className="mt-3.5 flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
         <Database className="size-3" />
         {isMemory
-          ? "Browser preview · candidates are stored in session memory and reset on reload."
-          : "Stored locally in a SQLite workspace on this device."}
+          ? tr(
+              "Browser preview · candidates are stored in session memory and reset on reload.",
+            )
+          : tr("Stored locally in a SQLite workspace on this device.")}
       </p>
 
       <Dialog
@@ -435,14 +443,14 @@ export default function CandidateWorkspace() {
           }}
         >
           <DialogHeader>
-            <DialogTitle>Edit Notes</DialogTitle>
+            <DialogTitle>{tr("Edit Notes")}</DialogTitle>
             <DialogDescription>{editingCandidate?.name}</DialogDescription>
           </DialogHeader>
           <label
             htmlFor="candidate-research-notes"
             className="text-xs font-medium text-muted-foreground"
           >
-            Research notes
+            {tr("Research notes")}
           </label>
           <Textarea
             id="candidate-research-notes"
@@ -454,7 +462,7 @@ export default function CandidateWorkspace() {
           />
           {notesError && (
             <p role="alert" className="text-xs text-destructive">
-              {notesError}
+              {tr(notesError)}
             </p>
           )}
           <DialogFooter>
@@ -463,11 +471,11 @@ export default function CandidateWorkspace() {
               disabled={savingNotes}
               onClick={() => setEditingCandidate(null)}
             >
-              Cancel
+              {tr("Cancel")}
             </Button>
             <Button onClick={saveNotes} disabled={savingNotes}>
-              {savingNotes && <Loader2 className="size-3.5 animate-spin" />}Save
-              Notes
+              {savingNotes && <Loader2 className="size-3.5 animate-spin" />}
+              {tr("Save Notes")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -483,9 +491,9 @@ export default function CandidateWorkspace() {
       >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Create Candidate</DialogTitle>
+            <DialogTitle>{tr("Create Candidate")}</DialogTitle>
             <DialogDescription>
-              Add a cross candidate to your workspace.
+              {tr("Add a cross candidate to your workspace.")}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-3">
@@ -495,7 +503,7 @@ export default function CandidateWorkspace() {
                   htmlFor="candidate-parent-a"
                   className="text-xs font-medium text-muted-foreground"
                 >
-                  Parent A
+                  {tr("Parent A")}
                 </label>
                 <Input
                   id="candidate-parent-a"
@@ -509,7 +517,7 @@ export default function CandidateWorkspace() {
                   htmlFor="candidate-parent-b"
                   className="text-xs font-medium text-muted-foreground"
                 >
-                  Parent B
+                  {tr("Parent B")}
                 </label>
                 <Input
                   id="candidate-parent-b"
@@ -524,26 +532,26 @@ export default function CandidateWorkspace() {
                 htmlFor="candidate-name"
                 className="text-xs font-medium text-muted-foreground"
               >
-                Candidate name
+                {tr("Candidate name")}
               </label>
               <Input
                 id="candidate-name"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                placeholder="My cross candidate"
+                placeholder={tr("My cross candidate")}
               />
               {createError ? (
-                <p className="text-xs text-destructive">{createError}</p>
+                <p className="text-xs text-destructive">{tr(createError)}</p>
               ) : null}
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-muted-foreground">
-                Notes
+                {tr("Notes")}
               </label>
               <Textarea
                 value={newNotes}
                 onChange={(e) => setNewNotes(e.target.value)}
-                placeholder="Why is this pair worth reviewing?"
+                placeholder={tr("Why is this pair worth reviewing?")}
                 className="min-h-[60px]"
                 maxLength={2000}
               />
@@ -551,7 +559,7 @@ export default function CandidateWorkspace() {
             <div className="flex items-center justify-between gap-3">
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-medium text-muted-foreground">
-                  Status
+                  {tr("Status")}
                 </label>
                 <Select
                   value={newStatus}
@@ -560,12 +568,12 @@ export default function CandidateWorkspace() {
                   }
                 >
                   <SelectTrigger className="h-8 w-[130px]">
-                    <SelectValue>{reviewLabel(newStatus)}</SelectValue>
+                    <SelectValue>{tr(reviewLabel(newStatus))}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {REVIEW_STATUSES.map((s) => (
                       <SelectItem key={s} value={s}>
-                        {reviewLabel(s)}
+                        {tr(reviewLabel(s))}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -573,7 +581,7 @@ export default function CandidateWorkspace() {
               </div>
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-medium text-muted-foreground">
-                  Tags
+                  {tr("Tags")}
                 </label>
                 <div className="flex flex-wrap items-center gap-1.5">
                   {newTags.map((t) => (
@@ -585,7 +593,7 @@ export default function CandidateWorkspace() {
                           setNewTags((p) => p.filter((x) => x !== t))
                         }
                         className="text-muted-foreground hover:text-foreground"
-                        aria-label={`Remove ${t}`}
+                        aria-label={tr("Remove {tag}", { tag: t })}
                       >
                         <X className="size-3" />
                       </button>
@@ -600,7 +608,7 @@ export default function CandidateWorkspace() {
                         addNewTag();
                       }
                     }}
-                    placeholder="tag"
+                    placeholder={tr("tag")}
                     className="h-7 w-24 px-2 text-xs"
                   />
                 </div>
@@ -609,7 +617,7 @@ export default function CandidateWorkspace() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setCreateOpen(false)}>
-              Cancel
+              {tr("Cancel")}
             </Button>
             <Button
               onClick={handleCreate}
@@ -625,7 +633,7 @@ export default function CandidateWorkspace() {
               ) : (
                 <Check className="size-3.5" />
               )}
-              Save Candidate
+              {tr("Save Candidate")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -640,14 +648,15 @@ export default function CandidateWorkspace() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete candidate?</AlertDialogTitle>
+            <AlertDialogTitle>{tr("Delete candidate?")}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently remove this candidate from your workspace.
-              This action cannot be undone.
+              {tr(
+                "This will permanently remove this candidate from your workspace. This action cannot be undone.",
+              )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{tr("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => pendingDeleteId && handleDelete(pendingDeleteId)}
               disabled={deleting}
@@ -657,7 +666,7 @@ export default function CandidateWorkspace() {
               ) : (
                 <Trash2 className="size-3.5" />
               )}
-              {deleting ? "Deleting…" : "Delete"}
+              {deleting ? tr("Deleting…") : tr("Delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

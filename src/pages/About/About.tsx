@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import logoUrl from "@/assets/GeneField_vector.svg";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,22 +13,24 @@ const LICENSE_ROW_LABEL = "Third-party license notices";
 const LICENSE_ROW_VALUE = "License notice review pending before distribution";
 
 function SectionHeader({ title }: { title: string }) {
+  const { t: tr } = useTranslation();
   return (
     <CardHeader className="px-4 pt-3">
       <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-        {title}
+        {tr(title)}
       </h3>
     </CardHeader>
   );
 }
 
 function DatasetAttributionCard() {
+  const { t: tr } = useTranslation();
   return (
     <Card className="shadow-[var(--gf-card-shadow)]">
-      <SectionHeader title="Dataset Attribution" />
+      <SectionHeader title={tr("Dataset Attribution")} />
       <CardContent className="px-4 pb-4">
         <p className="text-[13px] leading-[19px] text-muted-foreground">
-          {DATASET_ATTRIBUTION}
+          {tr(DATASET_ATTRIBUTION)}
         </p>
       </CardContent>
     </Card>
@@ -35,11 +38,12 @@ function DatasetAttributionCard() {
 }
 
 function LimitationsPanel({ items }: { items: string[] }) {
+  const { t: tr } = useTranslation();
   return (
     <Card className="border-amber-500/30 bg-amber-50/40 dark:bg-amber-950/30 shadow-[var(--gf-card-shadow)]">
       <CardHeader className="px-4 pt-3">
         <h3 className="text-[11px] font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-200">
-          Research and Scientific Limitations
+          {tr("Research and Scientific Limitations")}
         </h3>
       </CardHeader>
       <CardContent className="px-4 pb-4">
@@ -51,7 +55,7 @@ function LimitationsPanel({ items }: { items: string[] }) {
                 aria-hidden
               />
               <p className="text-[13px] leading-[19px] text-amber-900/90 dark:text-amber-200">
-                {item}
+                {tr(item)}
               </p>
             </li>
           ))}
@@ -62,16 +66,17 @@ function LimitationsPanel({ items }: { items: string[] }) {
 }
 
 function LicensesCard() {
+  const { t: tr } = useTranslation();
   return (
     <Card className="shadow-[var(--gf-card-shadow)]">
-      <SectionHeader title="Open-Source Licenses and Acknowledgements" />
+      <SectionHeader title={tr("Open-Source Licenses and Acknowledgements")} />
       <CardContent className="px-4 pb-4">
         <div className="flex items-center justify-between">
           <span className="text-[13px] text-foreground">
-            {LICENSE_ROW_LABEL}
+            {tr(LICENSE_ROW_LABEL)}
           </span>
           <span className="text-[13px] text-muted-foreground">
-            {LICENSE_ROW_VALUE}
+            {tr(LICENSE_ROW_VALUE)}
           </span>
         </div>
       </CardContent>
@@ -80,6 +85,7 @@ function LicensesCard() {
 }
 
 export default function About() {
+  const { t: tr } = useTranslation();
   return (
     <div className="mx-auto max-w-[1208px] p-6">
       {/* Top banner */}
@@ -93,13 +99,13 @@ export default function About() {
               GeneField
             </h2>
             <p className="mt-1 text-[15px] leading-[21px] text-muted-foreground">
-              An offline desktop application for exploring rice breeding data,
-              inspecting pedigrees, and analyzing parent pairs with
-              experimental, research-only models.
+              {tr(
+                "An offline desktop application for exploring rice breeding data, inspecting pedigrees, and analyzing parent pairs with experimental, research-only models.",
+              )}
             </p>
           </div>
           <Badge variant="secondary" className="shrink-0">
-            Version 0.1.0
+            {tr("Version 0.1.0")}
           </Badge>
         </CardContent>
       </Card>

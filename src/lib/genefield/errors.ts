@@ -1,27 +1,27 @@
 import { GeneFieldError } from "./client";
 const messages: Record<string, string> = {
-  PARENT_UNKNOWN: "Parent tidak ditemukan dalam data GeneField.",
-  UNKNOWN_PARENT: "Parent tidak ditemukan dalam data GeneField.",
+  PARENT_UNKNOWN: "Parent not found in GeneField data.",
+  UNKNOWN_PARENT: "Parent not found in GeneField data.",
   PARENT_INELIGIBLE:
-    "Parent belum memenuhi syarat untuk analisis trait yang dipilih.",
+    "Parent is not eligible for analysis of the selected traits.",
   INELIGIBLE_PARENT:
-    "Parent belum memenuhi syarat untuk analisis trait yang dipilih.",
+    "Parent is not eligible for analysis of the selected traits.",
   GENOTYPE_UNAVAILABLE:
-    "Data genetik parent belum tersedia untuk analisis model.",
-  SELF_CROSS: "Pilih dua parent yang berbeda.",
+    "Parent genotype data is unavailable for model analysis.",
+  SELF_CROSS: "Select two different parents.",
   DTF_OBJECTIVE_REQUIRED:
-    "Pilih prioritas Umur Berbunga: lebih cepat atau lebih lambat.",
-  PARENT_MALFORMED: "Gunakan ID parent GeneField yang valid.",
-  TRAIT_INVALID: "Pilih trait GY, DTF, NO, atau LB.",
-  OBJECTIVE_INVALID: "Pilih arah prioritas yang didukung untuk trait tersebut.",
+    "Select a flowering time priority: earlier or later flowering.",
+  PARENT_MALFORMED: "Use a valid GeneField parent ID.",
+  TRAIT_INVALID: "Select GY, DTF, NO, or LB.",
+  OBJECTIVE_INVALID: "Select a supported priority direction for this trait.",
   WEIGHTS_INVALID:
-    "Bobot setiap trait yang dipilih harus berupa angka positif.",
+    "Each selected trait must have a positive numeric weight.",
   IPC_TIMEOUT:
-    "Analisis lokal melewati batas waktu. Periksa layanan atau mulai ulang secara terkontrol.",
+    "Local analysis timed out. Check the service or use the restart control.",
 };
 export function analysisError(error: unknown): string {
   console.error("GeneField diagnostic", error);
   return error instanceof GeneFieldError && messages[error.code]
     ? messages[error.code]
-    : "Layanan analisis lokal GeneField tidak dapat dimuat.";
+    : "The local GeneField analysis service could not be loaded.";
 }

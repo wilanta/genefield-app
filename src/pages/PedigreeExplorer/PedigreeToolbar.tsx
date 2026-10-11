@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useState } from "react";
 import {
   Search,
@@ -30,6 +31,7 @@ export function PedigreeToolbar({
   onReset,
   onSearch,
 }: PedigreeToolbarProps) {
+  const { t: tr } = useTranslation();
   const [query, setQuery] = useState("");
 
   return (
@@ -44,9 +46,9 @@ export function PedigreeToolbar({
           onKeyDown={(e) => {
             if (e.key === "Enter" && query.trim()) onSearch?.(query.trim());
           }}
-          placeholder="Search LINE_ID"
+          placeholder={tr("Search LINE_ID")}
           className="pl-9 bg-card"
-          aria-label="Search LINE_ID"
+          aria-label={tr("Search LINE_ID")}
         />
       </div>
 
@@ -56,7 +58,7 @@ export function PedigreeToolbar({
         className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-card"
       >
         <span>
-          Ancestors <span className="tabular-nums">{ancestors}</span>
+          {tr("Ancestors")} <span className="tabular-nums">{ancestors}</span>
         </span>
         <ChevronRight className="h-3 w-3 text-muted-foreground" />
       </Badge>
@@ -67,7 +69,8 @@ export function PedigreeToolbar({
         className="gap-1.5 h-8.5 py-0 rounded-lg text-muted-foreground bg-card"
       >
         <span>
-          Descendants <span className="tabular-nums">{descendants}</span>
+          {tr("Descendants")}{" "}
+          <span className="tabular-nums">{descendants}</span>
         </span>
         <ChevronRight className="h-3 w-3 text-muted-foreground" />
       </Badge>
@@ -79,7 +82,7 @@ export function PedigreeToolbar({
           size="icon"
           className="h-[34px] w-[34px]"
           onClick={onZoomIn}
-          aria-label="Zoom in"
+          aria-label={tr("Zoom in")}
         >
           <ZoomIn className="h-4 w-4" />
         </Button>
@@ -90,7 +93,7 @@ export function PedigreeToolbar({
           size="icon"
           className="h-[34px] w-[34px]"
           onClick={onZoomOut}
-          aria-label="Zoom out"
+          aria-label={tr("Zoom out")}
         >
           <ZoomOut className="h-4 w-4" />
         </Button>
@@ -101,7 +104,7 @@ export function PedigreeToolbar({
           size="icon"
           className="h-[34px] w-[34px]"
           onClick={onFit}
-          aria-label="Fit to view"
+          aria-label={tr("Fit to view")}
         >
           <Maximize className="h-4 w-4" />
         </Button>
@@ -109,7 +112,7 @@ export function PedigreeToolbar({
         {/* Reset Graph */}
         <Button variant="outline" className="h-[34px]" onClick={onReset}>
           <RotateCcw className="h-4 w-4" />
-          Reset Graph
+          {tr("Reset Graph")}
         </Button>
       </div>
     </div>

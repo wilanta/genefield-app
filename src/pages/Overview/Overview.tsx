@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useAsync } from "@/lib/use-async";
 import { referenceService } from "@/services/reference-service";
 import { inference } from "@/services/inference-service";
@@ -11,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowUpRight } from "lucide-react";
+import OverviewLoading from "./OverviewLoading";
 
 interface StatCard {
   label: string;
@@ -21,17 +23,6 @@ interface StatCard {
 // Data categories
 const tags = ["Pedigree", "SNP genotypes", "Phenotypes: GY · DTF · NO · LB"];
 
-// Genotype coverage
-const formatNumber = (n: number) => n.toLocaleString("en-US");
-const getCoverage = (covered: number, total: number) => {
-  const pct = (covered / total) * 100;
-
-  return {
-    pct,
-    label: `${formatNumber(covered)} of ${formatNumber(total)} lines · ${pct.toFixed(1)}%`,
-  };
-};
-
 // Quick actions
 const actions = [
   { label: "Explore Lines", href: "/lines", primary: false },
@@ -41,17 +32,18 @@ const actions = [
 ];
 
 function StatTile({ stat }: { stat: StatCard }) {
+  const { t: tr } = useTranslation();
   return (
     <Card className="shadow-[var(--gf-card-shadow)]">
       <CardHeader>
-        <CardDescription>{stat.label}</CardDescription>
+        <CardDescription>{tr(stat.label)}</CardDescription>
         <CardTitle className="text-2xl font-semibold tabular-nums text-foreground">
           {stat.value}
         </CardTitle>
       </CardHeader>
       {stat.hint ? (
         <CardContent>
-          <p className="text-sm text-muted-foreground">{stat.hint}</p>
+          <p className="text-sm text-muted-foreground">{tr(stat.hint)}</p>
         </CardContent>
       ) : null}
     </Card>
@@ -59,54 +51,76 @@ function StatTile({ stat }: { stat: StatCard }) {
 }
 
 export default function Overview() {
+  const { t: tr, locale } = useTranslation();
+  const formatNumber = (n: number) => n.toLocaleString(locale);
+  const getCoverage = (covered: number, total: number) => {
+    const pct = total === 0 ? 0 : (covered / total) * 100;
+    return {
+      pct,
+      label: tr("{covered} of {total} lines · {percent}%", {
+        covered: formatNumber(covered),
+        total: formatNumber(total),
+        percent: pct.toLocaleString(locale, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+        }),
+      }),
+    };
+  };
   const { data, error } = useAsync(async () => ({
     summary: await referenceService.getDatasetSummary(),
     metadata: await inference.start(),
     saved: await candidateStore.list(),
   }));
-  if (!data)
-    return (
-      <p className="p-6" role={error ? "alert" : "status"}>
-        {error ?? "Memuat data lokal..."}
-      </p>
-    );
+  if (!data) {
+    if (error)
+      return (
+        <p className="p-6" role="alert">
+          {tr(error)}
+        </p>
+      );
+    return <OverviewLoading />;
+  }
   const { summary, metadata, saved } = data;
   const STATS: StatCard[] = [
-    { label: "Recorded lines", value: formatNumber(summary.line_count) },
+    { label: tr("Recorded lines"), value: formatNumber(summary.line_count) },
     {
-      label: "Phenotype observations",
+      label: tr("Phenotype observations"),
       value: formatNumber(summary.phenotype_observation_count),
     },
     {
-      label: "Genotyped lines",
+      label: tr("Genotyped lines"),
       value: formatNumber(summary.genotyped_line_count),
     },
-    { label: "SNP markers", value: formatNumber(metadata.input_markers) },
+    { label: tr("SNP markers"), value: formatNumber(metadata.input_markers) },
   ];
   const { pct, label } = getCoverage(
     summary.genotyped_line_count,
     summary.line_count,
   );
   const stats = [
-    { value: saved.length, label: "Saved candidates" },
+    { value: saved.length, label: tr("Saved candidates") },
     {
       value: saved.filter((c) => c.reviewStatus === "draft").length,
-      label: "Draft candidates",
+      label: tr("Draft candidates"),
     },
     {
       value: saved.filter((c) => c.reviewStatus === "review").length,
-      label: "Awaiting review",
+      label: tr("Awaiting review"),
     },
   ];
   const activities = saved.slice(0, 4).map((c) => ({
-    text: `Saved candidate ? ${c.name}`,
-    time: new Date(c.updatedAt).toLocaleDateString(),
+    text: tr("Saved candidate · {name}", { name: c.name }),
+    time: new Date(c.updatedAt).toLocaleDateString(locale),
   }));
   const systemStatus = [
-    { label: "Offline", value: "Local", dot: true, mono: false },
-    { label: "Model bundle", value: metadata.bundle_version, mono: true },
-    { label: "Scientific review", value: "Sign-off pending" },
-    { label: "Predictive ranking", value: "Enabled for eligible parents" },
+    { label: tr("Offline"), value: tr("Local"), dot: true, mono: false },
+    { label: tr("Model bundle"), value: metadata.bundle_version, mono: true },
+    { label: tr("Scientific review"), value: tr("Sign-off pending") },
+    {
+      label: tr("Predictive ranking"),
+      value: tr("Enabled for eligible parents"),
+    },
   ];
   return (
     <div className="mx-auto max-w-[1208px] space-y-6 p-6">
@@ -128,14 +142,16 @@ export default function Overview() {
         <Card className="col-span-2 bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
           <CardHeader className="flex flex-row items-start justify-between">
             <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              DATASET OVERVIEW
+              {tr("DATASET OVERVIEW")}
             </CardTitle>
           </CardHeader>
           <div className="mx-3 h-px bg-border"></div>
           <CardContent className="space-y-3">
             {/* Dataset Source */}
             <div className="flex w-full justify-between">
-              <p className="text-sm text-muted-foreground">Dataset source</p>
+              <p className="text-sm text-muted-foreground">
+                {tr("Dataset source")}
+              </p>
               <p className="text-sm text-foreground font-normal">
                 INIA Uruguay
               </p>
@@ -146,7 +162,7 @@ export default function Overview() {
             {/* Data Categories */}
             <div className="flex w-full items-center justify-between gap-4">
               <p className="shrink-0 text-sm text-muted-foreground">
-                Data categories
+                {tr("Data categories")}
               </p>
               <div className="flex flex-wrap justify-end gap-2">
                 {tags.map((tag) => (
@@ -154,7 +170,7 @@ export default function Overview() {
                     key={tag}
                     className="whitespace-nowrap rounded-full bg-muted px-4 py-1.5 text-xs text-muted-foreground font-medium dark:bg-stone-800 dark:text-stone-200"
                   >
-                    {tag}
+                    {tr(tag)}
                   </span>
                 ))}
               </div>
@@ -163,8 +179,10 @@ export default function Overview() {
             {/* Genotype Coverage */}
             <div className="w-full">
               <div className="mb-2 flex items-baseline justify-between">
-                <p className="text-sm text-foreground">Genotype coverage</p>
-                <p className="text-sm text-muted-foreground">{label}</p>
+                <p className="text-sm text-foreground">
+                  {tr("Genotype coverage")}
+                </p>
+                <p className="text-sm text-muted-foreground">{tr(label)}</p>
               </div>
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted dark:bg-stone-800">
                 <div
@@ -177,7 +195,9 @@ export default function Overview() {
             {/* Phenotype coverage */}
             <div className="w-full">
               <div className="mb-2 flex items-baseline justify-between">
-                <p className="text-sm text-foreground">Phenotype coverage</p>
+                <p className="text-sm text-foreground">
+                  {tr("Phenotype coverage")}
+                </p>
                 <p className="text-sm text-muted-foreground">
                   {
                     getCoverage(
@@ -200,7 +220,9 @@ export default function Overview() {
             {/* Pedigree availability */}
             <div className="w-full">
               <div className="mb-2 flex items-baseline justify-between">
-                <p className="text-sm text-foreground">Pedigree availability</p>
+                <p className="text-sm text-foreground">
+                  {tr("Pedigree availability")}
+                </p>
                 <p className="text-sm text-muted-foreground">
                   {
                     getCoverage(summary.pedigree_line_count, summary.line_count)
@@ -224,7 +246,7 @@ export default function Overview() {
         <Card className="bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
           <CardHeader className="flex flex-row items-start justify-between">
             <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              QUICK ACTIONS
+              {tr("QUICK ACTIONS")}
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2.5">
@@ -238,7 +260,7 @@ export default function Overview() {
                     : "border-border bg-card text-foreground hover:bg-muted"
                 }`}
               >
-                {action.label}
+                {tr(action.label)}
                 <ArrowUpRight className="size-3.5" />
               </Link>
             ))}
@@ -255,7 +277,7 @@ export default function Overview() {
         <Card className="col-span-2 bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
           <CardHeader className="flex flex-row items-start justify-between">
             <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Research Workspace
+              {tr("Research Workspace")}
             </CardTitle>
           </CardHeader>
 
@@ -271,7 +293,7 @@ export default function Overview() {
                     {stat.value}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {stat.label}
+                    {tr(stat.label)}
                   </p>
                 </div>
               ))}
@@ -280,7 +302,7 @@ export default function Overview() {
             {/* Recent local activity */}
             <div>
               <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Recent local activity
+                {tr("Recent local activity")}
               </p>
               <ul className="divide-y border-y">
                 {activities.map((item) => (
@@ -303,7 +325,7 @@ export default function Overview() {
         <Card className="self-start bg-gf-panel-bg shadow-[var(--gf-card-shadow)]">
           <CardHeader>
             <CardTitle className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              System Status
+              {tr("System Status")}
             </CardTitle>
           </CardHeader>
 
@@ -314,7 +336,9 @@ export default function Overview() {
                   key={item.label}
                   className="flex items-center justify-between py-3 text-sm"
                 >
-                  <span className="text-muted-foreground">{item.label}</span>
+                  <span className="text-muted-foreground">
+                    {tr(item.label)}
+                  </span>
                   <span
                     className={`flex items-center gap-2 font-medium text-foreground ${
                       item.mono ? "font-mono" : ""
@@ -323,7 +347,7 @@ export default function Overview() {
                     {item.dot && (
                       <span className="size-2 rounded-full bg-primary" />
                     )}
-                    {item.value}
+                    {tr(item.value)}
                   </span>
                 </li>
               ))}

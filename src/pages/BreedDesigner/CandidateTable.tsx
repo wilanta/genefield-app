@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useState } from "react";
 import {
   Table,
@@ -30,6 +31,7 @@ export function CandidateTable({
   onOpenInCrossLab,
   onGoToWorkspace,
 }: Props) {
+  const { t: tr } = useTranslation();
   const [state, setState] = useState<Map<string, SaveState>>(new Map());
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -69,14 +71,14 @@ export function CandidateTable({
           next.set(c.candidateId, "conflict");
           return next;
         });
-        setErrorMsg(e.message);
+        setErrorMsg(tr('A candidate named "{name}" already exists.', { name }));
       } else {
         setState((prev) => {
           const next = new Map(prev);
           next.set(c.candidateId, "idle");
           return next;
         });
-        setErrorMsg("Could not save candidate. " + (e as Error).message);
+        setErrorMsg(tr("Could not save candidate. ") + (e as Error).message);
       }
     }
   };
@@ -97,31 +99,31 @@ export function CandidateTable({
           <TableHeader>
             <TableRow className="border-b hover:bg-transparent">
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Candidate
+                {tr("Candidate")}
                 <br />
                 ID
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Parent A
+                {tr("Parent A")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Parent B
+                {tr("Parent B")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Genotype
+                {tr("Genotype")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Historical
+                {tr("Historical")}
                 <br />
-                cross
+                {tr("cross")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Research
+                {tr("Research")}
                 <br />
-                status
+                {tr("status")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Actions
+                {tr("Actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -136,12 +138,12 @@ export function CandidateTable({
                     {c.candidateId}
                     {c.analysis && (
                       <div className="mt-1 text-[10px] text-muted-foreground">
-                        Score: {c.analysis.applicationScore?.toFixed(4)}
+                        {tr("Score:")} {c.analysis.applicationScore?.toFixed(4)}
                         <br />
                         {Object.entries(c.analysis.predictions).map(
                           ([t, p]) => (
                             <div key={t}>
-                              {t}: {p.value.toFixed(2)} {p.units}
+                              {t}: {p.value.toFixed(2)} {tr(p.units)}
                             </div>
                           ),
                         )}
@@ -171,7 +173,7 @@ export function CandidateTable({
                             : "border border-muted-foreground bg-transparent")
                         }
                       />
-                      {c.genotype}
+                      {tr(c.genotype)}
                     </span>
                   </TableCell>
                   <TableCell className="px-3 text-sm">
@@ -183,12 +185,12 @@ export function CandidateTable({
                           : "text-muted-foreground")
                       }
                     >
-                      {c.historical}
+                      {tr(c.historical)}
                     </span>
                   </TableCell>
                   <TableCell className="px-3 text-sm">
                     <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">
-                      {c.researchStatus}
+                      {tr(c.researchStatus)}
                     </span>
                   </TableCell>
                   <TableCell className="breed-designer-actions px-3">
@@ -198,7 +200,7 @@ export function CandidateTable({
                         className="text-primary"
                         onClick={() => onOpenInCrossLab(c.parentA, c.parentB)}
                       >
-                        Open in Cross Lab
+                        {tr("Open in Cross Lab")}
                       </button>
                       <span aria-hidden> · </span>
                       <button
@@ -210,12 +212,12 @@ export function CandidateTable({
                         onClick={() => save(c, "save")}
                       >
                         {s === "saving"
-                          ? "Saving…"
+                          ? tr("Saving…")
                           : justSaved
-                            ? "Saved"
+                            ? tr("Saved")
                             : conflicted
-                              ? "Conflict"
-                              : "Save"}
+                              ? tr("Conflict")
+                              : tr("Save")}
                       </button>
                       <span aria-hidden> · </span>
                       <button
@@ -226,7 +228,7 @@ export function CandidateTable({
                         disabled={s === "saving"}
                         onClick={() => save(c, "add")}
                       >
-                        Add
+                        {tr("Add")}
                       </button>
                     </div>
                   </TableCell>
@@ -239,8 +241,9 @@ export function CandidateTable({
                   colSpan={7}
                   className="px-3 py-10 text-center text-sm text-muted-foreground"
                 >
-                  No candidate pairs match the current pool and generation
-                  rules.
+                  {tr(
+                    "No candidate pairs match the current pool and generation rules.",
+                  )}
                 </TableCell>
               </TableRow>
             ) : null}
@@ -250,16 +253,16 @@ export function CandidateTable({
       {state.size > 0 && (
         <div className="border-t border-border px-4 py-2.5" aria-live="polite">
           {errorMsg ? (
-            <p className="text-xs text-destructive">{errorMsg}</p>
+            <p className="text-xs text-destructive">{tr(errorMsg)}</p>
           ) : (
             <p className="text-xs text-muted-foreground">
-              Saved candidates go to your{" "}
+              {tr("Saved candidates go to your")}{" "}
               <button
                 type="button"
                 onClick={onGoToWorkspace}
                 className="mx-0.5 font-medium text-primary hover:underline"
               >
-                Candidate Workspace
+                {tr("Candidate Workspace")}
               </button>
               .
             </p>

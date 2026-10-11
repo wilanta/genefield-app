@@ -51,7 +51,7 @@ export const referenceService = {
     const index = new Map(lines.map((l) => [l.id, l]));
     const selected = index.get(id);
     if (!selected)
-      throw new Error("Line tidak ditemukan dalam data GeneField.");
+      throw new Error("Line not found in GeneField data.");
     const nodes = new Map<string, PedigreeNode>();
     const edges = new Map<string, { source: string; target: string }>();
     const add = (

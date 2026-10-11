@@ -1,3 +1,4 @@
+import { useTranslation } from "@/components/language-provider";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { referenceService } from "@/services/reference-service";
@@ -61,6 +62,7 @@ export default function LineExplorer({
   onUseAsParent,
   filters: initialFilters = DEFAULT_FILTERS,
 }: LineExplorerProps) {
+  const { t: tr } = useTranslation();
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const { data: loadedLines, error } = useAsync(() =>
@@ -113,11 +115,11 @@ export default function LineExplorer({
     <div className="flex h-full min-h-0 flex-col p-6">
       {error && (
         <p role="alert" className="text-destructive">
-          {error}
+          {tr(error)}
         </p>
       )}
       {!loadedLines && !error && (
-        <p role="status">Memuat data referensi lokal…</p>
+        <p role="status">{tr("Loading local reference data…")}</p>
       )}
       {/* Toolbar */}
       <div className="shrink-0">
@@ -131,7 +133,7 @@ export default function LineExplorer({
 
       {/* Content row: table (800) + detail panel (340) */}
       <div className="mt-5 grid min-h-0 flex-1 grid-cols-1 gap-5 overflow-auto lg:grid-cols-[minmax(0,1fr)_420px]">
-        <section aria-label="Lines table" className="min-h-0">
+        <section aria-label={tr("Lines table")} className="min-h-0">
           {filtered.length === 0 ? (
             <LineExplorerNoResults
               queryLabel={queryLabel}
@@ -148,7 +150,7 @@ export default function LineExplorer({
           )}
         </section>
 
-        <aside aria-label="Line detail" className="min-h-0">
+        <aside aria-label={tr("Line detail")} className="min-h-0">
           <LineExplorerDetailPanel
             line={filtered.length === 0 ? null : selectedLine}
             onUseAsParent={handleUseAsParent}
