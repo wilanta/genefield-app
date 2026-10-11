@@ -81,13 +81,24 @@ export function CandidateTable({
   };
 
   return (
-    <div className="rounded-xl border border-border bg-card shadow-[var(--gf-card-shadow)]">
-      <div className="flex flex-col overflow-hidden">
+    <div className="breed-designer-candidates">
+      <div className="breed-designer-candidate-scroll">
         <Table>
+          <colgroup>
+            <col style={{ width: "11.3%" }} />
+            <col style={{ width: "10.6%" }} />
+            <col style={{ width: "10.6%" }} />
+            <col style={{ width: "10.8%" }} />
+            <col style={{ width: "16.9%" }} />
+            <col style={{ width: "16.5%" }} />
+            <col style={{ width: "23.3%" }} />
+          </colgroup>
           <TableHeader>
             <TableRow className="border-b hover:bg-transparent">
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                 Candidate
+                <br />
+                ID
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                 Parent A
@@ -99,12 +110,16 @@ export function CandidateTable({
                 Genotype
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Historical cross
+                Historical
+                <br />
+                cross
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Research status
+                Research
+                <br />
+                status
               </TableHead>
-              <TableHead className="px-3 py-2 text-right text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+              <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                 Actions
               </TableHead>
             </TableRow>
@@ -115,7 +130,7 @@ export function CandidateTable({
               const justSaved = s === "saved";
               const conflicted = s === "conflict";
               return (
-                <TableRow key={c.candidateId} className="h-[42px] border-b">
+                <TableRow key={c.candidateId} className="border-b">
                   <TableCell className="px-3 text-sm font-mono">
                     {c.candidateId}
                   </TableCell>
@@ -126,13 +141,20 @@ export function CandidateTable({
                     <span className="font-mono">{c.parentB}</span>
                   </TableCell>
                   <TableCell className="px-3 text-sm">
-                    <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <span
+                      className={
+                        "inline-flex items-center gap-1.5 text-[13px] " +
+                        (c.genotype === "Both"
+                          ? "text-foreground"
+                          : "text-muted-foreground")
+                      }
+                    >
                       <span
                         className={
-                          "size-2.5 rounded-full " +
+                          "size-[7px] shrink-0 rounded-full " +
                           (c.genotype === "Both"
                             ? "bg-primary"
-                            : "border-2 border-muted-foreground bg-transparent")
+                            : "border border-muted-foreground bg-transparent")
                         }
                       />
                       {c.genotype}
@@ -141,7 +163,7 @@ export function CandidateTable({
                   <TableCell className="px-3 text-sm">
                     <span
                       className={
-                        "rounded-md px-1.5 py-0.5 text-xs " +
+                        "rounded-full bg-muted px-2 py-0.5 text-[11px] " +
                         (c.historicalRecorded
                           ? "text-foreground"
                           : "text-muted-foreground")
@@ -151,41 +173,41 @@ export function CandidateTable({
                     </span>
                   </TableCell>
                   <TableCell className="px-3 text-sm">
-                    <span className="rounded-md border border-border px-1.5 py-0.5 text-xs text-muted-foreground">
+                    <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">
                       {c.researchStatus}
                     </span>
                   </TableCell>
-                  <TableCell className="px-3">
-                    <div className="flex items-center gap-3 whitespace-nowrap">
+                  <TableCell className="breed-designer-actions px-3">
+                    <div>
                       <button
                         type="button"
-                        className="text-xs font-medium text-foreground underline underline-offset-2 hover:text-primary"
+                        className="text-primary"
                         onClick={() => onOpenInCrossLab(c.parentA, c.parentB)}
                       >
                         Open in Cross Lab
                       </button>
+                      <span aria-hidden> · </span>
                       <button
                         type="button"
                         className={
-                          "text-xs font-medium " +
-                          (justSaved
-                            ? "text-primary"
-                            : conflicted
-                              ? "text-destructive"
-                              : "text-foreground underline underline-offset-2 hover:text-primary")
+                          conflicted ? "text-destructive" : "text-primary"
                         }
                         disabled={s === "saving"}
                         onClick={() => save(c, "save")}
                       >
-                        {s === "saving" ? "Saving…" : justSaved ? "Saved" : conflicted ? "Conflict" : "Save"}
+                        {s === "saving"
+                          ? "Saving…"
+                          : justSaved
+                            ? "Saved"
+                            : conflicted
+                              ? "Conflict"
+                              : "Save"}
                       </button>
+                      <span aria-hidden> · </span>
                       <button
                         type="button"
                         className={
-                          "text-xs font-medium " +
-                          (conflicted
-                            ? "text-destructive"
-                            : "text-foreground underline underline-offset-2 hover:text-primary")
+                          conflicted ? "text-destructive" : "text-primary"
                         }
                         disabled={s === "saving"}
                         onClick={() => save(c, "add")}
@@ -203,30 +225,33 @@ export function CandidateTable({
                   colSpan={7}
                   className="px-3 py-10 text-center text-sm text-muted-foreground"
                 >
-                  No candidate pairs match the current pool and generation rules.
+                  No candidate pairs match the current pool and generation
+                  rules.
                 </TableCell>
               </TableRow>
             ) : null}
           </TableBody>
         </Table>
       </div>
-      <div className="border-t border-border px-4 py-2.5">
-        {errorMsg ? (
-          <p className="text-xs text-destructive">{errorMsg}</p>
-        ) : (
-          <p className="text-xs text-muted-foreground">
-            Saved candidates go to your Candidate
-            <button
-              type="button"
-              onClick={onGoToWorkspace}
-              className="mx-0.5 font-medium text-primary hover:underline"
-            >
-              Workspace
-            </button>
-            . In preview mode they stay in-session only.
-          </p>
-        )}
-      </div>
+      {state.size > 0 && (
+        <div className="border-t border-border px-4 py-2.5" aria-live="polite">
+          {errorMsg ? (
+            <p className="text-xs text-destructive">{errorMsg}</p>
+          ) : (
+            <p className="text-xs text-muted-foreground">
+              Saved candidates go to your{" "}
+              <button
+                type="button"
+                onClick={onGoToWorkspace}
+                className="mx-0.5 font-medium text-primary hover:underline"
+              >
+                Candidate Workspace
+              </button>
+              .
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

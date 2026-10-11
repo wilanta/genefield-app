@@ -1,0 +1,186 @@
+.breed-designer {
+  container-type: inline-size;
+  height: 100%;
+  min-height: 0;
+  padding: 20px 24px;
+  overflow: auto;
+}
+
+.breed-designer-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  min-height: 100%;
+}
+
+.breed-designer-main {
+  container-type: inline-size;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.breed-designer .breed-designer-card {
+  gap: 0;
+  padding-block: 0;
+  border-radius: 12px;
+  box-shadow: var(--gf-card-shadow);
+}
+
+.breed-designer-pool {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.breed-designer-search {
+  flex: 1 1 160px;
+  min-width: 140px;
+}
+
+.breed-designer .breed-designer-filter {
+  height: 34px;
+  width: auto;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: transparent;
+  font-size: 13px;
+  box-shadow: none;
+}
+
+.breed-designer-selected {
+  flex: 1 1 110px;
+  padding-left: 8px;
+}
+
+.breed-designer-generation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+
+.breed-designer-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.breed-designer-rule [data-slot="switch"] {
+  width: 34px;
+  height: 20px;
+}
+
+.breed-designer-rule [data-slot="switch-thumb"] {
+  width: 16px;
+  height: 16px;
+  background: white;
+}
+
+.breed-designer-generate {
+  justify-self: start;
+}
+
+.breed-designer-results {
+  flex: 1 1 0;
+  min-height: 260px;
+}
+
+.breed-designer-candidates {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.breed-designer-candidate-scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.breed-designer-candidates table {
+  min-width: 640px;
+  table-layout: fixed;
+}
+
+.breed-designer-candidates thead {
+  background: var(--spring-wood);
+}
+
+:root .breed-designer-candidates [data-slot="table-head"] {
+  height: 44px;
+  padding: 7px 12px;
+  white-space: normal;
+  font-size: 11px;
+  line-height: 15px;
+  letter-spacing: 0.03em;
+}
+
+:root
+  .breed-designer
+  .breed-designer-candidates
+  [data-slot="table-cell"]:not([colspan]) {
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.breed-designer-candidates [data-slot="table-row"] {
+  height: 36px;
+}
+
+.breed-designer-candidates [data-slot="table-cell"][colspan] {
+  padding-block: 40px;
+  white-space: normal;
+}
+
+.breed-designer-candidates .breed-designer-actions {
+  white-space: normal;
+  font-size: 13px;
+  color: var(--primary);
+}
+
+.breed-designer-actions button {
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.breed-designer-actions button:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.breed-designer-actions button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.breed-designer-actions button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+@container (min-width: 900px) {
+  .breed-designer-layout {
+    height: 100%;
+    grid-template-columns: minmax(0, 1fr) clamp(260px, 29%, 340px);
+  }
+}
+
+@container (min-width: 650px) {
+  .breed-designer-generation {
+    grid-template-columns: minmax(280px, 1.25fr) minmax(140px, 1fr) auto;
+    gap: 12px;
+  }
+
+  .breed-designer-generate {
+    justify-self: end;
+  }
+}
