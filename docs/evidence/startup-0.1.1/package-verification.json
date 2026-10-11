@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "version": "0.1.1",
+  "root": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField",
+  "installer": "C:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-app\\genefield-desktop\\src-tauri\\target\\release\\bundle\\nsis\\GeneField_0.1.1_x64-setup.exe",
+  "installer_sha256": "0e13c617e007cd20e9f6054a27af94b6f57e8b61a27b63d26bf0a07da40a9a2a",
+  "installer_bytes": 58649149,
+  "runtime_hashes_verified": 645,
+  "reference_unchanged": true,
+  "notice_packages_verified": 444
+}

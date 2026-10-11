@@ -1,4 +1,11 @@
 {
+  "Getting GeneField ready": "Menyiapkan GeneField",
+  "Your data and analysis are loading locally. The first launch may take a little longer.": "Data dan analisis sedang dimuat secara lokal. Pembukaan pertama mungkin membutuhkan waktu sedikit lebih lama.",
+  "Loading rice breeding data": "Memuat data pemuliaan padi",
+  "Preparing local analysis": "Menyiapkan analisis lokal",
+  "Opening your workspace": "Membuka ruang kerja Anda",
+  "Ready": "Siap",
+  "Try again": "Coba lagi",
   "Third-party license notices": "Pemberitahuan lisensi pihak ketiga",
   "License notice review pending before distribution": "Tinjauan pemberitahuan lisensi masih diperlukan sebelum distribusi",
   "Dataset Attribution": "Atribusi Dataset",

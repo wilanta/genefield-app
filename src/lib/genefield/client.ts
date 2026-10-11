@@ -106,6 +106,7 @@ export class GeneFieldSidecar {
   private startup?: Promise<Metadata>;
   private metadata?: Metadata;
   private attempted = false;
+  private startupEpoch = 0;
   private generation = 0;
   private sequence = 0;
   private pending = new Map<
@@ -134,15 +135,50 @@ export class GeneFieldSidecar {
         new GeneFieldError("PROCESS_UNAVAILABLE", "Explicit restart required"),
       );
     this.attempted = true;
-    this.startup = this.spawn().finally(() => {
+    this.startup = this.initialize(this.startupEpoch).finally(() => {
       this.startup = undefined;
     });
     return this.startup;
   }
 
+  private async initialize(epoch: number): Promise<Metadata> {
+    // Recover once from a transient first-launch failure. Never replay an
+    // inference/ranking request or respawn a service that failed after readiness.
+    const recoverable = new Set([
+      "IPC_TIMEOUT",
+      "PROCESS_CLOSED",
+      "PROCESS_ERROR",
+      "PROCESS_WRITE_FAILED",
+      "PROCESS_START_FAILED",
+    ]);
+    for (let attempt = 0; ; attempt++) {
+      if (epoch !== this.startupEpoch)
+        throw new GeneFieldError("PROCESS_CLOSED", "Startup interrupted");
+      try {
+        return await this.spawn();
+      } catch (error) {
+        if (
+          epoch !== this.startupEpoch ||
+          attempt >= 1 ||
+          !(error instanceof GeneFieldError) ||
+          !recoverable.has(error.code)
+        )
+          throw error;
+        console.warn("GeneField startup recovery", error.code);
+        await new Promise((resolve) => setTimeout(resolve, 750));
+      }
+    }
+  }
+
   private async spawn(): Promise<Metadata> {
     const generation = ++this.generation;
     const command = Command.sidecar("binaries/genefield-final-v1");
+    let startupFailure: GeneFieldError | undefined;
+    let processClosed = false;
+    const fail = (error: GeneFieldError) => {
+      startupFailure ??= error;
+      this.failAll(error);
+    };
     // Tauri shell's UTF8 stdout data events are complete lines, without newline.
     command.stdout.on("data", (line) => {
       if (generation !== this.generation) return;
@@ -150,7 +186,7 @@ export class GeneFieldSidecar {
       try {
         response = JSON.parse(line) as Response;
       } catch {
-        this.failAll(new GeneFieldError("IPC_INVALID", "Invalid sidecar JSON"));
+        fail(new GeneFieldError("IPC_INVALID", "Invalid sidecar JSON"));
         return;
       }
       if (
@@ -164,15 +200,11 @@ export class GeneFieldSidecar {
             typeof response.error.code !== "string" ||
             typeof response.error.message !== "string"))
       ) {
-        this.failAll(
-          new GeneFieldError("IPC_INVALID", "Unsupported response version"),
-        );
+        fail(new GeneFieldError("IPC_INVALID", "Unsupported response version"));
         return;
       }
       if (response.request_id === null && !response.ok) {
-        this.failAll(
-          new GeneFieldError(response.error.code, response.error.message),
-        );
+        fail(new GeneFieldError(response.error.code, response.error.message));
         return;
       }
       const pending = response.request_id
@@ -192,29 +224,43 @@ export class GeneFieldSidecar {
     );
     command.on("error", (error) => {
       if (generation === this.generation)
-        this.failAll(new GeneFieldError("PROCESS_ERROR", String(error)));
+        fail(new GeneFieldError("PROCESS_ERROR", String(error)));
     });
     command.on("close", (data) => {
       if (generation !== this.generation) return;
+      processClosed = true;
       this.child = undefined;
       this.metadata = undefined;
-      this.failAll(
+      fail(
         new GeneFieldError("PROCESS_CLOSED", `Sidecar closed (${data.code})`),
       );
     });
-    const child = await command.spawn();
+    const child = await command.spawn().catch((error) => {
+      throw new GeneFieldError("PROCESS_START_FAILED", String(error));
+    });
     if (generation !== this.generation) {
       await child.kill();
       throw new GeneFieldError("PROCESS_CLOSED", "Startup interrupted");
     }
-    this.child = child;
+    if (!processClosed) this.child = child;
     try {
-      const metadata = await this.health();
+      // A process can close or report a bundle error before spawn() resolves.
+      // Retain that event rather than waiting for a response that cannot arrive.
+      if (startupFailure) throw startupFailure;
+      // Cold imports and first-launch OS scanning can exceed the warm health
+      // timeout on another PC. Later health checks retain their normal budget.
+      const metadata = await this.request<Metadata>(
+        { operation: "metadata" },
+        120_000,
+      );
+      if (startupFailure) throw startupFailure;
+      if (generation !== this.generation)
+        throw new GeneFieldError("PROCESS_CLOSED", "Startup interrupted");
       validateMetadata(metadata);
       this.metadata = metadata;
       return metadata;
     } catch (error) {
-      await this.stop();
+      await this.dispose();
       throw error;
     }
   }
@@ -255,7 +301,9 @@ export class GeneFieldSidecar {
           if (pending) {
             clearTimeout(pending.timer);
             this.pending.delete(request_id);
-            pending.reject(error);
+            pending.reject(
+              new GeneFieldError("PROCESS_WRITE_FAILED", String(error)),
+            );
           }
         });
     });
@@ -327,6 +375,11 @@ export class GeneFieldSidecar {
     return this.start();
   }
   async stop(): Promise<void> {
+    ++this.startupEpoch;
+    await this.dispose();
+  }
+
+  private async dispose(): Promise<void> {
     ++this.generation;
     this.metadata = undefined;
     const child = this.child;

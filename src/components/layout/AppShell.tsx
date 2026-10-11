@@ -12,6 +12,7 @@ import {
   Info,
 } from "lucide-react";
 import logoUrl from "@/assets/GeneField_vector.svg";
+import { DesktopStartup } from "@/components/desktop-startup";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
@@ -231,7 +232,9 @@ export default function AppShell() {
           </header>
 
           <div className="min-h-0 flex-1 overflow-auto">
-            <Outlet />
+            <DesktopStartup>
+              <Outlet />
+            </DesktopStartup>
           </div>
         </main>
       </div>

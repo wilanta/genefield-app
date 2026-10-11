@@ -1,0 +1,738 @@
+{
+  "scope": "Installed release app; real UI/native IPC/SQLite/frozen EXE",
+  "binary": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe",
+  "cwd": "C:\\Users\\sheil\\AppData\\Local\\Temp\\genefield-startup-qa-82f2cd32dee84c389fb096766a77dc0d",
+  "offline_method": "WebView2 deny proxy + browser offline; frozen sidecar existing socket-denial hook. OS adapters unchanged.",
+  "checks": [
+    {
+      "name": "installed offline startup and one sidecar",
+      "value": {
+        "index": 0,
+        "pid": 16972,
+        "url": "http://tauri.localhost/",
+        "process_tree": [
+          {
+            "ProcessId": 16972,
+            "ParentProcessId": 9788,
+            "Name": "GeneField.exe",
+            "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe"
+          },
+          {
+            "ProcessId": 7912,
+            "ParentProcessId": 16972,
+            "Name": "msedgewebview2.exe",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+          },
+          {
+            "ProcessId": 19280,
+            "ParentProcessId": 7912,
+            "Name": "msedgewebview2.exe",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+          },
+          {
+            "ProcessId": 18992,
+            "ParentProcessId": 7912,
+            "Name": "msedgewebview2.exe",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+          },
+          {
+            "ProcessId": 6268,
+            "ParentProcessId": 7912,
+            "Name": "msedgewebview2.exe",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+          },
+          {
+            "ProcessId": 10728,
+            "ParentProcessId": 7912,
+            "Name": "msedgewebview2.exe",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+          },
+          {
+            "ProcessId": 2388,
+            "ParentProcessId": 7912,
+            "Name": "msedgewebview2.exe",
+            "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+          },
+          {
+            "ProcessId": 14240,
+            "ParentProcessId": 16972,
+            "Name": "genefield-final-v1.exe",
+            "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+          },
+          {
+            "ProcessId": 10892,
+            "ParentProcessId": 14240,
+            "Name": "conhost.exe",
+            "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe"
+          }
+        ],
+        "external_fetch_blocked": true
+      }
+    },
+    {
+      "name": "Line Explorer and historical profile",
+      "value": "GID_10039\nHistorical observations\nGenotype availability\nAvailable\nPedigree availability\nAvailable\nPhenotype observations\n13\nKnown parents\nGID_12132 × GID_10396\n\nHISTORICAL PHENOTYPE SUMMARY\n\nGrain Yield (kg/ha)\n8,512.955\nDays to Flowering (days)\n112.2\nStem Rot (severity rating)\n5.1\nLeaf Blast (severity rating)\n—\n\nDATA PROVENANCE\n\nINIA Uruguay dataset. Historical line means from recorded observations.\n\nUse as Parent A\nUse as Parent B\nView Pedigree"
+    },
+    {
+      "name": "real pedigree nodes and edges",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nPedigree Explorer\n\nInvestigate recorded parent–offspring relationships.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nAncestors 0\nDescendants 0\nReset Graph\nGID_1\nGID_2980\nGID_2052\nANCESTORS · −2\nPARENTS · −1\nSELECTED\nDESCENDANTS · +1\nSelected\nGenotype available\nNo genotype\nMissing record\nRecorded relationships only · no inference from SNP similarity\nGID_1\nRecorded parents\nGID_2980, GID_2052\nRecorded descendants\n0\nGenotype availability\nNot available\nPhenotype availability\nAvailable\n\nExample data. Edges show recorded parent–offspring relationships only.\n\nOpen Line Profile\nUse as Parent A\nUse as Parent B\nAncestors: 0. Descendants: 0."
+    },
+    {
+      "name": "Cross Lab four traits, units and scientific wording",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nCross Lab\n\nExplore parent combinations and historical cross-level trait estimates.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nPARENT A\nGenotype available\nView line profile\nPARENT B\nGenotype available\nView line profile\nAnalyze Cross\nReset\nTwo distinct genotyped parent lines are required.\nHISTORICAL EVIDENCE\nHistorical pedigree registry\nHistorical cross record\nNot recorded in historical registry\nRecorded descendant count\nNot supplied by pair lookup\nPhenotype observations\nSee historical line profiles\nTraining-parent membership\nA · Yes (selected traits)\nB · Yes (selected traits)\nModeled Cross-level Estimates\nAnalysis complete\nHistorical validation passed · Decision-support only\nTRAIT\tESTIMATE\tUNIT\tPREDICTIVE RANKING\nGrain Yield (GY)\t7,891.224\tkg/ha\tMaximize\nDays to Flowering (DTF)\t98.633\tdays\tEarlier / Later\nStem Rot (NO)\t4.591\tmodified SES IRRI rating points\tMinimize\nLeaf Blast (LB)\t0.883\tSES IRRI rating points\tMinimize\n\nHistorical-descendant cross-level modeled estimates\n\nRepresented INIA germplasm; no guaranteed offspring phenotype.\n\nEstimates describe modeled historical descendant phenotype summaries, not F1 performance or guaranteed cross outcomes.\n\nSave Candidate\nAdd Research Note\nView Parent Pedigree\nPARENT COMPARISON\nParent A\nGID_10039\nGenotype\nAvailable\nPhenotype\nAvailable\nPedigree\nAvailable\nParent B\nGID_10125\nGenotype\nAvailable\nPhenotype\nAvailable\nPedigree\nAvailable\nMODEL INFORMATION\nBundle\nfinal-v1\nValidation status\nHistorical validation passed\nExternal expert review\nPending\nUsage\nDecision-support only\nPredictive ranking\nEnabled for represented parents\nInference\nLocal / Offline\nSCIENTIFIC LIMITATIONS\nHistorical-descendant cross-level modeled estimates for represented INIA germplasm.\nGeneralization to external germplasm is not supported.\nNo calibrated uncertainty intervals are available.\nFor candidate prioritization; not a substitute for field trials."
+    },
+    {
+      "name": "actual four-trait snapshot",
+      "value": {
+        "bundleVersion": "final-v1",
+        "predictions": {
+          "GY": {
+            "value": 7891.223511267753,
+            "units": "kg/ha",
+            "model_version": "final-v1/GY/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "DTF": {
+            "value": 98.63343564424765,
+            "units": "days",
+            "model_version": "final-v1/DTF/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "NO": {
+            "value": 4.591383457183838,
+            "units": "modified SES IRRI rating points",
+            "model_version": "final-v1/NO/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          },
+          "LB": {
+            "value": 0.8833725118415202,
+            "units": "SES IRRI rating points",
+            "model_version": "final-v1/LB/1.0.0",
+            "parents_seen_in_training": [
+              true,
+              true
+            ],
+            "parent_training_pair_counts": [
+              1,
+              1
+            ]
+          }
+        },
+        "isHistoricalPair": false
+      }
+    },
+    {
+      "name": "recorded historical pair allowed",
+      "value": true
+    },
+    {
+      "name": "ineligible input shows application error without prediction fallback",
+      "value": "Parent is not eligible for analysis of the selected traits."
+    },
+    {
+      "name": "GY maximize",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n3913 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 91 lines\n2\nConfigure Cross Generation\nGY weight\nDTF weight\nNO weight\nLB weight\n\nSet a weight to 0 to omit a trait.\n\nDTF priority\nSelect priority\nMaximum candidate count\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nGenerate Candidate Pairs\n3\nCandidate Results\n\nRelative application score used to prioritize candidate pairs; not a probability of breeding success.\n\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tEXPERT REVIEW\nSTATUS\tACTIONS\nC-001\nPrioritization Score: 1.0000\n\nGY: 9677.96 kg/ha\n\tGID_10021\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-002\nPrioritization Score: 0.9948\n\nGY: 9658.18 kg/ha\n\tGID_1350\tGID_5083\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-003\nPrioritization Score: 0.9895\n\nGY: 9638.00 kg/ha\n\tGID_1350\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-004\nPrioritization Score: 0.9822\n\nGY: 9609.92 kg/ha\n\tGID_19535\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-005\nPrioritization Score: 0.9742\n\nGY: 9579.68 kg/ha\n\tGID_1350\tGID_13520\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-006\nPrioritization Score: 0.9567\n\nGY: 9512.66 kg/ha\n\tGID_11055\tGID_19535\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-007\nPrioritization Score: 0.9521\n\nGY: 9495.31 kg/ha\n\tGID_13648\tGID_2052\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-008\nPrioritization Score: 0.9517\n\nGY: 9493.81 kg/ha\n\tGID_13648\tGID_19535\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-009\nPrioritization Score: 0.9515\n\nGY: 9492.94 kg/ha\n\tGID_3497\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-010\nPrioritization Score: 0.9491\n\nGY: 9483.71 kg/ha\n\tGID_1221\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-011\nPrioritization Score: 0.9414\n\nGY: 9454.38 kg/ha\n\tGID_18855\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-012\nPrioritization Score: 0.9299\n\nGY: 9410.44 kg/ha\n\tGID_20605\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-013\nPrioritization Score: 0.9280\n\nGY: 9403.37 kg/ha\n\tGID_12203\tGID_3497\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-014\nPrioritization Score: 0.9238\n\nGY: 9387.51 kg/ha\n\tGID_10452\tGID_1221\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-015\nPrioritization Score: 0.9201\n\nGY: 9373.12 kg/ha\n\tGID_1350\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-016\nPrioritization Score: 0.9196\n\nGY: 9371.33 kg/ha\n\tGID_10976\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-017\nPrioritization Score: 0.9187\n\nGY: 9368.01 kg/ha\n\tGID_11055\tGID_1221\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-018\nPrioritization Score: 0.9184\n\nGY: 9366.58 kg/ha\n\tGID_1276\tGID_13648\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-019\nPrioritization Score: 0.9152\n\nGY: 9354.62 kg/ha\n\tGID_3540\tGID_7804\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-020\nPrioritization Score: 0.9138\n\nGY: 9349.18 kg/ha\n\tGID_10976\tGID_3497\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-021\nPrioritization Score: 0.9084\n\nGY: 9328.57 kg/ha\n\tGID_12516\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-022\nPrioritization Score: 0.9057\n\nGY: 9318.19 kg/ha\n\tGID_12516\tGID_19321\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-023\nPrioritization Score: 0.9052\n\nGY: 9316.47 kg/ha\n\tGID_1350\tGID_8990\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-024\nPrioritization Score: 0.9034\n\nGY: 9309.37 kg/ha\n\tGID_1350\tGID_9411\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-025\nPrioritization Score: 0.9029\n\nGY: 9307.81 kg/ha\n\tGID_1221\tGID_12524\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-026\nPrioritization Score: 0.9026\n\nGY: 9306.46 kg/ha\n\tGID_12516\tGID_3497\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-027\nPrioritization Score: 0.9025\n\nGY: 9306.13 kg/ha\n\tGID_1350\tGID_3497\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-028\nPrioritization Score: 0.9023\n\nGY: 9305.42 kg/ha\n\tGID_3497\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-029\nPrioritization Score: 0.9017\n\nGY: 9302.90 kg/ha\n\tGID_11055\tGID_3497\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-030\nPrioritization Score: 0.9015\n\nGY: 9302.17 kg/ha\n\tGID_12203\tGID_19321\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-031\nPrioritization Score: 0.9009\n\nGY: 9300.14 kg/ha\n\tGID_14902\tGID_19321\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-032\nPrioritization Score: 0.9001\n\nGY: 9296.91 kg/ha\n\tGID_16416\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-033\nPrioritization Score: 0.8999\n\nGY: 9296.34 kg/ha\n\tGID_1350\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-034\nPrioritization Score: 0.8981\n\nGY: 9289.33 kg/ha\n\tGID_1221\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-035\nPrioritization Score: 0.8979\n\nGY: 9288.38 kg/ha\n\tGID_19321\tGID_8234\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-036\nPrioritization Score: 0.8955\n\nGY: 9279.57 kg/ha\n\tGID_12203\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-037\nPrioritization Score: 0.8952\n\nGY: 9278.37 kg/ha\n\tGID_3497\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-038\nPrioritization Score: 0.8930\n\nGY: 9269.91 kg/ha\n\tGID_12524\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-039\nPrioritization Score: 0.8918\n\nGY: 9265.12 kg/ha\n\tGID_13311\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-040\nPrioritization Score: 0.8877\n\nGY: 9249.55 kg/ha\n\tGID_20605\tGID_8234\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-041\nPrioritization Score: 0.8859\n\nGY: 9242.78 kg/ha\n\tGID_1350\tGID_4519\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-042\nPrioritization Score: 0.8851\n\nGY: 9239.80 kg/ha\n\tGID_13648\tGID_7208\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-043\nPrioritization Score: 0.8850\n\nGY: 9239.23 kg/ha\n\tGID_4519\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-044\nPrioritization Score: 0.8848\n\nGY: 9238.64 kg/ha\n\tGID_1350\tGID_19321\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-045\nPrioritization Score: 0.8843\n\nGY: 9236.69 kg/ha\n\tGID_10976\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-046\nPrioritization Score: 0.8834\n\nGY: 9233.39 kg/ha\n\tGID_16416\tGID_8990\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-047\nPrioritization Score: 0.8818\n\nGY: 9227.14 kg/ha\n\tGID_10976\tGID_1221\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-048\nPrioritization Score: 0.8809\n\nGY: 9223.55 kg/ha\n\tGID_10125\tGID_19321\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-049\nPrioritization Score: 0.8801\n\nGY: 9220.59 kg/ha\n\tGID_1221\tGID_13648\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-050\nPrioritization Score: 0.8799\n\nGY: 9219.84 kg/ha\n\tGID_12516\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n91\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "DTF Earlier flowering",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n4186 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 94 lines\n2\nConfigure Cross Generation\nGY weight\nDTF weight\nNO weight\nLB weight\n\nSet a weight to 0 to omit a trait.\n\nDTF priority\nEarlier flowering\nMaximum candidate count\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nGenerate Candidate Pairs\n3\nCandidate Results\n\nRelative application score used to prioritize candidate pairs; not a probability of breeding success.\n\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tEXPERT REVIEW\nSTATUS\tACTIONS\nC-001\nPrioritization Score: 1.0000\n\nDTF: 93.93 days\n\tGID_3497\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-002\nPrioritization Score: 0.9827\n\nDTF: 94.26 days\n\tGID_10452\tGID_20605\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-003\nPrioritization Score: 0.9805\n\nDTF: 94.30 days\n\tGID_11587\tGID_12203\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-004\nPrioritization Score: 0.9762\n\nDTF: 94.38 days\n\tGID_12203\tGID_3497\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-005\nPrioritization Score: 0.9726\n\nDTF: 94.45 days\n\tGID_3497\tGID_7018\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-006\nPrioritization Score: 0.9706\n\nDTF: 94.49 days\n\tGID_18855\tGID_9673\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-007\nPrioritization Score: 0.9644\n\nDTF: 94.60 days\n\tGID_10452\tGID_1221\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-008\nPrioritization Score: 0.9643\n\nDTF: 94.61 days\n\tGID_7106\tGID_8990\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-009\nPrioritization Score: 0.9618\n\nDTF: 94.65 days\n\tGID_11587\tGID_4437\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-010\nPrioritization Score: 0.9578\n\nDTF: 94.73 days\n\tGID_12516\tGID_4519\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-011\nPrioritization Score: 0.9561\n\nDTF: 94.76 days\n\tGID_19535\tGID_3745\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-012\nPrioritization Score: 0.9503\n\nDTF: 94.87 days\n\tGID_20053\tGID_3745\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-013\nPrioritization Score: 0.9490\n\nDTF: 94.90 days\n\tGID_18855\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-014\nPrioritization Score: 0.9487\n\nDTF: 94.90 days\n\tGID_10587\tGID_12122\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-015\nPrioritization Score: 0.9473\n\nDTF: 94.93 days\n\tGID_12203\tGID_3745\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-016\nPrioritization Score: 0.9462\n\nDTF: 94.95 days\n\tGID_20053\tGID_7467\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-017\nPrioritization Score: 0.9458\n\nDTF: 94.96 days\n\tGID_12203\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-018\nPrioritization Score: 0.9450\n\nDTF: 94.97 days\n\tGID_18855\tGID_7106\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-019\nPrioritization Score: 0.9416\n\nDTF: 95.04 days\n\tGID_14790\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-020\nPrioritization Score: 0.9396\n\nDTF: 95.07 days\n\tGID_11587\tGID_14790\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-021\nPrioritization Score: 0.9386\n\nDTF: 95.09 days\n\tGID_11587\tGID_1221\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-022\nPrioritization Score: 0.9383\n\nDTF: 95.10 days\n\tGID_11587\tGID_19535\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-023\nPrioritization Score: 0.9346\n\nDTF: 95.17 days\n\tGID_7467\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-024\nPrioritization Score: 0.9326\n\nDTF: 95.21 days\n\tGID_11587\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-025\nPrioritization Score: 0.9321\n\nDTF: 95.22 days\n\tGID_11333\tGID_19535\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-026\nPrioritization Score: 0.9315\n\nDTF: 95.23 days\n\tGID_18855\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-027\nPrioritization Score: 0.9311\n\nDTF: 95.24 days\n\tGID_19321\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-028\nPrioritization Score: 0.9310\n\nDTF: 95.24 days\n\tGID_10976\tGID_1221\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-029\nPrioritization Score: 0.9299\n\nDTF: 95.26 days\n\tGID_10976\tGID_3497\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-030\nPrioritization Score: 0.9271\n\nDTF: 95.31 days\n\tGID_19321\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-031\nPrioritization Score: 0.9257\n\nDTF: 95.34 days\n\tGID_20605\tGID_8990\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-032\nPrioritization Score: 0.9253\n\nDTF: 95.34 days\n\tGID_3497\tGID_7106\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-033\nPrioritization Score: 0.9249\n\nDTF: 95.35 days\n\tGID_3497\tGID_8990\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-034\nPrioritization Score: 0.9244\n\nDTF: 95.36 days\n\tGID_11587\tGID_14770\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-035\nPrioritization Score: 0.9231\n\nDTF: 95.39 days\n\tGID_12516\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-036\nPrioritization Score: 0.9201\n\nDTF: 95.44 days\n\tGID_20053\tGID_4519\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-037\nPrioritization Score: 0.9198\n\nDTF: 95.45 days\n\tGID_18754\tGID_8154\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-038\nPrioritization Score: 0.9193\n\nDTF: 95.46 days\n\tGID_10976\tGID_19535\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-039\nPrioritization Score: 0.9192\n\nDTF: 95.46 days\n\tGID_8520\tGID_8990\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-040\nPrioritization Score: 0.9188\n\nDTF: 95.47 days\n\tGID_12203\tGID_20605\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-041\nPrioritization Score: 0.9183\n\nDTF: 95.48 days\n\tGID_16416\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-042\nPrioritization Score: 0.9180\n\nDTF: 95.48 days\n\tGID_12203\tGID_7467\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-043\nPrioritization Score: 0.9177\n\nDTF: 95.49 days\n\tGID_20053\tGID_20605\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-044\nPrioritization Score: 0.9160\n\nDTF: 95.52 days\n\tGID_7208\tGID_8154\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-045\nPrioritization Score: 0.9158\n\nDTF: 95.53 days\n\tGID_8154\tGID_9411\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-046\nPrioritization Score: 0.9157\n\nDTF: 95.53 days\n\tGID_10976\tGID_4437\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-047\nPrioritization Score: 0.9157\n\nDTF: 95.53 days\n\tGID_19321\tGID_7106\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-048\nPrioritization Score: 0.9151\n\nDTF: 95.54 days\n\tGID_10396\tGID_19535\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-049\nPrioritization Score: 0.9148\n\nDTF: 95.54 days\n\tGID_3745\tGID_7018\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-050\nPrioritization Score: 0.9144\n\nDTF: 95.55 days\n\tGID_11587\tGID_1276\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n94\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "DTF Later flowering",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n4186 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 94 lines\n2\nConfigure Cross Generation\nGY weight\nDTF weight\nNO weight\nLB weight\n\nSet a weight to 0 to omit a trait.\n\nDTF priority\nLater flowering\nMaximum candidate count\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nGenerate Candidate Pairs\n3\nCandidate Results\n\nRelative application score used to prioritize candidate pairs; not a probability of breeding success.\n\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tEXPERT REVIEW\nSTATUS\tACTIONS\nC-001\nPrioritization Score: 1.0000\n\nDTF: 112.87 days\n\tGID_1350\tGID_13520\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-002\nPrioritization Score: 0.9739\n\nDTF: 112.37 days\n\tGID_1350\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-003\nPrioritization Score: 0.9728\n\nDTF: 112.35 days\n\tGID_1350\tGID_9411\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-004\nPrioritization Score: 0.8815\n\nDTF: 110.62 days\n\tGID_1350\tGID_3723\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-005\nPrioritization Score: 0.8807\n\nDTF: 110.61 days\n\tGID_1233\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-006\nPrioritization Score: 0.8776\n\nDTF: 110.55 days\n\tGID_1350\tGID_391\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-007\nPrioritization Score: 0.8509\n\nDTF: 110.04 days\n\tGID_1350\tGID_5083\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-008\nPrioritization Score: 0.8225\n\nDTF: 109.51 days\n\tGID_16780\tGID_2770\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-009\nPrioritization Score: 0.8143\n\nDTF: 109.35 days\n\tGID_12700\tGID_16780\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-010\nPrioritization Score: 0.8141\n\nDTF: 109.35 days\n\tGID_10021\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-011\nPrioritization Score: 0.8083\n\nDTF: 109.24 days\n\tGID_1233\tGID_9162\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-012\nPrioritization Score: 0.8051\n\nDTF: 109.18 days\n\tGID_1233\tGID_13520\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-013\nPrioritization Score: 0.8007\n\nDTF: 109.09 days\n\tGID_1233\tGID_7804\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-014\nPrioritization Score: 0.7922\n\nDTF: 108.93 days\n\tGID_12700\tGID_2770\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-015\nPrioritization Score: 0.7888\n\nDTF: 108.87 days\n\tGID_13324\tGID_16780\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-016\nPrioritization Score: 0.7854\n\nDTF: 108.80 days\n\tGID_1233\tGID_5083\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-017\nPrioritization Score: 0.7665\n\nDTF: 108.45 days\n\tGID_13324\tGID_2770\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-018\nPrioritization Score: 0.7491\n\nDTF: 108.12 days\n\tGID_1233\tGID_391\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-019\nPrioritization Score: 0.7465\n\nDTF: 108.07 days\n\tGID_1233\tGID_9411\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-020\nPrioritization Score: 0.7450\n\nDTF: 108.04 days\n\tGID_12122\tGID_1233\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-021\nPrioritization Score: 0.7399\n\nDTF: 107.94 days\n\tGID_1350\tGID_9162\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-022\nPrioritization Score: 0.7390\n\nDTF: 107.93 days\n\tGID_1350\tGID_3540\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-023\nPrioritization Score: 0.7327\n\nDTF: 107.81 days\n\tGID_11587\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-024\nPrioritization Score: 0.7286\n\nDTF: 107.73 days\n\tGID_1350\tGID_19535\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-025\nPrioritization Score: 0.7286\n\nDTF: 107.73 days\n\tGID_1350\tGID_7467\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-026\nPrioritization Score: 0.7233\n\nDTF: 107.63 days\n\tGID_1350\tGID_3521\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-027\nPrioritization Score: 0.7218\n\nDTF: 107.60 days\n\tGID_1350\tGID_4437\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-028\nPrioritization Score: 0.7198\n\nDTF: 107.56 days\n\tGID_1350\tGID_2770\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-029\nPrioritization Score: 0.7188\n\nDTF: 107.54 days\n\tGID_10396\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-030\nPrioritization Score: 0.7161\n\nDTF: 107.49 days\n\tGID_1350\tGID_3745\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-031\nPrioritization Score: 0.7146\n\nDTF: 107.46 days\n\tGID_1350\tGID_16780\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-032\nPrioritization Score: 0.7140\n\nDTF: 107.45 days\n\tGID_1350\tGID_14770\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-033\nPrioritization Score: 0.7139\n\nDTF: 107.45 days\n\tGID_1350\tGID_14790\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-034\nPrioritization Score: 0.7121\n\nDTF: 107.42 days\n\tGID_1350\tGID_7208\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-035\nPrioritization Score: 0.7105\n\nDTF: 107.38 days\n\tGID_1233\tGID_7208\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-036\nPrioritization Score: 0.7096\n\nDTF: 107.37 days\n\tGID_1233\tGID_16825\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-037\nPrioritization Score: 0.7082\n\nDTF: 107.34 days\n\tGID_1233\tGID_5306\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-038\nPrioritization Score: 0.7082\n\nDTF: 107.34 days\n\tGID_1233\tGID_7467\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-039\nPrioritization Score: 0.7075\n\nDTF: 107.33 days\n\tGID_13324\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-040\nPrioritization Score: 0.7062\n\nDTF: 107.30 days\n\tGID_1350\tGID_343\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-041\nPrioritization Score: 0.7036\n\nDTF: 107.26 days\n\tGID_3723\tGID_5878\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-042\nPrioritization Score: 0.7031\n\nDTF: 107.24 days\n\tGID_12700\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-043\nPrioritization Score: 0.7029\n\nDTF: 107.24 days\n\tGID_1350\tGID_7783\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-044\nPrioritization Score: 0.7010\n\nDTF: 107.20 days\n\tGID_1233\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-045\nPrioritization Score: 0.7007\n\nDTF: 107.20 days\n\tGID_12713\tGID_1350\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-046\nPrioritization Score: 0.6999\n\nDTF: 107.18 days\n\tGID_1350\tGID_3921\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-047\nPrioritization Score: 0.6990\n\nDTF: 107.17 days\n\tGID_1350\tGID_20053\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-048\nPrioritization Score: 0.6989\n\nDTF: 107.17 days\n\tGID_1233\tGID_3745\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-049\nPrioritization Score: 0.6968\n\nDTF: 107.13 days\n\tGID_1350\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-050\nPrioritization Score: 0.6937\n\nDTF: 107.07 days\n\tGID_1350\tGID_13512\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n94\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "NO minimize",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n2323 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 71 lines\n2\nConfigure Cross Generation\nGY weight\nDTF weight\nNO weight\nLB weight\n\nSet a weight to 0 to omit a trait.\n\nDTF priority\nLater flowering\nMaximum candidate count\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nGenerate Candidate Pairs\n3\nCandidate Results\n\nRelative application score used to prioritize candidate pairs; not a probability of breeding success.\n\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tEXPERT REVIEW\nSTATUS\tACTIONS\nC-001\nPrioritization Score: 1.0000\n\nNO: 3.49 modified SES IRRI rating points\n\tGID_15680\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-002\nPrioritization Score: 0.9862\n\nNO: 3.54 modified SES IRRI rating points\n\tGID_15680\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-003\nPrioritization Score: 0.9824\n\nNO: 3.55 modified SES IRRI rating points\n\tGID_15680\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-004\nPrioritization Score: 0.9739\n\nNO: 3.58 modified SES IRRI rating points\n\tGID_12203\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-005\nPrioritization Score: 0.9717\n\nNO: 3.59 modified SES IRRI rating points\n\tGID_13520\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-006\nPrioritization Score: 0.9681\n\nNO: 3.61 modified SES IRRI rating points\n\tGID_14790\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-007\nPrioritization Score: 0.9583\n\nNO: 3.64 modified SES IRRI rating points\n\tGID_15680\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-008\nPrioritization Score: 0.9576\n\nNO: 3.65 modified SES IRRI rating points\n\tGID_15680\tGID_20053\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-009\nPrioritization Score: 0.9497\n\nNO: 3.67 modified SES IRRI rating points\n\tGID_10452\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-010\nPrioritization Score: 0.9420\n\nNO: 3.70 modified SES IRRI rating points\n\tGID_10159\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-011\nPrioritization Score: 0.9344\n\nNO: 3.73 modified SES IRRI rating points\n\tGID_15680\tGID_16416\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-012\nPrioritization Score: 0.9335\n\nNO: 3.74 modified SES IRRI rating points\n\tGID_15680\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-013\nPrioritization Score: 0.9313\n\nNO: 3.74 modified SES IRRI rating points\n\tGID_14770\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-014\nPrioritization Score: 0.9240\n\nNO: 3.77 modified SES IRRI rating points\n\tGID_15680\tGID_6687\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-015\nPrioritization Score: 0.9225\n\nNO: 3.78 modified SES IRRI rating points\n\tGID_15680\tGID_5083\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-016\nPrioritization Score: 0.9198\n\nNO: 3.79 modified SES IRRI rating points\n\tGID_12203\tGID_13520\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-017\nPrioritization Score: 0.9189\n\nNO: 3.79 modified SES IRRI rating points\n\tGID_13520\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-018\nPrioritization Score: 0.9148\n\nNO: 3.81 modified SES IRRI rating points\n\tGID_12203\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-019\nPrioritization Score: 0.9143\n\nNO: 3.81 modified SES IRRI rating points\n\tGID_15680\tGID_3723\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-020\nPrioritization Score: 0.9078\n\nNO: 3.83 modified SES IRRI rating points\n\tGID_15680\tGID_9411\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-021\nPrioritization Score: 0.9059\n\nNO: 3.84 modified SES IRRI rating points\n\tGID_15680\tGID_18855\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-022\nPrioritization Score: 0.9018\n\nNO: 3.85 modified SES IRRI rating points\n\tGID_11055\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-023\nPrioritization Score: 0.9003\n\nNO: 3.86 modified SES IRRI rating points\n\tGID_10125\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-024\nPrioritization Score: 0.8994\n\nNO: 3.86 modified SES IRRI rating points\n\tGID_15680\tGID_9844\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-025\nPrioritization Score: 0.8994\n\nNO: 3.86 modified SES IRRI rating points\n\tGID_12516\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-026\nPrioritization Score: 0.8941\n\nNO: 3.88 modified SES IRRI rating points\n\tGID_5190\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-027\nPrioritization Score: 0.8937\n\nNO: 3.88 modified SES IRRI rating points\n\tGID_11333\tGID_12203\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-028\nPrioritization Score: 0.8937\n\nNO: 3.88 modified SES IRRI rating points\n\tGID_10452\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-029\nPrioritization Score: 0.8918\n\nNO: 3.89 modified SES IRRI rating points\n\tGID_10039\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-030\nPrioritization Score: 0.8897\n\nNO: 3.90 modified SES IRRI rating points\n\tGID_15680\tGID_343\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-031\nPrioritization Score: 0.8891\n\nNO: 3.90 modified SES IRRI rating points\n\tGID_12524\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-032\nPrioritization Score: 0.8852\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_14790\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-033\nPrioritization Score: 0.8849\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_10452\tGID_13520\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-034\nPrioritization Score: 0.8838\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_14770\tGID_20053\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-035\nPrioritization Score: 0.8836\n\nNO: 3.92 modified SES IRRI rating points\n\tGID_15680\tGID_2553\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-036\nPrioritization Score: 0.8826\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_12700\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-037\nPrioritization Score: 0.8817\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_15680\tGID_9673\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-038\nPrioritization Score: 0.8816\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_12203\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-039\nPrioritization Score: 0.8803\n\nNO: 3.93 modified SES IRRI rating points\n\tGID_15680\tGID_16780\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-040\nPrioritization Score: 0.8798\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_13324\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-041\nPrioritization Score: 0.8796\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_12906\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-042\nPrioritization Score: 0.8784\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_15680\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-043\nPrioritization Score: 0.8780\n\nNO: 3.94 modified SES IRRI rating points\n\tGID_15680\tGID_8154\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-044\nPrioritization Score: 0.8758\n\nNO: 3.95 modified SES IRRI rating points\n\tGID_12203\tGID_12516\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-045\nPrioritization Score: 0.8742\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_12203\tGID_4437\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-046\nPrioritization Score: 0.8742\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_12203\tGID_13512\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-047\nPrioritization Score: 0.8737\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_10159\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-048\nPrioritization Score: 0.8730\n\nNO: 3.96 modified SES IRRI rating points\n\tGID_12516\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-049\nPrioritization Score: 0.8720\n\nNO: 3.97 modified SES IRRI rating points\n\tGID_15680\tGID_2770\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-050\nPrioritization Score: 0.8713\n\nNO: 3.97 modified SES IRRI rating points\n\tGID_4462\tGID_5190\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n71\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "LB minimize",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n881 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 45 lines\n2\nConfigure Cross Generation\nGY weight\nDTF weight\nNO weight\nLB weight\n\nSet a weight to 0 to omit a trait.\n\nDTF priority\nLater flowering\nMaximum candidate count\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nGenerate Candidate Pairs\n3\nCandidate Results\n\nRelative application score used to prioritize candidate pairs; not a probability of breeding success.\n\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tEXPERT REVIEW\nSTATUS\tACTIONS\nC-001\nPrioritization Score: 1.0000\n\nLB: 0.22 SES IRRI rating points\n\tGID_10125\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-002\nPrioritization Score: 0.9895\n\nLB: 0.26 SES IRRI rating points\n\tGID_11055\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-003\nPrioritization Score: 0.9843\n\nLB: 0.28 SES IRRI rating points\n\tGID_10452\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-004\nPrioritization Score: 0.9757\n\nLB: 0.32 SES IRRI rating points\n\tGID_12524\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-005\nPrioritization Score: 0.9745\n\nLB: 0.32 SES IRRI rating points\n\tGID_8938\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-006\nPrioritization Score: 0.9667\n\nLB: 0.35 SES IRRI rating points\n\tGID_12524\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-007\nPrioritization Score: 0.9656\n\nLB: 0.36 SES IRRI rating points\n\tGID_10452\tGID_12524\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-008\nPrioritization Score: 0.9645\n\nLB: 0.36 SES IRRI rating points\n\tGID_16416\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-009\nPrioritization Score: 0.9639\n\nLB: 0.36 SES IRRI rating points\n\tGID_10125\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-010\nPrioritization Score: 0.9619\n\nLB: 0.37 SES IRRI rating points\n\tGID_3143\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-011\nPrioritization Score: 0.9595\n\nLB: 0.38 SES IRRI rating points\n\tGID_12203\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-012\nPrioritization Score: 0.9595\n\nLB: 0.38 SES IRRI rating points\n\tGID_3921\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-013\nPrioritization Score: 0.9586\n\nLB: 0.38 SES IRRI rating points\n\tGID_10125\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-014\nPrioritization Score: 0.9572\n\nLB: 0.39 SES IRRI rating points\n\tGID_10125\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-015\nPrioritization Score: 0.9561\n\nLB: 0.39 SES IRRI rating points\n\tGID_12524\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-016\nPrioritization Score: 0.9538\n\nLB: 0.40 SES IRRI rating points\n\tGID_9201\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-017\nPrioritization Score: 0.9535\n\nLB: 0.40 SES IRRI rating points\n\tGID_10159\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-018\nPrioritization Score: 0.9516\n\nLB: 0.41 SES IRRI rating points\n\tGID_12524\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-019\nPrioritization Score: 0.9502\n\nLB: 0.42 SES IRRI rating points\n\tGID_14902\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-020\nPrioritization Score: 0.9459\n\nLB: 0.43 SES IRRI rating points\n\tGID_12203\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-021\nPrioritization Score: 0.9438\n\nLB: 0.44 SES IRRI rating points\n\tGID_20053\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-022\nPrioritization Score: 0.9423\n\nLB: 0.45 SES IRRI rating points\n\tGID_4437\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-023\nPrioritization Score: 0.9398\n\nLB: 0.46 SES IRRI rating points\n\tGID_10125\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-024\nPrioritization Score: 0.9365\n\nLB: 0.47 SES IRRI rating points\n\tGID_10125\tGID_12203\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-025\nPrioritization Score: 0.9359\n\nLB: 0.47 SES IRRI rating points\n\tGID_14790\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-026\nPrioritization Score: 0.9354\n\nLB: 0.47 SES IRRI rating points\n\tGID_10039\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-027\nPrioritization Score: 0.9352\n\nLB: 0.47 SES IRRI rating points\n\tGID_14790\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-028\nPrioritization Score: 0.9341\n\nLB: 0.48 SES IRRI rating points\n\tGID_11055\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-029\nPrioritization Score: 0.9319\n\nLB: 0.49 SES IRRI rating points\n\tGID_10452\tGID_11055\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-030\nPrioritization Score: 0.9317\n\nLB: 0.49 SES IRRI rating points\n\tGID_20053\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-031\nPrioritization Score: 0.9316\n\nLB: 0.49 SES IRRI rating points\n\tGID_11055\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-032\nPrioritization Score: 0.9308\n\nLB: 0.49 SES IRRI rating points\n\tGID_12524\tGID_14790\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-033\nPrioritization Score: 0.9304\n\nLB: 0.49 SES IRRI rating points\n\tGID_10125\tGID_14790\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-034\nPrioritization Score: 0.9292\n\nLB: 0.50 SES IRRI rating points\n\tGID_10125\tGID_12524\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-035\nPrioritization Score: 0.9291\n\nLB: 0.50 SES IRRI rating points\n\tGID_10159\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-036\nPrioritization Score: 0.9281\n\nLB: 0.50 SES IRRI rating points\n\tGID_10159\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-037\nPrioritization Score: 0.9279\n\nLB: 0.50 SES IRRI rating points\n\tGID_10125\tGID_10159\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-038\nPrioritization Score: 0.9273\n\nLB: 0.50 SES IRRI rating points\n\tGID_10452\tGID_3921\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-039\nPrioritization Score: 0.9268\n\nLB: 0.51 SES IRRI rating points\n\tGID_10396\tGID_12524\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-040\nPrioritization Score: 0.9264\n\nLB: 0.51 SES IRRI rating points\n\tGID_4788\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-041\nPrioritization Score: 0.9261\n\nLB: 0.51 SES IRRI rating points\n\tGID_10452\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-042\nPrioritization Score: 0.9233\n\nLB: 0.52 SES IRRI rating points\n\tGID_4462\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-043\nPrioritization Score: 0.9197\n\nLB: 0.53 SES IRRI rating points\n\tGID_11055\tGID_12524\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-044\nPrioritization Score: 0.9175\n\nLB: 0.54 SES IRRI rating points\n\tGID_3143\tGID_4437\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-045\nPrioritization Score: 0.9175\n\nLB: 0.54 SES IRRI rating points\n\tGID_4462\tGID_7208\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-046\nPrioritization Score: 0.9172\n\nLB: 0.54 SES IRRI rating points\n\tGID_20053\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-047\nPrioritization Score: 0.9167\n\nLB: 0.55 SES IRRI rating points\n\tGID_10159\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-048\nPrioritization Score: 0.9152\n\nLB: 0.55 SES IRRI rating points\n\tGID_14790\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-049\nPrioritization Score: 0.9132\n\nLB: 0.56 SES IRRI rating points\n\tGID_10159\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-050\nPrioritization Score: 0.9126\n\nLB: 0.56 SES IRRI rating points\n\tGID_6922\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n45\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "weighted four-trait ranking",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nBreed Designer\n\nConstruct and explore candidate crosses using user-defined criteria.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\n\n881 eligible unrecorded pairs | authoritative ranking order\n\n1\nSelect Parent Pool\nGenotype\nAvailable\nPhenotype\nAny\nPedigree\nAny\nSelected: 45 lines\n2\nConfigure Cross Generation\nGY weight\nDTF weight\nNO weight\nLB weight\n\nSet a weight to 0 to omit a trait.\n\nDTF priority\nLater flowering\nMaximum candidate count\nExclude self-crosses\nExclude duplicate parent pairs\nExclude historically recorded crosses\nGenerate Candidate Pairs\n3\nCandidate Results\n\nRelative application score used to prioritize candidate pairs; not a probability of breeding success.\n\nCANDIDATE\nID\tPARENT A\tPARENT B\tGENOTYPE\tHISTORICAL\nCROSS\tEXPERT REVIEW\nSTATUS\tACTIONS\nC-001\nPrioritization Score: 0.7214\n\nGY: 9092.43 kg/ha\nDTF: 98.84 days\nNO: 4.78 modified SES IRRI rating points\nLB: 0.32 SES IRRI rating points\n\tGID_8938\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-002\nPrioritization Score: 0.7146\n\nGY: 8956.54 kg/ha\nDTF: 97.46 days\nNO: 4.27 modified SES IRRI rating points\nLB: 0.48 SES IRRI rating points\n\tGID_11055\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-003\nPrioritization Score: 0.7060\n\nGY: 8614.15 kg/ha\nDTF: 100.67 days\nNO: 4.34 modified SES IRRI rating points\nLB: 0.56 SES IRRI rating points\n\tGID_10159\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-004\nPrioritization Score: 0.7056\n\nGY: 9296.91 kg/ha\nDTF: 97.51 days\nNO: 4.77 modified SES IRRI rating points\nLB: 0.80 SES IRRI rating points\n\tGID_16416\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-005\nPrioritization Score: 0.7050\n\nGY: 8836.60 kg/ha\nDTF: 98.52 days\nNO: 4.37 modified SES IRRI rating points\nLB: 0.51 SES IRRI rating points\n\tGID_10452\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-006\nPrioritization Score: 0.7047\n\nGY: 9081.32 kg/ha\nDTF: 97.07 days\nNO: 4.68 modified SES IRRI rating points\nLB: 0.28 SES IRRI rating points\n\tGID_10452\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-007\nPrioritization Score: 0.7029\n\nGY: 8335.52 kg/ha\nDTF: 99.57 days\nNO: 3.54 modified SES IRRI rating points\nLB: 0.78 SES IRRI rating points\n\tGID_15680\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-008\nPrioritization Score: 0.7006\n\nGY: 8748.93 kg/ha\nDTF: 98.74 days\nNO: 4.24 modified SES IRRI rating points\nLB: 0.61 SES IRRI rating points\n\tGID_10452\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-009\nPrioritization Score: 0.6953\n\nGY: 8467.05 kg/ha\nDTF: 99.65 days\nNO: 3.74 modified SES IRRI rating points\nLB: 1.00 SES IRRI rating points\n\tGID_15680\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-010\nPrioritization Score: 0.6952\n\nGY: 9113.72 kg/ha\nDTF: 96.27 days\nNO: 4.66 modified SES IRRI rating points\nLB: 0.36 SES IRRI rating points\n\tGID_16416\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-011\nPrioritization Score: 0.6937\n\nGY: 9157.39 kg/ha\nDTF: 97.39 days\nNO: 4.65 modified SES IRRI rating points\nLB: 0.82 SES IRRI rating points\n\tGID_3143\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-012\nPrioritization Score: 0.6915\n\nGY: 9030.62 kg/ha\nDTF: 95.48 days\nNO: 4.22 modified SES IRRI rating points\nLB: 0.64 SES IRRI rating points\n\tGID_16416\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-013\nPrioritization Score: 0.6902\n\nGY: 8839.08 kg/ha\nDTF: 97.63 days\nNO: 4.06 modified SES IRRI rating points\nLB: 1.01 SES IRRI rating points\n\tGID_12203\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-014\nPrioritization Score: 0.6892\n\nGY: 8515.57 kg/ha\nDTF: 100.85 days\nNO: 4.54 modified SES IRRI rating points\nLB: 0.38 SES IRRI rating points\n\tGID_10125\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-015\nPrioritization Score: 0.6885\n\nGY: 8900.67 kg/ha\nDTF: 100.17 days\nNO: 4.85 modified SES IRRI rating points\nLB: 0.74 SES IRRI rating points\n\tGID_12524\tGID_7208\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-016\nPrioritization Score: 0.6882\n\nGY: 8516.06 kg/ha\nDTF: 99.84 days\nNO: 4.22 modified SES IRRI rating points\nLB: 0.60 SES IRRI rating points\n\tGID_10452\tGID_7208\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-017\nPrioritization Score: 0.6881\n\nGY: 9068.94 kg/ha\nDTF: 96.52 days\nNO: 4.79 modified SES IRRI rating points\nLB: 0.26 SES IRRI rating points\n\tGID_11055\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-018\nPrioritization Score: 0.6875\n\nGY: 8653.93 kg/ha\nDTF: 97.90 days\nNO: 4.14 modified SES IRRI rating points\nLB: 0.55 SES IRRI rating points\n\tGID_10159\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-019\nPrioritization Score: 0.6874\n\nGY: 8785.84 kg/ha\nDTF: 98.42 days\nNO: 4.60 modified SES IRRI rating points\nLB: 0.36 SES IRRI rating points\n\tGID_10452\tGID_12524\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-020\nPrioritization Score: 0.6862\n\nGY: 8644.06 kg/ha\nDTF: 100.89 days\nNO: 4.82 modified SES IRRI rating points\nLB: 0.37 SES IRRI rating points\n\tGID_3143\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-021\nPrioritization Score: 0.6861\n\nGY: 8949.95 kg/ha\nDTF: 97.65 days\nNO: 4.61 modified SES IRRI rating points\nLB: 0.56 SES IRRI rating points\n\tGID_6922\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-022\nPrioritization Score: 0.6839\n\nGY: 8747.81 kg/ha\nDTF: 98.34 days\nNO: 4.42 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_12203\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-023\nPrioritization Score: 0.6839\n\nGY: 8505.57 kg/ha\nDTF: 99.15 days\nNO: 3.98 modified SES IRRI rating points\nLB: 0.82 SES IRRI rating points\n\tGID_15680\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-024\nPrioritization Score: 0.6837\n\nGY: 8734.13 kg/ha\nDTF: 98.29 days\nNO: 4.39 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_12524\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-025\nPrioritization Score: 0.6814\n\nGY: 8940.72 kg/ha\nDTF: 96.62 days\nNO: 4.49 modified SES IRRI rating points\nLB: 0.53 SES IRRI rating points\n\tGID_11055\tGID_12524\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-026\nPrioritization Score: 0.6786\n\nGY: 8921.38 kg/ha\nDTF: 96.02 days\nNO: 4.13 modified SES IRRI rating points\nLB: 0.90 SES IRRI rating points\n\tGID_7218\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-027\nPrioritization Score: 0.6774\n\nGY: 8344.72 kg/ha\nDTF: 100.94 days\nNO: 4.02 modified SES IRRI rating points\nLB: 0.97 SES IRRI rating points\n\tGID_15680\tGID_7208\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-028\nPrioritization Score: 0.6770\n\nGY: 8935.36 kg/ha\nDTF: 97.67 days\nNO: 4.81 modified SES IRRI rating points\nLB: 0.41 SES IRRI rating points\n\tGID_12524\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-029\nPrioritization Score: 0.6761\n\nGY: 8669.20 kg/ha\nDTF: 99.26 days\nNO: 4.61 modified SES IRRI rating points\nLB: 0.49 SES IRRI rating points\n\tGID_11055\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-030\nPrioritization Score: 0.6756\n\nGY: 8918.14 kg/ha\nDTF: 98.18 days\nNO: 4.71 modified SES IRRI rating points\nLB: 0.69 SES IRRI rating points\n\tGID_11055\tGID_3143\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-031\nPrioritization Score: 0.6745\n\nGY: 8488.80 kg/ha\nDTF: 98.73 days\nNO: 4.06 modified SES IRRI rating points\nLB: 0.73 SES IRRI rating points\n\tGID_10452\tGID_12203\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-032\nPrioritization Score: 0.6739\n\nGY: 8707.41 kg/ha\nDTF: 98.66 days\nNO: 4.54 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_12524\tGID_20053\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-033\nPrioritization Score: 0.6732\n\nGY: 8742.21 kg/ha\nDTF: 98.67 days\nNO: 4.62 modified SES IRRI rating points\nLB: 0.55 SES IRRI rating points\n\tGID_14790\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-034\nPrioritization Score: 0.6726\n\nGY: 8937.52 kg/ha\nDTF: 97.98 days\nNO: 4.80 modified SES IRRI rating points\nLB: 0.62 SES IRRI rating points\n\tGID_10159\tGID_7011\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-035\nPrioritization Score: 0.6724\n\nGY: 8840.80 kg/ha\nDTF: 96.95 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.67 SES IRRI rating points\n\tGID_11055\tGID_20053\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-036\nPrioritization Score: 0.6720\n\nGY: 8925.34 kg/ha\nDTF: 97.29 days\nNO: 4.44 modified SES IRRI rating points\nLB: 0.94 SES IRRI rating points\n\tGID_11055\tGID_16416\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-037\nPrioritization Score: 0.6716\n\nGY: 8358.04 kg/ha\nDTF: 97.87 days\nNO: 3.55 modified SES IRRI rating points\nLB: 0.95 SES IRRI rating points\n\tGID_15680\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-038\nPrioritization Score: 0.6713\n\nGY: 8359.74 kg/ha\nDTF: 98.57 days\nNO: 3.61 modified SES IRRI rating points\nLB: 1.08 SES IRRI rating points\n\tGID_14790\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-039\nPrioritization Score: 0.6706\n\nGY: 8491.18 kg/ha\nDTF: 98.96 days\nNO: 4.31 modified SES IRRI rating points\nLB: 0.50 SES IRRI rating points\n\tGID_10159\tGID_4462\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-040\nPrioritization Score: 0.6705\n\nGY: 8661.36 kg/ha\nDTF: 97.35 days\nNO: 4.35 modified SES IRRI rating points\nLB: 0.43 SES IRRI rating points\n\tGID_12203\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-041\nPrioritization Score: 0.6700\n\nGY: 8741.85 kg/ha\nDTF: 98.87 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.99 SES IRRI rating points\n\tGID_6687\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-042\nPrioritization Score: 0.6678\n\nGY: 8304.80 kg/ha\nDTF: 98.26 days\nNO: 3.67 modified SES IRRI rating points\nLB: 0.82 SES IRRI rating points\n\tGID_10452\tGID_15680\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-043\nPrioritization Score: 0.6677\n\nGY: 8323.16 kg/ha\nDTF: 99.78 days\nNO: 4.27 modified SES IRRI rating points\nLB: 0.40 SES IRRI rating points\n\tGID_10159\tGID_8938\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-044\nPrioritization Score: 0.6664\n\nGY: 8810.55 kg/ha\nDTF: 95.85 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.40 SES IRRI rating points\n\tGID_9201\tGID_9577\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-045\nPrioritization Score: 0.6660\n\nGY: 8452.49 kg/ha\nDTF: 99.52 days\nNO: 4.36 modified SES IRRI rating points\nLB: 0.57 SES IRRI rating points\n\tGID_4462\tGID_4788\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-046\nPrioritization Score: 0.6647\n\nGY: 8826.94 kg/ha\nDTF: 97.35 days\nNO: 4.40 modified SES IRRI rating points\nLB: 0.89 SES IRRI rating points\n\tGID_16416\tGID_20053\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-047\nPrioritization Score: 0.6646\n\nGY: 8792.12 kg/ha\nDTF: 99.38 days\nNO: 4.72 modified SES IRRI rating points\nLB: 0.89 SES IRRI rating points\n\tGID_12524\tGID_4437\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-048\nPrioritization Score: 0.6644\n\nGY: 9049.85 kg/ha\nDTF: 96.30 days\nNO: 4.79 modified SES IRRI rating points\nLB: 0.61 SES IRRI rating points\n\tGID_16416\tGID_9201\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-049\nPrioritization Score: 0.6641\n\nGY: 8945.19 kg/ha\nDTF: 96.43 days\nNO: 4.62 modified SES IRRI rating points\nLB: 0.63 SES IRRI rating points\n\tGID_10452\tGID_6922\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\n\nC-050\nPrioritization Score: 0.6639\n\nGY: 8895.20 kg/ha\nDTF: 95.78 days\nNO: 4.49 modified SES IRRI rating points\nLB: 0.52 SES IRRI rating points\n\tGID_4462\tGID_7218\t\nBoth\tNot recorded\tPending\t\nOpen in Cross Lab · Save · Add\nPARENT POOL SUMMARY\nLines in pool\n45\nWith genotype\nAll selected\n\nACTIVE FILTERS\n\nGenotype: Available\n\nGENERATION RULES\n\nSelf-crosses\nExcluded\nDuplicate pairs\nExcluded\nRecorded crosses\nExcluded\nCandidate count\n50 of max 50\nSCIENTIFIC LIMITATIONS\nBreed Designer prioritizes unrecorded crosses using selected trait objectives.\nfinal-v1 supports ranking for eligible represented INIA parents.\nScores prioritize candidates for review; they are not breeding success probabilities."
+    },
+    {
+      "name": "installed Compare uses persisted snapshots",
+      "value": "Compare saved candidates\n\nSaved estimates only. Missing values are not recalculated.\n\nAttribute\tGID_8938 × GID_9201\tInstalled QA 2026-10-11T12:45:03.438Z\nParent A\tGID_8938\tGID_10039\nParent B\tGID_9201\tGID_10125\nGY estimate\t9092.4348 kg/ha\t7891.2235 kg/ha\nDTF estimate\t98.8421 days\t98.6334 days\nNO estimate\t4.7842 modified SES IRRI rating points\t4.5914 modified SES IRRI rating points\nLB estimate\t0.3205 SES IRRI rating points\t0.8834 SES IRRI rating points\nTrait objectives\tGY: Maximize, DTF: Maximize, NO: Minimize, LB: Minimize\tNot saved\nWeights\tGY: 2, DTF: 1, NO: 1, LB: 1\tNot saved\nPrioritization Score\t0.7214\tNot saved\nModel bundle\tfinal-v1\tfinal-v1\nHistorical status\tNot recorded\tNot recorded\n\nRelative application score used to prioritize candidate pairs; not a probability of breeding success.\n\nScores from different objectives, weights or candidate pools are not directly comparable.\n\nBack to Workspace\nClose"
+    },
+    {
+      "name": "reopen saved candidate",
+      "value": true
+    },
+    {
+      "name": "runtime metadata and Model Insights",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nModel Insights\n\nUnderstand model performance, validation protocols, and limitations.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nMODEL OVERVIEW\n\nModel bundle\n\nfinal-v1\n\nValidation status\n\nHistorical validation passed\n\nExternal expert review\n\nPending\n\nUsage\n\nDecision-support only\n\nTraining\n\nCompleted\n\nPredictive ranking\n\nEnabled\n\nTRAIT MODEL SUMMARY\nTRAIT\tSELECTED MODEL FAMILY\tHYPERPARAMETERS\nGY\tExtraTrees\tmin_samples_leaf = 3, n_estimators = 100\nDTF\tExtraTrees\tmin_samples_leaf = 3, n_estimators = 100\nNO\tRidge\talpha = 100\nLB\tExtraTrees\tmin_samples_leaf = 3, n_estimators = 100\nVALIDATION RESULTS\nDetailed validation evidence remains in frozen model cards\nTRAIT\tNESTED CV MAE\tPARENT-DISJOINT MAE\tSPEARMAN (NESTED CV)\tSPEARMAN (PARENT-DISJOINT)\tBASELINE MAE\nHistorical pedigree registry pairs\n209\n\nINIA historical rice breeding dataset\n\nGY: kg/ha | 160 training pairs | 91 eligible parents | Maximize\n\nDTF: days | 172 training pairs | 94 eligible parents | Minimize / Maximize\n\nNO: modified SES IRRI rating points | 137 training pairs | 71 eligible parents | Minimize\n\nLB: SES IRRI rating points | 61 training pairs | 45 eligible parents | Minimize\n\nHISTORICAL SCOPE\n\nHistorical-descendant cross-level estimates among represented INIA parents. Validation is same-dataset; external germplasm is not supported.\n\nAPPLICATION PRIORITIZATION\n\nPrioritization Scores express selected trait objectives and weights. External expert review is pending.\n\nSCIENTIFIC LIMITATIONS\n\nengineering release candidate; target-device resources and breeder/scientific sign-off pending\n\nSame previously inspected historical INIA dataset; no independent validation.\n\nSelected historical descendant means, not F1, causal or field predictions.\n\nEnvironment, generations, selection, relatedness and target uncertainty unadjusted.\n\nDependent repeated folds; descriptive distributions are not confidence intervals.\n\nNo arbitrary external germplasm inference; target-device deployment review pending.\n\nControlled LB stress was not estimable in development."
+    },
+    {
+      "name": "installed paths and metadata health",
+      "value": "GeneField\nOverview\nLine Explorer\nPedigree Explorer\nCross Lab\nBreed Designer\nCandidate Workspace\nModel Insights\nSettings\nAbout GeneField\nSettings\n\nConfigure appearance, local storage, and the inference engine.\n\nDataset\nINIA Uruguay\nModel\nfinal-v1\nAPPEARANCE\nTheme\nLight\nDark\nSystem\nInterface density\n\nCompact fits more content; Comfortable adds space to menus, cards, and table rows.\n\nCompact\nComfortable\nDATA AND STORAGE\nDatabase\nSQLite - local\nStorage location\nUnavailable\nDatabase size\nNot measured\nExport workspace data\nBackup local workspace\nRestore backup\nINFERENCE ENGINE\nModel bundle location\nUnavailable\nCheck\nModel bundle version\nUnavailable\nBundle integrity status\nNot checked\nLocal inference availability\nUnavailable\nPredictive ranking\nUnavailable\nLocked\nTest inference connection\nRestart local analysis\n\nThe final-v1 service is ready. Bundle integrity was verified during loading.\n\nAPPLICATION\nLanguage preference\nEnglish\nApplication version\nUnavailable\nDiagnostic logs\nOpen log folder\nExport logs\n\nSettings are stored locally. No account or network connection is required."
+    },
+    {
+      "name": "controlled restart replaces exactly one sidecar",
+      "value": {
+        "before": {
+          "ProcessId": 14240,
+          "ParentProcessId": 16972,
+          "Name": "genefield-final-v1.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+        },
+        "after": [
+          {
+            "ProcessId": 12080,
+            "ParentProcessId": 16972,
+            "Name": "genefield-final-v1.exe",
+            "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+          }
+        ]
+      }
+    },
+    {
+      "name": "normal close cleans installed application and sidecar",
+      "value": {
+        "app_pid": 16972,
+        "sidecar_pid": 12080,
+        "survivors": null
+      }
+    },
+    {
+      "name": "whole installed restart 1 preserves exact snapshots",
+      "value": true
+    },
+    {
+      "name": "normal close cleans installed application and sidecar",
+      "value": {
+        "app_pid": 19908,
+        "sidecar_pid": 7828,
+        "survivors": null
+      }
+    },
+    {
+      "name": "whole installed restart 2 preserves exact snapshots",
+      "value": true
+    },
+    {
+      "name": "normal close cleans installed application and sidecar",
+      "value": {
+        "app_pid": 16656,
+        "sidecar_pid": 13488,
+        "survivors": null
+      }
+    },
+    {
+      "name": "whole installed restart 3 preserves exact snapshots",
+      "value": true
+    },
+    {
+      "name": "normal close cleans installed application and sidecar",
+      "value": {
+        "app_pid": 17892,
+        "sidecar_pid": 15840,
+        "survivors": null
+      }
+    },
+    {
+      "name": "whole installed restart 4 preserves exact snapshots",
+      "value": true
+    },
+    {
+      "name": "only QA-created workspace rows removed",
+      "value": [
+        "2dca6e9e-f629-4af7-8634-845398ceb85a",
+        "723a590e-c320-47db-8dcf-2fd8688ee52a"
+      ]
+    },
+    {
+      "name": "normal close cleans installed application and sidecar",
+      "value": {
+        "app_pid": 8156,
+        "sidecar_pid": 13536,
+        "survivors": null
+      }
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+    "GeneField diagnostic yv: Both parents must be represented in final training for NO\n    at http://tauri.localhost/assets/index-lNOa2Gni.js:51:93470\n    at gv.emit (http://tauri.localhost/assets/index-lNOa2Gni.js:51:90303)\n    at r.onmessage (http://tauri.localhost/assets/index-lNOa2Gni.js:51:91362)\n    at http://tauri.localhost/assets/index-lNOa2Gni.js:51:88705\n    at <anonymous>:272:26\n    at Object.runCallback (<anonymous>:284:7)\n    at <anonymous>:1:28",
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED",
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED"
+  ],
+  "samples": {
+    "startup_ui_ms": [
+      3395.9883000000004,
+      1618.149900000004,
+      1818.1520999999993,
+      1460.4943000000058,
+      1313.0359000000026
+    ],
+    "startup_ml_ms": [
+      19674.128500000003,
+      5727.1031,
+      6339.386999999995,
+      5001.449200000003,
+      5841.464099999997
+    ],
+    "cross_ui_ms": [
+      672.9268999999986,
+      186.99459999999817,
+      219.6978999999992,
+      189.79729999999836,
+      172.04750000000058,
+      184.88910000000033,
+      178.14140000000043,
+      176.98249999999825,
+      178.22819999999774,
+      183.46190000000206
+    ],
+    "gy_ui_ms": [
+      439.0429000000004,
+      390.51580000000104,
+      492.1886000000013,
+      1111.8351000000002,
+      393.9992999999995,
+      357.46429999999964,
+      331.2481000000007,
+      333.5659000000014,
+      333.036500000002,
+      328.9553999999989
+    ],
+    "weighted_ui_ms": [
+      388.83230000000185,
+      327.03949999999895,
+      382.7075000000041,
+      322.5512999999992,
+      441.2839000000022,
+      315.00619999999617,
+      317.2445000000007,
+      325.0344999999943,
+      311.1814000000013,
+      327.40209999999934
+    ]
+  },
+  "launches": [
+    {
+      "index": 0,
+      "pid": 16972,
+      "url": "http://tauri.localhost/",
+      "process_tree": [
+        {
+          "ProcessId": 16972,
+          "ParentProcessId": 9788,
+          "Name": "GeneField.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe"
+        },
+        {
+          "ProcessId": 7912,
+          "ParentProcessId": 16972,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 19280,
+          "ParentProcessId": 7912,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 18992,
+          "ParentProcessId": 7912,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 6268,
+          "ParentProcessId": 7912,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 10728,
+          "ParentProcessId": 7912,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 2388,
+          "ParentProcessId": 7912,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 14240,
+          "ParentProcessId": 16972,
+          "Name": "genefield-final-v1.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+        },
+        {
+          "ProcessId": 10892,
+          "ParentProcessId": 14240,
+          "Name": "conhost.exe",
+          "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe"
+        }
+      ],
+      "external_fetch_blocked": true
+    },
+    {
+      "index": 1,
+      "pid": 19908,
+      "url": "http://tauri.localhost/",
+      "process_tree": [
+        {
+          "ProcessId": 19908,
+          "ParentProcessId": 9788,
+          "Name": "GeneField.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe"
+        },
+        {
+          "ProcessId": 19916,
+          "ParentProcessId": 19908,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 16304,
+          "ParentProcessId": 19916,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 14536,
+          "ParentProcessId": 19916,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 16740,
+          "ParentProcessId": 19916,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 13224,
+          "ParentProcessId": 19916,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 2324,
+          "ParentProcessId": 19916,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 7828,
+          "ParentProcessId": 19908,
+          "Name": "genefield-final-v1.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+        },
+        {
+          "ProcessId": 3704,
+          "ParentProcessId": 7828,
+          "Name": "conhost.exe",
+          "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe"
+        }
+      ],
+      "external_fetch_blocked": true
+    },
+    {
+      "index": 2,
+      "pid": 16656,
+      "url": "http://tauri.localhost/",
+      "process_tree": [
+        {
+          "ProcessId": 16656,
+          "ParentProcessId": 9788,
+          "Name": "GeneField.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe"
+        },
+        {
+          "ProcessId": 13908,
+          "ParentProcessId": 16656,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 12080,
+          "ParentProcessId": 13908,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 11624,
+          "ParentProcessId": 13908,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 12788,
+          "ParentProcessId": 13908,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 1544,
+          "ParentProcessId": 13908,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 18932,
+          "ParentProcessId": 13908,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 13488,
+          "ParentProcessId": 16656,
+          "Name": "genefield-final-v1.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+        },
+        {
+          "ProcessId": 3324,
+          "ParentProcessId": 13488,
+          "Name": "conhost.exe",
+          "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe"
+        }
+      ],
+      "external_fetch_blocked": true
+    },
+    {
+      "index": 3,
+      "pid": 17892,
+      "url": "http://tauri.localhost/",
+      "process_tree": [
+        {
+          "ProcessId": 17892,
+          "ParentProcessId": 9788,
+          "Name": "GeneField.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe"
+        },
+        {
+          "ProcessId": 2232,
+          "ParentProcessId": 17892,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 17912,
+          "ParentProcessId": 2232,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 17620,
+          "ParentProcessId": 2232,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 1344,
+          "ParentProcessId": 2232,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 16944,
+          "ParentProcessId": 2232,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 6460,
+          "ParentProcessId": 2232,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 15840,
+          "ParentProcessId": 17892,
+          "Name": "genefield-final-v1.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+        },
+        {
+          "ProcessId": 11348,
+          "ParentProcessId": 15840,
+          "Name": "conhost.exe",
+          "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe"
+        }
+      ],
+      "external_fetch_blocked": true
+    },
+    {
+      "index": 4,
+      "pid": 8156,
+      "url": "http://tauri.localhost/",
+      "process_tree": [
+        {
+          "ProcessId": 8156,
+          "ParentProcessId": 9788,
+          "Name": "GeneField.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe"
+        },
+        {
+          "ProcessId": 17844,
+          "ParentProcessId": 8156,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 14312,
+          "ParentProcessId": 17844,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 2592,
+          "ParentProcessId": 17844,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 11376,
+          "ParentProcessId": 17844,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 6116,
+          "ParentProcessId": 17844,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 19324,
+          "ParentProcessId": 17844,
+          "Name": "msedgewebview2.exe",
+          "ExecutablePath": "C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.62\\msedgewebview2.exe"
+        },
+        {
+          "ProcessId": 13536,
+          "ParentProcessId": 8156,
+          "Name": "genefield-final-v1.exe",
+          "ExecutablePath": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe"
+        },
+        {
+          "ProcessId": 8268,
+          "ParentProcessId": 13536,
+          "Name": "conhost.exe",
+          "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe"
+        }
+      ],
+      "external_fetch_blocked": true
+    }
+  ],
+  "memory": [
+    {
+      "Id": 3900,
+      "ProcessName": "conhost",
+      "WorkingSet64": 7172096,
+      "PrivateMemorySize64": 1216512
+    },
+    {
+      "Id": 16972,
+      "ProcessName": "GeneField",
+      "WorkingSet64": 33222656,
+      "PrivateMemorySize64": 7315456
+    },
+    {
+      "Id": 12080,
+      "ProcessName": "genefield-final-v1",
+      "WorkingSet64": 154923008,
+      "PrivateMemorySize64": 600117248
+    },
+    {
+      "Id": 2388,
+      "ProcessName": "msedgewebview2",
+      "WorkingSet64": 289595392,
+      "PrivateMemorySize64": 234086400
+    },
+    {
+      "Id": 6268,
+      "ProcessName": "msedgewebview2",
+      "WorkingSet64": 36470784,
+      "PrivateMemorySize64": 11948032
+    },
+    {
+      "Id": 7912,
+      "ProcessName": "msedgewebview2",
+      "WorkingSet64": 103563264,
+      "PrivateMemorySize64": 41738240
+    },
+    {
+      "Id": 10728,
+      "ProcessName": "msedgewebview2",
+      "WorkingSet64": 20000768,
+      "PrivateMemorySize64": 7700480
+    },
+    {
+      "Id": 18992,
+      "ProcessName": "msedgewebview2",
+      "WorkingSet64": 230612992,
+      "PrivateMemorySize64": 305549312
+    },
+    {
+      "Id": 19280,
+      "ProcessName": "msedgewebview2",
+      "WorkingSet64": 19013632,
+      "PrivateMemorySize64": 3657728
+    }
+  ],
+  "result": "PASS",
+  "performance": {
+    "startup_ui_ms": {
+      "n": 5,
+      "mean": 1921.1641000000025,
+      "median": 1618.149900000004
+    },
+    "startup_ml_ms": {
+      "n": 5,
+      "mean": 8516.70638,
+      "median": 5841.464099999997
+    },
+    "cross_ui_ms": {
+      "n": 10,
+      "mean": 234.31672999999938,
+      "median": 184.1755000000012,
+      "empirical_p95": 672.9268999999986
+    },
+    "gy_ui_ms": {
+      "n": 10,
+      "mean": 451.1851900000005,
+      "median": 373.99005000000034,
+      "empirical_p95": 1111.8351000000002
+    },
+    "weighted_ui_ms": {
+      "n": 10,
+      "mean": 345.8283199999998,
+      "median": 326.0369999999966,
+      "empirical_p95": 441.2839000000022
+    }
+  }
+}

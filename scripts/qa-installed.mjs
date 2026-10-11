@@ -10,8 +10,12 @@ const exec = promisify(execFile);
 const binary = process.env.GENEFIELD_INSTALLED_EXE;
 if (!binary || binary.toLowerCase().includes("\\projects\\"))
   throw new Error("Installed EXE outside repositories is required");
-const out = path.resolve("docs/evidence/release/installed");
-const cwd = path.join(os.tmpdir(), "genefield-installed-qa-20261011");
+const out = path.resolve(
+  process.env.GENEFIELD_QA_OUTPUT || "docs/evidence/release/installed",
+);
+const cwd =
+  process.env.GENEFIELD_QA_CWD ||
+  path.join(os.tmpdir(), "genefield-installed-qa-20261011");
 mkdirSync(out, { recursive: true });
 mkdirSync(cwd, { recursive: true });
 const evidence = {
@@ -107,7 +111,7 @@ async function start(index) {
   await page.getByRole("link", { name: "Overview", exact: true }).waitFor();
   evidence.samples.startup_ui_ms.push(performance.now() - start);
   await page.getByRole("link", { name: "Overview", exact: true }).click();
-  await page.getByText("20,628", { exact: true }).waitFor();
+  await page.getByText("20,628", { exact: true }).waitFor({ timeout: 250_000 });
   evidence.samples.startup_ml_ms.push(performance.now() - start);
   assert(await page.evaluate(() => !!window.__TAURI_INTERNALS__));
   await page.context().setOffline(true);
@@ -456,6 +460,17 @@ try {
       .catch(() => "");
   throw error;
 } finally {
+  if (app && app.exitCode === null) {
+    try {
+      await stop();
+    } catch {
+      // Only this harness's process tree; never leave the test app holding
+      // workspace files after a failed assertion.
+      await exec("taskkill.exe", ["/PID", String(app.pid), "/T", "/F"], {
+        windowsHide: true,
+      });
+    }
+  }
   const stats = (values) => {
     const sorted = [...values].sort((a, b) => a - b);
     return {

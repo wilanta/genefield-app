@@ -16,8 +16,12 @@ export type DatasetSummary = {
 type Snapshot = { lines: RiceLine[]; summary: DatasetSummary };
 let snapshot: Promise<Snapshot> | undefined;
 async function load() {
-  // A failure stays a failure; never switch to mocks after a native error.
-  snapshot ??= invoke<Snapshot>("reference_snapshot");
+  // Share successful/in-flight reads, but allow a real native read to recover
+  // on a later attempt. Never substitute mock data after a native failure.
+  snapshot ??= invoke<Snapshot>("reference_snapshot").catch((error) => {
+    snapshot = undefined;
+    throw error;
+  });
   return snapshot;
 }
 export const referenceService = {
@@ -50,8 +54,7 @@ export const referenceService = {
     const lines = (await load()).lines;
     const index = new Map(lines.map((l) => [l.id, l]));
     const selected = index.get(id);
-    if (!selected)
-      throw new Error("Line not found in GeneField data.");
+    if (!selected) throw new Error("Line not found in GeneField data.");
     const nodes = new Map<string, PedigreeNode>();
     const edges = new Map<string, { source: string; target: string }>();
     const add = (
