@@ -30,3 +30,32 @@ src-tauri/binaries/
 *.sqlite-shm
 __pycache__/
 *.pyc
+
+# Local test/build output.
+/coverage/
+/playwright-report/
+/test-results/
+*.tsbuildinfo
+
+# Keep final release evidence and the baseline used by verify-installed.py.
+# Repeated test output, raw audits, build inventories and Git snapshots stay local.
+/docs/evidence/release/*
+!/docs/evidence/release/application-exe-verification.json
+!/docs/evidence/release/commands.json
+!/docs/evidence/release/final-checks.json
+!/docs/evidence/release/frozen-baseline.json
+!/docs/evidence/release/frozen-preservation.json
+!/docs/evidence/release/h1-checks.json
+!/docs/evidence/release/installation.json
+!/docs/evidence/release/installed-layout.json
+!/docs/evidence/release/normal-console.json
+!/docs/evidence/release/notices-verification.json
+!/docs/evidence/release/npm-audit-assessment.json
+!/docs/evidence/release/target-machine.json
+!/docs/evidence/release/h1-native/
+/docs/evidence/release/h1-native/*
+!/docs/evidence/release/h1-native/desktop-smoke.json
+!/docs/evidence/release/installed/
+/docs/evidence/release/installed/*
+!/docs/evidence/release/installed/qa.json
+!/docs/evidence/release/installed/compare.png

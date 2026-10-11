@@ -1,0 +1,29 @@
+{
+  "all_vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 7,
+    "critical": 0,
+    "total": 7
+  },
+  "production_vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "affected": [
+    "@shadcn/registry",
+    "@ts-morph/common",
+    "braces",
+    "fast-glob",
+    "micromatch",
+    "shadcn",
+    "ts-morph"
+  ],
+  "assessment": "All seven advisories are on shadcn CLI/registry/glob/ts-morph tooling. Source imports only shadcn/tailwind.css; no CLI JavaScript is imported or bundled. shadcn moved to devDependencies without version/resolution/integrity changes. No force fix or major upgrade.",
+  "package_version_changes": []
+}

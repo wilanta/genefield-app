@@ -28,9 +28,7 @@
   },
   "plugins": {
     "sql": {
-      "preload": [
-        "sqlite:genefield.db"
-      ]
+      "preload": ["sqlite:genefield.db"]
     }
   },
   "bundle": {
@@ -43,12 +41,11 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "externalBin": [
-      "binaries/genefield-final-v1"
-    ],
+    "externalBin": ["binaries/genefield-final-v1"],
     "resources": {
       "binaries/_internal/": "_internal/",
-      "resources/data/": "data/"
+      "resources/data/": "data/",
+      "resources/notices/": "notices/"
     }
   }
 }

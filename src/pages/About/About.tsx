@@ -10,7 +10,7 @@ const DATASET_ATTRIBUTION =
   "Dataset source: INIA Uruguay historical rice breeding data. Dryad DOI: 10.5061/dryad.x69p8czn8.";
 
 const LICENSE_ROW_LABEL = "Third-party license notices";
-const LICENSE_ROW_VALUE = "License notice review pending before distribution";
+const LICENSE_ROW_VALUE = "Third-party notices included with the application";
 
 function SectionHeader({ title }: { title: string }) {
   const { t: tr } = useTranslation();
@@ -100,7 +100,7 @@ export default function About() {
             </h2>
             <p className="mt-1 text-[15px] leading-[21px] text-muted-foreground">
               {tr(
-                "An offline desktop application for exploring rice breeding data, inspecting pedigrees, and analyzing parent pairs with experimental, research-only models.",
+                "An offline desktop application for exploring rice breeding data, inspecting pedigrees, and prioritizing parent pairs with historically validated models for represented INIA germplasm.",
               )}
             </p>
           </div>

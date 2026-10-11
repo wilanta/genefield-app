@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "root": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField",
+  "sidecar": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\genefield-final-v1.exe",
+  "internal": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\_internal",
+  "bundle": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\_internal\\bundles\\final-v1",
+  "bundle_count": 1,
+  "reference": "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\data\\genefield-reference.sqlite",
+  "reference_sha256": "35f35c8fd98eb8196f7b39fb5b8fdd551474b35bc345ec4a3102fd12494bf030",
+  "runtime_hashes_verified": 645,
+  "notice_packages_verified": 444,
+  "package_bytes": 236516102,
+  "installed_file_count": 1393,
+  "application_exe_bytes": 8453632,
+  "windows_pe_subsystem": 2
+}

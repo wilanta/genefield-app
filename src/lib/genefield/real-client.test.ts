@@ -4,7 +4,7 @@
 import { beforeAll, afterAll, expect, test, vi } from "vitest";
 import { spawn } from "node:child_process";
 import { createInterface } from "node:readline";
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 vi.mock("@tauri-apps/plugin-shell", () => ({
   Command: {
     sidecar: () => {
@@ -62,12 +62,14 @@ import {
 } from "./client";
 import { analysisError } from "./errors";
 const client = new GeneFieldSidecar();
+const evidenceDir = "docs/evidence/release/real-client";
+mkdirSync(evidenceDir, { recursive: true });
 let metadata: Metadata;
 beforeAll(async () => {
   const start = performance.now();
   metadata = await client.start();
   writeFileSync(
-    "docs/evidence/metadata.json",
+    `${evidenceDir}/metadata.json`,
     JSON.stringify(
       {
         transport: "application TS client with real Node pipes",
@@ -95,7 +97,7 @@ test("request IDs correlate concurrent prediction and historical lookup", async 
     expect(Number.isFinite(p.value)).toBe(true);
   expect(prediction.parent_ids).toEqual(history.parent_ids);
   writeFileSync(
-    "docs/evidence/prediction.json",
+    `${evidenceDir}/prediction.json`,
     JSON.stringify({ prediction, history }, null, 2) + "\n",
   );
 });
@@ -160,7 +162,7 @@ test("actual single-trait objectives, weighted ranking, determinism and candidat
     ),
   ).toEqual(weighted);
   writeFileSync(
-    "docs/evidence/ranking.json",
+    `${evidenceDir}/ranking.json`,
     JSON.stringify({ single_trait: results, weighted }, null, 2) + "\n",
   );
 });

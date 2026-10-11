@@ -1,0 +1,22 @@
+﻿{
+    "console_windows":  [
+
+                        ],
+    "sidecar_pid":  18224,
+    "visible_windows":  [
+                            {
+                                "Pid":  17772,
+                                "Title":  "GeneField",
+                                "Class":  "Tauri Window"
+                            },
+                            {
+                                "Pid":  17772,
+                                "Title":  "",
+                                "Class":  "Tao Thread Event Target"
+                            }
+                        ],
+    "normal_launch":  true,
+    "result":  "PASS",
+    "clean_shutdown":  true,
+    "app_pid":  17772
+}

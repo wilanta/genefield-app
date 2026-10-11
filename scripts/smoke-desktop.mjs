@@ -1,11 +1,44 @@
 // Attach to the REAL Tauri WebView2 started with a debug-only CDP port.
 // No fake Tauri invokes, database adapters, inference or model outputs.
 import { chromium } from "playwright";
-import { writeFileSync } from "node:fs";
+import { writeFileSync, mkdirSync } from "node:fs";
+import path from "node:path";
 import assert from "node:assert/strict";
-const browser = await chromium.connectOverCDP(
-  process.env.GENEFIELD_CDP_URL || "http://127.0.0.1:9223",
-);
+// WebView2 can retain a Vite dependency-optimizer SharedWorker target which
+// Playwright's CDP adapter does not accept. Close that development-only worker
+// before attaching; the real application page and native services are untouched.
+const cdpUrl = process.env.GENEFIELD_CDP_URL || "http://127.0.0.1:9223";
+const version = await (await fetch(`${cdpUrl}/json/version`)).json();
+const socket = new WebSocket(version.webSocketDebuggerUrl);
+await new Promise((resolve, reject) => {
+  socket.addEventListener("open", resolve, { once: true });
+  socket.addEventListener("error", reject, { once: true });
+});
+let commandId = 0;
+const command = (method, params = {}) =>
+  new Promise((resolve) => {
+    const id = ++commandId;
+    const listener = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.id === id) {
+        socket.removeEventListener("message", listener);
+        resolve(data.result);
+      }
+    };
+    socket.addEventListener("message", listener);
+    socket.send(JSON.stringify({ id, method, params }));
+  });
+const targets = await command("Target.getTargets");
+for (const target of targets.targetInfos.filter(
+  (t) =>
+    t.type === "shared_worker" &&
+    t.url.startsWith("blob:http://localhost:1420/"),
+))
+  await command("Target.closeTarget", { targetId: target.targetId });
+socket.close();
+const browser = await chromium.connectOverCDP(cdpUrl);
+const evidenceDir = process.env.GENEFIELD_EVIDENCE_DIR || "docs/evidence";
+mkdirSync(evidenceDir, { recursive: true });
 const page = browser
   .contexts()
   .flatMap((c) => c.pages())
@@ -31,6 +64,7 @@ const nav = async (name) => {
   await page.getByRole("link", { name, exact: true }).click();
 };
 let baselineIds = [];
+let baselineNames = [];
 try {
   if (await page.getByRole("dialog").isVisible())
     await page
@@ -42,6 +76,10 @@ try {
   baselineIds = await page.evaluate(async () => {
     const { candidateStore } = await import("/src/services/index.ts");
     return (await candidateStore.list()).map((c) => c.id);
+  });
+  baselineNames = await page.evaluate(async () => {
+    const { candidateStore } = await import("/src/services/index.ts");
+    return (await candidateStore.list()).map((c) => c.name);
   });
   await nav("Overview");
   await page.getByText("20,628", { exact: true }).waitFor();
@@ -88,12 +126,24 @@ try {
     .getByRole("button", { name: "Analyze Cross", exact: true })
     .click();
   await page.getByText("Analysis complete", { exact: true }).waitFor();
+  assert(
+    (await page.locator("body").innerText()).includes(
+      "Historical validation passed",
+    ),
+  );
+  assert(
+    !(await page.locator("body").innerText()).includes(
+      "Not validated for breeding decisions",
+    ),
+  );
   evidence.performance.cross_ui_ms = performance.now() - crossStart;
   record(
     "Cross Lab real four-trait output and historical lookup",
     await page.locator("body").innerText(),
   );
-  await page.screenshot({ path: "docs/evidence/desktop-cross-lab.png" });
+  await page.screenshot({
+    path: path.join(evidenceDir, "desktop-cross-lab.png"),
+  });
   const name = `Integration smoke ${new Date().toISOString()}`;
   await page
     .getByRole("button", { name: "Save Candidate", exact: true })
@@ -144,6 +194,10 @@ try {
     .getByRole("button", { name: "Generate Candidate Pairs", exact: true })
     .click();
   await page.getByText("C-001", { exact: false }).first().waitFor();
+  await page
+    .getByText("Prioritization Score:", { exact: false })
+    .first()
+    .waitFor();
   evidence.performance.gy_ui_ms = performance.now() - rankStart;
   record(
     "Breed Designer GY maximize native UI",
@@ -209,11 +263,62 @@ try {
     "weighted four-trait native UI",
     await page.locator("body").innerText(),
   );
-  await page.getByRole("button", { name: "Save", exact: true }).first().click();
-  await page
-    .getByRole("button", { name: "Saved", exact: true })
-    .first()
+  let savedRanking = false;
+  for (const row of await page
+    .locator(".breed-designer-candidates tbody tr")
+    .all()) {
+    const cells = await row.getByRole("cell").allTextContents();
+    if (baselineNames.includes(`${cells[1].trim()} × ${cells[2].trim()}`))
+      continue;
+    await row.getByRole("button", { name: "Save", exact: true }).click();
+    await row.getByRole("button", { name: "Saved", exact: true }).waitFor();
+    savedRanking = true;
+    break;
+  }
+  assert(savedRanking, "An unsaved ranked pair is required for smoke save");
+  await nav("Candidate Workspace");
+  const boxes = page.getByRole("checkbox", { name: /^Compare / });
+  await boxes.first().waitFor();
+  assert((await boxes.count()) >= 2);
+  await boxes.nth(0).check();
+  assert(
+    await page
+      .getByRole("button", { name: /^Compare candidates/ })
+      .isDisabled(),
+  );
+  await boxes.nth(1).check();
+  await page.getByRole("button", { name: /^Compare candidates/ }).click();
+  const comparison = page.getByRole("dialog");
+  await comparison
+    .getByText("Compare saved candidates", { exact: true })
     .waitFor();
+  for (const trait of ["GY", "DTF", "NO", "LB"])
+    await comparison.getByText(`${trait} estimate`, { exact: true }).waitFor();
+  await comparison.getByText("final-v1", { exact: true }).first().waitFor();
+  record(
+    "saved comparison native UI, insufficient selection, snapshot bundle and four traits",
+    await comparison.innerText(),
+  );
+  await page.screenshot({
+    path: path.join(evidenceDir, "candidate-compare.png"),
+  });
+  await comparison
+    .getByRole("button", { name: "Back to Workspace", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Clear selection", exact: true })
+    .click();
+  await page.getByText(name, { exact: true }).first().click();
+  await page
+    .getByRole("button", { name: "Open in Cross Lab", exact: true })
+    .click();
+  assert.equal(
+    await page
+      .getByRole("textbox", { name: "Parent A", exact: true })
+      .inputValue(),
+    "GID_10039",
+  );
+  record("reopen saved Cross Lab candidate", true);
   await nav("Settings");
   await page.getByText("Verified by final-v1 loader").waitFor();
   await page
@@ -360,7 +465,9 @@ try {
   }, baselineIds);
   record("test-created workspace rows cleaned up", cleanup);
   assert.equal(evidence.page_errors.length, 0);
-  await page.screenshot({ path: "docs/evidence/desktop-workspace.png" });
+  await page.screenshot({
+    path: path.join(evidenceDir, "desktop-workspace.png"),
+  });
   evidence.result = "PASS";
 } catch (error) {
   evidence.result = "FAIL";
@@ -369,7 +476,7 @@ try {
   throw error;
 } finally {
   writeFileSync(
-    "docs/evidence/desktop-smoke.json",
+    path.join(evidenceDir, "desktop-smoke.json"),
     JSON.stringify(evidence, null, 2) + "\n",
   );
   await browser.close();

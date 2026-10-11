@@ -1,6 +1,6 @@
 # GeneField final-v1 desktop integration
 
-The Windows x64 development integration uses the existing UI, real reference data, and the frozen final-v1 sidecar. Models are not retrained. Results are historical-descendant cross-level modeled estimates for represented INIA germplasm; scientific/breeder approval remains subject to the manifest status. Full A–AT report: [GENEFIELD_INTEGRATION_REPORT.md](GENEFIELD_INTEGRATION_REPORT.md).
+The Windows x64 integration uses the existing UI, real reference data, and the frozen final-v1 sidecar. Models are not retrained. Historical validation passed within represented INIA germplasm; results remain historical-descendant cross-level modeled estimates for candidate prioritization, with external expert review pending. The previous development A–AT record is [GENEFIELD_INTEGRATION_REPORT.md](GENEFIELD_INTEGRATION_REPORT.md); current installer/installed QA A–AI results are [GENEFIELD_RELEASE_READINESS.md](GENEFIELD_RELEASE_READINESS.md).
 
 ## Data responsibilities
 
@@ -94,4 +94,18 @@ The smoke test uses WebView2/CDP, native invoke, real SQL, and the real EXE, rat
 
 ## Remaining limitations
 
-Development integration passed; the installer has not been built/installed. Installed offline validation, installer resource placement, distribution notices/licenses, and scientific/breeder approval are the next steps. There are seven high-severity advisories in the existing shadcn dependency chain, a frontend chunk-size warning, and a React CSR message from the built-in next-themes inline script. The smoke test reported no page exceptions. Settings utilities for backup/restore/logs are not implemented in the template; they now display a notice instead of reporting false success. There is no separate comparison UI to migrate. The unused release cache remains ignored because automatic approval review rejected its deletion as blocked by policy.
+The NSIS installer was built, installed outside both repositories and tested offline on the target laptop. Saved comparison now uses 2–3 persisted snapshots without rerunning inference. Third-party notices are packaged under `notices/`. External expert review remains pending; no field/external/F1 claim is supported. The unsigned installer requires an installed WebView2 runtime for offline use on this tested laptop. Seven high advisories remain on development tooling only (`npm audit --omit=dev`: zero); a frontend chunk warning and existing development next-themes CSR message remain. Settings backup/restore/log utilities are existing notices outside the MVP polish scope. See the release report for full installed measurements and methodology.
+
+## Installer and release checks
+
+```powershell
+python -B scripts/verify-release.py --stage h1
+# Run the real native smoke documented above, then:
+npm run tauri build -- --bundles nsis
+# Installer: src-tauri/target/release/bundle/nsis/GeneField_0.1.0_x64-setup.exe
+python -B scripts/verify-release.py --stage final
+```
+
+`scripts/qa-installed.mjs` requires `GENEFIELD_INSTALLED_EXE` pointing to the actually installed executable outside the repositories. It uses a separate temporary WebView profile, native UI and native SQL; it preserves pre-existing workspace rows and cleans only its newly created rows. Test outputs now use `docs/evidence/release/` rather than overwriting previous desktop evidence.
+
+For dependency changes, regenerate the actual frontend package inventory with `npm run build`, then run `scripts/build-notices.py --python-license <original Python 3.11.9 LICENSE.txt> --pyinstaller-license <original PyInstaller 6.22.3 COPYING.txt>`. The script reads package metadata/source notices, copies text unchanged, records hashes and identifies missing notices. It never changes the frozen runtime. Review the result, then rebuild the installer; `resources/notices/ -> notices/` is the additional package resource map.

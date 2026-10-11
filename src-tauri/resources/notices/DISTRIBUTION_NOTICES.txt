@@ -1,0 +1,28 @@
+GeneField third-party distribution notices
+
+Dataset: Rebollo, Ines; Scheffel, Sheila; Blanco, Pedro et al. (2023).
+Instituto Nacional de Investigacion Agropecuaria (INIA) Rice Breeding Program
+Historical Dataset [Dataset]. Dryad. https://doi.org/10.5061/dryad.x69p8czn8
+Dryad data are made available under CC0 1.0 Universal:
+https://datadryad.org/terms and https://creativecommons.org/publicdomain/zero/1.0/
+GeneField ships transformed reference tables and frozen model artifacts.
+Dataset availability does not imply author/institution endorsement of GeneField.
+
+Python: PSF license and bundled notices in python/Python@3.11.9/LICENSE.txt.
+NumPy, SciPy, scikit-learn: upstream BSD notices, including bundled native
+components, are retained unchanged in python/. joblib/threadpoolctl use their
+BSD notices; cloudpickle its BSD notice; narwhals its MIT notice. Actual
+identifiers, versions, file paths and SHA256 values are in inventory.json.
+PyInstaller bootloader license and distribution exception are retained.
+
+Frontend: actual Vite-bundled packages plus Geist font, with unchanged
+upstream license texts in frontend/. The shadcn tailwind.css styles are included; its CLI JavaScript is not bundled.
+Tauri/Rust: normal Windows dependency closure, with upstream notices in rust/.
+Some build-time/proc-macro notices may be included conservatively.
+For MPL-2.0 components, corresponding unmodified source is available through
+the version-specific source_url recorded for each package in inventory.json.
+Microsoft WebView2 is managed by Windows/Microsoft; its own installer and
+runtime terms apply. GeneField does not replace or modify those terms.
+
+No upstream license wording has been edited. GeneField's own source licensing
+is not declared by this third-party notice artifact.

@@ -116,7 +116,11 @@ export default function Overview() {
   const systemStatus = [
     { label: tr("Offline"), value: tr("Local"), dot: true, mono: false },
     { label: tr("Model bundle"), value: metadata.bundle_version, mono: true },
-    { label: tr("Scientific review"), value: tr("Sign-off pending") },
+    {
+      label: tr("Validation status"),
+      value: tr("Historical validation passed"),
+    },
+    { label: tr("External expert review"), value: tr("Pending") },
     {
       label: tr("Predictive ranking"),
       value: tr("Enabled for eligible parents"),

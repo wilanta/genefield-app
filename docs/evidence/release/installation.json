@@ -1,0 +1,8 @@
+﻿{
+    "exit_code":  0,
+    "installer":  "C:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-app\\genefield-desktop\\src-tauri\\target\\release\\bundle\\nsis\\GeneField_0.1.0_x64-setup.exe",
+    "command":  "NSIS /S /D=\u003cLocalAppData\u003e\\Programs\\GeneField",
+    "installed_root":  "C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField",
+    "installer_sha256":  "9F5498049A994A4BFB444B7E013414995718743CECE5C07FB1394F2A981C2D3F",
+    "installer_bytes":  58642627
+}

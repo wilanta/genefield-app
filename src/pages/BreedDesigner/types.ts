@@ -32,7 +32,7 @@ export interface BreedDesignerCandidate {
   historical: "Recorded" | "Not recorded";
   /** Ranking excludes every historical pair using the backend registry. */
   historicalRecorded: boolean;
-  researchStatus: "Unreviewed";
+  researchStatus: "Pending";
 }
 
 /** The full generation input, mirroring UI state, for testable deterministic output. */

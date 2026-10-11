@@ -174,7 +174,7 @@ export default function BreedDesigner() {
           genotype: "Both",
           historical: "Not recorded",
           historicalRecorded: false,
-          researchStatus: "Unreviewed",
+          researchStatus: "Pending",
           analysis: {
             bundleVersion: result.bundle_version,
             predictions: c.predictions,

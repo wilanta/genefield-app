@@ -1,0 +1,38 @@
+{
+  "commands": [
+    "npm run typecheck",
+    "npm run build",
+    "npm test",
+    "npm run test:reference",
+    "cargo check --manifest-path src-tauri/Cargo.toml",
+    "cargo test --manifest-path src-tauri/Cargo.toml --lib",
+    "cargo fmt --manifest-path src-tauri/Cargo.toml --check",
+    "python -B scripts/verify-release.py --stage h1",
+    "npm install --package-lock-only --ignore-scripts",
+    "npm audit --json",
+    "npm audit --omit=dev --json",
+    "python -B scripts/build-notices.py --python-license C:\\Users\\sheil\\AppData\\Local\\Programs\\Python\\Python311\\LICENSE.txt --pyinstaller-license C:\\Users\\sheil\\OneDrive\\Dokumen\\Wildhan\\projects\\genefield-ml\\.venv\\Lib\\site-packages\\pyinstaller-6.22.3.dist-info\\licenses\\COPYING.txt",
+    "$env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS='--remote-debugging-port=9234'; npm run tauri dev",
+    "$env:GENEFIELD_CDP_URL='http://127.0.0.1:9234'; $env:GENEFIELD_EVIDENCE_DIR='docs/evidence/release/h1-native'; node scripts/smoke-desktop.mjs",
+    "npm run tauri build -- --bundles nsis",
+    "npm run tauri -- bundle --bundles nsis",
+    "Start-Process -FilePath src-tauri/target/release/bundle/nsis/GeneField_0.1.0_x64-setup.exe -ArgumentList /S,/D=C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField -WindowStyle Hidden -Wait -PassThru",
+    "python -B scripts/verify-installed.py --root C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField",
+    "$env:GENEFIELD_INSTALLED_EXE='C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe'; node scripts/qa-installed.mjs",
+    "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-console.ps1 -Application C:\\Users\\sheil\\AppData\\Local\\Programs\\GeneField\\GeneField.exe",
+    "python -B scripts/verify-release.py --stage final",
+    "npm test",
+    "git status --short",
+    "git diff --check",
+    "git diff --stat"
+  ],
+  "additional_actions": [
+    "Read-only architecture/frozen evidence/license source inspections, hashes and package inventory; no ML training/import/reference rebuild",
+    "H1 harness retried after stale CDP SharedWorker/empty target and duplicate saved pair; final PASS; exactly three failed-smoke fixture rows removed",
+    "Installed harness retried after early about:blank page attachment; now waits for native tauri page and exempts only local Tauri origin from deny proxy; final PASS",
+    "Formatting, actual process/window enumeration, target-machine inventory and Authenticode check",
+    "Historical desktop IPC evidence restored to original tracked content and checkout line endings; tests now write new release/real-client evidence instead",
+    "Installer rebundled once to include additional upstream shadcn CSS notice; executable/models unchanged",
+    "Read-only EXE comparison confirmed three Tauri UNK-to-NSS bundle marker bytes only; installed app code otherwise identical to release executable"
+  ]
+}

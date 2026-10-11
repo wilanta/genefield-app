@@ -54,6 +54,7 @@ import type {
   SavedCandidate,
 } from "@/types/research";
 import { CandidateNameConflictError } from "@/types/research";
+import { CandidateCompare } from "./CandidateCompare";
 
 function exportCandidates(candidates: SavedCandidate[]) {
   const blob = new Blob(
@@ -105,6 +106,25 @@ export default function CandidateWorkspace() {
   const [notesError, setNotesError] = useState<string | null>(null);
   const [savingNotes, setSavingNotes] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [compareOpen, setCompareOpen] = useState(false);
+  const compareCandidates = compareIds.flatMap((id) => {
+    const candidate = items.find((item) => item.id === id);
+    return candidate ? [candidate] : [];
+  });
+  useEffect(() => {
+    setCompareIds((current) =>
+      current.filter((id) => items.some((item) => item.id === id)),
+    );
+  }, [items]);
+  const toggleCompare = (id: string) =>
+    setCompareIds((current) =>
+      current.includes(id)
+        ? current.filter((value) => value !== id)
+        : current.length < 3
+          ? [...current, id]
+          : current,
+    );
 
   // Load / delete / status-update error states
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -337,6 +357,28 @@ export default function CandidateWorkspace() {
             onExport={() => exportCandidates(filtered)}
             hasCandidates={filtered.length > 0}
           />
+          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={compareCandidates.length < 2 || loading}
+              onClick={() => setCompareOpen(true)}
+            >
+              {tr("Compare candidates")} ({compareCandidates.length}/3)
+            </Button>
+            <span role="status">
+              {tr("Select 2–3 saved candidates to compare.")}
+            </span>
+            {compareIds.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCompareIds([])}
+              >
+                {tr("Clear selection")}
+              </Button>
+            )}
+          </div>
           <div
             className="@container min-h-[360px] flex-1 overflow-auto rounded-xl border bg-card shadow-[var(--gf-card-shadow)]"
             aria-busy={loading}
@@ -345,6 +387,8 @@ export default function CandidateWorkspace() {
               items={filtered}
               selectedId={selectedId}
               view={view}
+              compareIds={compareIds}
+              onToggleCompare={toggleCompare}
               actions={{
                 onSelect: (candidate) => setSelectedId(candidate.id),
                 onOpen: openInCrossLab,
@@ -418,6 +462,11 @@ export default function CandidateWorkspace() {
           />
         </aside>
       </div>
+      <CandidateCompare
+        candidates={compareCandidates}
+        open={compareOpen}
+        onOpenChange={setCompareOpen}
+      />
       <p className="mt-3.5 flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
         <Database className="size-3" />
         {isMemory

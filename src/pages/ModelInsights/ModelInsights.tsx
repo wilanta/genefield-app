@@ -19,7 +19,7 @@ const methodologyNotes = [
   {
     title: "Application prioritization",
     description:
-      "Ranking scores express selected trait objectives and weights. Scientific and breeder sign-off remains pending.",
+      "Prioritization Scores express selected trait objectives and weights. External expert review is pending.",
   },
 ];
 import type {
@@ -35,16 +35,6 @@ function metric(v: number | null): string {
 
 /* ── Model Overview ─────────────────────────────────────────────────────── */
 
-const REVIEW_LABEL: Record<ModelInsightsData["scientificReview"], string> = {
-  reviewed: "Reviewed",
-  unreviewed: "Unreviewed",
-};
-
-const USAGE_LABEL: Record<ModelInsightsData["usage"], string> = {
-  "research-only": "Research-only",
-  production: "Production",
-};
-
 const TRAINING_LABEL: Record<ModelInsightsData["trainingStatus"], string> = {
   "in-progress": "In progress",
   completed: "Completed",
@@ -55,10 +45,11 @@ function ModelOverview({ data }: { data: ModelInsightsData }) {
   const fields: Array<{ label: string; value: string }> = [
     { label: tr("Model bundle"), value: data.modelBundle },
     {
-      label: tr("Scientific review"),
-      value: REVIEW_LABEL[data.scientificReview],
+      label: tr("Validation status"),
+      value: tr("Historical validation passed"),
     },
-    { label: tr("Usage"), value: USAGE_LABEL[data.usage] },
+    { label: tr("External expert review"), value: tr("Pending") },
+    { label: tr("Usage"), value: tr("Decision-support only") },
     { label: tr("Training"), value: TRAINING_LABEL[data.trainingStatus] },
     {
       label: tr("Predictive ranking"),
@@ -74,7 +65,7 @@ function ModelOverview({ data }: { data: ModelInsightsData }) {
         </h3>
       </CardHeader>
       <CardContent className="px-0 pb-4">
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-2 gap-y-2 lg:grid-cols-3">
           {fields.map((f, i) => (
             <div
               key={f.label}

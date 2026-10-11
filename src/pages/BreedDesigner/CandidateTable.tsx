@@ -85,6 +85,11 @@ export function CandidateTable({
 
   return (
     <div className="breed-designer-candidates">
+      <p className="px-3 py-2 text-xs text-muted-foreground">
+        {tr(
+          "Relative application score used to prioritize candidate pairs; not a probability of breeding success.",
+        )}
+      </p>
       <div className="breed-designer-candidate-scroll">
         <Table>
           <colgroup>
@@ -118,7 +123,7 @@ export function CandidateTable({
                 {tr("cross")}
               </TableHead>
               <TableHead className="px-3 py-2 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                {tr("Research")}
+                {tr("Expert review")}
                 <br />
                 {tr("status")}
               </TableHead>
@@ -138,7 +143,8 @@ export function CandidateTable({
                     {c.candidateId}
                     {c.analysis && (
                       <div className="mt-1 text-[10px] text-muted-foreground">
-                        {tr("Score:")} {c.analysis.applicationScore?.toFixed(4)}
+                        {tr("Prioritization Score:")}{" "}
+                        {c.analysis.applicationScore?.toFixed(4)}
                         <br />
                         {Object.entries(c.analysis.predictions).map(
                           ([t, p]) => (

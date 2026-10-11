@@ -1,0 +1,44 @@
+[
+  {
+    "command": "npm.cmd run typecheck",
+    "exit_code": 0,
+    "seconds": 5.671999999962281,
+    "log": "final-check-0.log"
+  },
+  {
+    "command": "npm.cmd run build",
+    "exit_code": 0,
+    "seconds": 9.51600000000326,
+    "log": "final-check-1.log"
+  },
+  {
+    "command": "npm.cmd test",
+    "exit_code": 0,
+    "seconds": 15.64000000001397,
+    "log": "final-check-2.log"
+  },
+  {
+    "command": "npm.cmd run test:reference",
+    "exit_code": 0,
+    "seconds": 0.8439999999827705,
+    "log": "final-check-3.log"
+  },
+  {
+    "command": "cargo check --manifest-path src-tauri/Cargo.toml",
+    "exit_code": 0,
+    "seconds": 8.063000000023749,
+    "log": "final-check-4.log"
+  },
+  {
+    "command": "cargo test --manifest-path src-tauri/Cargo.toml --lib",
+    "exit_code": 0,
+    "seconds": 13.170999999972992,
+    "log": "final-check-5.log"
+  },
+  {
+    "command": "cargo fmt --manifest-path src-tauri/Cargo.toml --check",
+    "exit_code": 0,
+    "seconds": 0.6410000000032596,
+    "log": "final-check-6.log"
+  }
+]

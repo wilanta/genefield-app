@@ -347,11 +347,15 @@ export function CandidateList({
   selectedId,
   actions,
   view,
+  compareIds,
+  onToggleCompare,
 }: {
   items: SavedCandidate[];
   selectedId: string | null;
   actions: CandidateActions;
   view: CandidateView;
+  compareIds: string[];
+  onToggleCompare: (id: string) => void;
 }) {
   const { t: tr } = useTranslation();
   if (view === "grid") {
@@ -367,6 +371,16 @@ export function CandidateList({
             )}
           >
             <div className="flex items-start justify-between gap-2">
+              <input
+                type="checkbox"
+                aria-label={tr("Compare {name}", { name: candidate.name })}
+                checked={compareIds.includes(candidate.id)}
+                disabled={
+                  compareIds.length >= 3 && !compareIds.includes(candidate.id)
+                }
+                onChange={() => onToggleCompare(candidate.id)}
+                className="mt-1 size-4 accent-primary"
+              />
               <button
                 onClick={() => actions.onSelect(candidate)}
                 className="min-w-0 text-left text-[13px] font-medium hover:text-primary focus-visible:outline-ring"
@@ -401,6 +415,7 @@ export function CandidateList({
   return (
     <Table className="min-w-[740px] table-fixed text-[13px]">
       <colgroup>
+        <col className="w-10" />
         <col className="w-[22%]" />
         <col className="w-[12%]" />
         <col className="w-[12%]" />
@@ -411,6 +426,9 @@ export function CandidateList({
       </colgroup>
       <TableHeader className="bg-gf-sidebar-bg/70">
         <TableRow className="hover:bg-transparent">
+          <TableHead className="px-2">
+            <span className="sr-only">{tr("Select for comparison")}</span>
+          </TableHead>
           {[
             tr("Candidate Name"),
             tr("Parent A"),
@@ -441,6 +459,21 @@ export function CandidateList({
                 "bg-gf-tint-positive hover:bg-gf-tint-positive",
             )}
           >
+            <TableCell
+              className="px-2"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <input
+                type="checkbox"
+                aria-label={tr("Compare {name}", { name: candidate.name })}
+                checked={compareIds.includes(candidate.id)}
+                disabled={
+                  compareIds.length >= 3 && !compareIds.includes(candidate.id)
+                }
+                onChange={() => onToggleCompare(candidate.id)}
+                className="size-4 accent-primary"
+              />
+            </TableCell>
             <TableCell className="h-[34px] truncate border-b border-border/60 px-3 py-0 font-medium">
               <button
                 className="w-full truncate text-left outline-none focus-visible:underline focus-visible:text-primary"
@@ -598,13 +631,8 @@ export function CandidateDetail({
             {candidate.notes || tr("No research notes yet.")}
           </p>
         </section>
-        <section
-          className="mt-3"
-          aria-label={tr("Saved experimental estimates")}
-        >
-          <h3 className={sectionHeading}>
-            {tr("Saved Experimental Estimates")}
-          </h3>
+        <section className="mt-3" aria-label={tr("Saved modeled estimates")}>
+          <h3 className={sectionHeading}>{tr("Saved Modeled Estimates")}</h3>
           {candidate.analysis ? (
             <div className="space-y-1 text-xs">
               {Object.entries(candidate.analysis.predictions).map(
@@ -632,7 +660,7 @@ export function CandidateDetail({
               )}
               {candidate.analysis.applicationScore !== undefined && (
                 <p>
-                  {tr("Application prioritization score:")}{" "}
+                  {tr("Prioritization Score:")}{" "}
                   {candidate.analysis.applicationScore.toFixed(4)}
                 </p>
               )}
@@ -651,7 +679,9 @@ export function CandidateDetail({
             </Badge>
           )}
           <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground">
-            {tr("For exploratory research review only.")}
+            {tr(
+              "For candidate prioritization; not a substitute for field trials.",
+            )}
           </p>
         </section>
         <section className="mt-3" aria-label={tr("Review history")}>

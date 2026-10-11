@@ -834,7 +834,7 @@ export default function CrossLab() {
                   className="flex items-center gap-1.5 rounded-lg border-amber-300 dark:border-amber-700/50 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 text-[11px] font-medium text-amber-800 dark:text-amber-200"
                 >
                   <AlertTriangle className="size-3.5" />
-                  {tr("Research-only · Not validated for breeding decisions")}
+                  {tr("Historical validation passed · Decision-support only")}
                 </Badge>
               </div>
             </CardHeader>
@@ -1004,8 +1004,15 @@ export default function CrossLab() {
             <CardContent className="px-4">
               <div className="divide-y divide-border">
                 <ModelRow label={tr("Bundle")} value="final-v1" mono />
-                <ModelRow label={tr("Scientific review")} value="Unreviewed" />
-                <ModelRow label={tr("Usage")} value="Research-only" />
+                <ModelRow
+                  label={tr("Validation status")}
+                  value="Historical validation passed"
+                />
+                <ModelRow
+                  label={tr("External expert review")}
+                  value="Pending"
+                />
+                <ModelRow label={tr("Usage")} value="Decision-support only" />
                 <ModelRow
                   label={tr("Predictive ranking")}
                   value="Enabled for represented parents"
@@ -1024,16 +1031,20 @@ export default function CrossLab() {
               </span>
             </div>
             <ul className="list-disc space-y-1.5 pl-5 text-[12.5px] leading-[19px] text-amber-950/80 dark:text-amber-200">
-              <li>{tr("Predictions are experimental.")}</li>
               <li>
-                {tr("Generalization to unseen parents is not established.")}
+                {tr(
+                  "Historical-descendant cross-level modeled estimates for represented INIA germplasm.",
+                )}
+              </li>
+              <li>
+                {tr("Generalization to external germplasm is not supported.")}
               </li>
               <li>
                 {tr("No calibrated uncertainty intervals are available.")}
               </li>
               <li>
                 {tr(
-                  "Estimates must not be interpreted as validated breeding recommendations.",
+                  "For candidate prioritization; not a substitute for field trials.",
                 )}
               </li>
             </ul>

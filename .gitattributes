@@ -1,0 +1,2 @@
+# Preserve upstream notice bytes and the recorded SHA256 values on Windows.
+src-tauri/resources/notices/** -text

@@ -73,7 +73,8 @@ const TITLES: Record<string, TitleMeta> = {
   },
   "/cross-lab": {
     title: "Cross Lab",
-    subtitle: "Explore parent combinations and experimental trait estimates.",
+    subtitle:
+      "Explore parent combinations and historical cross-level trait estimates.",
   },
   "/breed-designer": {
     title: "Breed Designer",

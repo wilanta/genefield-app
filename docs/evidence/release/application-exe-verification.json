@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "built_sha256": "109bbcfca98bec180e94fe423c694c1a2af9f356fa1aa3c38568241ab5f87a02",
+  "installed_sha256": "5a4ec99baa58ce3d08d05d9f8c6a5bdb006b2adc7a375cf2feea0ab808a41615",
+  "different_bytes": 3,
+  "reason": "Tauri NSIS marker UNK to NSS; all other executable bytes identical"
+}
