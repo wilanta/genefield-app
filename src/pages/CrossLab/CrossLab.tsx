@@ -42,6 +42,7 @@ import { candidateStore } from "@/services";
 import type { RiceLine, TraitCode } from "@/types/research";
 import { CandidateNameConflictError } from "@/types/research";
 import { cn } from "@/lib/utils";
+import { useCrossLabDraft } from "@/stores/cross-lab-draft";
 
 // CardHeading was removed; headings are now rendered inline.
 
@@ -352,7 +353,7 @@ type GenotypeWarning = "A" | "B" | "both" | null;
 
 export default function CrossLab() {
   const { t: tr } = useTranslation();
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const { data: lines = [], error: referenceError } = useAsync(() =>
     referenceService.allLines(),
   );
@@ -362,8 +363,7 @@ export default function CrossLab() {
   const pending = useRef(false);
   const revision = useRef(0);
 
-  const [parentA, setParentA] = useState(params.get("a") ?? "");
-  const [parentB, setParentB] = useState(params.get("b") ?? "");
+  const { parentA, parentB, setParents } = useCrossLabDraft();
   const [phase, setPhase] = useState<Phase>("idle");
   const [estimates, setEstimates] =
     useState<Record<TraitCode, number | null>>(EMPTY_ESTIMATES);
@@ -386,18 +386,27 @@ export default function CrossLab() {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveSaving, setSaveSaving] = useState(false);
 
-  // Prefill when the page is reached via "Use as Parent A/B".
+  // Apply incoming slots once, preserving any slot the caller did not supply.
+  // Consume the prefill so Back cannot restore old values after edits or Reset.
   useEffect(() => {
+    const a = params.get("a");
+    const b = params.get("b");
+    if (a === null && b === null) return;
     ++revision.current;
     setResult(undefined);
     setHistorical(undefined);
+    setError(undefined);
     setEstimates(EMPTY_ESTIMATES);
     setPhase("idle");
-    const a = params.get("a");
-    const b = params.get("b");
-    if (a) setParentA(a);
-    if (b) setParentB(b);
-  }, [params]);
+    setParents({
+      ...(a !== null ? { parentA: a } : {}),
+      ...(b !== null ? { parentB: b } : {}),
+    });
+    const remaining = new URLSearchParams(params);
+    remaining.delete("a");
+    remaining.delete("b");
+    setParams(remaining, { replace: true });
+  }, [params, setParams, setParents]);
 
   const navigate = useNavigate();
 
@@ -468,8 +477,8 @@ export default function CrossLab() {
     ++revision.current;
     setResult(undefined);
     setHistorical(undefined);
-    if (slot === "A") setParentA(v);
-    else setParentB(v);
+    setError(undefined);
+    setParents(slot === "A" ? { parentA: v } : { parentB: v });
     if (phase !== "idle") {
       setPhase("idle");
       setEstimates(EMPTY_ESTIMATES);
@@ -515,8 +524,8 @@ export default function CrossLab() {
     ++revision.current;
     setResult(undefined);
     setHistorical(undefined);
-    setParentA("");
-    setParentB("");
+    setError(undefined);
+    setParents({ parentA: "", parentB: "" });
     setEstimates(EMPTY_ESTIMATES);
     setPhase("idle");
     setNoteOpen(false);
@@ -636,8 +645,8 @@ export default function CrossLab() {
                   ++revision.current;
                   setResult(undefined);
                   setHistorical(undefined);
-                  setParentA(parentB);
-                  setParentB(parentA);
+                  setError(undefined);
+                  setParents({ parentA: parentB, parentB: parentA });
                   if (phase !== "idle") {
                     setPhase("idle");
                     setEstimates(EMPTY_ESTIMATES);
