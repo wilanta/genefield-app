@@ -42,6 +42,7 @@ import { candidateStore } from "@/services";
 import type { RiceLine, TraitCode } from "@/types/research";
 import { CandidateNameConflictError } from "@/types/research";
 import { cn } from "@/lib/utils";
+import { tourEvents } from "@/onboarding/tourEvents";
 import { useCrossLabDraft } from "@/stores/cross-lab-draft";
 
 // CardHeading was removed; headings are now rendered inline.
@@ -172,6 +173,7 @@ function ParentCard({
           >
             <Search className="pointer-events-none size-4 shrink-0 text-muted-foreground" />
             <Input
+              data-tour={slot === "A" ? "cross-parent-a" : "cross-parent-b"}
               value={value}
               onChange={(e) => {
                 onChange(e.target.value);
@@ -510,6 +512,7 @@ export default function CrossLab() {
         ) as Record<TraitCode, number | null>,
       );
       setPhase("done");
+      tourEvents.emit("cross-analysis-complete");
     } catch (e) {
       if (token !== revision.current) return;
       setError(analysisError(e));
@@ -626,7 +629,7 @@ export default function CrossLab() {
         {/* Left column */}
         <div className="flex flex-col gap-3.5">
           {/* Parent inputs + swap */}
-          <div className="flex items-stretch gap-3">
+          <div data-tour="cross-parents" className="flex items-stretch gap-3">
             <ParentCard
               slot="A"
               value={parentA}
@@ -688,7 +691,7 @@ export default function CrossLab() {
           )}
 
           {/* Action row (with error-state retry variant, frame 1:6728) */}
-          <div className="flex items-center gap-2.5">
+          <div data-tour="cross-analyze" className="flex items-center gap-2.5">
             {phase === "error" ? (
               <>
                 <Button
@@ -739,7 +742,10 @@ export default function CrossLab() {
           </div>
 
           {/* Historical evidence */}
-          <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
+          <Card
+            data-tour="historical-status"
+            className="rounded-xl shadow-[var(--gf-card-shadow)]"
+          >
             <CardHeader className="px-4 border-b border-border pb-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
@@ -822,7 +828,10 @@ export default function CrossLab() {
           </Card>
 
           {/* Experimental trait estimates */}
-          <Card className="rounded-xl shadow-[var(--gf-card-shadow)]">
+          <Card
+            data-tour="cross-results"
+            className="rounded-xl shadow-[var(--gf-card-shadow)]"
+          >
             <CardHeader className="flex flex-row items-center justify-between border-b border-border px-5">
               <CardTitle className="text-[15px] font-semibold tracking-tight">
                 {tr("Modeled Cross-level Estimates")}

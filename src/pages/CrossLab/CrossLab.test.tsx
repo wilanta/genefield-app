@@ -111,6 +111,7 @@ function expectParents(a: string, b: string) {
 
 beforeEach(() => {
   localStorage.clear();
+  localStorage.setItem("genefield-language", "english");
   useCrossLabDraft.getState().setParents({ parentA: "", parentB: "" });
   useLineExplorerFilters.getState().resetFilters();
   vi.resetAllMocks();

@@ -43,7 +43,11 @@ export default function PedigreeExplorer() {
       {/* Content row: graph (800) + detail (340) */}
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 lg:grid-cols-[800px_340px]">
         {/* Graph panel */}
-        <section className="min-h-0" aria-label={tr("Pedigree graph")}>
+        <section
+          data-tour="pedigree-graph"
+          className="min-h-0"
+          aria-label={tr("Pedigree graph")}
+        >
           <PedigreeGraph data={data} onSelect={(line) => setParams({ line })} />
         </section>
 

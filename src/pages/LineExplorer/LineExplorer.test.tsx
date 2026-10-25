@@ -93,6 +93,7 @@ function expectDefaults() {
 }
 beforeEach(() => {
   localStorage.clear();
+  localStorage.setItem("genefield-language", "english");
   useLineExplorerFilters.getState().resetFilters();
   // Radix scrolls the highlighted option; jsdom does not implement scrolling.
   vi.stubGlobal(

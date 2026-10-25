@@ -132,6 +132,7 @@ async function generate() {
 }
 beforeEach(() => {
   localStorage.clear();
+  localStorage.setItem("genefield-language", "english");
   useBreedDesignerDraft.setState(useBreedDesignerDraft.getInitialState(), true);
   vi.resetAllMocks();
   HTMLElement.prototype.scrollIntoView = vi.fn();

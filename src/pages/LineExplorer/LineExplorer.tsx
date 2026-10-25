@@ -110,7 +110,7 @@ export default function LineExplorer({
       : "any of your filters");
 
   return (
-    <div className="flex h-full min-h-0 flex-col p-6">
+    <div data-tour="line-explorer" className="flex h-full min-h-0 flex-col p-6">
       {error && (
         <p role="alert" className="text-destructive">
           {tr(error)}
@@ -148,7 +148,11 @@ export default function LineExplorer({
           )}
         </section>
 
-        <aside aria-label={tr("Line detail")} className="min-h-0">
+        <aside
+          data-tour="line-profile"
+          aria-label={tr("Line detail")}
+          className="min-h-0"
+        >
           <LineExplorerDetailPanel
             line={filtered.length === 0 ? null : selectedLine}
             onUseAsParent={handleUseAsParent}

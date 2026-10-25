@@ -229,7 +229,10 @@ function ValidationTable({
 function LimitationsPanel({ items }: { items: string[] }) {
   const { t: tr } = useTranslation();
   return (
-    <Card className="border-amber-500/30 bg-amber-50/40 dark:bg-amber-950/30 shadow-[var(--gf-card-shadow)]">
+    <Card
+      data-tour="model-limitations"
+      className="border-amber-500/30 bg-amber-50/40 dark:bg-amber-950/30 shadow-[var(--gf-card-shadow)]"
+    >
       <CardHeader className="px-4 pt-3">
         <h3 className="text-[11px] font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-200">
           {tr("Scientific Limitations")}
@@ -314,7 +317,7 @@ export default function ModelInsights() {
   };
 
   return (
-    <div className="mx-auto max-w-[1208px] p-6">
+    <div data-tour="model-insights" className="mx-auto max-w-[1208px] p-6">
       <div className="grid gap-3.5 xl:grid-cols-[1fr_340px]">
         {/* Left column */}
         <div className="flex flex-col gap-3.5">

@@ -1,3 +1,5 @@
+import { useGuidedTour } from "@/onboarding/GuidedTourProvider";
+import { BookOpen } from "lucide-react";
 import { useTranslation } from "@/components/language-provider";
 import { useState } from "react";
 import { useTheme } from "next-themes";
@@ -162,6 +164,7 @@ function NotConnectedNotice() {
 /* ── Page ───────────────────────────────────────────────────────────────── */
 
 export default function Settings() {
+  const { progress, startTour } = useGuidedTour();
   const { t: tr } = useTranslation();
   const [revision, setRevision] = useState(0);
   const { data: runtime, error: runtimeError } = useAsync(async () => {
@@ -273,6 +276,36 @@ export default function Settings() {
                   onChange={setDensity}
                 />
               </SettingRow>
+            </CardContent>
+          </Card>
+
+          <Card className="@container/settings shadow-[var(--gf-card-shadow)]">
+            <SectionHeader
+              title={tr("Guided Tour")}
+              icon={<BookOpen className="size-3.5" />}
+            />
+            <CardContent className="space-y-4 px-4 pb-4">
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {tr(
+                  "Learn the complete GeneField workflow from line exploration to candidate ranking and model interpretation.",
+                )}
+              </p>
+              <Button
+                onClick={startTour}
+                className="h-auto min-h-8 whitespace-normal text-left"
+              >
+                <BookOpen aria-hidden />
+                {tr(
+                  progress.hasCompletedTour
+                    ? "Replay Guided Tour"
+                    : "Start Guided Tour",
+                )}
+              </Button>
+              <p className="text-xs text-muted-foreground">
+                {tr(
+                  "About 5–8 minutes. You can exit at any time. Saved candidates and preferences are preserved.",
+                )}
+              </p>
             </CardContent>
           </Card>
 

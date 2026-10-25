@@ -84,6 +84,7 @@ export function LineExplorerToolbar({
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
+          data-tour="line-search"
           value={filters.search}
           onChange={(e) => onChange({ ...filters, search: e.target.value })}
           placeholder={tr("Search LINE_ID")}

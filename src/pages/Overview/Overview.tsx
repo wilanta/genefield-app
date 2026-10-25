@@ -127,9 +127,9 @@ export default function Overview() {
     },
   ];
   return (
-    <div className="mx-auto max-w-[1208px] space-y-6 p-6">
+    <div data-tour="overview" className="mx-auto max-w-[1208px] space-y-6 p-6">
       {/* Section 1 - Stat cards */}
-      <section aria-labelledby="overview-stats">
+      <section data-tour="dataset-stats" aria-labelledby="overview-stats">
         <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
           {STATS.map((stat) => (
             <StatTile key={stat.label} stat={stat} />

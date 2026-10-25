@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { referenceService } from "@/services/reference-service";
+import { tourEvents } from "@/onboarding/tourEvents";
 import { inference, rankPool } from "@/services/inference-service";
 import { analysisError } from "@/lib/genefield/errors";
 import { useAsync } from "@/lib/use-async";
@@ -166,6 +167,7 @@ export default function BreedDesigner() {
       );
       setEligibleCount(result.eligible_candidate_count);
       setGenerated(true);
+      tourEvents.emit("breed-ranking-complete");
     } catch (e) {
       setError(analysisError(e));
     } finally {
@@ -189,7 +191,7 @@ export default function BreedDesigner() {
   };
 
   return (
-    <div className="breed-designer">
+    <div data-tour="breed-designer" className="breed-designer">
       {(loadError || error) && (
         <p role="alert" className="text-destructive">
           {tr(loadError ?? error ?? "")}
@@ -208,7 +210,10 @@ export default function BreedDesigner() {
         {/* Left column */}
         <div className="breed-designer-main">
           {/* Step 1 — Select Parent Pool */}
-          <Card className="breed-designer-card shrink-0">
+          <Card
+            data-tour="breed-filters"
+            className="breed-designer-card shrink-0"
+          >
             <CardHeader className="px-3.5 pb-2.5 pt-3.5">
               <StepHeading step={1} title={tr("Select Parent Pool")} />
             </CardHeader>
@@ -330,12 +335,15 @@ export default function BreedDesigner() {
           </Card>
 
           {/* Step 2 — Configure Cross Generation */}
-          <Card className="breed-designer-card shrink-0">
+          <Card
+            data-tour="breed-objectives"
+            className="breed-designer-card shrink-0"
+          >
             <CardHeader className="px-3.5 pb-3.5 pt-3.5">
               <StepHeading step={2} title={tr("Configure Cross Generation")} />
             </CardHeader>
             <CardContent className="breed-designer-configuration px-3.5 pb-5">
-              <div className="breed-designer-weights">
+              <div data-tour="breed-weights" className="breed-designer-weights">
                 {(["GY", "DTF", "NO", "LB"] as Trait[]).map((t) => (
                   <div key={t} className="breed-designer-field">
                     <label htmlFor={`weight-${t}`}>
@@ -454,6 +462,7 @@ export default function BreedDesigner() {
                 </div>
 
                 <Button
+                  data-tour="breed-generate"
                   className="breed-designer-generate px-4 text-[13px]"
                   onClick={generate}
                   disabled={busy || !loaded}
@@ -465,7 +474,10 @@ export default function BreedDesigner() {
           </Card>
 
           {/* Step 3 — Candidate Results */}
-          <Card className="breed-designer-card breed-designer-results">
+          <Card
+            data-tour="breed-ranking"
+            className="breed-designer-card breed-designer-results"
+          >
             <CardHeader className="px-3.5 pb-1.5 pt-3.5">
               <StepHeading step={3} title={tr("Candidate Results")} />
             </CardHeader>

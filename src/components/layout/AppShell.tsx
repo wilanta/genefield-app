@@ -12,6 +12,7 @@ import {
   Info,
 } from "lucide-react";
 import logoUrl from "@/assets/GeneField_vector.svg";
+import { GuidedTourProvider } from "@/onboarding/GuidedTourProvider";
 import { DesktopStartup } from "@/components/desktop-startup";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -169,7 +170,10 @@ export default function AppShell() {
     <TooltipProvider>
       <div className="flex h-screen w-full overflow-hidden bg-gf-app-bg text-foreground">
         {/* Sidebar */}
-        <aside className="flex h-full w-[232px] shrink-0 flex-col bg-gf-sidebar-bg p-3 pt-4">
+        <aside
+          data-tour="workspace-nav"
+          className="flex h-full w-[232px] shrink-0 flex-col bg-gf-sidebar-bg p-3 pt-4"
+        >
           {/* Brand */}
           <div className="mb-5 flex items-center gap-2.5 px-2">
             <img
@@ -233,7 +237,9 @@ export default function AppShell() {
 
           <div className="min-h-0 flex-1 overflow-auto">
             <DesktopStartup>
-              <Outlet />
+              <GuidedTourProvider>
+                <Outlet />
+              </GuidedTourProvider>
             </DesktopStartup>
           </div>
         </main>

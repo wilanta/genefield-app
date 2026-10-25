@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   cleanup,
   fireEvent,
@@ -41,6 +41,10 @@ const candidates: SavedCandidate[] = [0, 1, 2, 3].map((i) => ({
       }
     : {}),
 }));
+beforeEach(() => {
+  localStorage.setItem("genefield-language", "english");
+});
+
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();

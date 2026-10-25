@@ -339,6 +339,7 @@ export default function CandidateWorkspace() {
     <div className="flex min-h-full flex-col px-6 pb-5 pt-5 xl:h-full xl:min-h-[680px]">
       <div className="grid min-h-0 flex-1 grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <section
+          data-tour="candidate-workspace"
           className="flex min-h-0 min-w-0 flex-col gap-3"
           aria-label={tr("Candidate workspace")}
         >
@@ -357,7 +358,10 @@ export default function CandidateWorkspace() {
             onExport={() => exportCandidates(filtered)}
             hasCandidates={filtered.length > 0}
           />
-          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+          <div
+            data-tour="candidate-compare"
+            className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground"
+          >
             <Button
               variant="outline"
               size="sm"

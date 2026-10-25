@@ -43,7 +43,31 @@ afterEach(() => {
 });
 
 describe("application language preference", () => {
+  it("defaults to Indonesian on first launch and persists it", () => {
+    render(
+      <LanguageProvider>
+        <Controls />
+      </LanguageProvider>,
+    );
+    expect(screen.getByText("indonesian / id-ID")).toBeDefined();
+    expect(document.documentElement.lang).toBe("id");
+    expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe("indonesian");
+  });
+
+  it("respects a previously saved English preference", () => {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, "english");
+    render(
+      <LanguageProvider>
+        <Controls />
+      </LanguageProvider>,
+    );
+    expect(screen.getByText("english / en-US")).toBeDefined();
+    expect(document.documentElement.lang).toBe("en");
+    expect(localStorage.getItem(LANGUAGE_STORAGE_KEY)).toBe("english");
+  });
+
   it("switches immediately, preserves current input, persists and restores on restart", () => {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, "english");
     const first = render(
       <LanguageProvider>
         <Controls />
@@ -82,8 +106,8 @@ describe("application language preference", () => {
           <Controls />
         </LanguageProvider>,
       );
-      expect(screen.getByText("english / en-US")).toBeDefined();
-      expect(document.documentElement.lang).toBe("en");
+      expect(screen.getByText("indonesian / id-ID")).toBeDefined();
+      expect(document.documentElement.lang).toBe("id");
     },
   );
 
@@ -99,8 +123,9 @@ describe("application language preference", () => {
         <Controls />
       </LanguageProvider>,
     );
-    fireEvent.click(screen.getByRole("button", { name: "Bahasa Indonesia" }));
-    expect(screen.getByText("Pilihan bahasa")).toBeDefined();
-    expect(document.documentElement.lang).toBe("id");
+    expect(screen.getByText("indonesian / id-ID")).toBeDefined();
+    fireEvent.click(screen.getByRole("button", { name: "English" }));
+    expect(screen.getByText("Language preference")).toBeDefined();
+    expect(document.documentElement.lang).toBe("en");
   });
 });

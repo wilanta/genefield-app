@@ -2,7 +2,7 @@ import indonesian from "@/locales/id.json";
 import type { LanguagePreference } from "@/types/settings";
 
 export const LANGUAGE_STORAGE_KEY = "genefield-language";
-export const DEFAULT_LANGUAGE: LanguagePreference = "english";
+export const DEFAULT_LANGUAGE: LanguagePreference = "indonesian";
 export const LANGUAGE_OPTIONS: { value: LanguagePreference; label: string }[] =
   [
     { value: "english", label: "English" },
