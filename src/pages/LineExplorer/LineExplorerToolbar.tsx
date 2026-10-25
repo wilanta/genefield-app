@@ -41,6 +41,7 @@ function AvailabilitySelect({
       onValueChange={(v) => onChange(v as AvailabilityFilter)}
     >
       <SelectTrigger
+        data-tour="line-filter"
         aria-label={display}
         className="h-9 w-36 gap-1.5 bg-card text-muted-foreground"
       >

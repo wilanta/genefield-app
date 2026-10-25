@@ -364,6 +364,8 @@ export function CandidateList({
         {items.map((candidate) => (
           <div
             key={candidate.id}
+            data-tour="candidate-row"
+            data-tour-candidate-id={candidate.id}
             className={cn(
               "rounded-lg border p-3",
               selectedId === candidate.id &&
@@ -372,6 +374,7 @@ export function CandidateList({
           >
             <div className="flex items-start justify-between gap-2">
               <input
+                data-tour="compare-checkbox"
                 type="checkbox"
                 aria-label={tr("Compare {name}", { name: candidate.name })}
                 checked={compareIds.includes(candidate.id)}
@@ -382,6 +385,7 @@ export function CandidateList({
                 className="mt-1 size-4 accent-primary"
               />
               <button
+                data-tour="candidate-open"
                 onClick={() => actions.onSelect(candidate)}
                 className="min-w-0 text-left text-[13px] font-medium hover:text-primary focus-visible:outline-ring"
               >
@@ -451,6 +455,8 @@ export function CandidateList({
         {items.map((candidate) => (
           <TableRow
             key={candidate.id}
+            data-tour="candidate-row"
+            data-tour-candidate-id={candidate.id}
             aria-selected={selectedId === candidate.id}
             onClick={() => actions.onSelect(candidate)}
             className={cn(
@@ -464,6 +470,7 @@ export function CandidateList({
               onClick={(event) => event.stopPropagation()}
             >
               <input
+                data-tour="compare-checkbox"
                 type="checkbox"
                 aria-label={tr("Compare {name}", { name: candidate.name })}
                 checked={compareIds.includes(candidate.id)}
@@ -476,6 +483,7 @@ export function CandidateList({
             </TableCell>
             <TableCell className="h-[34px] truncate border-b border-border/60 px-3 py-0 font-medium">
               <button
+                data-tour="candidate-open"
                 className="w-full truncate text-left outline-none focus-visible:underline focus-visible:text-primary"
                 title={candidate.name}
                 onClick={(event) => {

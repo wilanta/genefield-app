@@ -168,7 +168,7 @@ export default function AppShell() {
 
   return (
     <TooltipProvider>
-      <div className="flex h-screen w-full overflow-hidden bg-gf-app-bg text-foreground">
+      <div className="gf-app-shell flex h-screen w-full overflow-hidden bg-gf-app-bg text-foreground">
         {/* Sidebar */}
         <aside
           data-tour="workspace-nav"

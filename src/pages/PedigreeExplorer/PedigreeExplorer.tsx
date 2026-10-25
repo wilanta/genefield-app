@@ -1,4 +1,5 @@
 import { useTranslation } from "@/components/language-provider";
+import { tourEvents } from "@/onboarding/tourEvents";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { referenceService } from "@/services/reference-service";
 import { useAsync } from "@/lib/use-async";
@@ -48,7 +49,13 @@ export default function PedigreeExplorer() {
           className="min-h-0"
           aria-label={tr("Pedigree graph")}
         >
-          <PedigreeGraph data={data} onSelect={(line) => setParams({ line })} />
+          <PedigreeGraph
+            data={data}
+            onSelect={(line) => {
+              setParams({ line });
+              tourEvents.emit("pedigree-node-selected", { id: line });
+            }}
+          />
         </section>
 
         {/* Detail panel */}

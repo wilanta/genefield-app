@@ -1,4 +1,5 @@
 import { useTranslation } from "@/components/language-provider";
+import { tourEvents } from "@/onboarding/tourEvents";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Database,
@@ -394,7 +395,12 @@ export default function CandidateWorkspace() {
               compareIds={compareIds}
               onToggleCompare={toggleCompare}
               actions={{
-                onSelect: (candidate) => setSelectedId(candidate.id),
+                onSelect: (candidate) => {
+                  setSelectedId(candidate.id);
+                  tourEvents.emit("workspace-candidate-opened", {
+                    id: candidate.id,
+                  });
+                },
                 onOpen: openInCrossLab,
                 onEdit: editNotes,
                 onExport: (candidate) => exportCandidates([candidate]),
@@ -449,6 +455,7 @@ export default function CandidateWorkspace() {
           </div>
         </section>
         <aside
+          data-tour="candidate-detail"
           className="flex min-h-0 min-w-0 flex-col gap-3.5 xl:overflow-y-auto"
           aria-label={tr("Selected candidate details")}
         >
@@ -469,7 +476,13 @@ export default function CandidateWorkspace() {
       <CandidateCompare
         candidates={compareCandidates}
         open={compareOpen}
-        onOpenChange={setCompareOpen}
+        onOpenChange={(open) => {
+          setCompareOpen(open);
+          if (!open && compareCandidates.length >= 2)
+            tourEvents.emit("candidate-comparison-reviewed", {
+              ids: compareCandidates.map((candidate) => candidate.id),
+            });
+        }}
       />
       <p className="mt-3.5 flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
         <Database className="size-3" />

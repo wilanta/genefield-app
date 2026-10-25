@@ -1,4 +1,5 @@
 import { useTranslation } from "@/components/language-provider";
+import { tourEvents } from "@/onboarding/tourEvents";
 import { useState } from "react";
 import {
   Table,
@@ -44,12 +45,13 @@ export function CandidateTable({
       return next;
     });
     setErrorMsg(null);
-    const name =
+    const baseName =
       kind === "add"
         ? `${c.parentA} × ${c.parentB} (${c.candidateId})`
         : `${c.parentA} × ${c.parentB}`;
+    const name = tourEvents.candidateName(baseName, tr("Guided Tour"));
     try {
-      await candidateStore.create({
+      const saved = await candidateStore.create({
         name,
         parentA: c.parentA,
         parentB: c.parentB,
@@ -58,6 +60,10 @@ export function CandidateTable({
         analysis: c.analysis,
         reviewStatus: "draft",
         tags: [kind],
+      });
+      tourEvents.emit("candidate-saved", {
+        id: saved.id,
+        parents: [c.parentA, c.parentB],
       });
       setState((prev) => {
         const next = new Map(prev);
@@ -211,6 +217,7 @@ export function CandidateTable({
                       <span aria-hidden> · </span>
                       <button
                         type="button"
+                        data-tour="breed-save"
                         className={
                           conflicted ? "text-destructive" : "text-primary"
                         }

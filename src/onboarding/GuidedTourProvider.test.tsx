@@ -31,6 +31,16 @@ import { tourSteps } from "./tourSteps";
 import { tourEvents } from "./tourEvents";
 import { placeTourPopover } from "./tourLayout";
 import indonesian from "@/locales/id.json";
+import { useCrossLabDraft } from "@/stores/cross-lab-draft";
+import { useBreedDesignerDraft } from "@/stores/breed-designer-draft";
+
+vi.mock("./tourExample", () => ({
+  loadTourExample: async () => ({
+    parents: ["GID_10039", "GID_10125"],
+    eligibleIds: ["GID_10039", "GID_10125"],
+    poolSearch: "GID_100",
+  }),
+}));
 
 vi.mock("@/services/inference-service", () => ({
   inference: { start: vi.fn().mockRejectedValue(new Error("Offline test")) },
@@ -43,7 +53,7 @@ function ManualEntry() {
   const { startTour } = useGuidedTour();
   return <button onClick={startTour}>Manual replay</button>;
 }
-function renderTour(entry = "/") {
+function renderTour(entry = "/", page = <div>Actual page area</div>) {
   return render(
     <StrictMode>
       <ThemeProvider>
@@ -57,7 +67,7 @@ function renderTour(entry = "/") {
                 <Link to="/about">About</Link>
                 <Routes>
                   <Route path="/settings" element={<Settings />} />
-                  <Route path="*" element={<div>Actual page area</div>} />
+                  <Route path="*" element={page} />
                 </Routes>
               </GuidedTourProvider>
             </MemoryRouter>
@@ -69,6 +79,12 @@ function renderTour(entry = "/") {
 }
 
 beforeEach(() => {
+  useCrossLabDraft.setState({ parentA: "", parentB: "" });
+  useBreedDesignerDraft.setState({
+    weights: { GY: 1, DTF: 0, NO: 0, LB: 0 },
+    dtf: "",
+    filters: { search: "", genotype: "yes", phenotype: "any", pedigree: "any" },
+  });
   localStorage.clear();
   localStorage.setItem("genefield-language", "english");
   vi.stubGlobal(
@@ -107,11 +123,88 @@ async function next() {
     screen.getByRole("button", { name: /^(Next|Continue Tour|Finish Tour)$/ }),
   );
 }
+async function performTask(index: number) {
+  act(() => {
+    switch (tourSteps[index].requirement) {
+      case "search":
+        tourEvents.emit("line-search", { query: "GID_10039", valid: true });
+        break;
+      case "profile":
+        tourEvents.emit("line-profile-opened", { id: "GID_10039" });
+        break;
+      case "pedigree":
+        tourEvents.emit("pedigree-node-selected", { id: "GID_10039" });
+        break;
+      case "parent-a":
+        useCrossLabDraft.setState({ parentA: "GID_10039" });
+        tourEvents.emit("parent-edited", { slot: "A", value: "GID_10039" });
+        break;
+      case "parent-b":
+        useCrossLabDraft.setState({ parentB: "GID_10125" });
+        tourEvents.emit("parent-edited", { slot: "B", value: "GID_10125" });
+        break;
+      case "analysis":
+        tourEvents.emit("cross-analysis-complete", {
+          parents: ["GID_10039", "GID_10125"],
+        });
+        break;
+      case "objectives":
+        useBreedDesignerDraft.setState({
+          weights: { GY: 1, DTF: 1, NO: 0, LB: 0 },
+          dtf: "minimize",
+        });
+        tourEvents.emit("breed-config-edited", { field: "objectives" });
+        break;
+      case "weights":
+        useBreedDesignerDraft.setState({
+          weights: { GY: 2, DTF: 1, NO: 0, LB: 0 },
+        });
+        tourEvents.emit("breed-config-edited", { field: "weights" });
+        break;
+      case "filters":
+        useBreedDesignerDraft.getState().setPool({ search: "GID_100" });
+        tourEvents.emit("breed-config-edited", { field: "filters" });
+        break;
+      case "ranking":
+        tourEvents.emit("breed-ranking-complete", { count: 2 });
+        break;
+      case "save":
+        tourEvents.emit("candidate-saved", {
+          id: "saved-a",
+          parents: ["GID_10039", "GID_10125"],
+        });
+        tourEvents.emit("candidate-saved", {
+          id: "saved-b",
+          parents: ["GID_10039", "GID_10040"],
+        });
+        break;
+      case "workspace":
+        tourEvents.emit("workspace-candidate-opened", { id: "saved-a" });
+        break;
+      case "compare":
+        tourEvents.emit("candidate-comparison-reviewed", {
+          ids: ["saved-a", "saved-b"],
+        });
+        break;
+    }
+  });
+  if (tourSteps[index].requirement === "limitations")
+    fireEvent.click(screen.getByRole("checkbox"));
+}
+async function walkTo(start: number, end: number) {
+  for (let i = start; i < end; i++) {
+    await screen.findByRole("heading", { name: tourSteps[i].title });
+    await performTask(i);
+    if (!tourSteps[i].event) await next();
+  }
+  await screen.findByRole("heading", { name: tourSteps[end].title });
+}
 async function completeFrom(start: number) {
   for (let i = start; i < tourSteps.length; i++) {
     await screen.findByRole("heading", { name: tourSteps[i].title });
     expect(screen.getByLabelText("route").textContent).toBe(tourSteps[i].route);
-    await next();
+    await performTask(i);
+    if (!tourSteps[i].event) await next();
   }
   await screen.findByRole("heading", {
     name: "You're ready to explore GeneField",
@@ -119,6 +212,131 @@ async function completeFrom(start: number) {
 }
 
 describe("guided tour lifecycle", () => {
+  it("allows the highlighted task, blocks outside mouse and keyboard actions, and releases the screen when hidden or exited", async () => {
+    const outside = vi.fn();
+    const inside = vi.fn();
+    renderTour(
+      "/",
+      <div>
+        <button onClick={outside} onKeyDown={outside}>
+          Outside action
+        </button>
+        <input
+          data-tour="line-search"
+          aria-label="Practice search"
+          onClick={inside}
+        />
+      </div>,
+    );
+    await begin();
+    await walkTo(0, 4);
+    const input = screen.getByRole("textbox", { name: "Practice search" });
+    fireEvent.click(input);
+    expect(inside).toHaveBeenCalledTimes(1);
+    const outsideButton = screen.getByRole("button", {
+      name: "Outside action",
+    });
+    fireEvent.click(outsideButton);
+    fireEvent.keyDown(outsideButton, { key: "Enter" });
+    expect(outside).not.toHaveBeenCalled();
+    outsideButton.focus();
+    expect(document.activeElement).toBe(
+      screen.getByRole("heading", { name: tourSteps[4].title }),
+    );
+    fireEvent.click(
+      screen.getByRole("button", { name: "Hide tip to explore this screen" }),
+    );
+    expect(document.documentElement.dataset.guidedTourDock).toBeUndefined();
+    fireEvent.click(outsideButton);
+    expect(outside).toHaveBeenCalledTimes(1);
+    fireEvent.click(
+      screen.getByRole("button", { name: /Continue Guided Tour/ }),
+    );
+    fireEvent.click(outsideButton);
+    expect(outside).toHaveBeenCalledTimes(1);
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(document.documentElement.dataset.guidedTourDock).toBeUndefined();
+    fireEvent.click(outsideButton);
+    expect(outside).toHaveBeenCalledTimes(2);
+  });
+
+  it("shows a profile reading phase on the same route after the requested Profile click", async () => {
+    renderTour();
+    await begin();
+    await walkTo(0, 5);
+    await performTask(5);
+    expect(screen.getByLabelText("route").textContent).toBe("/lines");
+    expect(
+      document.querySelector(".tour-popover")?.getAttribute("data-tour-phase"),
+    ).toBe("explanation");
+    expect(
+      screen.getByText("Read the line profile before continuing"),
+    ).toBeDefined();
+    await next();
+    expect(screen.getByLabelText("route").textContent).toBe("/pedigree");
+  });
+  it("locks required steps until valid actions, rejects stale analysis, and allows Back or exit", async () => {
+    renderTour();
+    await begin();
+    await walkTo(0, 4);
+    const forward = () =>
+      screen.getByRole("button", {
+        name: /^(Next|Continue Tour)$/,
+      }) as HTMLButtonElement;
+    expect(forward().disabled).toBe(true);
+    act(() =>
+      tourEvents.emit("line-search", { query: "GID_10125", valid: true }),
+    );
+    expect(forward().disabled).toBe(true);
+    await next();
+    expect(
+      screen.getByRole("heading", { name: tourSteps[4].title }),
+    ).toBeDefined();
+    act(() =>
+      tourEvents.emit("line-search", { query: "GID_UNKNOWN", valid: false }),
+    );
+    expect(forward().disabled).toBe(true);
+    await performTask(4);
+    await next();
+    await walkTo(5, 9);
+    act(() => useCrossLabDraft.setState({ parentA: "GID_10039" }));
+    expect(forward().disabled).toBe(true);
+    act(() => {
+      useCrossLabDraft.setState({ parentA: "GID_10125" });
+      tourEvents.emit("parent-edited", { slot: "A", value: "GID_10125" });
+    });
+    expect(forward().disabled).toBe(true);
+    act(() => useCrossLabDraft.setState({ parentA: "GID_10039" }));
+    expect(forward().disabled).toBe(true);
+    act(() =>
+      tourEvents.emit("parent-edited", { slot: "A", value: "GID_10039" }),
+    );
+    expect(forward().disabled).toBe(false);
+    await next();
+    act(() => {
+      useCrossLabDraft.setState({ parentB: "GID_10039" });
+      tourEvents.emit("parent-edited", { slot: "B", value: "GID_10039" });
+    });
+    expect(forward().disabled).toBe(true);
+    await performTask(10);
+    await next();
+    expect(forward().disabled).toBe(true);
+    act(() =>
+      tourEvents.emit("cross-analysis-complete", {
+        parents: ["GID_UNKNOWN", "GID_10125"],
+      }),
+    );
+    expect(forward().disabled).toBe(true);
+    await performTask(11);
+    await screen.findByRole("heading", { name: tourSteps[12].title });
+    fireEvent.click(screen.getByRole("button", { name: "Back" }));
+    await screen.findByRole("heading", { name: tourSteps[11].title });
+    expect(forward().disabled).toBe(false);
+    act(() => tourEvents.emit("cross-analysis-state", { ready: false }));
+    expect(forward().disabled).toBe(true);
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
   it("offers a dismissible welcome once and keeps the application accessible", async () => {
     const first = renderTour();
     expect(
@@ -172,6 +390,15 @@ describe("guided tour lifecycle", () => {
     fireEvent.click(screen.getByRole("button", { name: "Back" }));
     expect(screen.getByLabelText("route").textContent).toBe("/");
     fireEvent.click(screen.getByRole("link", { name: "About" }));
+    expect(screen.getByLabelText("route").textContent).toBe("/");
+    fireEvent.click(
+      screen.getByRole("button", { name: "Hide tip to explore this screen" }),
+    );
+    expect(document.documentElement.dataset.guidedTourDock).toBeUndefined();
+    fireEvent.click(screen.getByRole("link", { name: "About" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: /Continue Guided Tour/ }),
+    );
     expect(
       screen.getByText(
         "You opened another module. Return to this step or continue the tour.",
@@ -195,19 +422,23 @@ describe("guided tour lifecycle", () => {
   it("advances once after a successful analysis or ranking, ignores late events, exits with Escape", async () => {
     renderTour();
     await begin();
-    for (let i = 0; i < 11; i++) await next();
+    await walkTo(0, 11);
     act(() => {
-      tourEvents.emit("cross-analysis-complete");
-      tourEvents.emit("cross-analysis-complete");
+      tourEvents.emit("cross-analysis-complete", {
+        parents: ["GID_10039", "GID_10125"],
+      });
+      tourEvents.emit("cross-analysis-complete", {
+        parents: ["GID_10039", "GID_10125"],
+      });
     });
     await screen.findByRole("heading", { name: tourSteps[12].title });
-    for (let i = 12; i < 18; i++) await next();
-    act(() => tourEvents.emit("breed-ranking-complete"));
+    await walkTo(12, 18);
+    act(() => tourEvents.emit("breed-ranking-complete", { count: 2 }));
     await screen.findByRole("heading", { name: tourSteps[19].title });
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(readTourProgress().lastTourStep).toBe(19);
-    act(() => tourEvents.emit("breed-ranking-complete"));
+    act(() => tourEvents.emit("breed-ranking-complete", { count: 2 }));
     expect(screen.queryByRole("dialog")).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Manual replay" }));
     await screen.findByRole("heading", { name: tourSteps[0].title });
@@ -232,7 +463,13 @@ describe("local persistence and positioning", () => {
   it("provides Indonesian text for every tour step and its scientific boundaries", () => {
     const dictionary: Record<string, string> = indonesian;
     for (const step of tourSteps) {
-      for (const message of [step.title, step.body, step.hint, step.category]) {
+      for (const message of [
+        step.title,
+        step.body,
+        step.hint,
+        step.category,
+        step.task,
+      ]) {
         if (message) expect(dictionary[message]).toBeTruthy();
       }
     }

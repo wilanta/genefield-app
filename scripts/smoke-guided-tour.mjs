@@ -1,16 +1,15 @@
-// Actual Tauri WebView2 + local services. No mocked reference data or inference.
-// Launch a separate debug WebView profile so existing UI preferences are untouched.
+﻿// Real Tauri WebView2 + SQLite + frozen inference. Use an isolated QA profile.
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { spawn } from "node:child_process";
 import { createInterface } from "node:readline";
-
+import { tourSteps } from "../src/onboarding/tourSteps.ts";
 assert(
   process.env.GENEFIELD_TOUR_QA_PID,
   "Set GENEFIELD_TOUR_QA_PID to the isolated QA app process",
 );
-const windowHelper = spawn(
+const helper = spawn(
   "powershell",
   [
     "-NoProfile",
@@ -21,20 +20,19 @@ const windowHelper = spawn(
   ],
   { windowsHide: true, stdio: ["pipe", "pipe", "inherit"] },
 );
-const windowLines = createInterface({ input: windowHelper.stdout });
-const resizeWindow = (size) =>
+const lines = createInterface({ input: helper.stdout });
+const resize = (size) =>
   new Promise((resolve, reject) => {
-    const timeout = setTimeout(
-      () => reject(new Error("Native window resize timed out")),
+    const timer = setTimeout(
+      () => reject(Error("Native resize timed out")),
       10000,
     );
-    windowLines.once("line", (line) => {
-      clearTimeout(timeout);
-      line === "resized" ? resolve() : reject(new Error(line));
+    lines.once("line", (line) => {
+      clearTimeout(timer);
+      line === "resized" ? resolve() : reject(Error(line));
     });
-    windowHelper.stdin.write(`${size.width},${size.height}\n`);
+    helper.stdin.write(`${size.width},${size.height}\n`);
   });
-
 const browser = await chromium.connectOverCDP(
   process.env.GENEFIELD_CDP_URL || "http://127.0.0.1:9223",
 );
@@ -42,345 +40,608 @@ const page = browser
   .contexts()
   .flatMap((c) => c.pages())
   .find((p) => p.url().includes(":1420"));
-assert(page, "A running Tauri development WebView is required");
+assert(page, "A real Tauri development WebView is required");
+const dictionary = JSON.parse(readFileSync("src/locales/id.json", "utf8"));
+let language = "indonesian";
+const t = (text, values = {}) =>
+  (language === "indonesian" ? dictionary[text] || text : text).replace(
+    /\{(\w+)\}/g,
+    (match, key) => values[key] ?? match,
+  );
 const directory = "test-results/guided-tour";
 mkdirSync(directory, { recursive: true });
 const evidence = {
   scope:
-    "Actual Tauri development WebView2, real native SQLite and frozen final-v1 inference; no installer or scientific approval claim",
+    "Actual native Tauri, SQLite, and frozen final-v1; engineering validation only",
   checks: [],
   errors: [],
   sizes: [],
+  savedByTest: [],
 };
 page.on("pageerror", (error) => evidence.errors.push(error.message));
 const record = (name) => {
-  evidence.checks.push(name);
   console.log(`PASS ${name}`);
+  evidence.checks.push(name);
 };
-const popover = page.locator(".tour-popover");
-const next = () =>
-  popover
-    .getByRole("button", { name: /^(Next|Continue Tour|Finish Tour)$/ })
-    .click();
-const state = () =>
-  page.evaluate(() =>
-    JSON.parse(localStorage.getItem("genefield-onboarding-v1")),
+const panel = page.locator(".tour-popover");
+const forward = () =>
+  panel.getByRole("button", {
+    name: new RegExp(
+      `^(${t("Next")}|${t("Continue Tour")}|${t("Finish Tour")})$`,
+    ),
+  });
+const at = (id) =>
+  page.locator(`.tour-popover[data-tour-step="${id}"]`).waitFor();
+const next = () => forward().click();
+const locked = async () =>
+  assert(
+    await forward().isDisabled(),
+    "Next must be locked before the task is completed",
   );
-const snapshot = () =>
+const unlocked = () =>
+  page.waitForFunction(() => {
+    const e = document.querySelector(
+      ".tour-popover .tour-controls-pages button:last-child",
+    );
+    return e && !e.disabled;
+  });
+const hide = () =>
+  panel
+    .getByRole("button", {
+      name: t("Hide tip to explore this screen"),
+      exact: true,
+    })
+    .click();
+const resume = () => page.locator(".tour-resume button").first().click();
+const nav = (name) =>
+  page.getByRole("link", { name: t(name), exact: true }).click();
+const candidateList = () =>
   page.evaluate(async () => {
     const { candidateStore } = await import("/src/services/index.ts");
-    return JSON.stringify(await candidateStore.list());
+    return candidateStore.list();
   });
-const nav = (name) => page.getByRole("link", { name, exact: true }).click();
-const expectStep = async (id) => {
-  await page.locator(`.tour-popover[data-tour-step="${id}"]`).waitFor();
-  await page.waitForFunction(
-    () => !document.querySelector('[data-slot="dialog-content"]'),
-  );
-};
-const geometry = async () => {
-  await page.waitForFunction(
-    () => {
-      const element = document.querySelector(".tour-popover");
-      if (!element) return false;
-      const rect = element.getBoundingClientRect();
+let baseline = [];
+let exercise;
+const createdIds = new Set();
+const originalLanguage = await page.evaluate(() =>
+  localStorage.getItem("genefield-language"),
+);
+async function proveReadingLayout(step, pass) {
+  if (pass !== 1) return;
+  for (const size of [
+    { width: 1920, height: 1080 },
+    { width: 1440, height: 900 },
+    { width: 1366, height: 768 },
+    { width: 1024, height: 640 },
+  ]) {
+    await resize(size);
+    await page.waitForFunction(() => {
+      const card = document
+        .querySelector(".tour-popover")
+        ?.getBoundingClientRect();
+      const spots = [...document.querySelectorAll(".tour-spotlight")];
       return (
-        rect.left >= 0 &&
-        rect.top >= 0 &&
-        rect.right <= innerWidth + 1 &&
-        rect.bottom <= innerHeight + 1
+        card &&
+        card.left >= 0 &&
+        card.top >= 0 &&
+        card.right <= innerWidth + 1 &&
+        card.bottom <= innerHeight + 1 &&
+        spots.length === 1 &&
+        spots.every((spot) => {
+          const r = spot.getBoundingClientRect();
+          return (
+            Math.max(
+              0,
+              Math.min(card.right, r.right) - Math.max(card.left, r.left),
+            ) *
+              Math.max(
+                0,
+                Math.min(card.bottom, r.bottom) - Math.max(card.top, r.top),
+              ) ===
+            0
+          );
+        })
       );
-    },
-    null,
-    { timeout: 5000 },
-  );
-  const value = await popover.evaluate((element) => {
-    const rect = element.getBoundingClientRect();
-    return {
-      left: rect.left,
-      top: rect.top,
-      right: rect.right,
-      bottom: rect.bottom,
-      width: innerWidth,
-      height: innerHeight,
-    };
-  });
-  assert(
-    value.left >= 0 &&
-      value.top >= 0 &&
-      value.right <= value.width + 1 &&
-      value.bottom <= value.height + 1,
-    JSON.stringify(value),
-  );
-};
+    });
+    assert.equal(await panel.getAttribute("data-tour-phase"), "explanation");
+    const dock = await panel.getAttribute("data-tour-dock");
+    const width = await page.evaluate(() => innerWidth);
+    if (step === "save" && width >= 1450) assert.equal(dock, "left");
+    evidence.sizes.push({
+      step,
+      phase: "explanation",
+      requested: size,
+      actual: await page.evaluate(() => ({
+        width: innerWidth,
+        height: innerHeight,
+      })),
+    });
+    await page.screenshot({
+      path: `${directory}/interactive-${step}-explanation-${size.width}.png`,
+    });
+  }
+}
 
-try {
-  assert(await page.evaluate(() => !!window.__TAURI_INTERNALS__));
-  await page.evaluate(() =>
-    localStorage.setItem("genefield-language", "english"),
-  );
-  await page.goto("http://localhost:1420/");
-  await page.locator('[data-tour="overview"]').waitFor({ timeout: 120000 });
-  // Reset only onboarding in this isolated QA profile for a reproducible run.
-  await page.evaluate(() => localStorage.removeItem("genefield-onboarding-v1"));
-  await page.reload();
-  await page
-    .getByRole("heading", { name: "Welcome to GeneField", exact: true })
-    .waitFor({ timeout: 120000 });
-  const cdp = await page.context().newCDPSession(page);
-  await cdp.send("Emulation.clearDeviceMetricsOverride");
-  const baseline = await snapshot();
-  const preferences = await page.evaluate(() =>
-    Object.fromEntries(
-      [
-        "genefield-theme",
-        "genefield-language",
-        "genefield-interface-density",
-      ].map((key) => [key, localStorage.getItem(key)]),
-    ),
-  );
-  await page.getByRole("button", { name: "Maybe Later", exact: true }).click();
-  await page.reload();
-  await page.locator('[data-tour="overview"]').waitFor({ timeout: 120000 });
-  assert.equal(
-    await page
-      .getByRole("heading", { name: "Welcome to GeneField", exact: true })
-      .count(),
-    0,
-  );
-  record("Welcome is optional and stays dismissed after reload");
-  await nav("Settings");
-  await page
-    .getByRole("button", { name: "Start Guided Tour", exact: true })
-    .click();
-  await expectStep("workspace");
-  assert.equal(new URL(page.url()).pathname, "/");
-  record("Settings closes by navigation and starts Step 1");
-
-  // Responsive geometry on every step, including async target mounting.
-  const stepIds = [
-    "workspace",
-    "overview",
-    "dataset",
-    "lines",
-    "search",
-    "observations",
-    "pedigree",
-    "relationships",
-    "pair",
-    "parent-a",
-    "parent-b",
-    "analyze",
-    "estimates",
-    "history",
-    "designer",
-    "objectives",
-    "weights",
-    "filters",
-    "generate",
-    "ranking",
-    "save",
-    "compare",
-    "evidence",
-    "limits",
-  ];
-  for (let i = 0; i < stepIds.length; i++) {
-    await expectStep(stepIds[i]);
-    const { tourSteps } = await import("../src/onboarding/tourSteps.ts");
-    await page.locator(`[data-tour="${tourSteps[i].target}"]`).waitFor();
-    for (const size of [
-      { width: 1920, height: 1080 },
-      { width: 1440, height: 900 },
-      { width: 1366, height: 768 },
-      { width: 1024, height: 640 },
-    ]) {
-      await resizeWindow(size);
-      await page.waitForTimeout(200);
-      await geometry();
-      if (i === 16) {
-        evidence.sizes.push({
-          requested: size,
-          actual: await page.evaluate(() => ({
-            width: innerWidth,
-            height: innerHeight,
-          })),
-        });
-        await page.screenshot({
-          path: `${directory}/weights-${size.width}.png`,
-        });
+async function perform(step, pass) {
+  switch (step.requirement) {
+    case "search":
+      await page
+        .getByRole("textbox", { name: t("Search LINE_ID"), exact: true })
+        .fill("GID_NOT_IN_DATASET");
+      await locked();
+      await page
+        .getByRole("textbox", { name: t("Search LINE_ID"), exact: true })
+        .fill(exercise.parents[1]);
+      await locked();
+      await page
+        .getByRole("textbox", { name: t("Search LINE_ID"), exact: true })
+        .fill(exercise.parents[0]);
+      await page
+        .locator(".tour-task mark")
+        .filter({ hasText: exercise.parents[0] })
+        .waitFor();
+      break;
+    case "profile":
+      await page
+        .locator(
+          `[data-tour="line-profile-action"][data-tour-line-id="${exercise.parents[0]}"]`,
+        )
+        .click();
+      await page
+        .locator('.tour-popover[data-tour-phase="explanation"]')
+        .waitFor();
+      assert.equal(new URL(page.url()).pathname, "/lines");
+      assert(await page.locator('[data-tour="line-profile"]').isVisible());
+      await proveReadingLayout("observations", pass);
+      record(
+        `${pass}: Profile click shows the profile explanation before Pedigree Explorer`,
+      );
+      break;
+    case "pedigree":
+      await page.locator(".react-flow__node").first().click();
+      break;
+    case "parent-a":
+    case "parent-b": {
+      const slot = step.requirement === "parent-a" ? "A" : "B";
+      const input = page.getByRole("textbox", {
+        name: t(`Parent ${slot}`),
+        exact: true,
+      });
+      await input.fill(
+        slot === "A" ? "GID_NOT_IN_DATASET" : exercise.parents[0],
+      );
+      await locked();
+      if (slot === "A") {
+        await input.fill(
+          exercise.eligibleIds.find(
+            (id) => id !== exercise.parents[0] && id !== exercise.parents[1],
+          ) ?? exercise.parents[1],
+        );
+        await locked();
       }
+      const parent = exercise.parents[slot === "A" ? 0 : 1];
+      await input.fill(parent);
+      await page
+        .locator(`[data-tour="cross-suggestions-${slot.toLowerCase()}"]`)
+        .getByRole("button")
+        .filter({ hasText: parent })
+        .click();
+      assert.equal(
+        await page
+          .locator(`[data-tour="cross-suggestions-${slot.toLowerCase()}"]`)
+          .count(),
+        0,
+      );
+      await panel.getByRole("heading").click();
+      if (slot === "B" && pass === 1) {
+        await unlocked();
+        await panel
+          .getByRole("button", { name: t("Back"), exact: true })
+          .click();
+        await at("parent-a");
+        await unlocked();
+        await next();
+        await at("parent-b");
+        await unlocked();
+        record("Back preserves completed parent tasks within the session");
+      }
+      break;
     }
-    if (i === 3) {
-      await popover.getByRole("button", { name: "Back", exact: true }).click();
-      await expectStep("dataset");
-      assert.equal(new URL(page.url()).pathname, "/");
+    case "analysis":
+      await page
+        .getByRole("button", { name: t("Analyze Cross"), exact: true })
+        .click();
+      await at("estimates");
+      await panel.getByRole("button", { name: t("Back"), exact: true }).click();
+      await at("analyze");
+      await unlocked();
       await next();
-      await expectStep("lines");
-      record("Back and Next navigate across module routes");
-    }
-    if (i === 5) {
-      await popover
-        .getByRole("button", {
-          name: "Hide tip to explore this screen",
+      await at("estimates");
+      record(`${pass}: real four-trait analysis unlocks and advances`);
+      return;
+    case "objectives":
+      for (const [trait, value] of [
+        ["GY", "1"],
+        ["DTF", "1"],
+        ["NO", "0"],
+        ["LB", "0"],
+      ]) {
+        await panel
+          .locator(".tour-checklist button")
+          .nth(["GY", "DTF", "NO", "LB"].indexOf(trait))
+          .click();
+        await page
+          .getByRole("spinbutton", { name: `${trait} weight`, exact: true })
+          .fill(value);
+      }
+      await panel.locator(".tour-checklist button").last().click();
+      await page
+        .getByRole("combobox", { name: t("DTF priority"), exact: true })
+        .click();
+      await page
+        .getByRole("option", {
+          name: t(pass === 1 ? "Earlier flowering" : "Later flowering"),
           exact: true,
         })
         .click();
+      break;
+    case "weights":
       await page
-        .getByRole("button", { name: "Profile", exact: true })
+        .getByRole("spinbutton", { name: "GY weight", exact: true })
+        .fill("2");
+      await page
+        .getByRole("spinbutton", { name: "DTF weight", exact: true })
+        .fill("1");
+      break;
+    case "filters":
+      await page
+        .getByRole("textbox", { name: t("Search parent lines"), exact: true })
+        .fill("");
+      await page
+        .getByRole("textbox", { name: t("Search parent lines"), exact: true })
+        .fill(exercise.poolSearch);
+      await unlocked();
+      await page
+        .getByRole("textbox", { name: t("Search parent lines"), exact: true })
+        .fill(exercise.poolSearch.toLowerCase());
+      await unlocked();
+      record(`${pass}: uppercase and lowercase parent pool searches both pass`);
+      await panel.locator(".tour-checklist button").last().click();
+      assert.equal(
+        await page.evaluate(() => document.activeElement?.id),
+        "max-candidates",
+      );
+      await page.locator("#max-candidates").fill("5");
+      break;
+    case "ranking":
+      await page
+        .getByRole("button", {
+          name: t("Generate Candidate Pairs"),
+          exact: true,
+        })
+        .click();
+      await at("ranking");
+      record(`${pass}: real nonempty ranking unlocks and advances`);
+      return;
+    case "save":
+      for (let row = 0; row < 2; row++) {
+        const tr = page.locator(".breed-designer-candidates tbody tr").nth(row);
+        await tr.getByRole("button", { name: t("Save"), exact: true }).click();
+        await tr
+          .getByRole("button", { name: t("Saved"), exact: true })
+          .waitFor();
+        for (const c of await candidateList())
+          if (!baseline.some((b) => b.id === c.id)) createdIds.add(c.id);
+        if (row === 0) {
+          await locked();
+        }
+      }
+      break;
+    case "workspace": {
+      const saved = (await candidateList()).filter((c) => createdIds.has(c.id));
+      const highlightedRow = await page
+        .locator('[data-tour="candidate-row"]')
+        .evaluateAll((rows) => {
+          const spot = document
+            .querySelector(".tour-spotlight")
+            ?.getBoundingClientRect();
+          return rows.find((row) => {
+            const r = row.getBoundingClientRect();
+            return spot && Math.abs(spot.top - r.top) <= 6;
+          })?.dataset.tourCandidateId;
+        });
+      assert(highlightedRow, "One candidate row must be highlighted");
+      assert.equal(await page.locator(".tour-spotlight").count(), 1);
+      await page
+        .locator(
+          `[data-tour="candidate-row"][data-tour-candidate-id="${highlightedRow}"]`,
+        )
+        .getByRole("button")
         .first()
         .click();
-      await page.getByRole("button", { name: /Continue Guided Tour/ }).click();
-      record("Real historical line profile opens during tour");
-    }
-    if (i === 7) {
-      const node = page.locator(".react-flow__node").first();
-      await node.click();
-      await expectStep("relationships");
-      record("Pedigree graph remains interactive");
-    }
-    if (i === 9 || i === 10) {
-      // Verified pair already used in the repository's real-data smoke test.
-      const slot = i === 9 ? "A" : "B";
       await page
-        .getByRole("textbox", { name: `Parent ${slot}`, exact: true })
-        .fill(i === 9 ? "GID_10039" : "GID_10125");
-      await popover.getByRole("heading").click();
+        .locator('.tour-popover[data-tour-phase="explanation"]')
+        .waitFor();
+      assert.equal(new URL(page.url()).pathname, "/candidates");
+      assert(await page.locator('[data-tour="candidate-detail"]').isVisible());
+      await proveReadingLayout("save", pass);
+      record(
+        `${pass}: single candidate row opens the detail explanation without leaving the step`,
+      );
+      break;
     }
-    if (i === 11) {
-      await page
-        .getByRole("button", { name: "Analyze Cross", exact: true })
-        .click();
-      await expectStep("estimates");
-      await page.getByText("Analysis complete", { exact: true }).waitFor();
-      record("One user-initiated real four-trait analysis advances the tour");
-      continue;
-    }
-    if (i === 18) {
-      // Keep the real candidate space small using existing parent-pool controls.
-      await page
-        .getByRole("textbox", { name: "Search parent lines", exact: true })
-        .fill("GID_100");
-      await page
-        .getByRole("button", { name: "Generate Candidate Pairs", exact: true })
-        .click();
-      await expectStep("ranking");
-      record("One user-initiated real ranking advances the tour");
-      continue;
-    }
-    if (i === 21) {
-      const boxes = page.getByRole("checkbox", { name: /Compare/ });
-      if ((await boxes.count()) >= 2) {
-        await boxes.nth(0).click();
-        await boxes.nth(1).click();
-        await page.getByRole("button", { name: /Compare candidates/ }).click();
+    case "compare": {
+      const saved = (await candidateList())
+        .filter((c) => createdIds.has(c.id))
+        .slice(0, 2);
+      for (const c of saved)
         await page
-          .getByRole("heading", {
-            name: "Compare saved candidates",
+          .getByRole("checkbox", {
+            name: t("Compare {name}", { name: c.name }),
             exact: true,
           })
-          .waitFor();
-        assert.equal(await popover.count(), 0);
-        await page.keyboard.press("Escape");
-        await expectStep("compare");
-        record("Real saved candidate comparison opens and returns to the tour");
-      } else
-        throw new Error(
-          "Two existing saved candidates are required to demonstrate comparison without creating user data",
-        );
+          .check();
+      await page
+        .getByRole("button", {
+          name: new RegExp(`^${t("Compare candidates")}`),
+        })
+        .click();
+      await page
+        .getByRole("heading", {
+          name: t("Compare saved candidates"),
+          exact: true,
+        })
+        .waitFor();
+      await page.keyboard.press("Escape");
+      break;
     }
-    await next();
+    case "limitations":
+      await panel.getByRole("checkbox").check();
+      break;
   }
-  await page
-    .getByRole("heading", {
-      name: "You're ready to explore GeneField",
-      exact: true,
-    })
-    .waitFor();
-  assert.equal((await state()).hasCompletedTour, true);
-  await page.screenshot({ path: `${directory}/completion.png` });
-  await page
-    .getByRole("button", { name: "Start Exploring", exact: true })
-    .click();
-  record("First full tour completes and marks progress");
-  assert.equal(await snapshot(), baseline);
-  record("Actual SQLite candidate data is unchanged");
-
-  await page.reload();
-  await page
-    .locator('[data-tour="model-insights"]')
-    .waitFor({ timeout: 120000 });
-  assert.equal(await page.getByRole("dialog").count(), 0);
-  await nav("Settings");
-  await page
-    .getByRole("button", { name: "Replay Guided Tour", exact: true })
-    .focus();
-  await page.keyboard.press("Enter");
-  await expectStep("workspace");
-  record(
-    "Completed status survives restart; keyboard Settings replay starts Step 1",
-  );
-  for (const id of stepIds) {
-    await expectStep(id);
-    await next();
-  }
-  await page
-    .getByRole("heading", {
-      name: "You're ready to explore GeneField",
-      exact: true,
-    })
-    .waitFor();
-  await page.getByRole("button", { name: "Restart Tour", exact: true }).click();
-  await expectStep("workspace");
-  assert.equal(await popover.count(), 1);
-  record("Second full tour completes; completion restart creates one session");
-
-  // Missing target fallback, manual navigation, Escape, interrupted restart.
-  await page
-    .locator('[data-tour="workspace-nav"]')
-    .evaluate((element) => element.removeAttribute("data-tour"));
-  await popover
-    .getByText(
-      "This area is not available yet. You can continue the tour and explore it later.",
-    )
-    .waitFor({ timeout: 6000 });
+  await unlocked();
   await next();
-  await expectStep("overview");
-  await nav("Settings");
-  await popover
-    .getByRole("button", { name: "Return to step", exact: true })
+}
+try {
+  assert(await page.evaluate(() => !!window.__TAURI_INTERNALS__));
+  await page.evaluate(() => {
+    localStorage.setItem("genefield-language", "indonesian");
+    localStorage.removeItem("genefield-onboarding-v1");
+  });
+  await page.goto("http://localhost:1420/");
+  await page
+    .getByRole("button", { name: t("Maybe Later"), exact: true })
+    .waitFor({ timeout: 120000 });
+  baseline = await candidateList();
+  await page
+    .getByRole("button", { name: t("Maybe Later"), exact: true })
     .click();
-  await expectStep("overview");
-  assert.equal(new URL(page.url()).pathname, "/");
-  await page.keyboard.press("Escape");
-  assert.equal(await popover.count(), 0);
-  await page.reload();
-  await page.locator('[data-tour="overview"]').waitFor({ timeout: 120000 });
-  assert.equal(await page.getByRole("dialog").count(), 0);
+  exercise = await page.evaluate(async () => {
+    const { loadTourExample } = await import("/src/onboarding/tourExample.ts");
+    return loadTourExample();
+  });
   record(
-    "Missing target, manual navigation, Escape, and interrupted reload are safe",
+    `Verified eligible IDs ${exercise.parents.join(" / ")} and pool ${exercise.poolSearch}`,
   );
-  assert.equal(await snapshot(), baseline);
-  assert.deepEqual(
-    await page.evaluate(() =>
-      Object.fromEntries(
+  for (let pass = 1; pass <= 2; pass++) {
+    await nav("Settings");
+    if (pass === 2) {
+      await page
+        .getByRole("combobox", { name: t("Language preference"), exact: true })
+        .click();
+      await page.getByRole("option", { name: "English", exact: true }).click();
+      language = "english";
+    }
+    await page
+      .getByRole("button", {
+        name: t(pass === 1 ? "Start Guided Tour" : "Replay Guided Tour"),
+        exact: true,
+      })
+      .click();
+    for (const step of tourSteps) {
+      await at(step.id);
+      assert.equal(new URL(page.url()).pathname, step.route);
+      if (step.requirement) await locked();
+      if (
+        pass === 1 &&
         [
-          "genefield-theme",
-          "genefield-language",
-          "genefield-interface-density",
-        ].map((key) => [key, localStorage.getItem(key)]),
+          "overview",
+          "lines",
+          "observations",
+          "designer",
+          "objectives",
+          "weights",
+          "filters",
+          "save",
+          "evidence",
+        ].includes(step.id)
+      )
+        for (const size of [
+          { width: 1920, height: 1080 },
+          { width: 1440, height: 900 },
+          { width: 1366, height: 768 },
+          { width: 1024, height: 640 },
+        ]) {
+          await resize(size);
+          await page.waitForFunction(() => {
+            const r = document
+              .querySelector(".tour-popover")
+              ?.getBoundingClientRect();
+            return (
+              r &&
+              r.left >= 0 &&
+              r.top >= 0 &&
+              r.right <= innerWidth + 1 &&
+              r.bottom <= innerHeight + 1
+            );
+          });
+          if (step.id === "observations") {
+            await page.waitForFunction((id) => {
+              const target = [
+                ...document.querySelectorAll(
+                  '[data-tour="line-profile-action"]',
+                ),
+              ].find(
+                (element) => element.getAttribute("data-tour-line-id") === id,
+              );
+              const card = document.querySelector(".tour-popover");
+              if (!target || !card) return false;
+              const r = target.getBoundingClientRect();
+              const p = card.getBoundingClientRect();
+              const overlap =
+                Math.max(
+                  0,
+                  Math.min(p.right, r.right) - Math.max(p.left, r.left),
+                ) *
+                Math.max(
+                  0,
+                  Math.min(p.bottom, r.bottom) - Math.max(p.top, r.top),
+                );
+              const hit = document.elementFromPoint(
+                r.left + r.width / 2,
+                r.top + r.height / 2,
+              );
+              return overlap === 0 && !!hit && target.contains(hit);
+            }, exercise.parents[0]);
+          }
+          await page.waitForFunction(() => {
+            const card = document
+              .querySelector(".tour-popover")
+              ?.getBoundingClientRect();
+            const spots = [...document.querySelectorAll(".tour-spotlight")];
+            return (
+              card &&
+              spots.length &&
+              spots.every((spot) => {
+                const r = spot.getBoundingClientRect();
+                return (
+                  Math.max(
+                    0,
+                    Math.min(card.right, r.right) - Math.max(card.left, r.left),
+                  ) *
+                    Math.max(
+                      0,
+                      Math.min(card.bottom, r.bottom) -
+                        Math.max(card.top, r.top),
+                    ) ===
+                  0
+                );
+              })
+            );
+          });
+          evidence.sizes.push({
+            step: step.id,
+            requested: size,
+            actual: await page.evaluate(() => ({
+              width: innerWidth,
+              height: innerHeight,
+            })),
+          });
+          await page.screenshot({
+            path: `${directory}/interactive-${step.id}-${size.width}.png`,
+          });
+        }
+      if (pass === 1 && step.id === "overview") {
+        const before = page.url();
+        await page
+          .getByRole("link", { name: t("Settings"), exact: true })
+          .click();
+        assert.equal(page.url(), before);
+        await hide();
+        await nav("Settings");
+        await resume();
+        await panel
+          .getByRole("button", { name: t("Return to step"), exact: true })
+          .click();
+        record(
+          "Outside navigation is blocked while open and enabled while hidden",
+        );
+      }
+      await perform(step, pass);
+    }
+    await page
+      .getByRole("heading", {
+        name: t("You're ready to explore GeneField"),
+        exact: true,
+      })
+      .waitFor();
+    assert.equal(
+      await page.evaluate(
+        () =>
+          JSON.parse(localStorage.getItem("genefield-onboarding-v1"))
+            .hasCompletedTour,
       ),
+      true,
+    );
+    await page
+      .getByRole("button", { name: t("Start Exploring"), exact: true })
+      .click();
+    const actual = await candidateList();
+    for (const c of baseline)
+      assert.deepEqual(
+        actual.find((a) => a.id === c.id),
+        c,
+      );
+    assert.equal(createdIds.size, pass * 2);
+    record(
+      `${pass}: all 14 required tasks completed; explicit saves added two candidates; existing data unchanged`,
+    );
+    await page.reload();
+    await page
+      .locator('[data-tour="model-insights"]')
+      .waitFor({ timeout: 120000 });
+    assert.equal(await page.getByRole("dialog").count(), 0);
+  }
+  await nav("Settings");
+  await page
+    .getByRole("button", { name: t("Replay Guided Tour"), exact: true })
+    .click();
+  await at("workspace");
+  await page.keyboard.press("Escape");
+  assert.equal(await panel.count(), 0);
+  assert.equal(
+    await page.evaluate(() =>
+      document.documentElement.hasAttribute("data-guided-tour-dock"),
     ),
-    preferences,
+    false,
   );
+  await nav("Settings");
+  record("Escape exits the tour and restores normal navigation and page size");
   assert.deepEqual(evidence.errors, []);
   record(
-    "Candidates and unrelated preferences preserved across all replays; zero page errors",
+    "Two complete interactive runs in Indonesian and English; replay survives reload; zero page errors",
   );
 } finally {
+  evidence.savedByTest = [...createdIds];
+  for (const id of createdIds) {
+    assert(!baseline.some((c) => c.id === id));
+    await page.evaluate(async (id) => {
+      const { candidateStore } = await import("/src/services/index.ts");
+      const c = await candidateStore.get(id);
+      if (
+        !c ||
+        c.source !== "breed-designer" ||
+        !/\((?:Guided Tour|Tur Terpandu) [a-f0-9]{8}\)$/.test(c.name)
+      )
+        throw Error(
+          "Refusing to remove a candidate not created by this QA tour",
+        );
+      await candidateStore.remove(id);
+    }, id);
+  }
+  if (baseline.length || createdIds.size) {
+    assert.deepEqual(await candidateList(), baseline);
+    evidence.qaCandidatesCleaned = true;
+  }
+  await page.evaluate((original) => {
+    original
+      ? localStorage.setItem("genefield-language", original)
+      : localStorage.removeItem("genefield-language");
+  }, originalLanguage);
   writeFileSync(
-    `${directory}/evidence.json`,
+    `${directory}/interactive-evidence.json`,
     JSON.stringify(evidence, null, 2) + "\n",
   );
-  windowHelper.stdin.end();
+  helper.stdin.end();
   await browser.close();
 }

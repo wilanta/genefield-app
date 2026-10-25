@@ -190,6 +190,9 @@ function ParentCard({
           </div>
           {open && (
             <ul
+              data-tour={
+                slot === "A" ? "cross-suggestions-a" : "cross-suggestions-b"
+              }
               role="listbox"
               aria-label={tr("Parent {slot} suggestions", { slot })}
               className="absolute inset-x-0 top-[calc(100%+4px)] z-20 max-h-64 overflow-auto rounded-lg border border-border bg-popover p-1 shadow-lg"
@@ -367,6 +370,9 @@ export default function CrossLab() {
 
   const { parentA, parentB, setParents } = useCrossLabDraft();
   const [phase, setPhase] = useState<Phase>("idle");
+  useEffect(() => {
+    tourEvents.emit("cross-analysis-state", { ready: phase === "done" });
+  }, [phase]);
   const [estimates, setEstimates] =
     useState<Record<TraitCode, number | null>>(EMPTY_ESTIMATES);
 
@@ -476,6 +482,7 @@ export default function CrossLab() {
 
   /** Editing a parent invalidates the previous analysis. */
   const updateParent = (slot: "A" | "B", v: string) => {
+    tourEvents.emit("parent-edited", { slot, value: v });
     ++revision.current;
     setResult(undefined);
     setHistorical(undefined);
@@ -512,7 +519,15 @@ export default function CrossLab() {
         ) as Record<TraitCode, number | null>,
       );
       setPhase("done");
-      tourEvents.emit("cross-analysis-complete");
+      if (
+        TRAITS.every((trait) =>
+          Number.isFinite(prediction.predictions[trait.code]?.value),
+        )
+      ) {
+        tourEvents.emit("cross-analysis-complete", {
+          parents: prediction.parent_ids,
+        });
+      }
     } catch (e) {
       if (token !== revision.current) return;
       setError(analysisError(e));
@@ -695,6 +710,7 @@ export default function CrossLab() {
             {phase === "error" ? (
               <>
                 <Button
+                  data-tour="cross-analyze-action"
                   className="h-[34px] min-w-[132px]"
                   onClick={handleAnalyze}
                 >
@@ -708,6 +724,7 @@ export default function CrossLab() {
             ) : (
               <>
                 <Button
+                  data-tour="cross-analyze-action"
                   className="h-[34px] min-w-[132px]"
                   disabled={analysisDisabled}
                   onClick={handleAnalyze}

@@ -19,26 +19,44 @@ export function placeTourPopover(
     left: (viewport.width - panel.width) / 2,
     top: (viewport.height - panel.height) / 2,
   };
-  let position = center;
+  let candidates = [center];
   if (target) {
     const right = target.left + target.width + gap;
     const bottom = target.top + target.height + gap;
-    if (right + panel.width <= viewport.width - margin)
-      position = { left: right, top: target.top };
-    else if (target.left - gap - panel.width >= margin)
-      position = { left: target.left - gap - panel.width, top: target.top };
-    else if (bottom + panel.height <= viewport.height - margin)
-      position = { left: target.left, top: bottom };
-    else if (target.top - gap - panel.height >= margin)
-      position = { left: target.left, top: target.top - gap - panel.height };
-    else
-      position = {
+    candidates = [
+      { left: right, top: target.top },
+      { left: target.left - gap - panel.width, top: target.top },
+      { left: target.left, top: bottom },
+      { left: target.left, top: target.top - gap - panel.height },
+      { left: margin, top: margin },
+      { left: viewport.width - panel.width - margin, top: margin },
+      { left: margin, top: viewport.height - panel.height - margin },
+      {
         left: viewport.width - panel.width - margin,
         top: viewport.height - panel.height - margin,
-      };
+      },
+    ];
   }
-  return {
+  const placed = candidates.map((position) => ({
     left: clamp(position.left, viewport.width - panel.width - margin),
     top: clamp(position.top, viewport.height - panel.height - margin),
-  };
+  }));
+  const overlap = (position: typeof center) =>
+    target
+      ? Math.max(
+          0,
+          Math.min(position.left + panel.width, target.left + target.width) -
+            Math.max(position.left, target.left),
+        ) *
+        Math.max(
+          0,
+          Math.min(position.top + panel.height, target.top + target.height) -
+            Math.max(position.top, target.top),
+        )
+      : 0;
+  // Score the FINAL clamped position. A position that looked clear before
+  // clamping can otherwise cover the very button the user must click.
+  return placed.reduce((best, position) =>
+    overlap(position) < overlap(best) ? position : best,
+  );
 }

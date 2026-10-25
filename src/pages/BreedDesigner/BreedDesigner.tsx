@@ -53,13 +53,41 @@ function StepHeading({ step, title }: { step: number; title: string }) {
 export default function BreedDesigner() {
   const { t: tr } = useTranslation();
   const navigate = useNavigate();
-  const { filters, rules, weights, dtf, setPool, setRule, setWeight, setDtf } =
-    useBreedDesignerDraft();
+  const {
+    filters,
+    rules,
+    weights,
+    dtf,
+    setPool: updatePool,
+    setRule: updateRule,
+    setWeight: updateWeight,
+    setDtf: updateDtf,
+  } = useBreedDesignerDraft();
+  const setPool: typeof updatePool = (patch) => {
+    updatePool(patch);
+    tourEvents.emit("breed-config-edited", { field: "filters" });
+  };
+  const setRule: typeof updateRule = (key, value) => {
+    updateRule(key, value);
+    tourEvents.emit("breed-config-edited", { field: "filters" });
+  };
+  const setWeight: typeof updateWeight = (trait, value) => {
+    updateWeight(trait, value);
+    tourEvents.emit("breed-config-edited", { field: "objectives" });
+    tourEvents.emit("breed-config-edited", { field: "weights" });
+  };
+  const setDtf: typeof updateDtf = (value) => {
+    updateDtf(value);
+    tourEvents.emit("breed-config-edited", { field: "objectives" });
+  };
   const [editingWeight, setEditingWeight] = useState<{
     trait: Trait;
     text: string;
   } | null>(null);
   const [generated, setGenerated] = useState(false);
+  useEffect(() => {
+    tourEvents.emit("breed-ranking-state", { ready: generated });
+  }, [generated]);
 
   const { data: loaded, error: loadError } = useAsync(async () => ({
     lines: await referenceService.allLines(),
@@ -167,7 +195,9 @@ export default function BreedDesigner() {
       );
       setEligibleCount(result.eligible_candidate_count);
       setGenerated(true);
-      tourEvents.emit("breed-ranking-complete");
+      tourEvents.emit("breed-ranking-complete", {
+        count: result.candidates.length,
+      });
     } catch (e) {
       setError(analysisError(e));
     } finally {
@@ -221,6 +251,7 @@ export default function BreedDesigner() {
               <div className="breed-designer-search relative">
                 <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
+                  data-tour="pool-search"
                   value={filters.search}
                   onChange={(e) => setPool({ search: e.target.value })}
                   placeholder={tr("Search parent lines")}
@@ -237,6 +268,7 @@ export default function BreedDesigner() {
                   }
                 >
                   <SelectTrigger
+                    data-tour="pool-genotype"
                     aria-label={tr("Genotype availability")}
                     className="breed-designer-filter"
                   >
@@ -269,6 +301,7 @@ export default function BreedDesigner() {
                   }
                 >
                   <SelectTrigger
+                    data-tour="pool-phenotype"
                     aria-label={tr("Phenotype availability")}
                     className="breed-designer-filter"
                   >
@@ -301,6 +334,7 @@ export default function BreedDesigner() {
                   }
                 >
                   <SelectTrigger
+                    data-tour="pool-pedigree"
                     aria-label={tr("Pedigree availability")}
                     className="breed-designer-filter"
                   >

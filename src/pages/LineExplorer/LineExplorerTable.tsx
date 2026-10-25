@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import type { RiceLine } from "@/types/research";
 import { cn } from "@/lib/utils";
+import { useTourReferenceId } from "@/onboarding/GuidedTourProvider";
 
 interface Props {
   lines: RiceLine[];
@@ -79,6 +80,7 @@ export function LineExplorerTable({
     pageIndex: 0,
     pageSize,
   });
+  const tourReferenceId = useTourReferenceId();
 
   // Reset to page 0 whenever the filtered dataset changes.
   useEffect(() => {
@@ -111,7 +113,14 @@ export function LineExplorerTable({
         id: "lineId",
         header: "LINE_ID",
         cell: ({ getValue }) => (
-          <span className="font-mono text-sm">{getValue()}</span>
+          <span
+            className={cn(
+              "font-mono text-sm",
+              getValue() === tourReferenceId && "tour-reference",
+            )}
+          >
+            {getValue()}
+          </span>
         ),
       }),
       base.accessor("hasGenotype", {
@@ -136,6 +145,8 @@ export function LineExplorerTable({
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
             <Button
+              data-tour="line-profile-action"
+              data-tour-line-id={row.original.id}
               variant="ghost"
               size="sm"
               className="h-auto p-0 text-primary hover:bg-transparent hover:text-primary hover:underline"
@@ -169,7 +180,7 @@ export function LineExplorerTable({
         ),
       }),
     ] as ReadonlyArray<ColumnDef<typeof features, RiceLine>>;
-  }, [onProfile, onUseAsParent, tr]);
+  }, [onProfile, onUseAsParent, tr, tourReferenceId]);
 
   const table = useTable({
     features,

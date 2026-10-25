@@ -1,4 +1,5 @@
 import { useTranslation } from "@/components/language-provider";
+import { tourEvents } from "@/onboarding/tourEvents";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { referenceService } from "@/services/reference-service";
@@ -98,8 +99,17 @@ export default function LineExplorer({
 
   const handleProfile = (line: RiceLine) => {
     setSelected(line.id);
+    tourEvents.emit("line-profile-opened", { id: line.id });
     onSelectLine?.(line.id);
   };
+  useEffect(() => {
+    tourEvents.emit("line-search-state", {
+      query: filters.search,
+      valid: filtered.some(
+        (line) => line.id.toUpperCase() === filters.search.trim().toUpperCase(),
+      ),
+    });
+  }, [filters.search, filtered]);
 
   const queryLabel =
     filters.search.trim() ||
@@ -123,7 +133,17 @@ export default function LineExplorer({
       <div className="shrink-0">
         <LineExplorerToolbar
           filters={filters}
-          onChange={setFilters}
+          onChange={(next) => {
+            setFilters(next);
+            tourEvents.emit("line-search", {
+              query: next.search,
+              valid: lines.some(
+                (line) =>
+                  line.id.toUpperCase() === next.search.trim().toUpperCase() &&
+                  matchesFilters(line, next),
+              ),
+            });
+          }}
           matchCount={filtered.length}
           totalCount={totalCount}
         />
