@@ -64,6 +64,49 @@ try {
   assert.deepEqual(ids.sort(), ["GID_1", "GID_100", "GID_2"].sort());
   passed("native reference data includes all test parents");
 
+  const search = () =>
+    page.getByRole("textbox", { name: "Search LINE_ID", exact: true });
+  await nav("Line Explorer");
+  await search().fill("GID_1");
+  for (const [label, value] of [
+    ["Genotype", "Yes"],
+    ["Phenotype", "Yes"],
+    ["Pedigree", "No"],
+  ]) {
+    await page
+      .getByRole("combobox", { name: new RegExp(`^${label} `) })
+      .click();
+    await page.getByRole("option", { name: value, exact: true }).click();
+  }
+  await nav("Overview");
+  await nav("Line Explorer");
+  assert.equal(await search().inputValue(), "GID_1");
+  for (const name of ["Genotype Yes", "Phenotype Yes", "Pedigree No"]) {
+    assert(await page.getByRole("combobox", { name, exact: true }).isVisible());
+  }
+  passed("search and all availability filters survive route changes");
+  await action("Clear");
+  await nav("Overview");
+  await page.goBack();
+  assert.equal(await search().inputValue(), "");
+  for (const label of ["Genotype", "Phenotype", "Pedigree"]) {
+    assert(
+      await page
+        .getByRole("combobox", { name: `${label} Any`, exact: true })
+        .isVisible(),
+    );
+  }
+  passed("cleared filters stay at defaults after browser Back");
+  await search().fill("missing-line");
+  await nav("Cross Lab");
+  await nav("Line Explorer");
+  assert.equal(await search().inputValue(), "missing-line");
+  await action("Clear filters");
+  await nav("Cross Lab");
+  passed(
+    "empty results preserve the search and Clear filters restores defaults",
+  );
+
   for (const [slot, id] of [
     ["A", "GID_100"],
     ["B", "GID_1"],
@@ -82,8 +125,17 @@ try {
   await action("Reset");
   await selectInExplorer("A", "GID_100");
   await parents("GID_100", "");
+  await nav("Line Explorer");
+  assert.equal(await search().inputValue(), "GID_100");
   await selectInExplorer("B", "GID_1");
   await parents("GID_100", "GID_1");
+  await nav("Line Explorer");
+  assert.equal(await search().inputValue(), "GID_1");
+  await nav("Cross Lab");
+  await parents("GID_100", "GID_1");
+  passed(
+    "parent selections and Line Explorer search survive round trips together",
+  );
   passed("Line Explorer A GID_100 then B GID_1 preserves both");
   await page.screenshot({ path: `${out}/selected-parents.png` });
 
