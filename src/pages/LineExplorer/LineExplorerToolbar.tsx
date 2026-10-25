@@ -40,7 +40,10 @@ function AvailabilitySelect({
       value={value}
       onValueChange={(v) => onChange(v as AvailabilityFilter)}
     >
-      <SelectTrigger className="h-9 w-36 gap-1.5 bg-card text-muted-foreground">
+      <SelectTrigger
+        aria-label={display}
+        className="h-9 w-36 gap-1.5 bg-card text-muted-foreground"
+      >
         <SelectValue>{display}</SelectValue>
       </SelectTrigger>
       <SelectContent>

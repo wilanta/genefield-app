@@ -22,6 +22,7 @@ import { LanguageProvider } from "@/components/language-provider";
 import type { PredictionResult } from "@/lib/genefield/types";
 import type { RiceLine } from "@/types/research";
 import { useCrossLabDraft } from "@/stores/cross-lab-draft";
+import { useLineExplorerFilters } from "@/stores/line-explorer-filters";
 import LineExplorer from "@/pages/LineExplorer/LineExplorer";
 import CrossLab from "./CrossLab";
 
@@ -111,6 +112,7 @@ function expectParents(a: string, b: string) {
 beforeEach(() => {
   localStorage.clear();
   useCrossLabDraft.getState().setParents({ parentA: "", parentB: "" });
+  useLineExplorerFilters.getState().resetFilters();
   vi.resetAllMocks();
   mocks.allLines.mockResolvedValue(lines);
   mocks.start.mockResolvedValue(undefined);
@@ -120,6 +122,29 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe("Cross Lab parent navigation", () => {
+  it("keeps the Line Explorer search through selecting each parent and returning", async () => {
+    renderApp("/lines");
+    const search = () =>
+      screen.getByRole("textbox", {
+        name: "Search LINE_ID",
+      }) as HTMLInputElement;
+    fireEvent.change(search(), { target: { value: "GID_100" } });
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: "Use as Parent A for GID_100",
+      }),
+    );
+    go("Line Explorer");
+    expect(search().value).toBe("GID_100");
+    fireEvent.change(search(), { target: { value: "GID_1" } });
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Use as Parent B for GID_1" }),
+    );
+    expectParents("GID_100", "GID_1");
+    go("Line Explorer");
+    expect(search().value).toBe("GID_1");
+  });
+
   it("keeps both dropdown selections after leaving and returning via navigation", async () => {
     renderApp();
     for (const [slot, id] of [

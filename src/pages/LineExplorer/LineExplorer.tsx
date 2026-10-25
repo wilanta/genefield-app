@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { referenceService } from "@/services/reference-service";
 import { useAsync } from "@/lib/use-async";
+import { useLineExplorerFilters } from "@/stores/line-explorer-filters";
 import type { LineExplorerFilters, RiceLine } from "@/types/research";
 import { LineExplorerToolbar } from "./LineExplorerToolbar";
 import { LineExplorerTable } from "./LineExplorerTable";
@@ -25,13 +26,6 @@ interface LineExplorerProps {
   /** Initial filter state (optional). */
   filters?: LineExplorerFilters;
 }
-
-const DEFAULT_FILTERS: LineExplorerFilters = {
-  search: "",
-  genotype: "any",
-  phenotype: "any",
-  pedigree: "any",
-};
 
 function matchesFilters(line: RiceLine, filters: LineExplorerFilters): boolean {
   const q = filters.search.trim().toLowerCase();
@@ -60,7 +54,7 @@ export default function LineExplorer({
   selectedId = null,
   onSelectLine,
   onUseAsParent,
-  filters: initialFilters = DEFAULT_FILTERS,
+  filters: initialFilters,
 }: LineExplorerProps) {
   const { t: tr } = useTranslation();
   const navigate = useNavigate();
@@ -70,8 +64,14 @@ export default function LineExplorer({
   );
   const lines = suppliedLines ?? loadedLines ?? [];
   const totalCount = suppliedTotal ?? lines.length;
-  const [filters, setFilters] = useState<LineExplorerFilters>(initialFilters);
+  const { filters, setFilters, resetFilters } = useLineExplorerFilters();
+  const [startingFilters] = useState(initialFilters);
   const [selected, setSelected] = useState<string | null>(selectedId);
+
+  // Apply explicitly supplied initial filters once per mount.
+  useEffect(() => {
+    if (startingFilters) setFilters(startingFilters);
+  }, [startingFilters, setFilters]);
 
   // Default: "Use as Parent A/B" navigates to Cross Lab, prefilling that slot.
   const handleUseAsParent =
@@ -100,8 +100,6 @@ export default function LineExplorer({
     setSelected(line.id);
     onSelectLine?.(line.id);
   };
-
-  const clearFilters = () => setFilters(DEFAULT_FILTERS);
 
   const queryLabel =
     filters.search.trim() ||
@@ -137,7 +135,7 @@ export default function LineExplorer({
           {filtered.length === 0 ? (
             <LineExplorerNoResults
               queryLabel={queryLabel}
-              onClearFilters={clearFilters}
+              onClearFilters={resetFilters}
             />
           ) : (
             <LineExplorerTable
