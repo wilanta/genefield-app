@@ -19,10 +19,7 @@ import { analysisError } from "@/lib/genefield/errors";
 import { useAsync } from "@/lib/use-async";
 import type { Trait, Objectives } from "@/lib/genefield/types";
 import type { BreedDesignerCandidate } from "./types";
-import type {
-  BreedDesignerFilters,
-  BreedDesignerGenerationRules,
-} from "@/pages/BreedDesigner/types";
+import { useBreedDesignerDraft } from "@/stores/breed-designer-draft";
 import type { AvailabilityFilter } from "@/types/research";
 import { CandidateTable } from "./CandidateTable";
 import { BreedDesignerSidebar } from "./BreedDesignerSidebar";
@@ -35,20 +32,6 @@ const POOL_AVAILABILITY_OPTIONS: PoolFilterValue[] = ["any", "yes"];
 function poolLabel(v: PoolFilterValue): string {
   return v === "any" ? "Any" : v === "yes" ? "Available" : "Unavailable";
 }
-
-const DEFAULT_FILTERS: BreedDesignerFilters = {
-  search: "",
-  genotype: "yes", // "Available"
-  phenotype: "any",
-  pedigree: "any",
-};
-
-const DEFAULT_RULES: BreedDesignerGenerationRules = {
-  excludeSelfCrosses: true,
-  excludeDuplicatePairs: true,
-  excludeHistorical: true,
-  maxCandidates: 50,
-};
 
 function StepHeading({ step, title }: { step: number; title: string }) {
   const { t: tr } = useTranslation();
@@ -69,22 +52,18 @@ function StepHeading({ step, title }: { step: number; title: string }) {
 export default function BreedDesigner() {
   const { t: tr } = useTranslation();
   const navigate = useNavigate();
-  const [filters, setFilters] = useState<BreedDesignerFilters>(DEFAULT_FILTERS);
-  const [rules, setRules] =
-    useState<BreedDesignerGenerationRules>(DEFAULT_RULES);
+  const { filters, rules, weights, dtf, setPool, setRule, setWeight, setDtf } =
+    useBreedDesignerDraft();
+  const [editingWeight, setEditingWeight] = useState<{
+    trait: Trait;
+    text: string;
+  } | null>(null);
   const [generated, setGenerated] = useState(false);
 
   const { data: loaded, error: loadError } = useAsync(async () => ({
     lines: await referenceService.allLines(),
     metadata: await inference.start(),
   }));
-  const [weights, setWeights] = useState<Record<Trait, number>>({
-    GY: 1,
-    DTF: 0,
-    NO: 0,
-    LB: 0,
-  });
-  const [dtf, setDtf] = useState<"" | "minimize" | "maximize">("");
   const [candidates, setCandidates] = useState<BreedDesignerCandidate[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
@@ -208,14 +187,6 @@ export default function BreedDesigner() {
       `/cross-lab?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}`,
     );
   };
-
-  const setPool = (patch: Partial<BreedDesignerFilters>) =>
-    setFilters((prev) => ({ ...prev, ...patch }));
-
-  const setRule = <K extends keyof BreedDesignerGenerationRules>(
-    key: K,
-    value: BreedDesignerGenerationRules[K],
-  ) => setRules((prev) => ({ ...prev, [key]: value }));
 
   return (
     <div className="breed-designer">
@@ -377,15 +348,25 @@ export default function BreedDesigner() {
                       type="number"
                       min={0}
                       step={0.1}
-                      value={weights[t]}
+                      value={
+                        editingWeight?.trait === t
+                          ? editingWeight.text
+                          : weights[t]
+                      }
                       disabled={busy}
                       className="font-mono tabular-nums"
-                      onChange={(e) =>
-                        setWeights((prev) => ({
-                          ...prev,
-                          [t]: Math.max(0, Number(e.target.value)),
-                        }))
+                      onFocus={() =>
+                        setEditingWeight({
+                          trait: t,
+                          text: weights[t] === 0 ? "" : String(weights[t]),
+                        })
                       }
+                      onChange={(e) => {
+                        const text = e.target.value.replace(/^0+(?=\d)/, "");
+                        setEditingWeight({ trait: t, text });
+                        setWeight(t, Math.max(0, Number(text)));
+                      }}
+                      onBlur={() => setEditingWeight(null)}
                     />
                   </div>
                 ))}
