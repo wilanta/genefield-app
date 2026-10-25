@@ -93,13 +93,13 @@ export function CandidateTable({
       <div className="breed-designer-candidate-scroll">
         <Table>
           <colgroup>
-            <col style={{ width: "11.3%" }} />
-            <col style={{ width: "10.6%" }} />
-            <col style={{ width: "10.6%" }} />
-            <col style={{ width: "10.8%" }} />
-            <col style={{ width: "16.9%" }} />
-            <col style={{ width: "16.5%" }} />
-            <col style={{ width: "23.3%" }} />
+            <col style={{ width: "20%" }} />
+            <col style={{ width: "10.5%" }} />
+            <col style={{ width: "10.5%" }} />
+            <col style={{ width: "9%" }} />
+            <col style={{ width: "13%" }} />
+            <col style={{ width: "13%" }} />
+            <col style={{ width: "24%" }} />
           </colgroup>
           <TableHeader>
             <TableRow className="border-b hover:bg-transparent">
@@ -142,7 +142,7 @@ export function CandidateTable({
                   <TableCell className="px-3 text-sm font-mono">
                     {c.candidateId}
                     {c.analysis && (
-                      <div className="mt-1 text-[10px] text-muted-foreground">
+                      <div className="mt-1 whitespace-normal text-[10px] text-muted-foreground [overflow-wrap:anywhere]">
                         {tr("Prioritization Score:")}{" "}
                         {c.analysis.applicationScore?.toFixed(4)}
                         <br />

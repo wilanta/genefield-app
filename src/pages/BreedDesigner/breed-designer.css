@@ -140,8 +140,11 @@
 }
 
 .breed-designer-results {
-  flex: 1 1 0;
-  min-height: 260px;
+  flex: 1 0 auto;
+  height: clamp(420px, 60vh, 640px);
+  min-height: 420px;
+  max-height: 640px;
+  margin-bottom: 16px;
 }
 
 .breed-designer-candidates {
@@ -221,7 +224,6 @@
 
 @container (min-width: 900px) {
   .breed-designer-layout {
-    height: 100%;
     grid-template-columns: minmax(0, 1fr) clamp(260px, 29%, 340px);
   }
 }
